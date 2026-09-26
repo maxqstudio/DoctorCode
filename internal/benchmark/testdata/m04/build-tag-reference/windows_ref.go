@@ -2,4 +2,4 @@
 
 package repo
 
-func usePlatformHelper() { platformHelper() }
+func UsePlatformHelper() { platformHelper() }
