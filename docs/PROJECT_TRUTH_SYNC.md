@@ -11,30 +11,32 @@ HEAD is recorded externally after the commit exists.
 
 | Gate | Status | Evidence / Notes |
 |---|---|---|
-| SOURCE_TESTS | NOT_PROVEN | |
-| RUNTIME_E2E | NOT_PROVEN | |
+| SOURCE_TESTS | PASS | |
+| RUNTIME_E2E | PASS | |
 | PROVENANCE_SYNC | NOT_PROVEN | |
 | REFERENCE_SYNC | NOT_PROVEN | |
 | STRUCTURAL_SYNC | NOT_PROVEN | |
-| SEMANTIC_SYNC | NOT_PROVEN | |
-| BEHAVIORAL_SYNC | NOT_PROVEN | |
+| SEMANTIC_SYNC | PASS | |
+| BEHAVIORAL_SYNC | PASS | |
 | CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
-| HUMAN_COMPREHENSION | NOT_PROVEN | |
-| SEQUENCE_SYNC | NOT_PROVEN | |
+| HUMAN_COMPREHENSION | PASS | |
+| SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
 | PROJECT_DOCS_NORMALIZED | PASS | |
 | DOC_READABILITY | PASS | |
 | PROJECT_DOCS_SYNC | PASS | |
-| DOC_SOURCE_TRACEABILITY | NOT_PROVEN | |
-| DOC_TEST_TRACEABILITY | NOT_PROVEN | |
-| TEST_RUNTIME_TRACEABILITY | NOT_PROVEN | |
+| DOC_SOURCE_TRACEABILITY | PASS | |
+| DOC_TEST_TRACEABILITY | PASS | |
+| TEST_RUNTIME_TRACEABILITY | PASS | |
 | PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
 | Claim ID | Claim | Documents | Source owner(s) | Test(s) | Runtime/E2E evidence | Status |
 |---|---|---|---|---|---|---|
-| | | | | | | NOT_PROVEN |
+| TRUTH-M00-PORTABLE-CORE | M00 DoctorCode core builds, tests, and executes scan/toolchain smoke checks on Linux, Windows, and macOS GitHub-hosted runners. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::main; internal/scanner/scanner.go::Scan; internal/toolchain/toolchain.go::Detect | internal/language/registry_test.go; internal/scanner/scanner_test.go; internal/toolchain/toolchain_test.go | GitHub Actions CI matrix | PASS |
+| TRUTH-M00-LLM-OPTIONAL | M00 repository scanning and toolchain capability detection do not require an LLM or external model API. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::main; internal/scanner/scanner.go::Scan; internal/toolchain/toolchain.go::Detect | internal/scanner/scanner_test.go; internal/toolchain/toolchain_test.go | NOT_APPLICABLE | PASS |
+| TRUTH-M00-DETECTOR-BOUNDARY | M00 does not claim implemented semantic detection for BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::usage | NOT_APPLICABLE | NOT_APPLICABLE | PASS |
 
 ## Claim relations
 

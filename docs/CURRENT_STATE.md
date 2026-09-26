@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M00_BOOTSTRAP
-Status: IN_PROGRESS
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -20,7 +20,7 @@ Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
-Runtime status: NOT_PROVEN
+Runtime status: PASS
 
 ## Documentation governance
 Documentation root: docs/
@@ -34,17 +34,19 @@ PROJECT_DOCS_SYNC: PASS
 Sequence policy: REQUIRED
 Current sequence mode: DURING
 Current sequence session: M00-BOOTSTRAP
-SEQUENCE_SYNC: NOT_PROVEN
+SEQUENCE_SYNC: PASS
 
 ## Proven
-- Repository exists and initial README is tracked.
-- Core CI passed on Linux, Windows, and macOS at 1b58525ad4e83dcaa2e00548d1d8d845b08cddcb.
+- Core CI passed on Linux, Windows, and macOS at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
+- Skill_Workflow governance preview passed at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
+- Canonical generated docs were committed by GitHub Actions at f0725c0ff560549f9995bc6b84a366d4dbf03c79.
+- Human-first documentation was semantically reviewed for the M00 scope.
 
 ## Not proven
-- Final M00 SHA has not yet completed all CI and governance gates.
-- Go semantic sequence extraction is not supported by current generic Skill_Workflow extractor.
+- Final candidate provenance/reference/structural/cross-document gates are pending strict validation on the synchronized snapshot.
+- Go semantic sequence extraction is not supported by the current generic Skill_Workflow extractor.
 - Semantic detector support for any language is not implemented.
-- BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE accuracy is not benchmarked.
+- BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE accuracy is not benchmarked.
 
 ## Known blockers
 - None declared.
@@ -53,11 +55,11 @@ SEQUENCE_SYNC: NOT_PROVEN
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Run exact-HEAD multi-OS CI and governance preview.
-- Commit deterministic generated docs after governance preview succeeds.
-- Rerun exact-HEAD acceptance with tracked docs.
+- Synchronize generated docs for this acceptance-candidate spec.
+- Run strict Skill_Workflow validators on the exact synchronized snapshot.
+- Promote M00 only if strict governance and three-OS CI both pass.
 
 ## Explicitly blocked
+- Starting M01 implementation before M00 strict acceptance.
 - Claiming production-ready detector coverage.
 - Publishing safe-delete guarantees.
-- Starting stable release before detector benchmarks.

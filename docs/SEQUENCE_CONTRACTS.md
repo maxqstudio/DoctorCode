@@ -16,7 +16,7 @@ Status: CURRENT
 
 | Flow | Mode | Critical | Sequence session | Status |
 |---|---|---|---|---|
-| FLOW-SCAN | DURING | NO | M00-BOOTSTRAP | NOT_PROVEN |
+| FLOW-SCAN | DURING | NO | M00-BOOTSTRAP | PASS |
 
 ## Mismatch handling
 

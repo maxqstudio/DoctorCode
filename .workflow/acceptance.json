@@ -1,76 +1,76 @@
 {
-  "schema_version": 1,
   "evidence_boundary": "M00 acceptance is limited to the portable Go bootstrap: deterministic repository/language inventory, host toolchain capability reporting, Linux/Windows/macOS execution, and Skill_Workflow governance. Semantic BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE detectors are explicitly outside M00.",
-  "runtime_status": "PASS",
-  "human_comprehension_status": "PASS",
   "human_comprehension_questions": {
-    "What is the project and what problem does it solve?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
     "How does failure/recovery behave?": "PASS",
-    "What is the current project state?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
     "What is proven and what is not proven?": "PASS",
-    "What may happen next and what is blocked?": "PASS"
+    "What is the current project state?": "PASS",
+    "What is the project and what problem does it solve?": "PASS",
+    "What may happen next and what is blocked?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS"
   },
-  "sequence_mode": "DURING",
-  "sequence_session": "M00-BOOTSTRAP",
-  "sequence_sync_status": "PASS",
-  "truth_gates": {
-    "SOURCE_TESTS": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "PROVENANCE_SYNC": "NOT_PROVEN",
-    "REFERENCE_SYNC": "NOT_PROVEN",
-    "STRUCTURAL_SYNC": "NOT_PROVEN",
-    "SEMANTIC_SYNC": "PASS",
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "DOC_READABILITY": "PASS"
-  },
+  "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "GitHub Actions CI run 36255433437 at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1 and subsequent CI lineage.",
       "id": "M00-CROSS-PLATFORM",
       "requirement": "Tests, vet, build, scan smoke, and toolchain smoke pass on Linux, Windows, and macOS GitHub-hosted runners.",
-      "evidence": "GitHub Actions CI run 36255433437 at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1 and subsequent CI lineage.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/language/registry_test.go executed by GitHub Actions CI.",
       "id": "M00-LANGUAGE-REGISTRY",
       "requirement": "Registry recognizes representative multi-language files deterministically.",
-      "evidence": "internal/language/registry_test.go executed by GitHub Actions CI.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/scanner/scanner_test.go plus scan smoke executed by GitHub Actions CI.",
       "id": "M00-SCAN",
       "requirement": "Scanner ignores common dependency/generated directories and reports deterministic language counts.",
-      "evidence": "internal/scanner/scanner_test.go plus scan smoke executed by GitHub Actions CI.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/toolchain/toolchain_test.go plus toolchain smoke executed by GitHub Actions CI.",
       "id": "M00-TOOLCHAINS",
       "requirement": "Toolchain registry covers representative languages without assuming availability.",
-      "evidence": "internal/toolchain/toolchain_test.go plus toolchain smoke executed by GitHub Actions CI.",
       "status": "PASS"
     }
   ],
+  "runtime_checks": [
+    "go run ./cmd/doctorcode scan . --json",
+    "go run ./cmd/doctorcode toolchains . --json"
+  ],
+  "runtime_status": "PASS",
+  "schema_version": 1,
+  "sequence_mode": "DURING",
+  "sequence_session": "M00-BOOTSTRAP",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "runtime_checks": [
-    "go run ./cmd/doctorcode scan . --json",
-    "go run ./cmd/doctorcode toolchains . --json"
-  ]
+  "truth_gates": {
+    "BEHAVIORAL_SYNC": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
+    "DOC_SOURCE_TRACEABILITY": "PASS",
+    "DOC_TEST_TRACEABILITY": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "RUNTIME_E2E": "PASS",
+    "SEMANTIC_SYNC": "PASS",
+    "SOURCE_TESTS": "PASS",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "PASS"
+  }
 }

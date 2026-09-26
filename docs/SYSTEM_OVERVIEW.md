@@ -3,7 +3,7 @@
 # SYSTEM OVERVIEW
 
 Status: CURRENT
-Human comprehension status: NOT_PROVEN
+Human comprehension status: PASS
 
 ## One-minute summary
 
@@ -63,7 +63,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M00_BOOTSTRAP
 
-Current status: IN_PROGRESS
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -100,14 +100,14 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run exact-HEAD multi-OS CI and governance preview.
-- Commit deterministic generated docs after governance preview succeeds.
-- Rerun exact-HEAD acceptance with tracked docs.
+- Synchronize generated docs for this acceptance-candidate spec.
+- Run strict Skill_Workflow validators on the exact synchronized snapshot.
+- Promote M00 only if strict governance and three-OS CI both pass.
 
 Blocked actions:
+- Starting M01 implementation before M00 strict acceptance.
 - Claiming production-ready detector coverage.
 - Publishing safe-delete guarantees.
-- Starting stable release before detector benchmarks.
 
 Known blockers:
 - None declared.
@@ -116,15 +116,17 @@ Known blockers:
 
 ### Proven
 
-- Repository exists and initial README is tracked.
-- Core CI passed on Linux, Windows, and macOS at 1b58525ad4e83dcaa2e00548d1d8d845b08cddcb.
+- Core CI passed on Linux, Windows, and macOS at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
+- Skill_Workflow governance preview passed at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
+- Canonical generated docs were committed by GitHub Actions at f0725c0ff560549f9995bc6b84a366d4dbf03c79.
+- Human-first documentation was semantically reviewed for the M00 scope.
 
 ### Not proven
 
-- Final M00 SHA has not yet completed all CI and governance gates.
-- Go semantic sequence extraction is not supported by current generic Skill_Workflow extractor.
+- Final candidate provenance/reference/structural/cross-document gates are pending strict validation on the synchronized snapshot.
+- Go semantic sequence extraction is not supported by the current generic Skill_Workflow extractor.
 - Semantic detector support for any language is not implemented.
-- BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE accuracy is not benchmarked.
+- BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE accuracy is not benchmarked.
 
 ## Important limitations
 
@@ -157,18 +159,18 @@ See GLOSSARY.md.
 
 | Question | Status | Answer location |
 |---|---|---|
-| What is the project and what problem does it solve? | NOT_PROVEN | One-minute summary |
-| Who uses it and what are the primary outcomes? | NOT_PROVEN | One-minute summary |
-| What are the major components and how do they relate? | NOT_PROVEN | Major components |
-| How does important data flow through the system? | NOT_PROVEN | Main data flow |
-| What are the main user/domain workflows? | NOT_PROVEN | Main user workflows |
-| What are the important lifecycle states and transitions? | NOT_PROVEN | Lifecycle and state |
-| Who/what is authoritative for important decisions? | NOT_PROVEN | Authority model |
-| What is mutable and what is immutable? | NOT_PROVEN | Mutable vs immutable |
-| How does failure/recovery behave? | NOT_PROVEN | Failure and recovery |
-| What is the current project state? | NOT_PROVEN | Current project state |
-| What is proven and what is not proven? | NOT_PROVEN | Proven vs not proven |
-| What may happen next and what is blocked? | NOT_PROVEN | Current project state |
+| What is the project and what problem does it solve? | PASS | One-minute summary |
+| Who uses it and what are the primary outcomes? | PASS | One-minute summary |
+| What are the major components and how do they relate? | PASS | Major components |
+| How does important data flow through the system? | PASS | Main data flow |
+| What are the main user/domain workflows? | PASS | Main user workflows |
+| What are the important lifecycle states and transitions? | PASS | Lifecycle and state |
+| Who/what is authoritative for important decisions? | PASS | Authority model |
+| What is mutable and what is immutable? | PASS | Mutable vs immutable |
+| How does failure/recovery behave? | PASS | Failure and recovery |
+| What is the current project state? | PASS | Current project state |
+| What is proven and what is not proven? | PASS | Proven vs not proven |
+| What may happen next and what is blocked? | PASS | Current project state |
 
 The compiler projects the declared human-comprehension status. It does not
 grant PASS automatically.

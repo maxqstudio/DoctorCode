@@ -4,17 +4,17 @@
 
 ## Evidence boundary
 
-M00 proves cross-platform Go bootstrap, deterministic repository/language inventory, toolchain capability registry, and governance wiring only. It does not prove semantic defect detection.
+M00 acceptance is limited to the portable Go bootstrap: deterministic repository/language inventory, host toolchain capability reporting, Linux/Windows/macOS execution, and Skill_Workflow governance. Semantic BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE detectors are explicitly outside M00.
 
 Final tested source: external final acceptance evidence.
 Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M00-CROSS-PLATFORM | Tests, vet, build, scan smoke, and toolchain smoke pass on Linux, Windows, and macOS GitHub-hosted runners. | GitHub Actions CI matrix | NOT_PROVEN |
-| M00-LANGUAGE-REGISTRY | Registry recognizes representative multi-language files deterministically. | internal/language/registry_test.go | NOT_PROVEN |
-| M00-SCAN | Scanner ignores common dependency/generated directories and reports deterministic language counts. | internal/scanner/scanner_test.go | NOT_PROVEN |
-| M00-TOOLCHAINS | Toolchain registry covers representative languages without assuming availability. | internal/toolchain/toolchain_test.go | NOT_PROVEN |
+| M00-CROSS-PLATFORM | Tests, vet, build, scan smoke, and toolchain smoke pass on Linux, Windows, and macOS GitHub-hosted runners. | GitHub Actions CI run 36255433437 at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1 and subsequent CI lineage. | PASS |
+| M00-LANGUAGE-REGISTRY | Registry recognizes representative multi-language files deterministically. | internal/language/registry_test.go executed by GitHub Actions CI. | PASS |
+| M00-SCAN | Scanner ignores common dependency/generated directories and reports deterministic language counts. | internal/scanner/scanner_test.go plus scan smoke executed by GitHub Actions CI. | PASS |
+| M00-TOOLCHAINS | Toolchain registry covers representative languages without assuming availability. | internal/toolchain/toolchain_test.go plus toolchain smoke executed by GitHub Actions CI. | PASS |
 
 ## Test commands
 
@@ -31,7 +31,7 @@ Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff
 
 Sequence mode for this phase/session: DURING
 Sequence session contract: M00-BOOTSTRAP
-SEQUENCE_SYNC: NOT_PROVEN
+SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence
 
@@ -44,7 +44,7 @@ PROJECT_DOCS_SYNC: PASS
 
 ## Human comprehension evidence
 
-SYSTEM_OVERVIEW status: NOT_PROVEN
-HUMAN_COMPREHENSION_GATE: NOT_PROVEN
+SYSTEM_OVERVIEW status: PASS
+HUMAN_COMPREHENSION_GATE: PASS
 
 Generated documentation never upgrades NOT_RUN or NOT_PROVEN to PASS.
