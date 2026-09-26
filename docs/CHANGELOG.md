@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-26 — M01 detector foundation candidate
+
+Type: development
+
+- Added deterministic analyzer interface and stable finding ordering.
+- Added narrow Go rules for all five DoctorCode categories.
+- Added curated positive/negative corpus tests.
+- Added byte-bounded single-finding evidence packets with security source omission.
+- Kept safe_autofix disabled for every M01 finding.
+
 ## 2026-09-26 — M00 accepted baseline
 
 Type: acceptance

@@ -76,7 +76,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M01_DETECTOR_FOUNDATION
 
-Current status: IN_PROGRESS
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -114,9 +114,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run the deterministic Go detector and evidence-packet corpus tests on all three GitHub-hosted operating systems.
-- Synchronize M01 Project Truth documentation from structured specs.
-- Repair until exact-SHA M01 CI and strict governance pass.
+- Synchronize acceptance-candidate docs.
+- Run strict Skill_Workflow validators against the synchronized candidate.
+- Promote M01 only if strict governance passes without weakening validators.
 
 Blocked actions:
 - Auto-deleting or auto-fixing findings.
@@ -130,15 +130,18 @@ Known blockers:
 
 ### Proven
 
-- M00 portable baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
-- M00 CI and strict Skill_Workflow governance passed on Linux, Windows, and macOS.
+- M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
+- M01 source candidate 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed CI run 36256636261 on Linux, Windows, and macOS.
+- M01 curated corpus exercises BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE rules.
+- M01 security evidence redacts literal values and bounded packets omit security source excerpts.
+- All M01 findings explicitly disable automatic fixing/deletion.
 
 ### Not proven
 
-- M01 detector implementation has not yet passed exact-SHA CI and strict governance.
-- M01 Go rules are intentionally narrow and do not establish general detector precision.
+- Final M01 provenance/reference/structural/cross-document gates are pending strict validation on synchronized docs.
+- The curated corpus is not evidence of general real-world precision.
 - Semantic support for non-Go languages is not implemented.
-- Safe automatic deletion remains unsupported.
+- Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion.
 
 ## Important limitations
 

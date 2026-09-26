@@ -17,31 +17,31 @@
   "human_comprehension_status": "PASS",
   "requirements": [
     {
-      "evidence": "internal/engine plus all-OS audit smoke — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
+      "evidence": "internal/engine plus all-OS audit smoke \u2014 GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
       "id": "M01-ENGINE",
       "requirement": "Detector engine executes registered language analyzers deterministically and sorts findings stably.",
       "status": "PASS"
     },
     {
-      "evidence": "internal/analyzers/golang corpus tests — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
+      "evidence": "internal/analyzers/golang corpus tests \u2014 GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
       "id": "M01-FIVE-GO-RULES",
       "requirement": "Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.",
       "status": "PASS"
     },
     {
-      "evidence": "internal/analyzers/golang/analyzer_test.go — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
+      "evidence": "internal/analyzers/golang/analyzer_test.go \u2014 GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
       "id": "M01-DEADCODE-SAFETY",
       "requirement": "Dead-code rule fails closed for visible Go linkage escape hatches and counts test references.",
       "status": "PASS"
     },
     {
-      "evidence": "internal/evidence/packet_test.go — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
+      "evidence": "internal/evidence/packet_test.go \u2014 GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
       "id": "M01-EVIDENCE-BUDGET",
       "requirement": "Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings.",
       "status": "PASS"
     },
     {
-      "evidence": "analyzer tests — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
+      "evidence": "analyzer tests \u2014 GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest.",
       "id": "M01-NO-AUTOFIX",
       "requirement": "All M01 findings set safe_autofix=false.",
       "status": "PASS"

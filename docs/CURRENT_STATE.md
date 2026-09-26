@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M01_DETECTOR_FOUNDATION
-Status: IN_PROGRESS
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -20,7 +20,7 @@ Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
-Runtime status: NOT_PROVEN
+Runtime status: PASS
 
 ## Documentation governance
 Documentation root: docs/
@@ -37,14 +37,17 @@ Current sequence session: M01-DETECTOR-FOUNDATION
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M00 portable baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
-- M00 CI and strict Skill_Workflow governance passed on Linux, Windows, and macOS.
+- M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
+- M01 source candidate 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed CI run 36256636261 on Linux, Windows, and macOS.
+- M01 curated corpus exercises BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE rules.
+- M01 security evidence redacts literal values and bounded packets omit security source excerpts.
+- All M01 findings explicitly disable automatic fixing/deletion.
 
 ## Not proven
-- M01 detector implementation has not yet passed exact-SHA CI and strict governance.
-- M01 Go rules are intentionally narrow and do not establish general detector precision.
+- Final M01 provenance/reference/structural/cross-document gates are pending strict validation on synchronized docs.
+- The curated corpus is not evidence of general real-world precision.
 - Semantic support for non-Go languages is not implemented.
-- Safe automatic deletion remains unsupported.
+- Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion.
 
 ## Known blockers
 - None declared.
@@ -53,9 +56,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Run the deterministic Go detector and evidence-packet corpus tests on all three GitHub-hosted operating systems.
-- Synchronize M01 Project Truth documentation from structured specs.
-- Repair until exact-SHA M01 CI and strict governance pass.
+- Synchronize acceptance-candidate docs.
+- Run strict Skill_Workflow validators against the synchronized candidate.
+- Promote M01 only if strict governance passes without weakening validators.
 
 ## Explicitly blocked
 - Auto-deleting or auto-fixing findings.

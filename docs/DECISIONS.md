@@ -25,3 +25,19 @@ Status: ACCEPTED
 Do not infer a Go call graph from the current generic Skill_Workflow sequence extractor.
 
 Rationale: Current generic extraction covers Python AST and JS/TS HTTP structure, not Go symbol call graphs.
+
+## ADR-M01-001 — Byte-bounded evidence packets
+
+Status: ACCEPTED
+
+Use a deterministic byte cap for M01 evidence packets rather than claiming tokenizer-independent exact token counts.
+
+Rationale: Tokenization differs by model; a byte cap is deterministic and still constrains context size for small LLMs.
+
+## ADR-M01-002 — No automatic M01 mutation
+
+Status: ACCEPTED
+
+Every M01 finding sets safe_autofix=false.
+
+Rationale: The first semantic rules need evidence and verification maturity before DoctorCode is allowed to mutate source.
