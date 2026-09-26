@@ -4,18 +4,18 @@
 
 ## Evidence boundary
 
-M05 proves cross-platform compatibility against four exact-SHA public Go repository snapshots plus selected known-live negative assertions. Candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 and Real World Go Validation run 36279765083 on Linux, Windows, and macOS. The repositories are not exhaustively labeled, so this milestone does not establish real-world precision, recall, or defect-free status.
+M05 acceptance proves cross-platform compatibility against four exact-SHA public Go repository snapshots plus selected known-live negative assertions. Exact synchronized candidate 193910d73723149e191eb9f7529d379db630a5a3 passed strict governance run 36279964523, core CI run 36279964419, and Real World Go Validation run 36279964402 on Linux, Windows, and macOS. The four snapshots each produced zero findings on this candidate; that is compatibility telemetry only and does not establish real-world precision, recall, or defect-free status.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M05-PINNED-SOURCES | Every public repository used by M05 is checked out at an exact tracked commit SHA and the detached checkout SHA is verified before analysis. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and Real World Go Validation run 36279765083. | PASS |
-| M05-THREE-OS-REALWORLD | Pinned public repository validation executes and passes on Linux, Windows, and macOS. | Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739: all three matrix jobs PASS. | PASS |
-| M05-KNOWN-LIVE-ANCHORS | Selected known-live unexported functions from the pinned repositories are not reported as DEADCODE. | preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS. | PASS |
-| M05-FINDING-BOUNDARY | Any finding produced while analyzing pinned public repositories remains repository-relative, uses a known category/confidence, and never enables safe_autofix. | internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS. | PASS |
-| M05-CLAIM-BOUNDARY | Public repository execution is described as compatibility evidence only; unlabeled zero-finding snapshots are not promoted to precision, recall, or defect-free claims. | internal/realworld test log text and M05 acceptance/state contracts. | PASS |
+| M05-PINNED-SOURCES | Every public repository used by M05 is checked out at an exact tracked commit SHA and the detached checkout SHA is verified before analysis. | internal/realworld/sources.json and realworld_test.go; exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402 with detached exact-SHA verification. | PASS |
+| M05-THREE-OS-REALWORLD | Pinned public repository validation executes and passes on Linux, Windows, and macOS. | Exact candidate 193910d73723149e191eb9f7529d379db630a5a3, Real World Go Validation run 36279964402: Linux, Windows, and macOS all PASS. | PASS |
+| M05-KNOWN-LIVE-ANCHORS | Selected known-live unexported functions from the pinned repositories are not reported as DEADCODE. | preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
+| M05-FINDING-BOUNDARY | Any finding produced while analyzing pinned public repositories remains repository-relative, uses a known category/confidence, and never enables safe_autofix. | internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
+| M05-CLAIM-BOUNDARY | Public repository execution is described as compatibility evidence only; unlabeled zero-finding snapshots are not promoted to precision, recall, or defect-free claims. | internal/realworld test log text and M05 acceptance/state contracts. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
 
 ## Test commands
 

@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | NOT_PROVEN | |
-| REFERENCE_SYNC | NOT_PROVEN | |
-| STRUCTURAL_SYNC | NOT_PROVEN | |
+| PROVENANCE_SYNC | PASS | |
+| REFERENCE_SYNC | PASS | |
+| STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
+| CROSS_DOCUMENT_CONSISTENCY | PASS | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | NOT_PROVEN | |
+| PROJECT_STATE_SYNC | PASS | |
 
 ## Critical claim traceability
 
@@ -51,9 +51,9 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M04-REPOSITORY-METRICS | On corrected source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d, the 12-case M04 repository-shaped corpus reports 7 TP, 0 FP, and 0 FN while M02 and M03 remain passing. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04-repository-shaped.json; internal/benchmark/benchmark.go::Evaluate | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63 | PASS |
 | TRUTH-M04-NO-DETECTOR-CHANGE | M04 adds repository-shaped evaluation evidence without modifying Go detector implementation code. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04-repository-shaped.json; .github/workflows/ci.yml | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63 | PASS |
 | TRUTH-M04-ORACLE-CORRECTION | The first M04 run rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; the fixture was corrected without weakening detector rules. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424; GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63 | PASS |
-| TRUTH-M05-PINNED-PUBLIC-SOURCES | M05 validates exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; .github/workflows/real-world-go.yml | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 | PASS |
-| TRUTH-M05-KNOWN-LIVE-NEGATIVES | Selected known-live unexported functions preExecHook, nextID, cW, and httpCode are not reported as DEADCODE on the pinned public snapshots. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; internal/realworld/realworld_test.go | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279765083 | PASS |
-| TRUTH-M05-COMPATIBILITY-ONLY | M05 public-repository results are compatibility evidence only and are not used to claim real-world precision, recall, or absence of defects. | PROJECT_TRUTH_SYNC.md | internal/realworld/realworld_test.go; .workflow/acceptance.json | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279765083 | PASS |
+| TRUTH-M05-PINNED-PUBLIC-SOURCES | M05 validates exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; .github/workflows/real-world-go.yml | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
+| TRUTH-M05-KNOWN-LIVE-NEGATIVES | Selected known-live unexported functions preExecHook, nextID, cW, and httpCode are not reported as DEADCODE on the pinned public snapshots. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; internal/realworld/realworld_test.go | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
+| TRUTH-M05-COMPATIBILITY-ONLY | M05 public-repository results are compatibility evidence only and are not used to claim real-world precision, recall, or absence of defects. | PROJECT_TRUTH_SYNC.md | internal/realworld/realworld_test.go; .workflow/acceptance.json | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
 
 ## Claim relations
 

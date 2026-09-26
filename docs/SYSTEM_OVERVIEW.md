@@ -109,7 +109,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M05_PUBLIC_REPO_VALIDATION
 
-Current status: ACCEPTANCE_CANDIDATE
+Current status: M05_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -151,13 +151,13 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M05 Project Truth documentation and sequence evidence.
-- Run strict Skill_Workflow validation against the synchronized M05 snapshot.
-- Promote M05 only if exact-SHA core CI, public-repository validation, and strict governance all pass.
+- Freeze final M05 after temporary doc-sync removal and exact-SHA revalidation.
+- For M06, add an independently labeled real-world-derived dataset or a second semantic language adapter without weakening Go evidence boundaries.
+- Keep public compatibility telemetry separate from labeled precision metrics.
 
 Blocked actions:
-- Publishing real-world precision or recall percentages from the unlabeled public repositories.
-- Treating zero findings as proof that a repository is defect-free.
+- Publishing 100 percent real-world precision or recall.
+- Treating zero findings on the four public repositories as proof they contain no defects.
 - Upgrading DEADCODE HIGH to PROVEN_UNUSED from M05 evidence.
 - Auto-deleting or auto-fixing findings.
 
@@ -169,18 +169,18 @@ Known blockers:
 ### Proven
 
 - M04 accepted baseline is 82f9ea6499e5a70930da331fd02f778bca54d660.
-- M05 pins four public Go repositories by exact commit and validates checkout provenance before analysis.
-- M05 source candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 on Linux, Windows, and macOS.
-- The same candidate passed dedicated Real World Go Validation run 36279765083 on Linux, Windows, and macOS.
-- Pinned snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify were parsed and analyzed successfully on all three operating systems.
-- Selected known-live unexported anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
-- All real-world findings, if any, remain non-autofix and repository-relative.
+- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed strict Skill_Workflow governance run 36279964523.
+- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed core CI run 36279964419 on Linux, Windows, and macOS.
+- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402 on Linux, Windows, and macOS.
+- Exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify all parsed and analyzed successfully.
+- Selected known-live anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
+- Each pinned public snapshot produced zero findings on the accepted candidate; this is compatibility telemetry only.
 
 ### Not proven
 
-- The four public repository snapshots are not exhaustively labeled, so M05 does not establish their false-positive or false-negative rates.
-- A zero-finding result on a public snapshot is compatibility evidence, not proof that no defects exist or that detector recall is high.
+- The public repository snapshots are not exhaustively labeled, so zero findings do not establish correctness, high recall, or absence of defects.
 - Four repositories are not representative of the full Go ecosystem.
+- The public repository validation does not measure detector precision or false-negative rate.
 - Reference counting remains conservative visible-tree analysis rather than compiler/type-system whole-program reachability.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 

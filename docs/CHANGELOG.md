@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M05 accepted baseline
+
+Type: acceptance
+
+- Accepted exact-SHA public Go repository validation after strict governance, core CI, and dedicated Linux/Windows/macOS external-source validation.
+- Accepted provenance checks for cobra, bubbles, chi, and testify.
+- Accepted selected known-live DEADCODE negative assertions while keeping external results outside precision/recall claims.
+- Recorded zero findings on the four pinned snapshots as compatibility telemetry only.
+
 ## 2026-09-27 — M05 pinned public repository validation candidate
 
 Type: development
