@@ -31,7 +31,7 @@
       "file": "internal/analyzers/golang/analyzer_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 144
+      "lines": 168
     },
     {
       "directory": "internal/analyzers/golang",
@@ -136,13 +136,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69",
+  "source_digest": "99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a",
   "source_summary": {
     "files": 17,
     "languages": {
       "Go": 17
     },
-    "lines": 1584,
+    "lines": 1608,
     "test_files": 0
   },
   "tests": []

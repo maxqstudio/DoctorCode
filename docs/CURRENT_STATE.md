@@ -16,7 +16,7 @@ Branch: work/m01-detector-foundation
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: fa1da95814be480436c1430c80d154daaadc24e0
 Current candidate SHA: external final acceptance evidence
-Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
+Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md

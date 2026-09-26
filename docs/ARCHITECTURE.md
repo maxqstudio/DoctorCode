@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
+Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
 
 ## Components
 
@@ -32,7 +32,7 @@ Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f
 ## Observed implementation inventory
 
 Source files: 17
-Source lines: 1584
+Source lines: 1608
 Languages: Go=17
 
 Structural facts come from the code extractor. Component meaning comes from

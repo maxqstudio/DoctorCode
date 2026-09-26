@@ -7,7 +7,7 @@
 M01 will prove only the detector pipeline, five narrow Go rules, curated corpus behavior, bounded evidence packet generation, and three-OS execution. It will not prove general precision across real-world repositories or semantic support for other languages.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
+Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|

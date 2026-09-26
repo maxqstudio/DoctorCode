@@ -3,14 +3,14 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
+Source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
 | cmd/doctorcode/main.go | Go | 239 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 562 | internal/analyzers/golang | NO |
-| internal/analyzers/golang/analyzer_test.go | Go | 144 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer_test.go | Go | 168 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
