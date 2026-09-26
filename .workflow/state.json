@@ -6,23 +6,24 @@
   "last_accepted_sha": "",
   "last_accepted_branch": "",
   "proven": [
-    "Repository exists and initial README is tracked."
+    "Repository exists and initial README is tracked.",
+    "Core CI passed on Linux, Windows, and macOS at 1b58525ad4e83dcaa2e00548d1d8d845b08cddcb."
   ],
   "not_proven": [
-    "Cross-platform CI matrix.",
-    "Project Truth Compiler final acceptance.",
-    "Semantic detector support for any language.",
-    "BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE accuracy."
+    "Final M00 SHA has not yet completed all CI and governance gates.",
+    "Go semantic sequence extraction is not supported by current generic Skill_Workflow extractor.",
+    "Semantic detector support for any language is not implemented.",
+    "BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE accuracy is not benchmarked."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Run GitHub Actions on M00 bootstrap branch.",
-    "Repair until bootstrap workflows pass.",
-    "Generate canonical docs from current structured specs."
+    "Run exact-HEAD multi-OS CI and governance preview.",
+    "Commit deterministic generated docs after governance preview succeeds.",
+    "Rerun exact-HEAD acceptance with tracked docs."
   ],
   "blocked_actions": [
     "Claiming production-ready detector coverage.",
     "Publishing safe-delete guarantees.",
-    "Stable release before detector benchmarks."
+    "Starting stable release before detector benchmarks."
   ]
 }

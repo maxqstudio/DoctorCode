@@ -4,7 +4,7 @@
   "phase": "M00_BOOTSTRAP",
   "mode": "DURING",
   "scope": "CURRENT",
-  "critical": true,
+  "critical": false,
   "status": "IN_PROGRESS",
   "implementation_base_sha": "",
   "plan": {
@@ -19,9 +19,7 @@
     "graph": "docs/sequence/generated/M00-BOOTSTRAP.actual.json",
     "diagram": "docs/sequence/generated/M00-BOOTSTRAP.actual.mmd",
     "source_digest": "",
-    "entries": [
-      "cmd/doctorcode/main.go::main"
-    ]
+    "entries": []
   },
   "test_traceability_required": true,
   "tests": [

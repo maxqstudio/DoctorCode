@@ -10,30 +10,48 @@
     "internal/scanner/scanner.go",
     "internal/language/registry.go"
   ],
+  "states": [
+    "REQUESTED",
+    "WALKING",
+    "CLASSIFYING",
+    "REPORTED"
+  ],
   "transitions": [
     {
       "from": "REQUESTED",
       "to": "WALKING",
-      "action": "Normalize root and walk non-ignored entries."
+      "action": "Normalize root and walk non-ignored entries.",
+      "side_effects": []
     },
     {
       "from": "WALKING",
       "to": "CLASSIFYING",
-      "action": "Classify recognized source files."
+      "action": "Classify recognized source files.",
+      "side_effects": []
     },
     {
       "from": "CLASSIFYING",
       "to": "REPORTED",
-      "action": "Sort language names and emit text or JSON."
+      "action": "Sort language names and emit text or JSON.",
+      "side_effects": []
     }
+  ],
+  "invariants": [
+    "The scanner must not claim semantic analysis from extension-based language recognition."
   ],
   "tests": [
     "internal/scanner/scanner_test.go",
     "internal/language/registry_test.go"
   ],
   "sequence_session": "M00-BOOTSTRAP",
-  "critical": true,
+  "critical": false,
   "failure_behavior": [
     "Filesystem walk errors fail closed instead of claiming complete coverage."
+  ],
+  "restart_behavior": [
+    "A scan is stateless and may be rerun from the repository root."
+  ],
+  "rollback_behavior": [
+    "No persistent repository mutation occurs during scan."
   ]
 }

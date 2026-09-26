@@ -20,7 +20,7 @@ jobs:
           python-version: "3.13"
       - name: Generate current sequence evidence
         run: |
-          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M00-BOOTSTRAP.actual.json --output-mermaid docs/sequence/generated/M00-BOOTSTRAP.actual.mmd --entry cmd/doctorcode/main.go::main
+          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M00-BOOTSTRAP.actual.json --output-mermaid docs/sequence/generated/M00-BOOTSTRAP.actual.mmd
       - name: Validate sequence
         run: python .workflow/tools/validate_sequence_sessions.py
       - name: Compile project truth
@@ -29,6 +29,8 @@ jobs:
         run: python .workflow/tools/validate_project_docs.py
       - name: Validate doc quality
         run: python .workflow/tools/validate_doc_quality.py
+      - name: Validate human comprehension structure
+        run: python .workflow/tools/validate_human_comprehension.py
       - name: Upload governance preview
         uses: actions/upload-artifact@v4
         with:

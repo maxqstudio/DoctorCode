@@ -1,11 +1,17 @@
 {
   "schema_version": 1,
-  "known_defects": [
+  "defects": [
     {
       "id": "KNOWN-M00-001",
-      "summary": "Semantic defect detectors are not implemented in M00.",
       "status": "OPEN",
-      "impact": "No five-domain detector accuracy claim is valid yet."
+      "summary": "Semantic defect detectors are not implemented in M00.",
+      "evidence": "No detector packages or accuracy corpus are accepted yet."
+    },
+    {
+      "id": "KNOWN-M00-002",
+      "status": "OPEN",
+      "summary": "Current vendored Skill_Workflow sequence extractor does not resolve Go function call graphs.",
+      "evidence": "Governance run 36254412921 failed ENTRY_NOT_RESOLVED for cmd/doctorcode/main.go::main; M00 uses non-critical structural sequence evidence instead of fabricating Go edges."
     }
   ]
 }

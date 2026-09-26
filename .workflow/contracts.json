@@ -3,27 +3,68 @@
   "api_contracts": [],
   "data_contracts": [
     {
-      "id": "SCAN_RESULT_V1",
-      "purpose": "Machine-readable repository inventory from doctorcode scan --json",
-      "owner": "internal/model/model.go::ScanResult"
+      "name": "ScanResult V1",
+      "source_of_truth": "internal/model/model.go::ScanResult",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode scan"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "Output is deterministic for the same visible repository tree and ignore policy."
+      ]
     },
     {
-      "id": "TOOLCHAIN_STATUS_V1",
-      "purpose": "Machine-readable compiler/runtime capability from doctorcode toolchains --json",
-      "owner": "internal/model/model.go::ToolchainStatus"
+      "name": "ToolchainStatus V1",
+      "source_of_truth": "internal/model/model.go::ToolchainStatus",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode toolchains"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "Unavailable tools are reported as unavailable; absence is not converted to PASS."
+      ]
     },
     {
-      "id": "FINDING_V1",
-      "purpose": "Initial common shape for future compact findings",
-      "owner": "internal/model/model.go::Finding"
+      "name": "Finding V1",
+      "source_of_truth": "internal/model/model.go::Finding",
+      "mutability": "future detector output",
+      "legal_writes": [
+        "future detector engine"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "Finding category is one of BLOAT, SECURITY, SIMPLIFY, LOGIC, DEADCODE."
+      ]
     }
   ],
   "ui_surfaces": [],
   "runbook_steps": [
-    "go test ./...",
-    "go vet ./...",
-    "go build -trimpath ./cmd/doctorcode",
-    "go run ./cmd/doctorcode scan . --json",
-    "go run ./cmd/doctorcode toolchains . --json"
+    {
+      "name": "Unit tests",
+      "command": "go test ./...",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Static vet",
+      "command": "go vet ./...",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Build CLI",
+      "command": "go build -trimpath ./cmd/doctorcode",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Scan smoke",
+      "command": "go run ./cmd/doctorcode scan . --json",
+      "expected": "valid JSON and exit code 0"
+    },
+    {
+      "name": "Toolchain smoke",
+      "command": "go run ./cmd/doctorcode toolchains . --json",
+      "expected": "valid JSON and exit code 0"
+    }
   ]
 }
