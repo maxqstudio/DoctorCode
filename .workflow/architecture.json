@@ -61,10 +61,12 @@
     {
       "id": "go_analyzer",
       "name": "Go Built-in Analyzer",
-      "purpose": "Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories.",
+      "purpose": "Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior.",
       "owns": [
         "Go AST rules",
-        "Go dead-code lexical evidence"
+        "conservative package-function reference counting",
+        "pure-condition canonicalization",
+        "Go dead-code evidence boundaries"
       ],
       "depends_on": [
         "Go parser/AST standard library"
@@ -86,13 +88,14 @@
     {
       "id": "benchmark_harness",
       "name": "Precision Benchmark Harness",
-      "purpose": "Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
+      "purpose": "Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
       "owns": [
         "benchmark manifest validation",
         "case-root containment",
         "label matching",
         "TP/FP/FN accounting",
-        "threshold gate"
+        "baseline regression gate",
+        "adversarial regression gate"
       ],
       "depends_on": [
         "Go analyzer"
@@ -134,6 +137,11 @@
       "from": "precision benchmark harness",
       "to": "GitHub Actions",
       "meaning": "Threshold result is a blocking regression gate on all three supported CI operating systems."
+    },
+    {
+      "from": "adversarial labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases."
     }
   ],
   "external_boundaries": [

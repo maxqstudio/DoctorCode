@@ -188,6 +188,77 @@
         "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M03-GATE-CAUGHT-REGRESSION",
+      "claim": "The initial M03 adversarial corpus exposed four false negatives in the M02 detector behavior before repair, with no false positives.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m03-adversarial.json",
+        "internal/benchmark/benchmark.go::Evaluate"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M03-REPAIRED-METRICS",
+      "claim": "On repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea, the 11-case M03 adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 baseline corpus remains passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::lexicalReferenceCounts",
+        "internal/analyzers/golang/analyzer.go::canonicalCondition",
+        "internal/benchmark/testdata/m03-adversarial.json"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258809398"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M03-REFERENCE-COLLISION",
+      "claim": "M03 reference counting excludes same-named local identifiers, selector names, and function or method declaration names from unrelated package-level function reference counts.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::lexicalReferenceCounts"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258809398"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M03-PAREN-CANONICAL",
+      "claim": "M03 pure-condition comparison ignores redundant parentheses while preserving AST operator structure.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::canonicalCondition"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258809398"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "flow_id": "FLOW-BENCHMARK",
   "title": "Labeled precision regression benchmark",
-  "purpose": "Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.",
+  "purpose": "Measure detector behavior against baseline and adversarial labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.",
   "authority": "internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json",
   "entry_condition": "doctorcode benchmark is invoked with an accessible validated manifest.",
   "source_owners": [
@@ -55,13 +55,14 @@
     "Benchmark metrics are scoped to the supplied labeled corpus and are not general product precision claims.",
     "False positives and false negatives both reduce benchmark evidence and block the strict 1.0 corpus threshold.",
     "Case roots may not resolve outside the manifest directory.",
-    "Benchmark execution does not mutate analyzed source."
+    "Benchmark execution does not mutate analyzed source.",
+    "Accepted baseline corpus must remain passing when adversarial detector repairs are added."
   ],
   "tests": [
     "internal/benchmark/benchmark_test.go",
     "internal/analyzers/golang/analyzer_test.go"
   ],
-  "sequence_session": "M02-PRECISION-BENCHMARK",
+  "sequence_session": "M03-ADVERSARIAL-PRECISION",
   "critical": false,
   "failure_behavior": [
     "Invalid manifests and escaping case roots fail closed.",

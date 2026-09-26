@@ -110,6 +110,11 @@
       "expected": "passed=true; current nine-case corpus reports 5 TP, 0 FP, 0 FN"
     },
     {
+      "name": "M03 adversarial benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+      "expected": "passed=true; current 11-case adversarial corpus reports 6 TP, 0 FP, 0 FN"
+    },
+    {
       "name": "Static vet",
       "command": "go vet ./...",
       "expected": "exit code 0"

@@ -30,7 +30,7 @@ jobs:
       - name: Validate handoff
         run: python .workflow/tools/validate_handoff.py
       - name: Validate cross-document consistency
-        run: python .workflow/tools/validate_cross_document_consistency.py --base b9820a7f430723b9d46246a82a69372668831785 --require-base
+        run: python .workflow/tools/validate_cross_document_consistency.py --base 76903ac9384412274cef4393fe6ba970bab6fec7 --require-base
       - name: Validate project truth
         run: python .workflow/tools/validate_project_truth.py
       - name: Validate sequence sessions

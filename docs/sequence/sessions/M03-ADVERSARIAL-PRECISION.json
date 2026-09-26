@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "session_id": "M02-PRECISION-BENCHMARK",
-  "phase": "M02_PRECISION_BENCHMARK",
+  "session_id": "M03-ADVERSARIAL-PRECISION",
+  "phase": "M03_ADVERSARIAL_PRECISION",
   "mode": "DURING",
-  "scope": "HISTORICAL",
+  "scope": "CURRENT",
   "critical": false,
-  "status": "ACCEPTED",
-  "implementation_base_sha": "b9820a7f430723b9d46246a82a69372668831785",
+  "status": "ACCEPTANCE_CANDIDATE",
+  "implementation_base_sha": "76903ac9384412274cef4393fe6ba970bab6fec7",
   "plan": {
     "required": false,
     "contract": "",
@@ -16,8 +16,8 @@
     "diagram": ""
   },
   "actual": {
-    "graph": "docs/sequence/generated/M02-PRECISION-BENCHMARK.actual.json",
-    "diagram": "docs/sequence/generated/M02-PRECISION-BENCHMARK.actual.mmd",
+    "graph": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.json",
+    "diagram": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.mmd",
     "source_digest": "",
     "entries": []
   },

@@ -56,6 +56,20 @@
       "status": "ACCEPTED",
       "decision": "Require case roots to resolve inside the manifest directory and skip Go source symlink entries during repository analysis.",
       "rationale": "Benchmark and audit input paths are untrusted filesystem boundaries; following escaping symlinks could analyze or expose files outside the selected scope."
+    },
+    {
+      "id": "ADR-M03-001",
+      "title": "Adversarial evidence before claim expansion",
+      "status": "ACCEPTED",
+      "decision": "Add adversarial positive and negative controls to existing detector rules before raising confidence or expanding product claims.",
+      "rationale": "The first adversarial suite found four false negatives that the original happy-path corpus did not expose."
+    },
+    {
+      "id": "ADR-M03-002",
+      "title": "Preserve baseline while repairing adversarial misses",
+      "status": "ACCEPTED",
+      "decision": "Every M03 repair must pass both the accepted M02 baseline corpus and the M03 adversarial corpus on all supported CI operating systems.",
+      "rationale": "A detector repair is not accepted if it fixes the new cases by regressing previously accepted behavior."
     }
   ]
 }
