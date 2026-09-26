@@ -1,34 +1,36 @@
 {
   "schema_version": 1,
   "phase": "M03_ADVERSARIAL_PRECISION",
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "M03_ACCEPTED",
   "working_branch": "work/m03-adversarial-precision",
   "last_accepted_sha": "76903ac9384412274cef4393fe6ba970bab6fec7",
   "last_accepted_branch": "work/m02-precision-benchmark",
   "proven": [
     "M02 accepted baseline is 76903ac9384412274cef4393fe6ba970bab6fec7.",
-    "The first M03 adversarial run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e correctly failed with 4 false negatives and 0 false positives, exposing three reference-collision misses and one parenthesized-condition miss.",
-    "Repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea passed CI run 36258809398 on Linux, Windows, and macOS.",
-    "The 11-case M03 adversarial corpus reported 6 true positives, 0 false positives, and 0 false negatives on the repaired source.",
-    "The original nine-case M02 corpus remained PASS after the M03 detector repair."
+    "The initial M03 adversarial gate failed at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e with 4 false negatives and 0 false positives, proving the new oracle caught behavior missed by M02.",
+    "M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed strict Skill_Workflow governance run 36259014539.",
+    "M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 on ubuntu-latest, windows-latest, and macos-latest.",
+    "The 11-case adversarial corpus reports 6 true positives, 0 false positives, and 0 false negatives on the accepted candidate.",
+    "The original M02 nine-case corpus remains passing after the M03 repairs.",
+    "Reference-collision and redundant-parenthesis false negatives are covered by tracked regression fixtures."
   ],
   "not_proven": [
     "The combined curated corpora do not establish general real-world precision or recall.",
-    "Reference counting remains conservative static analysis rather than a complete Go compiler call graph.",
+    "Reference counting remains conservative static analysis rather than a complete compiler/type-system call graph.",
     "The corpora do not cover reflection, generated-code conventions, every build-tag combination, or all Go ecosystem patterns.",
     "Semantic support for non-Go languages is not implemented.",
     "Automatic fixing and deletion remain unsupported."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize M03 generated Project Truth documentation.",
-    "Run strict Skill_Workflow validation against the synchronized M03 snapshot.",
-    "Promote M03 only if exact-SHA three-OS CI and strict governance both pass."
+    "Freeze final M03 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.",
+    "For M04, increase evidence diversity before raising detector confidence or adding destructive actions.",
+    "Prefer a separate repository-shaped corpus with multi-file and multi-package cases over simply adding more single-file examples."
   ],
   "blocked_actions": [
     "Advertising corpus precision as general real-world product precision.",
     "Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.",
     "Auto-deleting or auto-fixing findings.",
-    "Adding another language before the current Go evidence boundary is documented and accepted."
+    "Adding destructive behavior before repository-shaped validation exists."
   ]
 }

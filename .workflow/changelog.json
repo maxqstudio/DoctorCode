@@ -3,6 +3,17 @@
   "entries": [
     {
       "date": "2026-09-27",
+      "title": "M03 accepted baseline",
+      "type": "acceptance",
+      "changes": [
+        "Accepted the 11-case adversarial Go benchmark after it first exposed four false negatives and the repairs closed them.",
+        "Accepted package-function reference-counting repair for local shadowing, selector collisions, and method declarations.",
+        "Accepted pure-condition canonicalization that ignores redundant parentheses while preserving operator structure.",
+        "Preserved the M02 baseline benchmark and passed strict governance plus Linux, Windows, and macOS CI."
+      ]
+    },
+    {
+      "date": "2026-09-27",
       "title": "M03 adversarial precision candidate",
       "type": "development",
       "changes": [
