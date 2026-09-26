@@ -1,75 +1,63 @@
 {
-  "schema_version": 1,
   "evidence_boundary": "M03 proves an additional 11-case adversarial Go regression corpus and two targeted detector repairs. The pre-repair gate exposed 4 false negatives; repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea produced 6 TP, 0 FP, and 0 FN on the adversarial corpus while preserving the M02 nine-case benchmark. These are curated-corpus results, not general real-world precision or recall.",
-  "runtime_status": "PASS",
-  "human_comprehension_status": "PASS",
   "human_comprehension_questions": {
-    "What is the project and what problem does it solve?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
     "How does failure/recovery behave?": "PASS",
-    "What is the current project state?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
     "What is proven and what is not proven?": "PASS",
-    "What may happen next and what is blocked?": "PASS"
+    "What is the current project state?": "PASS",
+    "What is the project and what problem does it solve?": "PASS",
+    "What may happen next and what is blocked?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS"
   },
-  "sequence_mode": "DURING",
-  "sequence_session": "M03-ADVERSARIAL-PRECISION",
-  "sequence_sync_status": "PASS",
-  "truth_gates": {
-    "SOURCE_TESTS": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "PROVENANCE_SYNC": "NOT_PROVEN",
-    "REFERENCE_SYNC": "NOT_PROVEN",
-    "STRUCTURAL_SYNC": "NOT_PROVEN",
-    "SEMANTIC_SYNC": "PASS",
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "DOC_READABILITY": "PASS"
-  },
+  "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "CI run 36258809398 at cd4ddcadae7b98efc507baebd9239bdec636fbea passed both M02 and M03 benchmark commands on Linux, Windows, and macOS.",
       "id": "M03-ADVERSARIAL-GATE",
       "requirement": "An independent 11-case Go adversarial corpus is a blocking CI gate alongside the accepted M02 baseline corpus.",
-      "evidence": "CI run 36258809398 at cd4ddcadae7b98efc507baebd9239bdec636fbea passed both M02 and M03 benchmark commands on Linux, Windows, and macOS.",
       "status": "PASS"
     },
     {
+      "evidence": "Pre-repair CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, gate FAIL.",
       "id": "M03-GATE-DETECTS-REGRESSION",
       "requirement": "The adversarial oracle must fail when current detector behavior misses labeled findings rather than merely reporting coverage.",
-      "evidence": "Pre-repair CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, gate FAIL.",
       "status": "PASS"
     },
     {
+      "evidence": "M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go.",
       "id": "M03-REFERENCE-COLLISIONS",
       "requirement": "Same-named local variables, method declarations, and selector names do not count as references to an unrelated package-level function candidate.",
-      "evidence": "M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go.",
       "status": "PASS"
     },
     {
+      "evidence": "M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation.",
       "id": "M03-CONDITION-CANONICALIZATION",
       "requirement": "Equivalent pure duplicate conditions remain comparable when one occurrence adds redundant parentheses.",
-      "evidence": "M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation.",
       "status": "PASS"
     },
     {
+      "evidence": "CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS.",
       "id": "M03-BASELINE-PRESERVATION",
       "requirement": "M03 precision repairs must not regress the accepted M02 nine-case benchmark.",
-      "evidence": "CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS.",
       "status": "PASS"
     }
   ],
+  "runtime_checks": [
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+    "go run ./cmd/doctorcode audit . --json --max-findings=10",
+    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
+  ],
+  "runtime_status": "PASS",
+  "schema_version": 1,
+  "sequence_mode": "DURING",
+  "sequence_session": "M03-ADVERSARIAL-PRECISION",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -77,10 +65,22 @@
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "runtime_checks": [
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
-    "go run ./cmd/doctorcode audit . --json --max-findings=10",
-    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
-  ]
+  "truth_gates": {
+    "BEHAVIORAL_SYNC": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
+    "DOC_SOURCE_TRACEABILITY": "PASS",
+    "DOC_TEST_TRACEABILITY": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "RUNTIME_E2E": "PASS",
+    "SEMANTIC_SYNC": "PASS",
+    "SOURCE_TESTS": "PASS",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "PASS"
+  }
 }

@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
+Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
 
 ## Components
 
@@ -13,9 +13,9 @@ Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a342
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
-| go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
+| go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| benchmark_harness | Precision Benchmark Harness | Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, threshold gate | Go analyzer |
+| benchmark_harness | Precision Benchmark Harness | Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate | Go analyzer |
 
 ## Data flow
 
@@ -26,6 +26,7 @@ Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a342
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
+- adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
 
 ## External boundaries
 
@@ -36,9 +37,9 @@ Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a342
 
 ## Observed implementation inventory
 
-Source files: 29
-Source lines: 2195
-Languages: Go=29
+Source files: 40
+Source lines: 2347
+Languages: Go=40
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

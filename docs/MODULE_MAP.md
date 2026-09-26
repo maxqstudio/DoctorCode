@@ -3,19 +3,19 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
+Source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
 | cmd/doctorcode/main.go | Go | 290 | cmd/doctorcode | NO |
-| internal/analyzers/golang/analyzer.go | Go | 565 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer.go | Go | 608 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 195 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
-| internal/benchmark/benchmark_test.go | Go | 122 | internal/benchmark | NO |
+| internal/benchmark/benchmark_test.go | Go | 141 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
 | internal/benchmark/testdata/cases/deadcode-bodyless/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-bodyless | NO |
 | internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-linkage-escape | NO |
@@ -26,6 +26,17 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/cases/negative-mixed/sample.go | Go | 18 | internal/benchmark/testdata/cases/negative-mixed | NO |
 | internal/benchmark/testdata/cases/security-positive/sample.go | Go | 3 | internal/benchmark/testdata/cases/security-positive | NO |
 | internal/benchmark/testdata/cases/simplify-positive/sample.go | Go | 9 | internal/benchmark/testdata/cases/simplify-positive | NO |
+| internal/benchmark/testdata/m03/bloat-shadow-local/sample.go | Go | 10 | internal/benchmark/testdata/m03/bloat-shadow-local | NO |
+| internal/benchmark/testdata/m03/bloat-two-references/sample.go | Go | 5 | internal/benchmark/testdata/m03/bloat-two-references | NO |
+| internal/benchmark/testdata/m03/deadcode-function-value-reference/sample.go | Go | 8 | internal/benchmark/testdata/m03/deadcode-function-value-reference | NO |
+| internal/benchmark/testdata/m03/deadcode-selector-collision/sample.go | Go | 11 | internal/benchmark/testdata/m03/deadcode-selector-collision | NO |
+| internal/benchmark/testdata/m03/deadcode-shadow-local/sample.go | Go | 8 | internal/benchmark/testdata/m03/deadcode-shadow-local | NO |
+| internal/benchmark/testdata/m03/logic-impure-duplicate/sample.go | Go | 12 | internal/benchmark/testdata/m03/logic-impure-duplicate | NO |
+| internal/benchmark/testdata/m03/logic-parenthesized-duplicate/sample.go | Go | 12 | internal/benchmark/testdata/m03/logic-parenthesized-duplicate | NO |
+| internal/benchmark/testdata/m03/security-placeholder/sample.go | Go | 3 | internal/benchmark/testdata/m03/security-placeholder | NO |
+| internal/benchmark/testdata/m03/security-raw-string/sample.go | Go | 3 | internal/benchmark/testdata/m03/security-raw-string | NO |
+| internal/benchmark/testdata/m03/simplify-inverted/sample.go | Go | 9 | internal/benchmark/testdata/m03/simplify-inverted | NO |
+| internal/benchmark/testdata/m03/simplify-same-result/sample.go | Go | 9 | internal/benchmark/testdata/m03/simplify-same-result | NO |
 | internal/detector/detector.go | Go | 12 | internal/detector | NO |
 | internal/engine/engine.go | Go | 87 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 104 | internal/evidence | NO |

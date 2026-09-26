@@ -4,36 +4,38 @@
 
 ## Evidence boundary
 
-M02 acceptance proves the labeled benchmark harness and the exact nine-case Go regression corpus only. On synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5, CI run 36258248707 reported 5 TP, 0 FP, and 0 FN and passed on Linux, Windows, and macOS; strict governance run 36258248730 also passed. These numbers are not a general real-world precision or recall claim.
+M03 proves an additional 11-case adversarial Go regression corpus and two targeted detector repairs. The pre-repair gate exposed 4 false negatives; repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea produced 6 TP, 0 FP, and 0 FN on the adversarial corpus while preserving the M02 nine-case benchmark. These are curated-corpus results, not general real-world precision or recall.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
+Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M02-BENCHMARK-HARNESS | Benchmark harness computes deterministic TP, FP, FN, precision, and recall per rule and in aggregate, and fails when expected/actual labels disagree or configured thresholds are missed. | internal/benchmark/benchmark_test.go plus exact synchronized candidate CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5. | PASS |
-| M02-CURATED-GATE | The nine-case labeled Go corpus is a blocking CI regression gate on Linux, Windows, and macOS. | Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5, CI run 36258248707: nine cases, 5 TP, 0 FP, 0 FN, aggregate precision=1 and recall=1 on this corpus only; Linux, Windows, and macOS all PASS. | PASS |
-| M02-PATH-CONTAINMENT | Benchmark case roots cannot escape the manifest directory through parent traversal or symlink resolution. | internal/benchmark/benchmark_test.go::TestEvaluateRejectsEscapingCaseRoot and secureCaseRoot. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
-| M02-SOURCE-SYMLINK | Go repository analysis does not follow .go symlink entries outside the selected repository tree. | internal/analyzers/golang/analyzer_test.go::TestAnalyzerDoesNotFollowGoFileSymlink plus three-OS compile/test CI; symlink creation regression executes on supported Unix runners. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
-| M02-NO-CLAIM-INFLATION | CLI and project truth describe benchmark metrics as corpus-scoped regression evidence rather than general product precision. | cmd/doctorcode/main.go usage text and .workflow acceptance/state boundary. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
+| M03-ADVERSARIAL-GATE | An independent 11-case Go adversarial corpus is a blocking CI gate alongside the accepted M02 baseline corpus. | CI run 36258809398 at cd4ddcadae7b98efc507baebd9239bdec636fbea passed both M02 and M03 benchmark commands on Linux, Windows, and macOS. | PASS |
+| M03-GATE-DETECTS-REGRESSION | The adversarial oracle must fail when current detector behavior misses labeled findings rather than merely reporting coverage. | Pre-repair CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, gate FAIL. | PASS |
+| M03-REFERENCE-COLLISIONS | Same-named local variables, method declarations, and selector names do not count as references to an unrelated package-level function candidate. | M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go. | PASS |
+| M03-CONDITION-CANONICALIZATION | Equivalent pure duplicate conditions remain comparable when one occurrence adds redundant parentheses. | M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation. | PASS |
+| M03-BASELINE-PRESERVATION | M03 precision repairs must not regress the accepted M02 nine-case benchmark. | CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS. | PASS |
 
 ## Test commands
 
 - go test ./...
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
 ## Runtime checks
 
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M02-PRECISION-BENCHMARK
+Sequence session contract: M03-ADVERSARIAL-PRECISION
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: b9820a7f430723b9d46246a82a69372668831785
+Authority verified at SHA: 76903ac9384412274cef4393fe6ba970bab6fec7
 Governance profile: strict
 
 ## Current phase
-Phase: M02_PRECISION_BENCHMARK
-Status: M02_ACCEPTED
+Phase: M03_ADVERSARIAL_PRECISION
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m02-precision-benchmark
+Branch: work/m03-adversarial-precision
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: b9820a7f430723b9d46246a82a69372668831785
+Last accepted SHA: 76903ac9384412274cef4393fe6ba970bab6fec7
 Current candidate SHA: external final acceptance evidence
-Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
+Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,24 +33,22 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M02-PRECISION-BENCHMARK
+Current sequence session: M03-ADVERSARIAL-PRECISION
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M01 accepted baseline is b9820a7f430723b9d46246a82a69372668831785.
-- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed strict Skill_Workflow governance run 36258248730.
-- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 on ubuntu-latest, windows-latest, and macos-latest.
-- The exact nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- Benchmark tests prove false positives and false negatives are both blocking signals.
-- Benchmark roots are path-contained and Go repository analysis does not follow source symlink entries.
-- All M01 safety boundaries remain in force: no automatic fix or deletion.
+- M02 accepted baseline is 76903ac9384412274cef4393fe6ba970bab6fec7.
+- The first M03 adversarial run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e correctly failed with 4 false negatives and 0 false positives, exposing three reference-collision misses and one parenthesized-condition miss.
+- Repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea passed CI run 36258809398 on Linux, Windows, and macOS.
+- The 11-case M03 adversarial corpus reported 6 true positives, 0 false positives, and 0 false negatives on the repaired source.
+- The original nine-case M02 corpus remained PASS after the M03 detector repair.
 
 ## Not proven
-- The nine-case curated corpus does not establish general real-world precision or recall.
-- The corpus does not cover the full Go language, ecosystem, build tags, generated-code conventions, reflection, or all adversarial code shapes.
+- The combined curated corpora do not establish general real-world precision or recall.
+- Reference counting remains conservative static analysis rather than a complete Go compiler call graph.
+- The corpora do not cover reflection, generated-code conventions, every build-tag combination, or all Go ecosystem patterns.
 - Semantic support for non-Go languages is not implemented.
-- Safe automatic deletion or automatic fixing remains unsupported.
-- Current generic Skill_Workflow sequence extraction does not resolve Go function call graphs.
+- Automatic fixing and deletion remain unsupported.
 
 ## Known blockers
 - None declared.
@@ -59,12 +57,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Freeze the final M02 accepted snapshot after temporary doc-sync workflow removal and exact-SHA revalidation.
-- For M03, expand evaluation evidence before expanding detector claims.
-- Prefer real-world labeled repository fixtures or a second independent corpus before changing confidence levels.
+- Synchronize M03 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M03 snapshot.
+- Promote M03 only if exact-SHA three-OS CI and strict governance both pass.
 
 ## Explicitly blocked
-- Advertising 100 percent precision or recall as a general DoctorCode product claim.
-- Raising HIGH or SUSPICIOUS detector confidence from the nine-case corpus alone.
+- Advertising corpus precision as general real-world product precision.
+- Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.
 - Auto-deleting or auto-fixing findings.
-- Claiming semantic support for languages without a dedicated analyzer and benchmark.
+- Adding another language before the current Go evidence boundary is documented and accepted.

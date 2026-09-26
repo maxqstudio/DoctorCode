@@ -47,7 +47,7 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 
 ## FLOW-BENCHMARK — Labeled precision regression benchmark
 
-Purpose: Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.
+Purpose: Measure detector behavior against baseline and adversarial labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
 Critical: FALSE
 Entry condition: doctorcode benchmark is invoked with an accessible validated manifest.
 Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
@@ -77,6 +77,7 @@ Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manif
 - False positives and false negatives both reduce benchmark evidence and block the strict 1.0 corpus threshold.
 - Case roots may not resolve outside the manifest directory.
 - Benchmark execution does not mutate analyzed source.
+- Accepted baseline corpus must remain passing when adversarial detector repairs are added.
 
 ### Failure behavior
 

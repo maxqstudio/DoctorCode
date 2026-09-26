@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 29 files, 1 language categories.
+Observed source inventory: 40 files, 1 language categories.
 
 ## Major components
 
@@ -38,9 +38,9 @@ Observed source inventory: 29 files, 1 language categories.
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
-| Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
+| Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| Precision Benchmark Harness | Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, threshold gate | Go analyzer |
+| Precision Benchmark Harness | Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate | Go analyzer |
 
 ## Main data flow
 
@@ -51,6 +51,7 @@ Observed source inventory: 29 files, 1 language categories.
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
+- adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
 
 ## Main user workflows
 
@@ -68,7 +69,7 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 
 ### FLOW-BENCHMARK — Labeled precision regression benchmark
 
-Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.
+Measure detector behavior against baseline and adversarial labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
 
 Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
 
@@ -90,9 +91,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M02_PRECISION_BENCHMARK
+Current phase: M03_ADVERSARIAL_PRECISION
 
-Current status: M02_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -133,15 +134,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Freeze the final M02 accepted snapshot after temporary doc-sync workflow removal and exact-SHA revalidation.
-- For M03, expand evaluation evidence before expanding detector claims.
-- Prefer real-world labeled repository fixtures or a second independent corpus before changing confidence levels.
+- Synchronize M03 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M03 snapshot.
+- Promote M03 only if exact-SHA three-OS CI and strict governance both pass.
 
 Blocked actions:
-- Advertising 100 percent precision or recall as a general DoctorCode product claim.
-- Raising HIGH or SUSPICIOUS detector confidence from the nine-case corpus alone.
+- Advertising corpus precision as general real-world product precision.
+- Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.
 - Auto-deleting or auto-fixing findings.
-- Claiming semantic support for languages without a dedicated analyzer and benchmark.
+- Adding another language before the current Go evidence boundary is documented and accepted.
 
 Known blockers:
 - None declared.
@@ -150,21 +151,19 @@ Known blockers:
 
 ### Proven
 
-- M01 accepted baseline is b9820a7f430723b9d46246a82a69372668831785.
-- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed strict Skill_Workflow governance run 36258248730.
-- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 on ubuntu-latest, windows-latest, and macos-latest.
-- The exact nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- Benchmark tests prove false positives and false negatives are both blocking signals.
-- Benchmark roots are path-contained and Go repository analysis does not follow source symlink entries.
-- All M01 safety boundaries remain in force: no automatic fix or deletion.
+- M02 accepted baseline is 76903ac9384412274cef4393fe6ba970bab6fec7.
+- The first M03 adversarial run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e correctly failed with 4 false negatives and 0 false positives, exposing three reference-collision misses and one parenthesized-condition miss.
+- Repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea passed CI run 36258809398 on Linux, Windows, and macOS.
+- The 11-case M03 adversarial corpus reported 6 true positives, 0 false positives, and 0 false negatives on the repaired source.
+- The original nine-case M02 corpus remained PASS after the M03 detector repair.
 
 ### Not proven
 
-- The nine-case curated corpus does not establish general real-world precision or recall.
-- The corpus does not cover the full Go language, ecosystem, build tags, generated-code conventions, reflection, or all adversarial code shapes.
+- The combined curated corpora do not establish general real-world precision or recall.
+- Reference counting remains conservative static analysis rather than a complete Go compiler call graph.
+- The corpora do not cover reflection, generated-code conventions, every build-tag combination, or all Go ecosystem patterns.
 - Semantic support for non-Go languages is not implemented.
-- Safe automatic deletion or automatic fixing remains unsupported.
-- Current generic Skill_Workflow sequence extraction does not resolve Go function call graphs.
+- Automatic fixing and deletion remain unsupported.
 
 ## Important limitations
 

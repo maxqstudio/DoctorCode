@@ -24,7 +24,7 @@
       "file": "internal/analyzers/golang/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 565
+      "lines": 608
     },
     {
       "directory": "internal/analyzers/golang",
@@ -66,7 +66,7 @@
       "file": "internal/benchmark/benchmark_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 122
+      "lines": 141
     },
     {
       "directory": "internal/benchmark/testdata/cases/bloat-positive",
@@ -134,6 +134,83 @@
     {
       "directory": "internal/benchmark/testdata/cases/simplify-positive",
       "file": "internal/benchmark/testdata/cases/simplify-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/bloat-shadow-local",
+      "file": "internal/benchmark/testdata/m03/bloat-shadow-local/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/bloat-two-references",
+      "file": "internal/benchmark/testdata/m03/bloat-two-references/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-function-value-reference",
+      "file": "internal/benchmark/testdata/m03/deadcode-function-value-reference/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-selector-collision",
+      "file": "internal/benchmark/testdata/m03/deadcode-selector-collision/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-shadow-local",
+      "file": "internal/benchmark/testdata/m03/deadcode-shadow-local/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/logic-impure-duplicate",
+      "file": "internal/benchmark/testdata/m03/logic-impure-duplicate/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/logic-parenthesized-duplicate",
+      "file": "internal/benchmark/testdata/m03/logic-parenthesized-duplicate/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/security-placeholder",
+      "file": "internal/benchmark/testdata/m03/security-placeholder/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/security-raw-string",
+      "file": "internal/benchmark/testdata/m03/security-raw-string/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/simplify-inverted",
+      "file": "internal/benchmark/testdata/m03/simplify-inverted/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/simplify-same-result",
+      "file": "internal/benchmark/testdata/m03/simplify-same-result/sample.go",
       "is_test": false,
       "language": "Go",
       "lines": 9
@@ -220,13 +297,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6",
+  "source_digest": "532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a",
   "source_summary": {
-    "files": 29,
+    "files": 40,
     "languages": {
-      "Go": 29
+      "Go": 40
     },
-    "lines": 2195,
+    "lines": 2347,
     "test_files": 0
   },
   "tests": []

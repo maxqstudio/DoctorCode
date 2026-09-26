@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -44,6 +44,10 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M02-CURATED-METRICS | On the nine-case M02 labeled Go corpus, source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 produced 5 true positives, 0 false positives, and 0 false negatives; this claim is corpus-scoped only. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::Evaluate; internal/benchmark/testdata/manifest.json | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5 | PASS |
 | TRUTH-M02-BENCHMARK-FAIL-CLOSED | The M02 benchmark reports failure for both unexpected analyzer findings and missing expected findings, and the CLI exits non-zero when the report does not pass. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::Evaluate; cmd/doctorcode/main.go::runBenchmark | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5 | PASS |
 | TRUTH-M02-PATH-CONTAINMENT | M02 benchmark case roots are constrained to the manifest directory and Go repository analysis skips source symlink entries. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::secureCaseRoot; internal/analyzers/golang/analyzer.go::parseGoFiles | internal/benchmark/benchmark_test.go; internal/analyzers/golang/analyzer_test.go | GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5 | PASS |
+| TRUTH-M03-GATE-CAUGHT-REGRESSION | The initial M03 adversarial corpus exposed four false negatives in the M02 detector behavior before repair, with no false positives. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m03-adversarial.json; internal/benchmark/benchmark.go::Evaluate | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e | PASS |
+| TRUTH-M03-REPAIRED-METRICS | On repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea, the 11-case M03 adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 baseline corpus remains passing. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::lexicalReferenceCounts; internal/analyzers/golang/analyzer.go::canonicalCondition; internal/benchmark/testdata/m03-adversarial.json | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258809398 | PASS |
+| TRUTH-M03-REFERENCE-COLLISION | M03 reference counting excludes same-named local identifiers, selector names, and function or method declaration names from unrelated package-level function reference counts. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::lexicalReferenceCounts | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258809398 | PASS |
+| TRUTH-M03-PAREN-CANONICAL | M03 pure-condition comparison ignores redundant parentheses while preserving AST operator structure. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::canonicalCondition | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36258809398 | PASS |
 
 ## Claim relations
 

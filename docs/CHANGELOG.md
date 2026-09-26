@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M03 adversarial precision candidate
+
+Type: development
+
+- Added an independent 11-case adversarial Go benchmark gate.
+- Captured an initial 4-FN failure before repair.
+- Repaired package-function reference counting for local shadowing, method declarations, and selector collisions.
+- Canonicalized pure conditions so redundant parentheses do not hide duplicate conditions.
+- Preserved the accepted M02 nine-case benchmark while the repaired M03 corpus reached 6 TP, 0 FP, and 0 FN.
+
 ## 2026-09-27 — M02 accepted baseline
 
 Type: acceptance
