@@ -11,11 +11,11 @@ Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef56
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M01-ENGINE | Detector engine executes registered language analyzers deterministically and sorts findings stably. | internal/engine plus all-OS audit smoke — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-FIVE-GO-RULES | Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE. | internal/analyzers/golang corpus tests — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-DEADCODE-SAFETY | Dead-code rule fails closed for visible Go linkage escape hatches and counts test references. | internal/analyzers/golang/analyzer_test.go — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-EVIDENCE-BUDGET | Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings. | internal/evidence/packet_test.go — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-NO-AUTOFIX | All M01 findings set safe_autofix=false. | analyzer tests — GitHub Actions CI run 36256636261 at 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M01-ENGINE | Detector engine executes registered language analyzers deterministically and sorts findings stably. | internal/engine plus all-OS audit smoke — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M01-FIVE-GO-RULES | Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE. | internal/analyzers/golang corpus tests — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M01-DEADCODE-SAFETY | Dead-code rule fails closed for visible Go linkage escape hatches and counts test references. | internal/analyzers/golang/analyzer_test.go — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M01-EVIDENCE-BUDGET | Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings. | internal/evidence/packet_test.go — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M01-NO-AUTOFIX | All M01 findings set safe_autofix=false. | analyzer tests — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
 
 ## Test commands
 

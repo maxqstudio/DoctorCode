@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-26 — M01 accepted baseline
+
+Type: acceptance
+
+- Accepted deterministic detector pipeline after Linux, Windows, and macOS CI.
+- Accepted strict Skill_Workflow governance on synchronized M01 documentation.
+- Retained conservative confidence boundaries and safe_autofix=false.
+- Excluded nested Go testdata from normal repository findings while preserving direct corpus analysis.
+
 ## 2026-09-26 — M01 detector foundation candidate
 
 Type: development
