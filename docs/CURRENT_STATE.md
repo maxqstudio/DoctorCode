@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M04_REPOSITORY_SHAPED_EVAL
-Status: ACCEPTANCE_CANDIDATE
+Status: M04_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -38,18 +38,19 @@ SEQUENCE_SYNC: PASS
 
 ## Proven
 - M03 accepted baseline is 07c8bee4c546edd381723abad2398dbb2567fbf9.
-- M04 added a 12-case repository-shaped Go corpus without changing detector source code.
-- The initial M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed because the build-tag fixture itself contained a valid unexported zero-reference function; the fixture oracle was corrected instead of weakening the detector.
-- Corrected M04 source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d passed CI run 36279033090 on ubuntu-latest, windows-latest, and macos-latest.
-- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the corrected candidate.
-- The accepted M02 baseline and M03 adversarial corpora remain passing alongside M04.
+- M04 added a 12-case repository-shaped Go corpus without changing detector implementation code.
+- The first M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; only the fixture was corrected.
+- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed strict Skill_Workflow governance run 36279198224.
+- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 on ubuntu-latest, windows-latest, and macos-latest.
+- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
+- The M02 baseline and M03 adversarial corpora remain passing.
 
 ## Not proven
 - The three curated corpora do not establish general real-world precision or recall.
-- M04 mini-repositories are still synthetic and smaller than production monorepos.
+- M04 mini-repositories are synthetic and smaller than production repositories and monorepos.
 - Build constraints are not evaluated as an active target configuration; reference analysis remains visible-tree lexical analysis.
-- Reference counting remains conservative static analysis rather than a complete compiler/type-system call graph.
-- Semantic support for non-Go languages and automatic mutation remain unsupported.
+- Reference counting is not a complete Go compiler/type-system call graph.
+- Semantic support for non-Go languages and automatic source mutation remain unsupported.
 
 ## Known blockers
 - None declared.
@@ -58,12 +59,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M04 generated Project Truth documentation.
-- Run strict Skill_Workflow validation against the synchronized M04 snapshot.
-- Promote M04 only if exact-SHA three-OS CI and strict governance both pass.
+- Freeze final M04 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.
+- For M05, add evidence from real public Go repositories or extracted real-world fixtures before changing confidence levels.
+- Keep language expansion separate from Go confidence promotion so evidence boundaries remain attributable.
 
 ## Explicitly blocked
 - Advertising corpus precision as general real-world product precision.
-- Treating a build-tagged source reference as proof of runtime reachability on every target.
-- Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.
+- Treating build-tag-visible lexical references as proof of runtime reachability on every target.
+- Upgrading DEADCODE HIGH to PROVEN_UNUSED from the current corpora.
 - Auto-deleting or auto-fixing findings.

@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M04 accepted baseline
+
+Type: acceptance
+
+- Accepted a 12-case repository-shaped Go benchmark after Linux, Windows, and macOS CI plus strict Skill_Workflow governance.
+- Accepted exact corpus evidence of 7 TP, 0 FP, and 0 FN without generalizing it beyond the tracked mini-repositories.
+- Accepted package/test/build-tag/assembly/generated-file/nested-path interaction evidence without changing detector implementation code.
+- Preserved M02 and M03 benchmark gates and retained safe_autofix=false.
+
 ## 2026-09-27 — M04 repository-shaped evaluation candidate
 
 Type: development
