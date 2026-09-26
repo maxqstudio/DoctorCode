@@ -3,6 +3,7 @@ name: Governance Bootstrap
 on:
   push:
     branches:
+      - main
       - "work/**"
   pull_request:
 
@@ -10,33 +11,27 @@ permissions:
   contents: read
 
 jobs:
-  project-truth:
-    name: skill-workflow-ubuntu
+  strict-project-truth:
+    name: strict-skill-workflow
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Generate current sequence evidence
-        run: |
-          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M00-BOOTSTRAP.actual.json --output-mermaid docs/sequence/generated/M00-BOOTSTRAP.actual.mmd
-      - name: Validate sequence
-        run: python .workflow/tools/validate_sequence_sessions.py
-      - name: Compile project truth
-        run: python .workflow/tools/sync_project_truth.py --no-record
-      - name: Validate project docs
+      - name: Validate tracked project docs
         run: python .workflow/tools/validate_project_docs.py
       - name: Validate doc quality
         run: python .workflow/tools/validate_doc_quality.py
-      - name: Validate human comprehension structure
-        run: python .workflow/tools/validate_human_comprehension.py
-      - name: Upload governance preview
-        uses: actions/upload-artifact@v4
-        with:
-          name: doctorcode-governance-preview
-          path: |
-            docs/
-            .workflow/generated/
-            artifacts/
-          if-no-files-found: error
+      - name: Validate human comprehension
+        run: python .workflow/tools/validate_human_comprehension.py --require-pass
+      - name: Validate handoff
+        run: python .workflow/tools/validate_handoff.py
+      - name: Validate cross-document consistency
+        run: python .workflow/tools/validate_cross_document_consistency.py --base 914b462a02a2858259c04d163a611ec8562411b8 --require-base
+      - name: Validate project truth
+        run: python .workflow/tools/validate_project_truth.py
+      - name: Validate sequence sessions
+        run: python .workflow/tools/validate_sequence_sessions.py

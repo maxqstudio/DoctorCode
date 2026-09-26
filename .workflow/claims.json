@@ -1,4 +1,64 @@
 {
   "schema_version": 1,
-  "claims": []
+  "claims": [
+    {
+      "id": "TRUTH-M00-PORTABLE-CORE",
+      "claim": "M00 DoctorCode core builds, tests, and executes scan/toolchain smoke checks on Linux, Windows, and macOS GitHub-hosted runners.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go::main",
+        "internal/scanner/scanner.go::Scan",
+        "internal/toolchain/toolchain.go::Detect"
+      ],
+      "tests": [
+        "internal/language/registry_test.go",
+        "internal/scanner/scanner_test.go",
+        "internal/toolchain/toolchain_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI matrix"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M00-LLM-OPTIONAL",
+      "claim": "M00 repository scanning and toolchain capability detection do not require an LLM or external model API.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go::main",
+        "internal/scanner/scanner.go::Scan",
+        "internal/toolchain/toolchain.go::Detect"
+      ],
+      "tests": [
+        "internal/scanner/scanner_test.go",
+        "internal/toolchain/toolchain_test.go"
+      ],
+      "runtime_evidence": [
+        "NOT_APPLICABLE"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M00-DETECTOR-BOUNDARY",
+      "claim": "M00 does not claim implemented semantic detection for BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go::usage"
+      ],
+      "tests": [
+        "NOT_APPLICABLE"
+      ],
+      "runtime_evidence": [
+        "NOT_APPLICABLE"
+      ],
+      "status": "PASS"
+    }
+  ],
+  "relations": []
 }
