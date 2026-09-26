@@ -91,8 +91,17 @@
     }
   ],
   "external_boundaries": [
-    "GitHub Actions hosted operating systems",
-    "host compilers and runtimes",
-    "future optional third-party analyzers"
+    {
+      "name": "GitHub Actions",
+      "contract": "Linux, Windows, and macOS hosted runners provide public CI and runtime acceptance evidence."
+    },
+    {
+      "name": "Host toolchains",
+      "contract": "Compiler/runtime availability is observed, never assumed; missing optional tools are reported as unavailable."
+    },
+    {
+      "name": "Third-party analyzers",
+      "contract": "Future analyzers may contribute evidence through adapters but do not override DoctorCode evidence classification."
+    }
   ]
 }
