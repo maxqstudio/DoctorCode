@@ -33,6 +33,8 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
       - name: M03 adversarial benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
+      - name: M04 repository-shaped benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI

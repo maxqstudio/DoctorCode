@@ -66,6 +66,25 @@ func TestEvaluateM03AdversarialGoCorpus(t *testing.T) {
 	}
 }
 
+func TestEvaluateM04RepositoryShapedGoCorpus(t *testing.T) {
+	_, current, _, ok := runtime.Caller(0)
+	if !ok {
+		t.Fatal("runtime.Caller failed")
+	}
+	manifest := filepath.Join(filepath.Dir(current), "testdata", "m04-repository-shaped.json")
+
+	report, err := Evaluate(context.Background(), manifest, goanalysis.New())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !report.Passed {
+		t.Fatalf("repository-shaped benchmark failed: %#v", report.Failures)
+	}
+	if report.Metrics.TruePositive != 7 || report.Metrics.FalsePositive != 0 || report.Metrics.FalseNegative != 0 {
+		t.Fatalf("unexpected repository-shaped metrics: %#v", report.Metrics)
+	}
+}
+
 func TestEvaluateReportsFalsePositive(t *testing.T) {
 	root := t.TempDir()
 	manifest := writeManifest(t, root, Manifest{
