@@ -1,12 +1,10 @@
 package goanalysis
 
 import (
-	"bytes"
 	"context"
 	"crypto/sha256"
 	"fmt"
 	"go/ast"
-	"go/format"
 	"go/parser"
 	"go/token"
 	"io/fs"
@@ -199,19 +197,45 @@ func topLevelCandidates(pkg *packageInfo) []candidate {
 
 func lexicalReferenceCounts(pkg *packageInfo, candidates []candidate) map[string]int {
 	definitionPos := map[token.Pos]bool{}
+	candidateObjects := map[string]*ast.Object{}
 	names := map[string]bool{}
 	for _, item := range candidates {
 		definitionPos[item.decl.Name.Pos()] = true
+		candidateObjects[item.name] = item.decl.Name.Obj
 		names[item.name] = true
 	}
 
 	counts := map[string]int{}
 	for _, file := range pkg.files {
+		nonPackageRef := map[token.Pos]bool{}
+		ast.Inspect(file.file, func(node ast.Node) bool {
+			switch value := node.(type) {
+			case *ast.SelectorExpr:
+				nonPackageRef[value.Sel.Pos()] = true
+			case *ast.KeyValueExpr:
+				if id, ok := value.Key.(*ast.Ident); ok {
+					nonPackageRef[id.Pos()] = true
+				}
+			}
+			return true
+		})
+
 		ast.Inspect(file.file, func(node ast.Node) bool {
 			id, ok := node.(*ast.Ident)
-			if !ok || !names[id.Name] || definitionPos[id.Pos()] {
+			if !ok || !names[id.Name] || definitionPos[id.Pos()] || nonPackageRef[id.Pos()] {
 				return true
 			}
+
+			if id.Obj != nil {
+				if candidateObjects[id.Name] != nil && id.Obj == candidateObjects[id.Name] {
+					counts[id.Name]++
+				}
+				return true
+			}
+
+			// Package-level identifiers referenced from another file are unresolved
+			// by parser.ParseFile and therefore have no Obj. Local declarations and
+			// uses do have an Obj, while selector names are excluded above.
 			counts[id.Name]++
 			return true
 		})
@@ -379,12 +403,27 @@ func pureCondition(expr ast.Expr) bool {
 	}
 }
 
-func expressionText(fset *token.FileSet, expr ast.Expr) string {
-	var buf bytes.Buffer
-	if err := format.Node(&buf, fset, expr); err != nil {
+func expressionText(_ *token.FileSet, expr ast.Expr) string {
+	return canonicalCondition(expr)
+}
+
+func canonicalCondition(expr ast.Expr) string {
+	switch value := expr.(type) {
+	case *ast.ParenExpr:
+		return canonicalCondition(value.X)
+	case *ast.Ident:
+		return "id:" + value.Name
+	case *ast.BasicLit:
+		return "lit:" + value.Kind.String() + ":" + value.Value
+	case *ast.SelectorExpr:
+		return "sel(" + canonicalCondition(value.X) + "." + value.Sel.Name + ")"
+	case *ast.UnaryExpr:
+		return "unary(" + value.Op.String() + "," + canonicalCondition(value.X) + ")"
+	case *ast.BinaryExpr:
+		return "binary(" + value.Op.String() + "," + canonicalCondition(value.X) + "," + canonicalCondition(value.Y) + ")"
+	default:
 		return ""
 	}
-	return buf.String()
 }
 
 func simplifyFindings(fset *token.FileSet, file *parsedFile) []model.Finding {
