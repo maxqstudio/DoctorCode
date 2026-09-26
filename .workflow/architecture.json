@@ -101,6 +101,21 @@
       "depends_on": [
         "Go analyzer"
       ]
+    },
+    {
+      "id": "realworld_validation",
+      "name": "Pinned Public Repository Validator",
+      "purpose": "Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims.",
+      "owns": [
+        "source provenance manifest",
+        "exact checkout SHA validation",
+        "selected known-live negative assertions",
+        "real-world finding safety boundary"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "GitHub Actions"
+      ]
     }
   ],
   "data_flows": [
@@ -148,6 +163,21 @@
       "from": "repository-shaped labeled corpus",
       "to": "precision benchmark harness",
       "meaning": "M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules."
+    },
+    {
+      "from": "pinned public Go repositories",
+      "to": "Pinned Public Repository Validator",
+      "meaning": "GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs."
+    },
+    {
+      "from": "Pinned Public Repository Validator",
+      "to": "Go Built-in Analyzer",
+      "meaning": "Original public repository trees are analyzed directly without copying them into DoctorCode."
+    },
+    {
+      "from": "Pinned Public Repository Validator",
+      "to": "GitHub Actions",
+      "meaning": "Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems."
     }
   ],
   "external_boundaries": [
@@ -166,6 +196,10 @@
     {
       "name": "Repository filesystem boundary",
       "contract": "Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis."
+    },
+    {
+      "name": "Pinned public repositories",
+      "contract": "External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority."
     }
   ]
 }

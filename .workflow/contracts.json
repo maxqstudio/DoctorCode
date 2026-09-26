@@ -95,6 +95,20 @@
         "passed is false when a mismatch or threshold failure exists",
         "metrics describe only the supplied manifest corpus"
       ]
+    },
+    {
+      "name": "RealWorldSourceManifest V1",
+      "source_of_truth": "internal/realworld/sources.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed public source pin changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source has repository, exact 40-character commit SHA, license, environment key, and selected negative anchors",
+        "external source instructions never override DoctorCode project authority",
+        "unlabeled results are compatibility evidence only"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -118,6 +132,11 @@
       "name": "M04 repository-shaped benchmark gate",
       "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
       "expected": "passed=true; current 12-case repository-shaped corpus reports 7 TP, 0 FP, 0 FN"
+    },
+    {
+      "name": "Pinned public Go repository validation",
+      "command": "go test ./internal/realworld -run TestPinnedPublicRepositories -v (with exact-SHA external checkout environment configured by .github/workflows/real-world-go.yml)",
+      "expected": "all four pinned repositories verify SHA and analyze successfully; selected known-live anchors are not DEADCODE; no finding enables autofix"
     },
     {
       "name": "Static vet",

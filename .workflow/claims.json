@@ -313,6 +313,60 @@
         "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M05-PINNED-PUBLIC-SOURCES",
+      "claim": "M05 validates exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify on Linux, Windows, and macOS.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/sources.json",
+        ".github/workflows/real-world-go.yml"
+      ],
+      "tests": [
+        "internal/realworld/realworld_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M05-KNOWN-LIVE-NEGATIVES",
+      "claim": "Selected known-live unexported functions preExecHook, nextID, cW, and httpCode are not reported as DEADCODE on the pinned public snapshots.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/sources.json",
+        "internal/realworld/realworld_test.go"
+      ],
+      "tests": [
+        "internal/realworld/realworld_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279765083"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M05-COMPATIBILITY-ONLY",
+      "claim": "M05 public-repository results are compatibility evidence only and are not used to claim real-world precision, recall, or absence of defects.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/realworld_test.go",
+        ".workflow/acceptance.json"
+      ],
+      "tests": [
+        "internal/realworld/realworld_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279765083"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

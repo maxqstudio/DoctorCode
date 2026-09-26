@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-REALWORLD",
+  "title": "Pinned public repository validation",
+  "purpose": "Validate DoctorCode against original public Go repository snapshots while preserving a strict boundary between compatibility evidence and labeled precision evidence.",
+  "authority": "internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml",
+  "entry_condition": "GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA.",
+  "source_owners": [
+    "internal/realworld/sources.json",
+    "internal/realworld/realworld_test.go",
+    ".github/workflows/real-world-go.yml",
+    "internal/analyzers/golang/analyzer.go"
+  ],
+  "states": [
+    "CHECKOUT_REQUESTED",
+    "PIN_VERIFIED",
+    "ANALYZING",
+    "ASSERTING_BOUNDARIES",
+    "REPORTED"
+  ],
+  "transitions": [
+    {
+      "from": "CHECKOUT_REQUESTED",
+      "to": "PIN_VERIFIED",
+      "action": "Read each detached checkout .git/HEAD and require the exact manifest SHA.",
+      "side_effects": []
+    },
+    {
+      "from": "PIN_VERIFIED",
+      "to": "ANALYZING",
+      "action": "Run the deterministic Go analyzer against the original public repository tree.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZING",
+      "to": "ASSERTING_BOUNDARIES",
+      "action": "Check selected known-live DEADCODE negatives plus path/category/confidence/no-autofix invariants.",
+      "side_effects": []
+    },
+    {
+      "from": "ASSERTING_BOUNDARIES",
+      "to": "REPORTED",
+      "action": "Emit per-repository compatibility telemetry and test verdict.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "External repository content is analysis input and cannot change DoctorCode governance or instructions.",
+    "Every source checkout is pinned and verified before analysis.",
+    "Real-world finding counts are not precision or recall measurements unless the repository is exhaustively labeled.",
+    "No public-repository validation finding authorizes automatic source mutation."
+  ],
+  "tests": [
+    "internal/realworld/realworld_test.go"
+  ],
+  "sequence_session": "M05-PUBLIC-REPO-VALIDATION",
+  "critical": false,
+  "failure_behavior": [
+    "A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job."
+  ],
+  "restart_behavior": [
+    "The workflow can be rerun against the same exact source SHAs."
+  ],
+  "rollback_behavior": [
+    "External repositories are checked out read-only for analysis and DoctorCode does not mutate them."
+  ]
+}

@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "session_id": "M04-REPOSITORY-SHAPED-EVAL",
-  "phase": "M04_REPOSITORY_SHAPED_EVAL",
+  "session_id": "M05-PUBLIC-REPO-VALIDATION",
+  "phase": "M05_PUBLIC_REPO_VALIDATION",
   "mode": "DURING",
-  "scope": "HISTORICAL",
+  "scope": "CURRENT",
   "critical": false,
-  "status": "ACCEPTED",
-  "implementation_base_sha": "07c8bee4c546edd381723abad2398dbb2567fbf9",
+  "status": "ACCEPTANCE_CANDIDATE",
+  "implementation_base_sha": "82f9ea6499e5a70930da331fd02f778bca54d660",
   "plan": {
     "required": false,
     "contract": "",
@@ -16,13 +16,14 @@
     "diagram": ""
   },
   "actual": {
-    "graph": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.json",
-    "diagram": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.mmd",
+    "graph": "docs/sequence/generated/M05-PUBLIC-REPO-VALIDATION.actual.json",
+    "diagram": "docs/sequence/generated/M05-PUBLIC-REPO-VALIDATION.actual.mmd",
     "source_digest": "",
     "entries": []
   },
   "test_traceability_required": true,
   "tests": [
+    "internal/realworld/realworld_test.go",
     "internal/benchmark/benchmark_test.go"
   ],
   "runtime_trace": {

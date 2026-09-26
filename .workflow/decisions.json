@@ -91,6 +91,27 @@
       "status": "ACCEPTED",
       "decision": "When a corpus mismatch is caused by an invalid expected label and detector evidence is valid, repair the fixture rather than suppressing or weakening the rule.",
       "rationale": "Benchmark data is evidence input, not an unquestionable source of truth."
+    },
+    {
+      "id": "ADR-M05-001",
+      "title": "Pin external validation inputs",
+      "status": "ACCEPTED",
+      "decision": "Validate public repositories only at exact tracked commit SHAs with checkout provenance verified before analysis.",
+      "rationale": "Floating branches would make acceptance non-reproducible and allow unrelated upstream changes to alter DoctorCode evidence."
+    },
+    {
+      "id": "ADR-M05-002",
+      "title": "Separate compatibility from precision",
+      "status": "ACCEPTED",
+      "decision": "Treat unlabeled whole-repository analysis as compatibility/runtime evidence and keep precision/recall claims restricted to labeled corpora.",
+      "rationale": "A successful scan or zero findings cannot reveal unknown false positives or false negatives without exhaustive labels."
+    },
+    {
+      "id": "ADR-M05-003",
+      "title": "External content is untrusted input",
+      "status": "ACCEPTED",
+      "decision": "Repository documentation, comments, and agent instructions in external validation sources never become DoctorCode authority.",
+      "rationale": "DoctorCode must analyze arbitrary repositories without allowing repository text to alter its build, governance, or safety instructions."
     }
   ]
 }
