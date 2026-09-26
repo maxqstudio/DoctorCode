@@ -19,11 +19,11 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M03 adversarial precision is accepted on the development branch.** Current semantic coverage remains deliberately narrow, and all benchmark results are explicitly corpus-scoped.
+**M04 repository-shaped evaluation is accepted on the development branch.** Current semantic coverage remains deliberately narrow, and all benchmark results are explicitly corpus-scoped.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
-| Go | Yes | Yes | **Yes — narrow rules, baseline + adversarial benchmark-gated** |
+| Go | Yes | Yes | **Yes — narrow rules, baseline + adversarial + repository-shaped benchmark-gated** |
 | Python | Yes | Yes | Not yet |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
@@ -73,6 +73,20 @@ M03 adds a second independent 11-case corpus:
 Before repair, this gate exposed **4 false negatives** that the M02 corpus did not catch: local-name shadowing, a selector/method-name collision, and a duplicate pure condition hidden by redundant parentheses. After the targeted repairs, the M03 corpus reports **6 TP, 0 FP, and 0 FN**, while the original M02 corpus remains passing.
 
 These results remain bounded to the tracked corpora. They do not establish general real-world precision or recall.
+
+### M04 repository-shaped regression gate
+
+M04 adds 12 mini-repositories that exercise interactions a single-file corpus cannot cover:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
+```
+
+The corpus covers cross-file references, separate packages with colliding names, same-package and external tests, build-tag-visible references, assembly fail-closed behavior, generated-file references, and nested package findings. The accepted M04 result is **7 TP, 0 FP, and 0 FN**.
+
+The first M04 attempt intentionally remained blocking when one fixture was mislabeled: the detector correctly found a zero-reference function inside the build-tag fixture. The fixture was corrected; the detector was not weakened. **M04 changes evaluation evidence only and makes no Go detector implementation change.**
+
+Build-tag references are currently treated as visible-tree lexical evidence. DoctorCode does not yet claim target-specific reachability for a particular GOOS, GOARCH, or custom build-tag set.
 
 ## Quick start
 
@@ -134,7 +148,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Each runner executes unit/corpus tests, both the M02 baseline and M03 adversarial benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
+Each runner executes unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
 
 ## Design principles
 
