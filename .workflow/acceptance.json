@@ -1,76 +1,82 @@
 {
-  "evidence_boundary": "M00 acceptance is limited to the portable Go bootstrap: deterministic repository/language inventory, host toolchain capability reporting, Linux/Windows/macOS execution, and Skill_Workflow governance. Semantic BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE detectors remain explicitly outside M00.",
-  "human_comprehension_questions": {
-    "How does failure/recovery behave?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
-    "What is proven and what is not proven?": "PASS",
-    "What is the current project state?": "PASS",
-    "What is the project and what problem does it solve?": "PASS",
-    "What may happen next and what is blocked?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS"
-  },
+  "schema_version": 1,
+  "evidence_boundary": "M01 will prove only the detector pipeline, five narrow Go rules, curated corpus behavior, bounded evidence packet generation, and three-OS execution. It will not prove general precision across real-world repositories or semantic support for other languages.",
+  "runtime_status": "NOT_PROVEN",
   "human_comprehension_status": "PASS",
+  "human_comprehension_questions": {
+    "What is the project and what problem does it solve?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
+    "How does failure/recovery behave?": "PASS",
+    "What is the current project state?": "PASS",
+    "What is proven and what is not proven?": "PASS",
+    "What may happen next and what is blocked?": "PASS"
+  },
+  "sequence_mode": "DURING",
+  "sequence_session": "M01-DETECTOR-FOUNDATION",
+  "sequence_sync_status": "PASS",
+  "truth_gates": {
+    "SOURCE_TESTS": "NOT_PROVEN",
+    "RUNTIME_E2E": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "SEMANTIC_SYNC": "NOT_PROVEN",
+    "BEHAVIORAL_SYNC": "NOT_PROVEN",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_SOURCE_TRACEABILITY": "NOT_PROVEN",
+    "DOC_TEST_TRACEABILITY": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "DOC_LAYOUT": "NOT_PROVEN",
+    "PROJECT_DOCS_NORMALIZED": "NOT_PROVEN",
+    "DOC_READABILITY": "NOT_PROVEN"
+  },
   "requirements": [
     {
-      "evidence": "GitHub Actions CI run 36255851655 at e9b1dc0fe38a0e8488df98d1372ec6b6842badc3: ubuntu-latest, windows-latest, macos-latest all PASS.",
-      "id": "M00-CROSS-PLATFORM",
-      "requirement": "Tests, vet, build, scan smoke, and toolchain smoke pass on Linux, Windows, and macOS GitHub-hosted runners.",
-      "status": "PASS"
+      "id": "M01-ENGINE",
+      "requirement": "Detector engine executes registered language analyzers deterministically and sorts findings stably.",
+      "evidence": "internal/engine plus all-OS audit smoke",
+      "status": "NOT_PROVEN"
     },
     {
-      "evidence": "internal/language/registry_test.go executed by GitHub Actions CI run 36255851655.",
-      "id": "M00-LANGUAGE-REGISTRY",
-      "requirement": "Registry recognizes representative multi-language files deterministically.",
-      "status": "PASS"
+      "id": "M01-FIVE-GO-RULES",
+      "requirement": "Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.",
+      "evidence": "internal/analyzers/golang corpus tests",
+      "status": "NOT_PROVEN"
     },
     {
-      "evidence": "internal/scanner/scanner_test.go plus scan smoke executed by GitHub Actions CI run 36255851655.",
-      "id": "M00-SCAN",
-      "requirement": "Scanner ignores common dependency/generated directories and reports deterministic language counts.",
-      "status": "PASS"
+      "id": "M01-DEADCODE-SAFETY",
+      "requirement": "Dead-code rule fails closed for visible Go linkage escape hatches and counts test references.",
+      "evidence": "internal/analyzers/golang/analyzer_test.go",
+      "status": "NOT_PROVEN"
     },
     {
-      "evidence": "internal/toolchain/toolchain_test.go plus toolchain smoke executed by GitHub Actions CI run 36255851655.",
-      "id": "M00-TOOLCHAINS",
-      "requirement": "Toolchain registry covers representative languages without assuming availability.",
-      "status": "PASS"
+      "id": "M01-EVIDENCE-BUDGET",
+      "requirement": "Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings.",
+      "evidence": "internal/evidence/packet_test.go",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "id": "M01-NO-AUTOFIX",
+      "requirement": "All M01 findings set safe_autofix=false.",
+      "evidence": "analyzer tests",
+      "status": "NOT_PROVEN"
     }
   ],
-  "runtime_checks": [
-    "go run ./cmd/doctorcode scan . --json",
-    "go run ./cmd/doctorcode toolchains . --json"
-  ],
-  "runtime_status": "PASS",
-  "schema_version": 1,
-  "sequence_mode": "DURING",
-  "sequence_session": "M00-BOOTSTRAP",
-  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "truth_gates": {
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "DOC_READABILITY": "PASS",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "PASS",
-    "PROVENANCE_SYNC": "PASS",
-    "REFERENCE_SYNC": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "SEMANTIC_SYNC": "PASS",
-    "SOURCE_TESTS": "PASS",
-    "STRUCTURAL_SYNC": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS"
-  }
+  "runtime_checks": [
+    "go run ./cmd/doctorcode audit . --json --max-findings=10",
+    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
+  ]
 }

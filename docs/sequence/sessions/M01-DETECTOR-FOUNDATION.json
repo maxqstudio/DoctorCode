@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "session_id": "M00-BOOTSTRAP",
-  "phase": "M00_BOOTSTRAP",
+  "session_id": "M01-DETECTOR-FOUNDATION",
+  "phase": "M01_DETECTOR_FOUNDATION",
   "mode": "DURING",
-  "scope": "HISTORICAL",
+  "scope": "CURRENT",
   "critical": false,
-  "status": "ACCEPTED",
+  "status": "IN_PROGRESS",
   "implementation_base_sha": "",
   "plan": {
     "required": false,
@@ -16,16 +16,16 @@
     "diagram": ""
   },
   "actual": {
-    "graph": "docs/sequence/generated/M00-BOOTSTRAP.actual.json",
-    "diagram": "docs/sequence/generated/M00-BOOTSTRAP.actual.mmd",
+    "graph": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.json",
+    "diagram": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.mmd",
     "source_digest": "",
     "entries": []
   },
   "test_traceability_required": true,
   "tests": [
-    "internal/language/registry_test.go",
-    "internal/scanner/scanner_test.go",
-    "internal/toolchain/toolchain_test.go"
+    "internal/analyzers/golang/analyzer_test.go",
+    "internal/analyzers/golang/corpus_test.go",
+    "internal/evidence/packet_test.go"
   ],
   "runtime_trace": {
     "required": false,

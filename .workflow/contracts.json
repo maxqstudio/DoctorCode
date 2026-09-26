@@ -3,6 +3,46 @@
   "api_contracts": [],
   "data_contracts": [
     {
+      "name": "Finding V2",
+      "source_of_truth": "internal/model/model.go::Finding",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "registered detector analyzers"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "category is one of five DoctorCode domains",
+        "confidence is explicit",
+        "safe_autofix is false for M01"
+      ]
+    },
+    {
+      "name": "AuditResult V1",
+      "source_of_truth": "internal/model/model.go::AuditResult",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "detector engine"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "analyzers are named",
+        "findings are stably sorted"
+      ]
+    },
+    {
+      "name": "EvidencePacket V1",
+      "source_of_truth": "internal/evidence/packet.go::Packet",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "evidence reducer"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "serialized packet fits max-bytes",
+        "security findings omit source excerpts by default"
+      ]
+    },
+    {
       "name": "ScanResult V1",
       "source_of_truth": "internal/model/model.go::ScanResult",
       "mutability": "runtime output",
@@ -11,7 +51,7 @@
       ],
       "retention": "caller-defined",
       "invariants": [
-        "Output is deterministic for the same visible repository tree and ignore policy."
+        "language recognition is structural only"
       ]
     },
     {
@@ -23,26 +63,14 @@
       ],
       "retention": "caller-defined",
       "invariants": [
-        "Unavailable tools are reported as unavailable; absence is not converted to PASS."
-      ]
-    },
-    {
-      "name": "Finding V1",
-      "source_of_truth": "internal/model/model.go::Finding",
-      "mutability": "future detector output",
-      "legal_writes": [
-        "future detector engine"
-      ],
-      "retention": "caller-defined",
-      "invariants": [
-        "Finding category is one of BLOAT, SECURITY, SIMPLIFY, LOGIC, DEADCODE."
+        "missing optional toolchains are reported as unavailable"
       ]
     }
   ],
   "ui_surfaces": [],
   "runbook_steps": [
     {
-      "name": "Unit tests",
+      "name": "Unit and corpus tests",
       "command": "go test ./...",
       "expected": "exit code 0"
     },
@@ -57,14 +85,14 @@
       "expected": "exit code 0"
     },
     {
-      "name": "Scan smoke",
-      "command": "go run ./cmd/doctorcode scan . --json",
+      "name": "Audit smoke",
+      "command": "go run ./cmd/doctorcode audit . --json --max-findings=10",
       "expected": "valid JSON and exit code 0"
     },
     {
-      "name": "Toolchain smoke",
-      "command": "go run ./cmd/doctorcode toolchains . --json",
-      "expected": "valid JSON and exit code 0"
+      "name": "Bounded packet smoke",
+      "command": "go run ./cmd/doctorcode next . --json --max-bytes=4096",
+      "expected": "valid bounded JSON or NO_FINDINGS"
     }
   ]
 }

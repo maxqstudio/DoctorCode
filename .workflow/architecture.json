@@ -4,14 +4,16 @@
     {
       "id": "cli",
       "name": "CLI",
-      "purpose": "Human/agent interface for deterministic DoctorCode operations.",
+      "purpose": "Human/agent interface for scan, toolchain, audit, and bounded next-finding operations.",
       "owns": [
         "command parsing",
         "text and JSON rendering"
       ],
       "depends_on": [
         "scanner",
-        "toolchain registry"
+        "toolchain registry",
+        "detector engine",
+        "evidence reducer"
       ]
     },
     {
@@ -47,21 +49,35 @@
     {
       "id": "detector_engine",
       "name": "Detector Engine",
-      "purpose": "Future host for five detector domains.",
+      "purpose": "Execute registered deterministic language analyzers and provide stable finding ordering.",
       "owns": [
-        "finding production"
+        "finding aggregation",
+        "priority ordering"
       ],
       "depends_on": [
-        "scanner",
-        "language-specific adapters"
+        "Go analyzer"
+      ]
+    },
+    {
+      "id": "go_analyzer",
+      "name": "Go Built-in Analyzer",
+      "purpose": "Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories.",
+      "owns": [
+        "Go AST rules",
+        "Go dead-code lexical evidence"
+      ],
+      "depends_on": [
+        "Go parser/AST standard library"
       ]
     },
     {
       "id": "evidence_reducer",
       "name": "Evidence Reducer",
-      "purpose": "Future bounded context compiler for humans and small LLMs.",
+      "purpose": "Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs.",
       "owns": [
-        "token-bounded finding context"
+        "source excerpt bounds",
+        "security excerpt suppression",
+        "byte budget"
       ],
       "depends_on": [
         "detector engine"
@@ -71,37 +87,37 @@
   "data_flows": [
     {
       "from": "repository",
-      "to": "repository scanner",
-      "meaning": "Inventory source without sending it to an LLM."
+      "to": "detector engine",
+      "meaning": "Audit dispatches the visible repository to registered deterministic analyzers."
     },
     {
-      "from": "repository scanner",
-      "to": "language registry",
-      "meaning": "Classify recognized source files."
-    },
-    {
-      "from": "host environment",
-      "to": "toolchain registry",
-      "meaning": "Observe compiler/runtime availability."
+      "from": "detector engine",
+      "to": "Go Built-in Analyzer",
+      "meaning": "Go source is parsed and narrow findings are generated with explicit confidence."
     },
     {
       "from": "detector engine",
       "to": "evidence reducer",
-      "meaning": "Reduce future findings to bounded packets."
+      "meaning": "The sorted highest-priority finding is reduced to a bounded packet for doctorcode next."
+    },
+    {
+      "from": "evidence reducer",
+      "to": "small LLM or human",
+      "meaning": "Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default."
     }
   ],
   "external_boundaries": [
     {
       "name": "GitHub Actions",
-      "contract": "Linux, Windows, and macOS hosted runners provide public CI and runtime acceptance evidence."
+      "contract": "Linux, Windows, and macOS hosted runners are acceptance authority."
     },
     {
       "name": "Host toolchains",
-      "contract": "Compiler/runtime availability is observed, never assumed; missing optional tools are reported as unavailable."
+      "contract": "Compiler/runtime availability is observed, never assumed."
     },
     {
-      "name": "Third-party analyzers",
-      "contract": "Future analyzers may contribute evidence through adapters but do not override DoctorCode evidence classification."
+      "name": "Future language analyzers",
+      "contract": "Each language declares semantic coverage separately; recognition alone never implies analyzer support."
     }
   ]
 }
