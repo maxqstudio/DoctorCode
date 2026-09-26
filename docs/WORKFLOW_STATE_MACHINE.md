@@ -47,10 +47,10 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 
 ## FLOW-BENCHMARK — Labeled precision regression benchmark
 
-Purpose: Measure detector behavior against baseline and adversarial labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
+Purpose: Measure detector behavior against baseline, adversarial, and repository-shaped labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
 Critical: FALSE
 Entry condition: doctorcode benchmark is invoked with an accessible validated manifest.
-Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
+Authority: internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/
 
 ### States
 
@@ -65,11 +65,11 @@ Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manif
 
 | From | To | Action | Authority | Side effects |
 |---|---|---|---|---|
-| REQUESTED | VALIDATING_MANIFEST | Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
-| VALIDATING_MANIFEST | ANALYZING_CASES | Run the selected deterministic analyzer against each isolated case. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
-| ANALYZING_CASES | MATCHING_LABELS | Match actual findings to expected rule/path/location labels. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
-| MATCHING_LABELS | GATED | Count TP, FP, FN and calculate aggregate/per-rule precision and recall. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
-| GATED | REPORTED | Emit the report and return failure when mismatches or thresholds fail. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+| REQUESTED | VALIDATING_MANIFEST | Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary. | internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/ |  |
+| VALIDATING_MANIFEST | ANALYZING_CASES | Run the selected deterministic analyzer against each isolated case. | internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/ |  |
+| ANALYZING_CASES | MATCHING_LABELS | Match actual findings to expected rule/path/location labels. | internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/ |  |
+| MATCHING_LABELS | GATED | Count TP, FP, FN and calculate aggregate/per-rule precision and recall. | internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/ |  |
+| GATED | REPORTED | Emit the report and return failure when mismatches or thresholds fail. | internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/ |  |
 
 ### Invariants
 
@@ -78,6 +78,7 @@ Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manif
 - Case roots may not resolve outside the manifest directory.
 - Benchmark execution does not mutate analyzed source.
 - Accepted baseline corpus must remain passing when adversarial detector repairs are added.
+- Repository-shaped oracle defects are corrected in fixtures rather than by weakening valid detector behavior.
 
 ### Failure behavior
 

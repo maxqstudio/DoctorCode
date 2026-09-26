@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
+Source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -15,7 +15,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
-| internal/benchmark/benchmark_test.go | Go | 141 | internal/benchmark | NO |
+| internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
 | internal/benchmark/testdata/cases/deadcode-bodyless/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-bodyless | NO |
 | internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-linkage-escape | NO |
@@ -37,6 +37,29 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m03/security-raw-string/sample.go | Go | 3 | internal/benchmark/testdata/m03/security-raw-string | NO |
 | internal/benchmark/testdata/m03/simplify-inverted/sample.go | Go | 9 | internal/benchmark/testdata/m03/simplify-inverted | NO |
 | internal/benchmark/testdata/m03/simplify-same-result/sample.go | Go | 9 | internal/benchmark/testdata/m03/simplify-same-result | NO |
+| internal/benchmark/testdata/m04/assembly-fail-closed/helper.go | Go | 3 | internal/benchmark/testdata/m04/assembly-fail-closed | NO |
+| internal/benchmark/testdata/m04/build-tag-reference/helper.go | Go | 3 | internal/benchmark/testdata/m04/build-tag-reference | NO |
+| internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go | Go | 5 | internal/benchmark/testdata/m04/build-tag-reference | NO |
+| internal/benchmark/testdata/m04/cross-file-dead/helper.go | Go | 3 | internal/benchmark/testdata/m04/cross-file-dead | NO |
+| internal/benchmark/testdata/m04/cross-file-dead/service.go | Go | 3 | internal/benchmark/testdata/m04/cross-file-dead | NO |
+| internal/benchmark/testdata/m04/cross-file-live/helper.go | Go | 3 | internal/benchmark/testdata/m04/cross-file-live | NO |
+| internal/benchmark/testdata/m04/cross-file-live/service.go | Go | 3 | internal/benchmark/testdata/m04/cross-file-live | NO |
+| internal/benchmark/testdata/m04/external-test-name-collision/helper.go | Go | 3 | internal/benchmark/testdata/m04/external-test-name-collision | NO |
+| internal/benchmark/testdata/m04/external-test-name-collision/helper_test.go | Go | 4 | internal/benchmark/testdata/m04/external-test-name-collision | NO |
+| internal/benchmark/testdata/m04/generated-reference/helper.go | Go | 3 | internal/benchmark/testdata/m04/generated-reference | NO |
+| internal/benchmark/testdata/m04/generated-reference/zz_generated.go | Go | 4 | internal/benchmark/testdata/m04/generated-reference | NO |
+| internal/benchmark/testdata/m04/multi-file-bloat/service.go | Go | 3 | internal/benchmark/testdata/m04/multi-file-bloat | NO |
+| internal/benchmark/testdata/m04/multi-file-bloat/target.go | Go | 3 | internal/benchmark/testdata/m04/multi-file-bloat | NO |
+| internal/benchmark/testdata/m04/multi-file-bloat/wrapper.go | Go | 3 | internal/benchmark/testdata/m04/multi-file-bloat | NO |
+| internal/benchmark/testdata/m04/multi-package-isolation/pkgone/a.go | Go | 3 | internal/benchmark/testdata/m04/multi-package-isolation/pkgone | NO |
+| internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo/a.go | Go | 4 | internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo | NO |
+| internal/benchmark/testdata/m04/nested-logic/internal/router/router.go | Go | 12 | internal/benchmark/testdata/m04/nested-logic/internal/router | NO |
+| internal/benchmark/testdata/m04/nested-logic/internal/router/support.go | Go | 3 | internal/benchmark/testdata/m04/nested-logic/internal/router | NO |
+| internal/benchmark/testdata/m04/nested-security/cmd/app/main.go | Go | 5 | internal/benchmark/testdata/m04/nested-security/cmd/app | NO |
+| internal/benchmark/testdata/m04/nested-simplify/pkg/flags/doc.go | Go | 1 | internal/benchmark/testdata/m04/nested-simplify/pkg/flags | NO |
+| internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go | Go | 9 | internal/benchmark/testdata/m04/nested-simplify/pkg/flags | NO |
+| internal/benchmark/testdata/m04/same-package-test-reference/helper.go | Go | 3 | internal/benchmark/testdata/m04/same-package-test-reference | NO |
+| internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go | Go | 3 | internal/benchmark/testdata/m04/same-package-test-reference | NO |
 | internal/detector/detector.go | Go | 12 | internal/detector | NO |
 | internal/engine/engine.go | Go | 87 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 104 | internal/evidence | NO |

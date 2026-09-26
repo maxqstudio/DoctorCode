@@ -1,81 +1,70 @@
 {
-  "schema_version": 1,
   "evidence_boundary": "M04 proves a 12-case repository-shaped Go regression corpus covering cross-file references, package isolation, same-package and external tests, build-tag-visible references, assembly fail-closed behavior, generated-file references, and nested package findings. Corrected candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d reports 7 TP, 0 FP, and 0 FN and passes all three CI operating systems. No detector source code changed in M04. These are synthetic repository-shaped corpus results, not general real-world precision or recall.",
-  "runtime_status": "PASS",
-  "human_comprehension_status": "PASS",
   "human_comprehension_questions": {
-    "What is the project and what problem does it solve?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
     "How does failure/recovery behave?": "PASS",
-    "What is the current project state?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
     "What is proven and what is not proven?": "PASS",
-    "What may happen next and what is blocked?": "PASS"
+    "What is the current project state?": "PASS",
+    "What is the project and what problem does it solve?": "PASS",
+    "What may happen next and what is blocked?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS"
   },
-  "sequence_mode": "DURING",
-  "sequence_session": "M04-REPOSITORY-SHAPED-EVAL",
-  "sequence_sync_status": "PASS",
-  "truth_gates": {
-    "SOURCE_TESTS": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "PROVENANCE_SYNC": "NOT_PROVEN",
-    "REFERENCE_SYNC": "NOT_PROVEN",
-    "STRUCTURAL_SYNC": "NOT_PROVEN",
-    "SEMANTIC_SYNC": "PASS",
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "DOC_READABILITY": "PASS"
-  },
+  "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "CI run 36279033090 at 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d: M02, M03, and M04 benchmark gates pass on Linux, Windows, and macOS.",
       "id": "M04-REPOSITORY-SHAPED-GATE",
       "requirement": "A 12-case multi-file and multi-package Go corpus is a blocking CI gate alongside the accepted M02 and M03 corpora.",
-      "evidence": "CI run 36279033090 at 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d: M02, M03, and M04 benchmark gates pass on Linux, Windows, and macOS.",
       "status": "PASS"
     },
     {
+      "evidence": "M04 multi-package-isolation and external-test-name-collision fixtures; M04 corpus PASS in CI run 36279033090.",
       "id": "M04-PACKAGE-ISOLATION",
       "requirement": "Repository-shaped evaluation distinguishes same-named functions in separate packages and external test packages without cross-package reference contamination.",
-      "evidence": "M04 multi-package-isolation and external-test-name-collision fixtures; M04 corpus PASS in CI run 36279033090.",
       "status": "PASS"
     },
     {
+      "evidence": "M04 cross-file-live, same-package-test-reference, generated-reference, and build-tag-reference fixtures; M04 corpus PASS in CI run 36279033090.",
       "id": "M04-CROSS-FILE-REFERENCES",
       "requirement": "Visible same-package references across files, tests, generated files, and build-tagged source files are counted conservatively for lexical reference evidence.",
-      "evidence": "M04 cross-file-live, same-package-test-reference, generated-reference, and build-tag-reference fixtures; M04 corpus PASS in CI run 36279033090.",
       "status": "PASS"
     },
     {
+      "evidence": "M04 assembly-fail-closed fixture; M04 corpus PASS in CI run 36279033090.",
       "id": "M04-ESCAPE-HATCH",
       "requirement": "Assembly presence in a package keeps DEADCODE fail-closed in repository-shaped analysis.",
-      "evidence": "M04 assembly-fail-closed fixture; M04 corpus PASS in CI run 36279033090.",
       "status": "PASS"
     },
     {
+      "evidence": "M04 nested-security, nested-logic, and nested-simplify fixtures; M04 corpus PASS in CI run 36279033090.",
       "id": "M04-NESTED-PACKAGES",
       "requirement": "Repository recursion preserves relative evidence paths for SECURITY, LOGIC, and SIMPLIFY findings in nested packages.",
-      "evidence": "M04 nested-security, nested-logic, and nested-simplify fixtures; M04 corpus PASS in CI run 36279033090.",
       "status": "PASS"
     },
     {
+      "evidence": "Initial run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed on a valid DEADCODE finding in windows_ref.go; only the fixture was corrected in 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d.",
       "id": "M04-ORACLE-INTEGRITY",
       "requirement": "A mislabeled fixture must be corrected when detector evidence is valid; acceptance must not weaken detector behavior merely to make the corpus green.",
-      "evidence": "Initial run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed on a valid DEADCODE finding in windows_ref.go; only the fixture was corrected in 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d.",
       "status": "PASS"
     }
   ],
+  "runtime_checks": [
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
+    "go run ./cmd/doctorcode audit . --json --max-findings=10",
+    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
+  ],
+  "runtime_status": "PASS",
+  "schema_version": 1,
+  "sequence_mode": "DURING",
+  "sequence_session": "M04-REPOSITORY-SHAPED-EVAL",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -84,11 +73,22 @@
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "runtime_checks": [
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
-    "go run ./cmd/doctorcode audit . --json --max-findings=10",
-    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
-  ]
+  "truth_gates": {
+    "BEHAVIORAL_SYNC": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
+    "DOC_SOURCE_TRACEABILITY": "PASS",
+    "DOC_TEST_TRACEABILITY": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "RUNTIME_E2E": "PASS",
+    "SEMANTIC_SYNC": "PASS",
+    "SOURCE_TESTS": "PASS",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "PASS"
+  }
 }

@@ -81,3 +81,27 @@ Status: ACCEPTED
 Every M03 repair must pass both the accepted M02 baseline corpus and the M03 adversarial corpus on all supported CI operating systems.
 
 Rationale: A detector repair is not accepted if it fixes the new cases by regressing previously accepted behavior.
+
+## ADR-M04-001 — Repository-shaped evidence before capability expansion
+
+Status: ACCEPTED
+
+Validate existing Go rules against multi-file and multi-package mini-repositories before adding a new semantic language adapter or destructive behavior.
+
+Rationale: Single-file corpora cannot exercise package boundaries, external tests, generated references, build-tag-visible references, or nested evidence paths.
+
+## ADR-M04-002 — Visible-tree build-tag reference semantics
+
+Status: ACCEPTED
+
+For current lexical reference evidence, count visible Go references even when they reside in a build-tagged file rather than claiming target-specific runtime reachability.
+
+Rationale: DoctorCode does not yet select an active GOOS/GOARCH/build-tag configuration; counting visible references is the safer fail-closed behavior for DEADCODE.
+
+## ADR-M04-003 — Do not repair the detector to satisfy a bad oracle
+
+Status: ACCEPTED
+
+When a corpus mismatch is caused by an invalid expected label and detector evidence is valid, repair the fixture rather than suppressing or weakening the rule.
+
+Rationale: Benchmark data is evidence input, not an unquestionable source of truth.

@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 40 files, 1 language categories.
+Observed source inventory: 63 files, 1 language categories.
 
 ## Major components
 
@@ -40,7 +40,7 @@ Observed source inventory: 40 files, 1 language categories.
 | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| Precision Benchmark Harness | Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate | Go analyzer |
+| Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
 
 ## Main data flow
 
@@ -52,6 +52,7 @@ Observed source inventory: 40 files, 1 language categories.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 - adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
+- repository-shaped labeled corpus -> precision benchmark harness: M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules.
 
 ## Main user workflows
 
@@ -69,9 +70,9 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 
 ### FLOW-BENCHMARK — Labeled precision regression benchmark
 
-Measure detector behavior against baseline and adversarial labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
+Measure detector behavior against baseline, adversarial, and repository-shaped labeled corpora and fail CI when a regression introduces a false positive, false negative, or threshold miss.
 
-Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
+Authority: internal/benchmark/benchmark.go and tracked manifests under internal/benchmark/testdata/
 
 - REQUESTED -> VALIDATING_MANIFEST : Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary.
 - VALIDATING_MANIFEST -> ANALYZING_CASES : Run the selected deterministic analyzer against each isolated case.
@@ -91,9 +92,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M03_ADVERSARIAL_PRECISION
+Current phase: M04_REPOSITORY_SHAPED_EVAL
 
-Current status: M03_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -134,15 +135,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Freeze final M03 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.
-- For M04, increase evidence diversity before raising detector confidence or adding destructive actions.
-- Prefer a separate repository-shaped corpus with multi-file and multi-package cases over simply adding more single-file examples.
+- Synchronize M04 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M04 snapshot.
+- Promote M04 only if exact-SHA three-OS CI and strict governance both pass.
 
 Blocked actions:
 - Advertising corpus precision as general real-world product precision.
+- Treating a build-tagged source reference as proof of runtime reachability on every target.
 - Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.
 - Auto-deleting or auto-fixing findings.
-- Adding destructive behavior before repository-shaped validation exists.
 
 Known blockers:
 - None declared.
@@ -151,21 +152,20 @@ Known blockers:
 
 ### Proven
 
-- M02 accepted baseline is 76903ac9384412274cef4393fe6ba970bab6fec7.
-- The initial M03 adversarial gate failed at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e with 4 false negatives and 0 false positives, proving the new oracle caught behavior missed by M02.
-- M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed strict Skill_Workflow governance run 36259014539.
-- M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 on ubuntu-latest, windows-latest, and macos-latest.
-- The 11-case adversarial corpus reports 6 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- The original M02 nine-case corpus remains passing after the M03 repairs.
-- Reference-collision and redundant-parenthesis false negatives are covered by tracked regression fixtures.
+- M03 accepted baseline is 07c8bee4c546edd381723abad2398dbb2567fbf9.
+- M04 added a 12-case repository-shaped Go corpus without changing detector source code.
+- The initial M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed because the build-tag fixture itself contained a valid unexported zero-reference function; the fixture oracle was corrected instead of weakening the detector.
+- Corrected M04 source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d passed CI run 36279033090 on ubuntu-latest, windows-latest, and macos-latest.
+- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the corrected candidate.
+- The accepted M02 baseline and M03 adversarial corpora remain passing alongside M04.
 
 ### Not proven
 
-- The combined curated corpora do not establish general real-world precision or recall.
+- The three curated corpora do not establish general real-world precision or recall.
+- M04 mini-repositories are still synthetic and smaller than production monorepos.
+- Build constraints are not evaluated as an active target configuration; reference analysis remains visible-tree lexical analysis.
 - Reference counting remains conservative static analysis rather than a complete compiler/type-system call graph.
-- The corpora do not cover reflection, generated-code conventions, every build-tag combination, or all Go ecosystem patterns.
-- Semantic support for non-Go languages is not implemented.
-- Automatic fixing and deletion remain unsupported.
+- Semantic support for non-Go languages and automatic mutation remain unsupported.
 
 ## Important limitations
 

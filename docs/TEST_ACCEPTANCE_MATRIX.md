@@ -4,24 +4,26 @@
 
 ## Evidence boundary
 
-M03 acceptance proves an additional 11-case adversarial Go regression corpus and two targeted detector repairs. Pre-repair CI run 36258651822 exposed 4 false negatives. Synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed strict governance run 36259014539 and three-OS CI run 36259014440; the adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 nine-case corpus remains passing. These are curated-corpus results, not general real-world precision or recall.
+M04 proves a 12-case repository-shaped Go regression corpus covering cross-file references, package isolation, same-package and external tests, build-tag-visible references, assembly fail-closed behavior, generated-file references, and nested package findings. Corrected candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d reports 7 TP, 0 FP, and 0 FN and passes all three CI operating systems. No detector source code changed in M04. These are synthetic repository-shaped corpus results, not general real-world precision or recall.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
+Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M03-ADVERSARIAL-GATE | An independent 11-case Go adversarial corpus is a blocking CI gate alongside the accepted M02 baseline corpus. | Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79, CI run 36259014440: both the M02 baseline gate and M03 adversarial gate PASS on Linux, Windows, and macOS. | PASS |
-| M03-GATE-DETECTS-REGRESSION | The adversarial oracle must fail when current detector behavior misses labeled findings rather than merely reporting coverage. | Pre-repair run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, blocking gate FAIL; repaired exact candidate later passed. | PASS |
-| M03-REFERENCE-COLLISIONS | Same-named local variables, method declarations, and selector names do not count as references to an unrelated package-level function candidate. | M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
-| M03-CONDITION-CANONICALIZATION | Equivalent pure duplicate conditions remain comparable when one occurrence adds redundant parentheses. | M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
-| M03-BASELINE-PRESERVATION | M03 precision repairs must not regress the accepted M02 nine-case benchmark. | CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
+| M04-REPOSITORY-SHAPED-GATE | A 12-case multi-file and multi-package Go corpus is a blocking CI gate alongside the accepted M02 and M03 corpora. | CI run 36279033090 at 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d: M02, M03, and M04 benchmark gates pass on Linux, Windows, and macOS. | PASS |
+| M04-PACKAGE-ISOLATION | Repository-shaped evaluation distinguishes same-named functions in separate packages and external test packages without cross-package reference contamination. | M04 multi-package-isolation and external-test-name-collision fixtures; M04 corpus PASS in CI run 36279033090. | PASS |
+| M04-CROSS-FILE-REFERENCES | Visible same-package references across files, tests, generated files, and build-tagged source files are counted conservatively for lexical reference evidence. | M04 cross-file-live, same-package-test-reference, generated-reference, and build-tag-reference fixtures; M04 corpus PASS in CI run 36279033090. | PASS |
+| M04-ESCAPE-HATCH | Assembly presence in a package keeps DEADCODE fail-closed in repository-shaped analysis. | M04 assembly-fail-closed fixture; M04 corpus PASS in CI run 36279033090. | PASS |
+| M04-NESTED-PACKAGES | Repository recursion preserves relative evidence paths for SECURITY, LOGIC, and SIMPLIFY findings in nested packages. | M04 nested-security, nested-logic, and nested-simplify fixtures; M04 corpus PASS in CI run 36279033090. | PASS |
+| M04-ORACLE-INTEGRITY | A mislabeled fixture must be corrected when detector evidence is valid; acceptance must not weaken detector behavior merely to make the corpus green. | Initial run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed on a valid DEADCODE finding in windows_ref.go; only the fixture was corrected in 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d. | PASS |
 
 ## Test commands
 
 - go test ./...
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
@@ -29,13 +31,14 @@ Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3
 
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M03-ADVERSARIAL-PRECISION
+Sequence session contract: M04-REPOSITORY-SHAPED-EVAL
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

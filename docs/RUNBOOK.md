@@ -5,7 +5,8 @@
 1. Unit and corpus tests — go test ./... — expected: exit code 0
 2. Precision benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json — expected: passed=true; current nine-case corpus reports 5 TP, 0 FP, 0 FN
 3. M03 adversarial benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json — expected: passed=true; current 11-case adversarial corpus reports 6 TP, 0 FP, 0 FN
-4. Static vet — go vet ./... — expected: exit code 0
-5. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
-6. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
-7. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS
+4. M04 repository-shaped benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json — expected: passed=true; current 12-case repository-shaped corpus reports 7 TP, 0 FP, 0 FN
+5. Static vet — go vet ./... — expected: exit code 0
+6. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
+7. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
+8. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS

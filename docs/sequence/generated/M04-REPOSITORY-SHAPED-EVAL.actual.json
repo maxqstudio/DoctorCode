@@ -1,0 +1,25 @@
+{
+  "coverage": {
+    "js_ts_http_module_scan": true,
+    "limitations": [
+      "dynamic dispatch",
+      "dependency injection",
+      "reflection",
+      "callbacks/events",
+      "framework magic not visible statically",
+      "JS/TS function-level call ownership is not fully resolved"
+    ],
+    "python_ast": true,
+    "python_parse_failures": [],
+    "python_route_decorators": true,
+    "runtime_trace": false
+  },
+  "edges": [],
+  "entries": [],
+  "generated": true,
+  "generated_by": "generate_sequence_actual.py",
+  "nodes": [],
+  "observed_head": "5e0dbebd9eef6a60e145e4dbbb9375ec294ceb3d",
+  "schema_version": 1,
+  "source_digest": "fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36"
+}

@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 76903ac9384412274cef4393fe6ba970bab6fec7
+Authority verified at SHA: 07c8bee4c546edd381723abad2398dbb2567fbf9
 Governance profile: strict
 
 ## Current phase
-Phase: M03_ADVERSARIAL_PRECISION
-Status: M03_ACCEPTED
+Phase: M04_REPOSITORY_SHAPED_EVAL
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m03-adversarial-precision
+Branch: work/m04-repository-shaped-eval
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 76903ac9384412274cef4393fe6ba970bab6fec7
+Last accepted SHA: 07c8bee4c546edd381723abad2398dbb2567fbf9
 Current candidate SHA: external final acceptance evidence
-Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
+Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,24 +33,23 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M03-ADVERSARIAL-PRECISION
+Current sequence session: M04-REPOSITORY-SHAPED-EVAL
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M02 accepted baseline is 76903ac9384412274cef4393fe6ba970bab6fec7.
-- The initial M03 adversarial gate failed at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e with 4 false negatives and 0 false positives, proving the new oracle caught behavior missed by M02.
-- M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed strict Skill_Workflow governance run 36259014539.
-- M03 synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 on ubuntu-latest, windows-latest, and macos-latest.
-- The 11-case adversarial corpus reports 6 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- The original M02 nine-case corpus remains passing after the M03 repairs.
-- Reference-collision and redundant-parenthesis false negatives are covered by tracked regression fixtures.
+- M03 accepted baseline is 07c8bee4c546edd381723abad2398dbb2567fbf9.
+- M04 added a 12-case repository-shaped Go corpus without changing detector source code.
+- The initial M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed because the build-tag fixture itself contained a valid unexported zero-reference function; the fixture oracle was corrected instead of weakening the detector.
+- Corrected M04 source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d passed CI run 36279033090 on ubuntu-latest, windows-latest, and macos-latest.
+- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the corrected candidate.
+- The accepted M02 baseline and M03 adversarial corpora remain passing alongside M04.
 
 ## Not proven
-- The combined curated corpora do not establish general real-world precision or recall.
+- The three curated corpora do not establish general real-world precision or recall.
+- M04 mini-repositories are still synthetic and smaller than production monorepos.
+- Build constraints are not evaluated as an active target configuration; reference analysis remains visible-tree lexical analysis.
 - Reference counting remains conservative static analysis rather than a complete compiler/type-system call graph.
-- The corpora do not cover reflection, generated-code conventions, every build-tag combination, or all Go ecosystem patterns.
-- Semantic support for non-Go languages is not implemented.
-- Automatic fixing and deletion remain unsupported.
+- Semantic support for non-Go languages and automatic mutation remain unsupported.
 
 ## Known blockers
 - None declared.
@@ -59,12 +58,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Freeze final M03 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.
-- For M04, increase evidence diversity before raising detector confidence or adding destructive actions.
-- Prefer a separate repository-shaped corpus with multi-file and multi-package cases over simply adding more single-file examples.
+- Synchronize M04 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M04 snapshot.
+- Promote M04 only if exact-SHA three-OS CI and strict governance both pass.
 
 ## Explicitly blocked
 - Advertising corpus precision as general real-world product precision.
+- Treating a build-tagged source reference as proof of runtime reachability on every target.
 - Upgrading DEADCODE HIGH to PROVEN_UNUSED from these corpora alone.
 - Auto-deleting or auto-fixing findings.
-- Adding destructive behavior before repository-shaped validation exists.

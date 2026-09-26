@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
+Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
 
 ## Components
 
@@ -15,7 +15,7 @@ Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| benchmark_harness | Precision Benchmark Harness | Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate | Go analyzer |
+| benchmark_harness | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
 
 ## Data flow
 
@@ -27,6 +27,7 @@ Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 - adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
+- repository-shaped labeled corpus -> precision benchmark harness: M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules.
 
 ## External boundaries
 
@@ -37,9 +38,9 @@ Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3
 
 ## Observed implementation inventory
 
-Source files: 40
-Source lines: 2347
-Languages: Go=40
+Source files: 63
+Source lines: 2455
+Languages: Go=63
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

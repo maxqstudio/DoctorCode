@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M04 repository-shaped evaluation candidate
+
+Type: development
+
+- Added a 12-case multi-file and multi-package Go benchmark corpus.
+- Covered package isolation, external tests, build-tag-visible references, assembly fail-closed behavior, generated references, and nested package evidence paths.
+- Corrected one mislabeled build-tag fixture after the detector validly reported its own zero-reference function.
+- Made no Go detector source changes.
+- Preserved M02 and M03 benchmark gates while M04 reached 7 TP, 0 FP, and 0 FN.
+
 ## 2026-09-27 — M03 accepted baseline
 
 Type: acceptance

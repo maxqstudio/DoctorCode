@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -48,6 +48,9 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M03-REPAIRED-METRICS | On repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea, the 11-case M03 adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 baseline corpus remains passing. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::lexicalReferenceCounts; internal/analyzers/golang/analyzer.go::canonicalCondition; internal/benchmark/testdata/m03-adversarial.json | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79 | PASS |
 | TRUTH-M03-REFERENCE-COLLISION | M03 reference counting excludes same-named local identifiers, selector names, and function or method declaration names from unrelated package-level function reference counts. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::lexicalReferenceCounts | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79 | PASS |
 | TRUTH-M03-PAREN-CANONICAL | M03 pure-condition comparison ignores redundant parentheses while preserving AST operator structure. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::canonicalCondition | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79 | PASS |
+| TRUTH-M04-REPOSITORY-METRICS | On corrected source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d, the 12-case M04 repository-shaped corpus reports 7 TP, 0 FP, and 0 FN while M02 and M03 remain passing. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04-repository-shaped.json; internal/benchmark/benchmark.go::Evaluate | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36279033090 | PASS |
+| TRUTH-M04-NO-DETECTOR-CHANGE | M04 adds repository-shaped evaluation evidence without modifying Go detector implementation code. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04-repository-shaped.json; .github/workflows/ci.yml | internal/benchmark/benchmark_test.go | Git history from 07c8bee4c546edd381723abad2398dbb2567fbf9 through 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d | PASS |
+| TRUTH-M04-ORACLE-CORRECTION | The first M04 run rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; the fixture was corrected without weakening detector rules. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 | PASS |
 
 ## Claim relations
 

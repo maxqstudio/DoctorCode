@@ -66,7 +66,7 @@
       "file": "internal/benchmark/benchmark_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 141
+      "lines": 160
     },
     {
       "directory": "internal/benchmark/testdata/cases/bloat-positive",
@@ -216,6 +216,167 @@
       "lines": 9
     },
     {
+      "directory": "internal/benchmark/testdata/m04/assembly-fail-closed",
+      "file": "internal/benchmark/testdata/m04/assembly-fail-closed/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/build-tag-reference",
+      "file": "internal/benchmark/testdata/m04/build-tag-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/build-tag-reference",
+      "file": "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-dead",
+      "file": "internal/benchmark/testdata/m04/cross-file-dead/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-dead",
+      "file": "internal/benchmark/testdata/m04/cross-file-dead/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-live",
+      "file": "internal/benchmark/testdata/m04/cross-file-live/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-live",
+      "file": "internal/benchmark/testdata/m04/cross-file-live/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/external-test-name-collision",
+      "file": "internal/benchmark/testdata/m04/external-test-name-collision/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/external-test-name-collision",
+      "file": "internal/benchmark/testdata/m04/external-test-name-collision/helper_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/generated-reference",
+      "file": "internal/benchmark/testdata/m04/generated-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/generated-reference",
+      "file": "internal/benchmark/testdata/m04/generated-reference/zz_generated.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/target.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/wrapper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-package-isolation/pkgone",
+      "file": "internal/benchmark/testdata/m04/multi-package-isolation/pkgone/a.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo",
+      "file": "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo/a.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-logic/internal/router",
+      "file": "internal/benchmark/testdata/m04/nested-logic/internal/router/router.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-logic/internal/router",
+      "file": "internal/benchmark/testdata/m04/nested-logic/internal/router/support.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-security/cmd/app",
+      "file": "internal/benchmark/testdata/m04/nested-security/cmd/app/main.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags",
+      "file": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/doc.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags",
+      "file": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/same-package-test-reference",
+      "file": "internal/benchmark/testdata/m04/same-package-test-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/same-package-test-reference",
+      "file": "internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
       "directory": "internal/detector",
       "file": "internal/detector/detector.go",
       "is_test": false,
@@ -297,13 +458,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a",
+  "source_digest": "fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36",
   "source_summary": {
-    "files": 40,
+    "files": 63,
     "languages": {
-      "Go": 40
+      "Go": 63
     },
-    "lines": 2347,
+    "lines": 2455,
     "test_files": 0
   },
   "tests": []
