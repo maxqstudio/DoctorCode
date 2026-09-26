@@ -1,32 +1,33 @@
 {
   "schema_version": 1,
   "phase": "M01_DETECTOR_FOUNDATION",
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "M01_ACCEPTED",
   "working_branch": "work/m01-detector-foundation",
   "last_accepted_sha": "fa1da95814be480436c1430c80d154daaadc24e0",
   "last_accepted_branch": "work/bootstrap-doctorcode-m00",
   "proven": [
     "M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.",
-    "M01 source candidate 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed CI run 36256636261 on Linux, Windows, and macOS.",
-    "M01 curated corpus exercises BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE rules.",
-    "M01 security evidence redacts literal values and bounded packets omit security source excerpts.",
-    "All M01 findings explicitly disable automatic fixing/deletion."
+    "M01 post-testdata source candidate 8d5a6f4315ffec8230989147db82419cb73bea8b passed CI run 36256939396 on ubuntu-latest, windows-latest, and macos-latest.",
+    "Synchronized M01 candidate 717b65f9767774004f09c060288499a8c98dbfb7 passed strict Skill_Workflow governance run 36257010289.",
+    "Five narrow Go rules are implemented with explicit confidence boundaries and curated positive/negative corpus coverage.",
+    "Security literal values are redacted and security evidence packets omit source excerpts by default.",
+    "All M01 findings set safe_autofix=false."
   ],
   "not_proven": [
-    "Final M01 provenance/reference/structural/cross-document gates are pending strict validation on synchronized docs.",
-    "The curated corpus is not evidence of general real-world precision.",
+    "The curated corpus does not establish general real-world precision or recall.",
     "Semantic support for non-Go languages is not implemented.",
-    "Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion."
+    "Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion.",
+    "Current generic Skill_Workflow sequence extraction still does not resolve Go function call graphs."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize acceptance-candidate docs.",
-    "Run strict Skill_Workflow validators against the synchronized candidate.",
-    "Promote M01 only if strict governance passes without weakening validators."
+    "Begin M02 precision/benchmark expansion from the accepted M01 baseline.",
+    "Add larger adversarial corpus cases before raising any confidence classification.",
+    "Add language adapters one at a time with their own evidence boundaries."
   ],
   "blocked_actions": [
     "Auto-deleting or auto-fixing findings.",
-    "Claiming general cross-language semantic support.",
-    "Calling HIGH or SUSPICIOUS findings proven defects."
+    "Claiming broad cross-language semantic support.",
+    "Publishing general precision/recall claims from the small curated corpus."
   ]
 }
