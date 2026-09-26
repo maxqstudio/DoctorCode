@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m01-detector-foundation
+Active branch: work/m02-precision-benchmark
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: fa1da95814be480436c1430c80d154daaadc24e0
-Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
+Last accepted SHA: b9820a7f430723b9d46246a82a69372668831785
+Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

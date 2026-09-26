@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
+Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 ## Components
 
@@ -15,6 +15,7 @@ Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef56
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
+| benchmark_harness | Precision Benchmark Harness | Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, threshold gate | Go analyzer |
 
 ## Data flow
 
@@ -22,18 +23,22 @@ Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef56
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
 - detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
 - evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
+- labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
+- Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
+- precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 
 ## External boundaries
 
 - GitHub Actions: Linux, Windows, and macOS hosted runners are acceptance authority.
 - Host toolchains: Compiler/runtime availability is observed, never assumed.
 - Future language analyzers: Each language declares semantic coverage separately; recognition alone never implies analyzer support.
+- Repository filesystem boundary: Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis.
 
 ## Observed implementation inventory
 
-Source files: 17
-Source lines: 1608
-Languages: Go=17
+Source files: 29
+Source lines: 2195
+Languages: Go=29
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

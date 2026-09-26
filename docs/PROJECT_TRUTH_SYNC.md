@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -41,6 +41,9 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M01-NO-AUTOFIX | M01 findings never authorize automatic fixing or deletion. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::newFinding | internal/analyzers/golang/analyzer_test.go | NOT_APPLICABLE | PASS |
 | TRUTH-M01-SECURITY-REDACTION | M01 hardcoded-credential findings never emit the literal credential value, and security evidence packets omit source excerpts by default. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::credentialFinding; internal/evidence/packet.go::Build | internal/analyzers/golang/analyzer_test.go; internal/evidence/packet_test.go | GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b | PASS |
 | TRUTH-M01-BOUNDED-PACKET | doctorcode next can emit one evidence packet under a deterministic max-bytes budget instead of exposing the whole repository. | PROJECT_TRUTH_SYNC.md | internal/evidence/packet.go::Build; cmd/doctorcode/main.go::runNext | internal/evidence/packet_test.go | GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b | PASS |
+| TRUTH-M02-CURATED-METRICS | On the nine-case M02 labeled Go corpus, source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 produced 5 true positives, 0 false positives, and 0 false negatives; this claim is corpus-scoped only. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::Evaluate; internal/benchmark/testdata/manifest.json | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36257961484 | PASS |
+| TRUTH-M02-BENCHMARK-FAIL-CLOSED | The M02 benchmark reports failure for both unexpected analyzer findings and missing expected findings, and the CLI exits non-zero when the report does not pass. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::Evaluate; cmd/doctorcode/main.go::runBenchmark | internal/benchmark/benchmark_test.go | GitHub Actions CI run 36257961484 | PASS |
+| TRUTH-M02-PATH-CONTAINMENT | M02 benchmark case roots are constrained to the manifest directory and Go repository analysis skips source symlink entries. | PROJECT_TRUTH_SYNC.md | internal/benchmark/benchmark.go::secureCaseRoot; internal/analyzers/golang/analyzer.go::parseGoFiles | internal/benchmark/benchmark_test.go; internal/analyzers/golang/analyzer_test.go | GitHub Actions CI run 36257961484 | PASS |
 
 ## Claim relations
 

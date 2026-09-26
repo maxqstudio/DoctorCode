@@ -17,21 +17,21 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 239
+      "lines": 290
     },
     {
       "directory": "internal/analyzers/golang",
       "file": "internal/analyzers/golang/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 562
+      "lines": 565
     },
     {
       "directory": "internal/analyzers/golang",
       "file": "internal/analyzers/golang/analyzer_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 168
+      "lines": 195
     },
     {
       "directory": "internal/analyzers/golang",
@@ -53,6 +53,90 @@
       "is_test": false,
       "language": "Go",
       "lines": 28
+    },
+    {
+      "directory": "internal/benchmark",
+      "file": "internal/benchmark/benchmark.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 317
+    },
+    {
+      "directory": "internal/benchmark",
+      "file": "internal/benchmark/benchmark_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 122
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/bloat-positive",
+      "file": "internal/benchmark/testdata/cases/bloat-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-bodyless",
+      "file": "internal/benchmark/testdata/cases/deadcode-bodyless/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-linkage-escape",
+      "file": "internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-positive",
+      "file": "internal/benchmark/testdata/cases/deadcode-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/cases/deadcode-test-reference/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/cases/deadcode-test-reference/sample_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/logic-positive",
+      "file": "internal/benchmark/testdata/cases/logic-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/negative-mixed",
+      "file": "internal/benchmark/testdata/cases/negative-mixed/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 18
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/security-positive",
+      "file": "internal/benchmark/testdata/cases/security-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/simplify-positive",
+      "file": "internal/benchmark/testdata/cases/simplify-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
     },
     {
       "directory": "internal/detector",
@@ -136,13 +220,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a",
+  "source_digest": "2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6",
   "source_summary": {
-    "files": 17,
+    "files": 29,
     "languages": {
-      "Go": 17
+      "Go": 29
     },
-    "lines": 1608,
+    "lines": 2195,
     "test_files": 0
   },
   "tests": []

@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 17 files, 1 language categories.
+Observed source inventory: 29 files, 1 language categories.
 
 ## Major components
 
@@ -40,6 +40,7 @@ Observed source inventory: 17 files, 1 language categories.
 | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
+| Precision Benchmark Harness | Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, threshold gate | Go analyzer |
 
 ## Main data flow
 
@@ -47,6 +48,9 @@ Observed source inventory: 17 files, 1 language categories.
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
 - detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
 - evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
+- labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
+- Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
+- precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 
 ## Main user workflows
 
@@ -62,6 +66,18 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 - RANKED -> REPORTED : For doctorcode audit, emit findings in text or JSON.
 - PACKED -> REPORTED : Emit the single evidence packet.
 
+### FLOW-BENCHMARK — Labeled precision regression benchmark
+
+Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.
+
+Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
+
+- REQUESTED -> VALIDATING_MANIFEST : Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary.
+- VALIDATING_MANIFEST -> ANALYZING_CASES : Run the selected deterministic analyzer against each isolated case.
+- ANALYZING_CASES -> MATCHING_LABELS : Match actual findings to expected rule/path/location labels.
+- MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
+- GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
+
 ### FLOW-SCAN — Repository inventory scan
 
 Produce deterministic repository inventory without whole-repository LLM context.
@@ -74,9 +90,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M01_DETECTOR_FOUNDATION
+Current phase: M02_PRECISION_BENCHMARK
 
-Current status: M01_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -109,19 +125,23 @@ compiler does not infer them from implementation names.
 ## Failure and recovery
 
 - FLOW-AUDIT: Parse or filesystem errors fail the audit instead of returning partial PASS evidence.
+- FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
+- FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
+- FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
 
 ## Current project state
 
 Next authorized actions:
-- Begin M02 precision/benchmark expansion from the accepted M01 baseline.
-- Add larger adversarial corpus cases before raising any confidence classification.
-- Add language adapters one at a time with their own evidence boundaries.
+- Synchronize M02 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M02 snapshot.
+- Promote M02 only if exact-SHA three-OS CI and strict governance both pass.
 
 Blocked actions:
+- Advertising 100 percent precision or recall as a general DoctorCode product claim.
+- Raising HIGH or SUSPICIOUS detector confidence based only on the nine-case corpus.
 - Auto-deleting or auto-fixing findings.
-- Claiming broad cross-language semantic support.
-- Publishing general precision/recall claims from the small curated corpus.
+- Claiming semantic support for languages without a dedicated analyzer and benchmark.
 
 Known blockers:
 - None declared.
@@ -130,19 +150,20 @@ Known blockers:
 
 ### Proven
 
-- M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
-- M01 post-testdata source candidate 8d5a6f4315ffec8230989147db82419cb73bea8b passed CI run 36256939396 on ubuntu-latest, windows-latest, and macos-latest.
-- Synchronized M01 candidate 717b65f9767774004f09c060288499a8c98dbfb7 passed strict Skill_Workflow governance run 36257010289.
-- Five narrow Go rules are implemented with explicit confidence boundaries and curated positive/negative corpus coverage.
-- Security literal values are redacted and security evidence packets omit source excerpts by default.
-- All M01 findings set safe_autofix=false.
+- M01 accepted baseline is b9820a7f430723b9d46246a82a69372668831785.
+- M02 source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 passed CI run 36257961484 on ubuntu-latest, windows-latest, and macos-latest.
+- The nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives for the five current rules.
+- Benchmark unit tests prove both unexpected findings and missing expected findings make the benchmark fail.
+- Benchmark case roots are constrained to the manifest directory, including symlink resolution.
+- Go analyzer ignores source symlink entries so repository audit does not follow a .go symlink outside the target tree.
 
 ### Not proven
 
-- The curated corpus does not establish general real-world precision or recall.
+- The nine-case curated corpus does not establish general real-world precision or recall.
+- The corpus does not cover the full Go language or all adversarial code shapes.
 - Semantic support for non-Go languages is not implemented.
-- Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion.
-- Current generic Skill_Workflow sequence extraction still does not resolve Go function call graphs.
+- Safe automatic deletion or automatic fixing remains unsupported.
+- Current generic Skill_Workflow sequence extraction does not resolve Go function call graphs.
 
 ## Important limitations
 

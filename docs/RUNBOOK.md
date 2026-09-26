@@ -3,7 +3,8 @@
 # RUNBOOK
 
 1. Unit and corpus tests — go test ./... — expected: exit code 0
-2. Static vet — go vet ./... — expected: exit code 0
-3. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
-4. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
-5. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS
+2. Precision benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json — expected: passed=true; current nine-case corpus reports 5 TP, 0 FP, 0 FN
+3. Static vet — go vet ./... — expected: exit code 0
+4. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
+5. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
+6. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS

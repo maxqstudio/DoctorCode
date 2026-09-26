@@ -3,13 +3,14 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
+Source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 ## Flow inventory
 
 | Flow | Entry | Authority symbol | State mutation | Tests | Sequence session | Sequence status |
 |---|---|---|---|---|---|---|
 | FLOW-AUDIT | doctorcode audit or doctorcode next is invoked for an accessible repository. | cmd/doctorcode/main.go, internal/engine/engine.go, internal/analyzers/golang/analyzer.go, internal/evidence/packet.go | ANALYZING, RANKED, PACKED, REPORTED, REPORTED | internal/analyzers/golang/analyzer_test.go, internal/analyzers/golang/corpus_test.go, internal/evidence/packet_test.go | M01-DETECTOR-FOUNDATION | DECLARED |
+| FLOW-BENCHMARK | doctorcode benchmark is invoked with an accessible validated manifest. | cmd/doctorcode/main.go, internal/benchmark/benchmark.go, internal/benchmark/testdata/manifest.json, internal/analyzers/golang/analyzer.go | VALIDATING_MANIFEST, ANALYZING_CASES, MATCHING_LABELS, GATED, REPORTED | internal/benchmark/benchmark_test.go, internal/analyzers/golang/analyzer_test.go | M02-PRECISION-BENCHMARK | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |
 
 ## Observed Python HTTP routes

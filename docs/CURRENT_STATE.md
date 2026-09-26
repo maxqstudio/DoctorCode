@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: fa1da95814be480436c1430c80d154daaadc24e0
+Authority verified at SHA: b9820a7f430723b9d46246a82a69372668831785
 Governance profile: strict
 
 ## Current phase
-Phase: M01_DETECTOR_FOUNDATION
-Status: M01_ACCEPTED
+Phase: M02_PRECISION_BENCHMARK
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m01-detector-foundation
+Branch: work/m02-precision-benchmark
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: fa1da95814be480436c1430c80d154daaadc24e0
+Last accepted SHA: b9820a7f430723b9d46246a82a69372668831785
 Current candidate SHA: external final acceptance evidence
-Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
+Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,22 +33,23 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M01-DETECTOR-FOUNDATION
+Current sequence session: M02-PRECISION-BENCHMARK
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
-- M01 post-testdata source candidate 8d5a6f4315ffec8230989147db82419cb73bea8b passed CI run 36256939396 on ubuntu-latest, windows-latest, and macos-latest.
-- Synchronized M01 candidate 717b65f9767774004f09c060288499a8c98dbfb7 passed strict Skill_Workflow governance run 36257010289.
-- Five narrow Go rules are implemented with explicit confidence boundaries and curated positive/negative corpus coverage.
-- Security literal values are redacted and security evidence packets omit source excerpts by default.
-- All M01 findings set safe_autofix=false.
+- M01 accepted baseline is b9820a7f430723b9d46246a82a69372668831785.
+- M02 source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 passed CI run 36257961484 on ubuntu-latest, windows-latest, and macos-latest.
+- The nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives for the five current rules.
+- Benchmark unit tests prove both unexpected findings and missing expected findings make the benchmark fail.
+- Benchmark case roots are constrained to the manifest directory, including symlink resolution.
+- Go analyzer ignores source symlink entries so repository audit does not follow a .go symlink outside the target tree.
 
 ## Not proven
-- The curated corpus does not establish general real-world precision or recall.
+- The nine-case curated corpus does not establish general real-world precision or recall.
+- The corpus does not cover the full Go language or all adversarial code shapes.
 - Semantic support for non-Go languages is not implemented.
-- Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion.
-- Current generic Skill_Workflow sequence extraction still does not resolve Go function call graphs.
+- Safe automatic deletion or automatic fixing remains unsupported.
+- Current generic Skill_Workflow sequence extraction does not resolve Go function call graphs.
 
 ## Known blockers
 - None declared.
@@ -57,11 +58,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Begin M02 precision/benchmark expansion from the accepted M01 baseline.
-- Add larger adversarial corpus cases before raising any confidence classification.
-- Add language adapters one at a time with their own evidence boundaries.
+- Synchronize M02 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M02 snapshot.
+- Promote M02 only if exact-SHA three-OS CI and strict governance both pass.
 
 ## Explicitly blocked
+- Advertising 100 percent precision or recall as a general DoctorCode product claim.
+- Raising HIGH or SUSPICIOUS detector confidence based only on the nine-case corpus.
 - Auto-deleting or auto-fixing findings.
-- Claiming broad cross-language semantic support.
-- Publishing general precision/recall claims from the small curated corpus.
+- Claiming semantic support for languages without a dedicated analyzer and benchmark.

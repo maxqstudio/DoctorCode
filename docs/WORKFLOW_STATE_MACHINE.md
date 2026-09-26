@@ -45,6 +45,53 @@ Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
 
 - Audit and evidence packet generation do not mutate target source.
 
+## FLOW-BENCHMARK — Labeled precision regression benchmark
+
+Purpose: Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.
+Critical: FALSE
+Entry condition: doctorcode benchmark is invoked with an accessible validated manifest.
+Authority: internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json
+
+### States
+
+- REQUESTED
+- VALIDATING_MANIFEST
+- ANALYZING_CASES
+- MATCHING_LABELS
+- GATED
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| REQUESTED | VALIDATING_MANIFEST | Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+| VALIDATING_MANIFEST | ANALYZING_CASES | Run the selected deterministic analyzer against each isolated case. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+| ANALYZING_CASES | MATCHING_LABELS | Match actual findings to expected rule/path/location labels. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+| MATCHING_LABELS | GATED | Count TP, FP, FN and calculate aggregate/per-rule precision and recall. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+| GATED | REPORTED | Emit the report and return failure when mismatches or thresholds fail. | internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json |  |
+
+### Invariants
+
+- Benchmark metrics are scoped to the supplied labeled corpus and are not general product precision claims.
+- False positives and false negatives both reduce benchmark evidence and block the strict 1.0 corpus threshold.
+- Case roots may not resolve outside the manifest directory.
+- Benchmark execution does not mutate analyzed source.
+
+### Failure behavior
+
+- Invalid manifests and escaping case roots fail closed.
+- Analyzer errors abort the benchmark instead of returning partial PASS.
+- Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+
+### Restart behavior
+
+- Benchmark is stateless and can be rerun from the same manifest and source snapshot.
+
+### Rollback behavior
+
+- Benchmark execution does not mutate source or benchmark fixtures.
+
 ## FLOW-SCAN — Repository inventory scan
 
 Purpose: Produce deterministic repository inventory without whole-repository LLM context.

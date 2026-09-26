@@ -4,34 +4,36 @@
 
 ## Evidence boundary
 
-M01 will prove only the detector pipeline, five narrow Go rules, curated corpus behavior, bounded evidence packet generation, and three-OS execution. It will not prove general precision across real-world repositories or semantic support for other languages.
+M02 proves the labeled benchmark harness and the current nine-case Go regression corpus only. On source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 the corpus produced 5 TP, 0 FP, and 0 FN on all three GitHub-hosted operating systems. These numbers are not a general real-world precision or recall claim.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 99e835405a683cf6ec577672fab4ac035e2274162067661ecb744ef565680b0a
+Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M01-ENGINE | Detector engine executes registered language analyzers deterministically and sorts findings stably. | internal/engine plus all-OS audit smoke — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-FIVE-GO-RULES | Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE. | internal/analyzers/golang corpus tests — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-DEADCODE-SAFETY | Dead-code rule fails closed for visible Go linkage escape hatches and counts test references. | internal/analyzers/golang/analyzer_test.go — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-EVIDENCE-BUDGET | Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings. | internal/evidence/packet_test.go — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
-| M01-NO-AUTOFIX | All M01 findings set safe_autofix=false. | analyzer tests — GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b passed on ubuntu-latest, windows-latest, and macos-latest. | PASS |
+| M02-BENCHMARK-HARNESS | Benchmark harness computes deterministic TP, FP, FN, precision, and recall per rule and in aggregate, and fails when expected/actual labels disagree or configured thresholds are missed. | internal/benchmark/benchmark_test.go plus CI run 36257961484 at 3b8a8dbb413499460de6e97aa06eb62730247105. | PASS |
+| M02-CURATED-GATE | The nine-case labeled Go corpus is a blocking CI regression gate on Linux, Windows, and macOS. | CI run 36257961484: 5 TP, 0 FP, 0 FN, aggregate precision=1 and recall=1 on this corpus only; all three OS jobs passed. | PASS |
+| M02-PATH-CONTAINMENT | Benchmark case roots cannot escape the manifest directory through parent traversal or symlink resolution. | internal/benchmark/benchmark_test.go::TestEvaluateRejectsEscapingCaseRoot and secureCaseRoot. | PASS |
+| M02-SOURCE-SYMLINK | Go repository analysis does not follow .go symlink entries outside the selected repository tree. | internal/analyzers/golang/analyzer_test.go::TestAnalyzerDoesNotFollowGoFileSymlink plus three-OS compile/test CI; symlink creation regression executes on supported Unix runners. | PASS |
+| M02-NO-CLAIM-INFLATION | CLI and project truth describe benchmark metrics as corpus-scoped regression evidence rather than general product precision. | cmd/doctorcode/main.go usage text and .workflow acceptance/state boundary. | PASS |
 
 ## Test commands
 
 - go test ./...
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
 ## Runtime checks
 
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M01-DETECTOR-FOUNDATION
+Sequence session contract: M02-PRECISION-BENCHMARK
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

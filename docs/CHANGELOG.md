@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M02 precision benchmark candidate
+
+Type: development
+
+- Added a strict labeled benchmark manifest and deterministic TP/FP/FN evaluator.
+- Added per-rule and aggregate corpus precision/recall regression gates.
+- Added blocking benchmark execution to Linux, Windows, and macOS CI.
+- Added path-containment validation for benchmark roots and source-symlink exclusion for Go analysis.
+- Recorded the current nine-case result as 5 TP, 0 FP, and 0 FN without generalizing it beyond the corpus.
+
 ## 2026-09-26 — M01 accepted baseline
 
 Type: acceptance

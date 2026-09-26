@@ -41,3 +41,27 @@ Status: ACCEPTED
 Every M01 finding sets safe_autofix=false.
 
 Rationale: The first semantic rules need evidence and verification maturity before DoctorCode is allowed to mutate source.
+
+## ADR-M02-001 — Corpus-scoped precision evidence
+
+Status: ACCEPTED
+
+Treat M02 precision and recall values as regression metrics for the exact labeled corpus only.
+
+Rationale: A small curated corpus can prove regression behavior for its cases but cannot establish general real-world detector precision.
+
+## ADR-M02-002 — False positives and false negatives are both blocking
+
+Status: ACCEPTED
+
+Match expected and actual findings explicitly so both unexpected findings and missing findings fail the benchmark.
+
+Rationale: Coverage-only or happy-path benchmarks would create false confidence and would not protect detector precision or recall.
+
+## ADR-M02-003 — Closed filesystem benchmark boundary
+
+Status: ACCEPTED
+
+Require case roots to resolve inside the manifest directory and skip Go source symlink entries during repository analysis.
+
+Rationale: Benchmark and audit input paths are untrusted filesystem boundaries; following escaping symlinks could analyze or expose files outside the selected scope.
