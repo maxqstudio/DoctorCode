@@ -3,12 +3,15 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 
-	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"\n\t"github.com/maxqstudio/DoctorCode/internal/benchmark"\n\t"github.com/maxqstudio/DoctorCode/internal/engine"
+	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	"github.com/maxqstudio/DoctorCode/internal/benchmark"
+	"github.com/maxqstudio/DoctorCode/internal/engine"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
@@ -31,6 +34,8 @@ func main() {
 		runAudit(os.Args[2:])
 	case "next":
 		runNext(os.Args[2:])
+	case "benchmark":
+		runBenchmark(os.Args[2:])
 	case "version", "--version", "-v":
 		fmt.Println(version)
 	case "help", "--help", "-h":
@@ -268,12 +273,17 @@ Usage:
   doctorcode toolchains [path] [--json]
   doctorcode audit [path] [--json] [--max-findings=N]
   doctorcode next [path] [--json] [--max-bytes=N]
+  doctorcode benchmark <manifest.json> [--json]
   doctorcode version
 
 M01 detector foundation:
   Go has intentionally narrow built-in rules for BLOAT, SECURITY, SIMPLIFY,
   LOGIC, and DEADCODE. Findings carry evidence and confidence boundaries.
   No M01 rule enables automatic deletion or automatic fixing.
+
+M02 precision benchmark:
+  A labeled corpus measures false positives and false negatives per rule.
+  Benchmark thresholds are regression gates, not general precision claims.
 
 Use "doctorcode next --json --max-bytes=4096" to give a small LLM one bounded
 evidence packet instead of the whole repository.`)
