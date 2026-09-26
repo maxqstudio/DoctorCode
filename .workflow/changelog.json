@@ -3,6 +3,18 @@
   "entries": [
     {
       "date": "2026-09-26",
+      "title": "M01 detector foundation candidate",
+      "type": "development",
+      "changes": [
+        "Added deterministic analyzer interface and stable finding ordering.",
+        "Added narrow Go rules for all five DoctorCode categories.",
+        "Added curated positive/negative corpus tests.",
+        "Added byte-bounded single-finding evidence packets with security source omission.",
+        "Kept safe_autofix disabled for every M01 finding."
+      ]
+    },
+    {
+      "date": "2026-09-26",
       "title": "M00 accepted baseline",
       "type": "acceptance",
       "changes": [

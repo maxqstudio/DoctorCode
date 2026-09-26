@@ -58,6 +58,81 @@
         "NOT_APPLICABLE"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M01-FIVE-CATEGORIES",
+      "claim": "M01 Go analyzer contains one intentionally narrow deterministic rule for each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::deadCodeFindings",
+        "internal/analyzers/golang/analyzer.go::bloatFindings",
+        "internal/analyzers/golang/analyzer.go::logicFindings",
+        "internal/analyzers/golang/analyzer.go::simplifyFindings",
+        "internal/analyzers/golang/analyzer.go::securityFindings"
+      ],
+      "tests": [
+        "internal/analyzers/golang/corpus_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256636261"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M01-NO-AUTOFIX",
+      "claim": "M01 findings never authorize automatic fixing or deletion.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::newFinding"
+      ],
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go"
+      ],
+      "runtime_evidence": [
+        "NOT_APPLICABLE"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M01-SECURITY-REDACTION",
+      "claim": "M01 hardcoded-credential findings never emit the literal credential value, and security evidence packets omit source excerpts by default.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::credentialFinding",
+        "internal/evidence/packet.go::Build"
+      ],
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go",
+        "internal/evidence/packet_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256636261"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M01-BOUNDED-PACKET",
+      "claim": "doctorcode next can emit one evidence packet under a deterministic max-bytes budget instead of exposing the whole repository.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/evidence/packet.go::Build",
+        "cmd/doctorcode/main.go::runNext"
+      ],
+      "tests": [
+        "internal/evidence/packet_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256636261"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

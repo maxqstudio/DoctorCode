@@ -1,25 +1,28 @@
 {
   "schema_version": 1,
   "phase": "M01_DETECTOR_FOUNDATION",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTANCE_CANDIDATE",
   "working_branch": "work/m01-detector-foundation",
   "last_accepted_sha": "fa1da95814be480436c1430c80d154daaadc24e0",
   "last_accepted_branch": "work/bootstrap-doctorcode-m00",
   "proven": [
-    "M00 portable baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.",
-    "M00 CI and strict Skill_Workflow governance passed on Linux, Windows, and macOS."
+    "M00 baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.",
+    "M01 source candidate 445a91ea7b6d87d05d5269b77fbf3ce7c65a3a43 passed CI run 36256636261 on Linux, Windows, and macOS.",
+    "M01 curated corpus exercises BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE rules.",
+    "M01 security evidence redacts literal values and bounded packets omit security source excerpts.",
+    "All M01 findings explicitly disable automatic fixing/deletion."
   ],
   "not_proven": [
-    "M01 detector implementation has not yet passed exact-SHA CI and strict governance.",
-    "M01 Go rules are intentionally narrow and do not establish general detector precision.",
+    "Final M01 provenance/reference/structural/cross-document gates are pending strict validation on synchronized docs.",
+    "The curated corpus is not evidence of general real-world precision.",
     "Semantic support for non-Go languages is not implemented.",
-    "Safe automatic deletion remains unsupported."
+    "Go dead-code HIGH findings are not PROVEN_UNUSED and still require verification before deletion."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Run the deterministic Go detector and evidence-packet corpus tests on all three GitHub-hosted operating systems.",
-    "Synchronize M01 Project Truth documentation from structured specs.",
-    "Repair until exact-SHA M01 CI and strict governance pass."
+    "Synchronize acceptance-candidate docs.",
+    "Run strict Skill_Workflow validators against the synchronized candidate.",
+    "Promote M01 only if strict governance passes without weakening validators."
   ],
   "blocked_actions": [
     "Auto-deleting or auto-fixing findings.",
