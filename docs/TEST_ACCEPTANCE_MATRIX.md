@@ -4,18 +4,18 @@
 
 ## Evidence boundary
 
-M03 proves an additional 11-case adversarial Go regression corpus and two targeted detector repairs. The pre-repair gate exposed 4 false negatives; repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea produced 6 TP, 0 FP, and 0 FN on the adversarial corpus while preserving the M02 nine-case benchmark. These are curated-corpus results, not general real-world precision or recall.
+M03 acceptance proves an additional 11-case adversarial Go regression corpus and two targeted detector repairs. Pre-repair CI run 36258651822 exposed 4 false negatives. Synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed strict governance run 36259014539 and three-OS CI run 36259014440; the adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 nine-case corpus remains passing. These are curated-corpus results, not general real-world precision or recall.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 532abc64b927b5de5f64de55afd052a9c0d3faa383a2e73fae77454e3794425a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M03-ADVERSARIAL-GATE | An independent 11-case Go adversarial corpus is a blocking CI gate alongside the accepted M02 baseline corpus. | CI run 36258809398 at cd4ddcadae7b98efc507baebd9239bdec636fbea passed both M02 and M03 benchmark commands on Linux, Windows, and macOS. | PASS |
-| M03-GATE-DETECTS-REGRESSION | The adversarial oracle must fail when current detector behavior misses labeled findings rather than merely reporting coverage. | Pre-repair CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, gate FAIL. | PASS |
-| M03-REFERENCE-COLLISIONS | Same-named local variables, method declarations, and selector names do not count as references to an unrelated package-level function candidate. | M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go. | PASS |
-| M03-CONDITION-CANONICALIZATION | Equivalent pure duplicate conditions remain comparable when one occurrence adds redundant parentheses. | M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation. | PASS |
-| M03-BASELINE-PRESERVATION | M03 precision repairs must not regress the accepted M02 nine-case benchmark. | CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS. | PASS |
+| M03-ADVERSARIAL-GATE | An independent 11-case Go adversarial corpus is a blocking CI gate alongside the accepted M02 baseline corpus. | Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79, CI run 36259014440: both the M02 baseline gate and M03 adversarial gate PASS on Linux, Windows, and macOS. | PASS |
+| M03-GATE-DETECTS-REGRESSION | The adversarial oracle must fail when current detector behavior misses labeled findings rather than merely reporting coverage. | Pre-repair run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e: 2 TP, 0 FP, 4 FN, recall 0.3333, blocking gate FAIL; repaired exact candidate later passed. | PASS |
+| M03-REFERENCE-COLLISIONS | Same-named local variables, method declarations, and selector names do not count as references to an unrelated package-level function candidate. | M03 deadcode-shadow-local, deadcode-selector-collision, and bloat-shadow-local fixtures plus internal/benchmark/benchmark_test.go. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
+| M03-CONDITION-CANONICALIZATION | Equivalent pure duplicate conditions remain comparable when one occurrence adds redundant parentheses. | M03 logic-parenthesized-duplicate fixture and repaired canonicalCondition implementation. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
+| M03-BASELINE-PRESERVATION | M03 precision repairs must not regress the accepted M02 nine-case benchmark. | CI run 36258809398 executes M02 Precision benchmark gate before M03 adversarial benchmark gate; both PASS on all three OS. Exact synchronized candidate 0a5196d22334540c7749957a2192ed44d19e7b79 passed CI run 36259014440 and strict governance run 36259014539. | PASS |
 
 ## Test commands
 
