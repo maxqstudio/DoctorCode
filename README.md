@@ -19,11 +19,11 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M01 detector foundation is accepted on the development branch.** Current semantic coverage is deliberately narrow.
+**M02 precision benchmark is accepted on the development branch.** Current semantic coverage is deliberately narrow, and benchmark results are explicitly corpus-scoped.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
-| Go | Yes | Yes | **Yes — M01 narrow rules** |
+| Go | Yes | Yes | **Yes — M01 narrow rules, M02 benchmark-gated** |
 | Python | Yes | Yes | Not yet |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
@@ -38,7 +38,7 @@ The LLM is not the source of truth.
 
 **Recognition does not mean semantic-analysis support.** Capabilities are kept separate to avoid false support claims.
 
-### Go M01 rules
+### Go detector rules
 
 | Category | M01 rule | Confidence boundary |
 |---|---|---|
@@ -48,7 +48,19 @@ The LLM is not the source of truth.
 | SECURITY | hardcoded literal assigned to a credential-like identifier | `SUSPICIOUS`, literal always redacted |
 | BLOAT | one-call unexported pass-through wrapper with one lexical reference | `SUSPICIOUS` |
 
-No M01 rule performs automatic fixing or deletion.
+No current rule performs automatic fixing or deletion.
+
+### M02 precision regression gate
+
+DoctorCode now includes a labeled Go benchmark that is executed as a blocking CI step:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/manifest.json --json
+```
+
+The accepted M02 corpus contains **9 curated cases**. On the accepted candidate it reports **5 TP, 0 FP, and 0 FN** across the five current rules. That is a regression result for this exact corpus only; it is **not** a claim of 100% real-world precision or recall.
+
+The benchmark fails when an expected finding is missing, when an unexpected finding appears, or when the configured corpus threshold is missed.
 
 ## Quick start
 
@@ -95,6 +107,8 @@ The byte cap is deliberate: exact token counts vary by model/tokenizer, while a 
 - `UNKNOWN` means evidence is insufficient.
 - Zero references never authorizes deletion by itself.
 - Go DEADCODE fails closed for visible assembly/cgo/linkage escape hatches.
+- Go repository analysis skips source symlink entries rather than following them outside the selected tree.
+- Benchmark case roots must resolve inside the benchmark manifest directory.
 - Security findings never include the detected credential literal in evidence.
 - Security `next` packets omit source excerpts by default.
 
@@ -108,7 +122,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Each runner executes unit/corpus tests, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
+Each runner executes unit/corpus tests, the labeled precision benchmark gate, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
 
 ## Design principles
 
