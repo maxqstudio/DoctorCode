@@ -3,6 +3,17 @@
   "entries": [
     {
       "date": "2026-09-26",
+      "title": "M00 accepted baseline",
+      "type": "acceptance",
+      "changes": [
+        "Portable Go core passed Linux, Windows, and macOS GitHub Actions.",
+        "Strict Skill_Workflow governance passed on the synchronized candidate.",
+        "Canonical generated docs are tracked under docs/.",
+        "Semantic detector implementation remains intentionally deferred beyond M00."
+      ]
+    },
+    {
+      "date": "2026-09-26",
       "title": "M00 bootstrap",
       "type": "development",
       "changes": [
