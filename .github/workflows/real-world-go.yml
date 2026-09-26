@@ -61,8 +61,8 @@ jobs:
       - name: Validate pinned public repositories
         working-directory: doctorcode
         env:
-          DOCTORCODE_RW_COBRA: ../external/cobra
-          DOCTORCODE_RW_BUBBLES: ../external/bubbles
-          DOCTORCODE_RW_CHI: ../external/chi
-          DOCTORCODE_RW_TESTIFY: ../external/testify
+          DOCTORCODE_RW_COBRA: external/cobra
+          DOCTORCODE_RW_BUBBLES: external/bubbles
+          DOCTORCODE_RW_CHI: external/chi
+          DOCTORCODE_RW_TESTIFY: external/testify
         run: go test ./internal/realworld -run TestPinnedPublicRepositories -v

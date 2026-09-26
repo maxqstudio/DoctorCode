@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -50,11 +49,11 @@ func TestPinnedPublicRepositories(t *testing.T) {
 				t.Skipf("%s is not set; pinned public-repository validation runs in the dedicated CI job", src.Env)
 			}
 
-			abs, err := filepath.Abs(root)
+			abs, err := resolveSourceRoot(root)
 			if err != nil {
 				t.Fatal(err)
 			}
-			if err := verifyGitSHA(abs, src.SHA); err != nil {
+			if err := verifyCheckoutSHA(abs, src.SHA); err != nil {
 				t.Fatalf("%s provenance check failed: %v", src.Repository, err)
 			}
 
@@ -79,13 +78,25 @@ func TestPinnedPublicRepositories(t *testing.T) {
 	}
 }
 
-func verifyGitSHA(root, expected string) error {
-	cmd := exec.Command("git", "-C", root, "rev-parse", "HEAD")
-	output, err := cmd.Output()
+func resolveSourceRoot(value string) (string, error) {
+	if filepath.IsAbs(value) {
+		return filepath.Clean(value), nil
+	}
+	if workspace := strings.TrimSpace(os.Getenv("GITHUB_WORKSPACE")); workspace != "" {
+		return filepath.Abs(filepath.Join(workspace, value))
+	}
+	return filepath.Abs(value)
+}
+
+func verifyCheckoutSHA(root, expected string) error {
+	data, err := os.ReadFile(filepath.Join(root, ".git", "HEAD"))
 	if err != nil {
 		return err
 	}
-	actual := strings.TrimSpace(string(output))
+	actual := strings.TrimSpace(string(data))
+	if strings.HasPrefix(actual, "ref:") {
+		return fmt.Errorf("expected detached exact-SHA checkout, got %q", actual)
+	}
 	if actual != expected {
 		return fmt.Errorf("expected %s, got %s", expected, actual)
 	}
