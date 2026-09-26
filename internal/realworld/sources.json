@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "cobra",
+      "repository": "spf13/cobra",
+      "sha": "adbc8813901bba65827259daa8e22ff94ec1f30e",
+      "license": "Apache-2.0",
+      "env": "DOCTORCODE_RW_COBRA",
+      "observations": [
+        "OS-specific build-tag files",
+        "package-level function referenced through a package variable"
+      ],
+      "not_deadcode_summary_contains": [
+        "preExecHook"
+      ]
+    },
+    {
+      "id": "bubbles",
+      "repository": "charmbracelet/bubbles",
+      "sha": "0a69b19b0690e9504a511fc231f69cea59ba1cc6",
+      "license": "MIT",
+      "env": "DOCTORCODE_RW_BUBBLES",
+      "observations": [
+        "OS-specific filepicker implementation",
+        "unexported package helper used by exported constructor path"
+      ],
+      "not_deadcode_summary_contains": [
+        "nextID"
+      ]
+    },
+    {
+      "id": "chi",
+      "repository": "go-chi/chi",
+      "sha": "3d1777a1ef8881f7d1da0b02c76ca8f0a29cd2bc",
+      "license": "MIT",
+      "env": "DOCTORCODE_RW_CHI",
+      "observations": [
+        "external test package",
+        "multi-package middleware tree",
+        "unexported package helper used by tests/runtime"
+      ],
+      "not_deadcode_summary_contains": [
+        "cW"
+      ]
+    },
+    {
+      "id": "testify",
+      "repository": "stretchr/testify",
+      "sha": "87a7b9d57689f6579db2da795ab8deeab29cb724",
+      "license": "MIT",
+      "env": "DOCTORCODE_RW_TESTIFY",
+      "observations": [
+        "tracked generated Go wrappers",
+        "large multi-package utility tree",
+        "unexported HTTP helper used by public assertions"
+      ],
+      "not_deadcode_summary_contains": [
+        "httpCode"
+      ]
+    }
+  ]
+}
