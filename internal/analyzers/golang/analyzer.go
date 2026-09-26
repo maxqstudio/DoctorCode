@@ -210,6 +210,10 @@ func lexicalReferenceCounts(pkg *packageInfo, candidates []candidate) map[string
 		nonPackageRef := map[token.Pos]bool{}
 		ast.Inspect(file.file, func(node ast.Node) bool {
 			switch value := node.(type) {
+			case *ast.FuncDecl:
+				if value.Name != nil {
+					nonPackageRef[value.Name.Pos()] = true
+				}
 			case *ast.SelectorExpr:
 				nonPackageRef[value.Sel.Pos()] = true
 			case *ast.KeyValueExpr:
