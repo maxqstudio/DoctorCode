@@ -149,7 +149,7 @@ func parseGoFiles(ctx context.Context, root string, fset *token.FileSet) ([]*par
 
 func ignoredDirectory(name string) bool {
 	switch name {
-	case ".git", ".hg", ".svn", ".idea", ".vscode", "node_modules", "vendor", "dist", "build", "target", ".venv", "venv", "__pycache__":
+	case ".git", ".hg", ".svn", ".idea", ".vscode", "node_modules", "vendor", "dist", "build", "target", ".venv", "venv", "__pycache__", "testdata":
 		return true
 	default:
 		return false
@@ -165,7 +165,7 @@ func hasEscapeHatch(file *ast.File) bool {
 	for _, group := range file.Comments {
 		for _, comment := range group.List {
 			text := strings.TrimSpace(comment.Text)
-			if strings.Contains(text, "//go:linkname") || strings.HasPrefix(text, "//export ") {
+			if strings.Contains(text, "//go:linkname") || strings.Contains(text, "//go:wasmimport") || strings.Contains(text, "//go:wasmexport") || strings.HasPrefix(text, "//export ") {
 				return true
 			}
 		}
@@ -181,7 +181,7 @@ func topLevelCandidates(pkg *packageInfo) []candidate {
 		}
 		for _, decl := range file.file.Decls {
 			fn, ok := decl.(*ast.FuncDecl)
-			if !ok || fn.Recv != nil || fn.Name == nil {
+			if !ok || fn.Recv != nil || fn.Name == nil || fn.Body == nil {
 				continue
 			}
 			name := fn.Name.Name

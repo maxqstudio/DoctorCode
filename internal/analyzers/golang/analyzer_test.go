@@ -121,6 +121,30 @@ func TestDeadCodeCountsTestReferences(t *testing.T) {
 	}
 }
 
+func TestRepositoryAuditSkipsNestedTestdata(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, "live.go"), []byte("package demo\nfunc live() int { return 1 }\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	fixtureDir := filepath.Join(root, "testdata")
+	if err := os.MkdirAll(fixtureDir, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(fixtureDir, "fixture.go"), []byte("package fixture\nfunc intentionallyDead() {}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	findings, err := New().Analyze(context.Background(), root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, finding := range findings {
+		if strings.Contains(finding.Path, "testdata/") || strings.Contains(finding.Path, "testdata\\") {
+			t.Fatalf("nested testdata must not leak into repository findings: %#v", finding)
+		}
+	}
+}
+
 func assertRule(t *testing.T, findings []model.Finding, rule string) model.Finding {
 	t.Helper()
 	for _, finding := range findings {
