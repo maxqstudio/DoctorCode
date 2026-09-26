@@ -4,17 +4,18 @@
 
 ## Evidence boundary
 
-M00 acceptance is limited to the portable Go bootstrap: deterministic repository/language inventory, host toolchain capability reporting, Linux/Windows/macOS execution, and Skill_Workflow governance. Semantic BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE detectors remain explicitly outside M00.
+M01 will prove only the detector pipeline, five narrow Go rules, curated corpus behavior, bounded evidence packet generation, and three-OS execution. It will not prove general precision across real-world repositories or semantic support for other languages.
 
 Final tested source: external final acceptance evidence.
-Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
+Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M00-CROSS-PLATFORM | Tests, vet, build, scan smoke, and toolchain smoke pass on Linux, Windows, and macOS GitHub-hosted runners. | GitHub Actions CI run 36255851655 at e9b1dc0fe38a0e8488df98d1372ec6b6842badc3: ubuntu-latest, windows-latest, macos-latest all PASS. | PASS |
-| M00-LANGUAGE-REGISTRY | Registry recognizes representative multi-language files deterministically. | internal/language/registry_test.go executed by GitHub Actions CI run 36255851655. | PASS |
-| M00-SCAN | Scanner ignores common dependency/generated directories and reports deterministic language counts. | internal/scanner/scanner_test.go plus scan smoke executed by GitHub Actions CI run 36255851655. | PASS |
-| M00-TOOLCHAINS | Toolchain registry covers representative languages without assuming availability. | internal/toolchain/toolchain_test.go plus toolchain smoke executed by GitHub Actions CI run 36255851655. | PASS |
+| M01-ENGINE | Detector engine executes registered language analyzers deterministically and sorts findings stably. | internal/engine plus all-OS audit smoke | NOT_PROVEN |
+| M01-FIVE-GO-RULES | Curated Go corpus exercises one narrow rule for each of BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE. | internal/analyzers/golang corpus tests | NOT_PROVEN |
+| M01-DEADCODE-SAFETY | Dead-code rule fails closed for visible Go linkage escape hatches and counts test references. | internal/analyzers/golang/analyzer_test.go | NOT_PROVEN |
+| M01-EVIDENCE-BUDGET | Single-finding evidence packet obeys a deterministic byte cap and omits source excerpts for security findings. | internal/evidence/packet_test.go | NOT_PROVEN |
+| M01-NO-AUTOFIX | All M01 findings set safe_autofix=false. | analyzer tests | NOT_PROVEN |
 
 ## Test commands
 
@@ -24,13 +25,13 @@ Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff
 
 ## Runtime checks
 
-- go run ./cmd/doctorcode scan . --json
-- go run ./cmd/doctorcode toolchains . --json
+- go run ./cmd/doctorcode audit . --json --max-findings=10
+- go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M00-BOOTSTRAP
+Sequence session contract: M01-DETECTOR-FOUNDATION
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

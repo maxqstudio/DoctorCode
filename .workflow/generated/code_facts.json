@@ -17,7 +17,70 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 116
+      "lines": 239
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 562
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 144
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/corpus_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 43
+    },
+    {
+      "directory": "internal/analyzers/golang/testdata/negative",
+      "file": "internal/analyzers/golang/testdata/negative/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 17
+    },
+    {
+      "directory": "internal/analyzers/golang/testdata/positive",
+      "file": "internal/analyzers/golang/testdata/positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 28
+    },
+    {
+      "directory": "internal/detector",
+      "file": "internal/detector/detector.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/engine",
+      "file": "internal/engine/engine.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 87
+    },
+    {
+      "directory": "internal/evidence",
+      "file": "internal/evidence/packet.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 104
+    },
+    {
+      "directory": "internal/evidence",
+      "file": "internal/evidence/packet_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 52
     },
     {
       "directory": "internal/language",
@@ -38,7 +101,7 @@
       "file": "internal/model/model.go",
       "is_test": false,
       "language": "Go",
-      "lines": 49
+      "lines": 71
     },
     {
       "directory": "internal/scanner",
@@ -73,13 +136,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f",
+  "source_digest": "1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69",
   "source_summary": {
-    "files": 8,
+    "files": 17,
     "languages": {
-      "Go": 8
+      "Go": 17
     },
-    "lines": 390,
+    "lines": 1584,
     "test_files": 0
   },
   "tests": []

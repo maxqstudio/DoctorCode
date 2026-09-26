@@ -3,15 +3,24 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
+Source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 116 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 239 | cmd/doctorcode | NO |
+| internal/analyzers/golang/analyzer.go | Go | 562 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer_test.go | Go | 144 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
+| internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
+| internal/detector/detector.go | Go | 12 | internal/detector | NO |
+| internal/engine/engine.go | Go | 87 | internal/engine | NO |
+| internal/evidence/packet.go | Go | 104 | internal/evidence | NO |
+| internal/evidence/packet_test.go | Go | 52 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
-| internal/model/model.go | Go | 49 | internal/model | NO |
+| internal/model/model.go | Go | 71 | internal/model | NO |
 | internal/scanner/scanner.go | Go | 46 | internal/scanner | NO |
 | internal/scanner/scanner_test.go | Go | 27 | internal/scanner | NO |
 | internal/toolchain/toolchain.go | Go | 68 | internal/toolchain | NO |

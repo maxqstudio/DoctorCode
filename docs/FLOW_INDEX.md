@@ -3,12 +3,13 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
+Source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
 
 ## Flow inventory
 
 | Flow | Entry | Authority symbol | State mutation | Tests | Sequence session | Sequence status |
 |---|---|---|---|---|---|---|
+| FLOW-AUDIT | doctorcode audit or doctorcode next is invoked for an accessible repository. | cmd/doctorcode/main.go, internal/engine/engine.go, internal/analyzers/golang/analyzer.go, internal/evidence/packet.go | ANALYZING, RANKED, PACKED, REPORTED, REPORTED | internal/analyzers/golang/analyzer_test.go, internal/analyzers/golang/corpus_test.go, internal/evidence/packet_test.go | M01-DETECTOR-FOUNDATION | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |
 
 ## Observed Python HTTP routes

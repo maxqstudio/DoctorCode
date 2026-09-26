@@ -4,6 +4,8 @@
 
 | Data / Artifact | Source of truth | Mutability | Legal writes | Retention | Invariants |
 |---|---|---|---|---|---|
-| ScanResult V1 | internal/model/model.go::ScanResult | runtime output | doctorcode scan | caller-defined | Output is deterministic for the same visible repository tree and ignore policy. |
-| ToolchainStatus V1 | internal/model/model.go::ToolchainStatus | runtime output | doctorcode toolchains | caller-defined | Unavailable tools are reported as unavailable; absence is not converted to PASS. |
-| Finding V1 | internal/model/model.go::Finding | future detector output | future detector engine | caller-defined | Finding category is one of BLOAT, SECURITY, SIMPLIFY, LOGIC, DEADCODE. |
+| Finding V2 | internal/model/model.go::Finding | runtime output | registered detector analyzers | caller-defined | category is one of five DoctorCode domains; confidence is explicit; safe_autofix is false for M01 |
+| AuditResult V1 | internal/model/model.go::AuditResult | runtime output | detector engine | caller-defined | analyzers are named; findings are stably sorted |
+| EvidencePacket V1 | internal/evidence/packet.go::Packet | runtime output | evidence reducer | caller-defined | serialized packet fits max-bytes; security findings omit source excerpts by default |
+| ScanResult V1 | internal/model/model.go::ScanResult | runtime output | doctorcode scan | caller-defined | language recognition is structural only |
+| ToolchainStatus V1 | internal/model/model.go::ToolchainStatus | runtime output | doctorcode toolchains | caller-defined | missing optional toolchains are reported as unavailable |

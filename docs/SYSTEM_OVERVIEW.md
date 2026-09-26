@@ -27,27 +27,40 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 8 files, 1 language categories.
+Observed source inventory: 17 files, 1 language categories.
 
 ## Major components
 
 | Component | Purpose | Owns / Decides | Depends On |
 |---|---|---|---|
-| CLI | Human/agent interface for deterministic DoctorCode operations. | command parsing, text and JSON rendering | scanner, toolchain registry |
+| CLI | Human/agent interface for scan, toolchain, audit, and bounded next-finding operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
 | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
-| Detector Engine | Future host for five detector domains. | finding production | scanner, language-specific adapters |
-| Evidence Reducer | Future bounded context compiler for humans and small LLMs. | token-bounded finding context | detector engine |
+| Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
+| Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
+| Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 
 ## Main data flow
 
-- repository -> repository scanner: Inventory source without sending it to an LLM.
-- repository scanner -> language registry: Classify recognized source files.
-- host environment -> toolchain registry: Observe compiler/runtime availability.
-- detector engine -> evidence reducer: Reduce future findings to bounded packets.
+- repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
+- detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
+- detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
+- evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
 
 ## Main user workflows
+
+### FLOW-AUDIT — Deterministic repository audit
+
+Convert visible Go source into explicit findings without sending the repository to an LLM.
+
+Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
+
+- REQUESTED -> ANALYZING : Run registered deterministic language analyzers.
+- ANALYZING -> RANKED : Sort findings by severity, confidence, path, and location.
+- RANKED -> PACKED : For doctorcode next, build one bounded evidence packet and suppress security source excerpts.
+- RANKED -> REPORTED : For doctorcode audit, emit findings in text or JSON.
+- PACKED -> REPORTED : Emit the single evidence packet.
 
 ### FLOW-SCAN — Repository inventory scan
 
@@ -61,9 +74,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M00_BOOTSTRAP
+Current phase: M01_DETECTOR_FOUNDATION
 
-Current status: M00_ACCEPTED
+Current status: IN_PROGRESS
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -95,19 +108,20 @@ compiler does not infer them from implementation names.
 
 ## Failure and recovery
 
+- FLOW-AUDIT: Parse or filesystem errors fail the audit instead of returning partial PASS evidence.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
 
 ## Current project state
 
 Next authorized actions:
-- Begin M01 detector-foundation planning from the accepted M00 baseline.
-- Define benchmark corpus and precision-first acceptance for the five detector domains.
-- Add language-specific semantic adapters incrementally without weakening M00 portability.
+- Run the deterministic Go detector and evidence-packet corpus tests on all three GitHub-hosted operating systems.
+- Synchronize M01 Project Truth documentation from structured specs.
+- Repair until exact-SHA M01 CI and strict governance pass.
 
 Blocked actions:
-- Claiming production-ready semantic detector coverage before detector benchmarks pass.
-- Publishing safe-delete guarantees before reachability and dynamic-reference safety evidence exists.
-- Claiming a compiler or semantic analyzer is supported solely because its file extension is recognized.
+- Auto-deleting or auto-fixing findings.
+- Claiming general cross-language semantic support.
+- Calling HIGH or SUSPICIOUS findings proven defects.
 
 Known blockers:
 - None declared.
@@ -116,17 +130,15 @@ Known blockers:
 
 ### Proven
 
-- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed strict Skill_Workflow governance run 36255851651.
-- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed GitHub Actions CI run 36255851655 on ubuntu-latest, windows-latest, and macos-latest.
-- Canonical generated documentation is tracked and reproducible from .workflow specs plus source facts.
-- M00 human-comprehension, sequence, handoff, cross-document, and project-truth candidate gates are validated.
+- M00 portable baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
+- M00 CI and strict Skill_Workflow governance passed on Linux, Windows, and macOS.
 
 ### Not proven
 
-- Go semantic sequence extraction is not supported by the current generic Skill_Workflow extractor.
-- Semantic detector support for any language is not implemented.
-- BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE accuracy is not benchmarked.
-- Safe automatic deletion is not implemented or claimed.
+- M01 detector implementation has not yet passed exact-SHA CI and strict governance.
+- M01 Go rules are intentionally narrow and do not establish general detector precision.
+- Semantic support for non-Go languages is not implemented.
+- Safe automatic deletion remains unsupported.
 
 ## Important limitations
 

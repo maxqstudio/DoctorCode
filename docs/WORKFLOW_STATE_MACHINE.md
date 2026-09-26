@@ -2,6 +2,49 @@
 
 # WORKFLOW STATE MACHINE
 
+## FLOW-AUDIT — Deterministic repository audit
+
+Purpose: Convert visible Go source into explicit findings without sending the repository to an LLM.
+Critical: FALSE
+Entry condition: doctorcode audit or doctorcode next is invoked for an accessible repository.
+Authority: internal/engine/engine.go and internal/analyzers/golang/analyzer.go
+
+### States
+
+- REQUESTED
+- ANALYZING
+- RANKED
+- PACKED
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| REQUESTED | ANALYZING | Run registered deterministic language analyzers. | internal/engine/engine.go and internal/analyzers/golang/analyzer.go |  |
+| ANALYZING | RANKED | Sort findings by severity, confidence, path, and location. | internal/engine/engine.go and internal/analyzers/golang/analyzer.go |  |
+| RANKED | PACKED | For doctorcode next, build one bounded evidence packet and suppress security source excerpts. | internal/engine/engine.go and internal/analyzers/golang/analyzer.go |  |
+| RANKED | REPORTED | For doctorcode audit, emit findings in text or JSON. | internal/engine/engine.go and internal/analyzers/golang/analyzer.go |  |
+| PACKED | REPORTED | Emit the single evidence packet. | internal/engine/engine.go and internal/analyzers/golang/analyzer.go |  |
+
+### Invariants
+
+- No M01 finding enables automatic fix or deletion.
+- Security evidence never includes the literal secret value.
+- Analyzer support is language-specific and explicit.
+
+### Failure behavior
+
+- Parse or filesystem errors fail the audit instead of returning partial PASS evidence.
+
+### Restart behavior
+
+- Audit is stateless and can be rerun against the same repository tree.
+
+### Rollback behavior
+
+- Audit and evidence packet generation do not mutate target source.
+
 ## FLOW-SCAN — Repository inventory scan
 
 Purpose: Produce deterministic repository inventory without whole-repository LLM context.

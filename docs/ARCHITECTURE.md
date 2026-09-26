@@ -2,37 +2,38 @@
 
 # ARCHITECTURE
 
-Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
+Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
 
 ## Components
 
 | ID | Component | Purpose | Owns | Depends On |
 |---|---|---|---|---|
-| cli | CLI | Human/agent interface for deterministic DoctorCode operations. | command parsing, text and JSON rendering | scanner, toolchain registry |
+| cli | CLI | Human/agent interface for scan, toolchain, audit, and bounded next-finding operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
 | scanner | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
-| detector_engine | Detector Engine | Future host for five detector domains. | finding production | scanner, language-specific adapters |
-| evidence_reducer | Evidence Reducer | Future bounded context compiler for humans and small LLMs. | token-bounded finding context | detector engine |
+| detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
+| go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal M01 rules across the five DoctorCode categories. | Go AST rules, Go dead-code lexical evidence | Go parser/AST standard library |
+| evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 
 ## Data flow
 
-- repository -> repository scanner: Inventory source without sending it to an LLM.
-- repository scanner -> language registry: Classify recognized source files.
-- host environment -> toolchain registry: Observe compiler/runtime availability.
-- detector engine -> evidence reducer: Reduce future findings to bounded packets.
+- repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
+- detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
+- detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
+- evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
 
 ## External boundaries
 
-- GitHub Actions: Linux, Windows, and macOS hosted runners provide public CI and runtime acceptance evidence.
-- Host toolchains: Compiler/runtime availability is observed, never assumed; missing optional tools are reported as unavailable.
-- Third-party analyzers: Future analyzers may contribute evidence through adapters but do not override DoctorCode evidence classification.
+- GitHub Actions: Linux, Windows, and macOS hosted runners are acceptance authority.
+- Host toolchains: Compiler/runtime availability is observed, never assumed.
+- Future language analyzers: Each language declares semantic coverage separately; recognition alone never implies analyzer support.
 
 ## Observed implementation inventory
 
-Source files: 8
-Source lines: 390
-Languages: Go=8
+Source files: 17
+Source lines: 1584
+Languages: Go=17
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

@@ -3,24 +3,24 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: NOT_DECLARED
+Authority verified at SHA: fa1da95814be480436c1430c80d154daaadc24e0
 Governance profile: strict
 
 ## Current phase
-Phase: M00_BOOTSTRAP
-Status: M00_ACCEPTED
+Phase: M01_DETECTOR_FOUNDATION
+Status: IN_PROGRESS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/bootstrap-doctorcode-m00
+Branch: work/m01-detector-foundation
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: NOT_DECLARED
+Last accepted SHA: fa1da95814be480436c1430c80d154daaadc24e0
 Current candidate SHA: external final acceptance evidence
-Current source digest: e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f
+Current source digest: 1dcf43c94a6f5ea395b6d473e6455f83b098e429e2509b54436b0329f49f8e69
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
-Runtime status: PASS
+Runtime status: NOT_PROVEN
 
 ## Documentation governance
 Documentation root: docs/
@@ -33,20 +33,18 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M00-BOOTSTRAP
+Current sequence session: M01-DETECTOR-FOUNDATION
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed strict Skill_Workflow governance run 36255851651.
-- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed GitHub Actions CI run 36255851655 on ubuntu-latest, windows-latest, and macos-latest.
-- Canonical generated documentation is tracked and reproducible from .workflow specs plus source facts.
-- M00 human-comprehension, sequence, handoff, cross-document, and project-truth candidate gates are validated.
+- M00 portable baseline is accepted at fa1da95814be480436c1430c80d154daaadc24e0.
+- M00 CI and strict Skill_Workflow governance passed on Linux, Windows, and macOS.
 
 ## Not proven
-- Go semantic sequence extraction is not supported by the current generic Skill_Workflow extractor.
-- Semantic detector support for any language is not implemented.
-- BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE accuracy is not benchmarked.
-- Safe automatic deletion is not implemented or claimed.
+- M01 detector implementation has not yet passed exact-SHA CI and strict governance.
+- M01 Go rules are intentionally narrow and do not establish general detector precision.
+- Semantic support for non-Go languages is not implemented.
+- Safe automatic deletion remains unsupported.
 
 ## Known blockers
 - None declared.
@@ -55,11 +53,11 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Begin M01 detector-foundation planning from the accepted M00 baseline.
-- Define benchmark corpus and precision-first acceptance for the five detector domains.
-- Add language-specific semantic adapters incrementally without weakening M00 portability.
+- Run the deterministic Go detector and evidence-packet corpus tests on all three GitHub-hosted operating systems.
+- Synchronize M01 Project Truth documentation from structured specs.
+- Repair until exact-SHA M01 CI and strict governance pass.
 
 ## Explicitly blocked
-- Claiming production-ready semantic detector coverage before detector benchmarks pass.
-- Publishing safe-delete guarantees before reachability and dynamic-reference safety evidence exists.
-- Claiming a compiler or semantic analyzer is supported solely because its file extension is recognized.
+- Auto-deleting or auto-fixing findings.
+- Claiming general cross-language semantic support.
+- Calling HIGH or SUSPICIOUS findings proven defects.

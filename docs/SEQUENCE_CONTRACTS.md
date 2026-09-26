@@ -16,6 +16,7 @@ Status: CURRENT
 
 | Flow | Mode | Critical | Sequence session | Status |
 |---|---|---|---|---|
+| FLOW-AUDIT | DURING | NO | M01-DETECTOR-FOUNDATION | PASS |
 | FLOW-SCAN | DURING | NO | M00-BOOTSTRAP | PASS |
 
 ## Mismatch handling

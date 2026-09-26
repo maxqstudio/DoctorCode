@@ -2,8 +2,8 @@
 
 # RUNBOOK
 
-1. Unit tests — go test ./... — expected: exit code 0
+1. Unit and corpus tests — go test ./... — expected: exit code 0
 2. Static vet — go vet ./... — expected: exit code 0
 3. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
-4. Scan smoke — go run ./cmd/doctorcode scan . --json — expected: valid JSON and exit code 0
-5. Toolchain smoke — go run ./cmd/doctorcode toolchains . --json — expected: valid JSON and exit code 0
+4. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
+5. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS
