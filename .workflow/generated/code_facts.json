@@ -1,0 +1,86 @@
+{
+  "coverage": {
+    "call_inventory": "Python AST token calls only",
+    "limitations": [
+      "non-Python symbol extraction requires language-specific parsers or Ctags",
+      "dynamic dispatch/dependency injection/reflection are not resolved",
+      "JS/TS function-level semantics are not inferred here"
+    ],
+    "module_inventory": "multi-language by extension",
+    "python_parse_failures": [],
+    "route_inventory": "Python decorator routes only",
+    "symbol_inventory": "Python AST only"
+  },
+  "modules": [
+    {
+      "directory": "cmd/doctorcode",
+      "file": "cmd/doctorcode/main.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 116
+    },
+    {
+      "directory": "internal/language",
+      "file": "internal/language/registry.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 49
+    },
+    {
+      "directory": "internal/language",
+      "file": "internal/language/registry_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 19
+    },
+    {
+      "directory": "internal/model",
+      "file": "internal/model/model.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 49
+    },
+    {
+      "directory": "internal/scanner",
+      "file": "internal/scanner/scanner.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 46
+    },
+    {
+      "directory": "internal/scanner",
+      "file": "internal/scanner/scanner_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 27
+    },
+    {
+      "directory": "internal/toolchain",
+      "file": "internal/toolchain/toolchain.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 68
+    },
+    {
+      "directory": "internal/toolchain",
+      "file": "internal/toolchain/toolchain_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 16
+    }
+  ],
+  "python_calls": [],
+  "python_routes": [],
+  "python_symbols": [],
+  "schema_version": 1,
+  "source_digest": "e3fde7b930d7cbadb39ffbba8ce6ab7af7b0902e7d1183b8f96efcbff77c526f",
+  "source_summary": {
+    "files": 8,
+    "languages": {
+      "Go": 8
+    },
+    "lines": 390,
+    "test_files": 0
+  },
+  "tests": []
+}
