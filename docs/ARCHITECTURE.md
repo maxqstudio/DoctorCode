@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
+Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
 
 ## Components
 
@@ -16,6 +16,7 @@ Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 | benchmark_harness | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
+| realworld_validation | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 
 ## Data flow
 
@@ -28,6 +29,9 @@ Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 - adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
 - repository-shaped labeled corpus -> precision benchmark harness: M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules.
+- pinned public Go repositories -> Pinned Public Repository Validator: GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs.
+- Pinned Public Repository Validator -> Go Built-in Analyzer: Original public repository trees are analyzed directly without copying them into DoctorCode.
+- Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
 
 ## External boundaries
 
@@ -35,12 +39,13 @@ Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e
 - Host toolchains: Compiler/runtime availability is observed, never assumed.
 - Future language analyzers: Each language declares semantic coverage separately; recognition alone never implies analyzer support.
 - Repository filesystem boundary: Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis.
+- Pinned public repositories: External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority.
 
 ## Observed implementation inventory
 
-Source files: 63
-Source lines: 2455
-Languages: Go=63
+Source files: 64
+Source lines: 2583
+Languages: Go=64
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

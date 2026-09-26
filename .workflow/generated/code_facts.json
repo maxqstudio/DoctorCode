@@ -426,6 +426,13 @@
       "lines": 71
     },
     {
+      "directory": "internal/realworld",
+      "file": "internal/realworld/realworld_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 128
+    },
+    {
       "directory": "internal/scanner",
       "file": "internal/scanner/scanner.go",
       "is_test": false,
@@ -458,13 +465,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36",
+  "source_digest": "719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba",
   "source_summary": {
-    "files": 63,
+    "files": 64,
     "languages": {
-      "Go": 63
+      "Go": 64
     },
-    "lines": 2455,
+    "lines": 2583,
     "test_files": 0
   },
   "tests": []

@@ -4,19 +4,18 @@
 
 ## Evidence boundary
 
-M04 acceptance proves a 12-case repository-shaped Go regression corpus covering cross-file references, package isolation, same-package and external tests, build-tag-visible references, assembly fail-closed behavior, generated-file references, and nested package findings. Synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed strict governance run 36279198224 and three-OS CI run 36279198188; the M04 corpus reports 7 TP, 0 FP, and 0 FN while M02 and M03 remain passing. No Go detector implementation code changed in M04. These are synthetic repository-shaped corpus results, not general real-world precision or recall.
+M05 proves cross-platform compatibility against four exact-SHA public Go repository snapshots plus selected known-live negative assertions. Candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 and Real World Go Validation run 36279765083 on Linux, Windows, and macOS. The repositories are not exhaustively labeled, so this milestone does not establish real-world precision, recall, or defect-free status.
 
 Final tested source: external final acceptance evidence.
-Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
+Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M04-REPOSITORY-SHAPED-GATE | A 12-case multi-file and multi-package Go corpus is a blocking CI gate alongside the accepted M02 and M03 corpora. | Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63, CI run 36279198188: M02, M03, and M04 benchmark gates PASS on Linux, Windows, and macOS. | PASS |
-| M04-PACKAGE-ISOLATION | Repository-shaped evaluation distinguishes same-named functions in separate packages and external test packages without cross-package reference contamination. | M04 multi-package-isolation and external-test-name-collision fixtures; M04 corpus PASS in CI run 36279033090. Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 and strict governance run 36279198224. | PASS |
-| M04-CROSS-FILE-REFERENCES | Visible same-package references across files, tests, generated files, and build-tagged source files are counted conservatively for lexical reference evidence. | M04 cross-file-live, same-package-test-reference, generated-reference, and build-tag-reference fixtures; M04 corpus PASS in CI run 36279033090. Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 and strict governance run 36279198224. | PASS |
-| M04-ESCAPE-HATCH | Assembly presence in a package keeps DEADCODE fail-closed in repository-shaped analysis. | M04 assembly-fail-closed fixture; M04 corpus PASS in CI run 36279033090. Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 and strict governance run 36279198224. | PASS |
-| M04-NESTED-PACKAGES | Repository recursion preserves relative evidence paths for SECURITY, LOGIC, and SIMPLIFY findings in nested packages. | M04 nested-security, nested-logic, and nested-simplify fixtures; M04 corpus PASS in CI run 36279033090. Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 and strict governance run 36279198224. | PASS |
-| M04-ORACLE-INTEGRITY | A mislabeled fixture must be corrected when detector evidence is valid; acceptance must not weaken detector behavior merely to make the corpus green. | Initial run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 failed on a valid DEADCODE finding in windows_ref.go; only the fixture was corrected. Exact synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 later passed CI run 36279198188 and strict governance run 36279198224. | PASS |
+| M05-PINNED-SOURCES | Every public repository used by M05 is checked out at an exact tracked commit SHA and the detached checkout SHA is verified before analysis. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and Real World Go Validation run 36279765083. | PASS |
+| M05-THREE-OS-REALWORLD | Pinned public repository validation executes and passes on Linux, Windows, and macOS. | Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739: all three matrix jobs PASS. | PASS |
+| M05-KNOWN-LIVE-ANCHORS | Selected known-live unexported functions from the pinned repositories are not reported as DEADCODE. | preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS. | PASS |
+| M05-FINDING-BOUNDARY | Any finding produced while analyzing pinned public repositories remains repository-relative, uses a known category/confidence, and never enables safe_autofix. | internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS. | PASS |
+| M05-CLAIM-BOUNDARY | Public repository execution is described as compatibility evidence only; unlabeled zero-finding snapshots are not promoted to precision, recall, or defect-free claims. | internal/realworld test log text and M05 acceptance/state contracts. | PASS |
 
 ## Test commands
 
@@ -29,16 +28,14 @@ Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e
 
 ## Runtime checks
 
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
+- go test ./internal/realworld -run TestPinnedPublicRepositories -v with the four exact-SHA public repository paths provided by the dedicated GitHub Actions workflow
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M04-REPOSITORY-SHAPED-EVAL
+Sequence session contract: M05-PUBLIC-REPO-VALIDATION
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

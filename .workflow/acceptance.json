@@ -1,75 +1,62 @@
 {
-  "schema_version": 1,
   "evidence_boundary": "M05 proves cross-platform compatibility against four exact-SHA public Go repository snapshots plus selected known-live negative assertions. Candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 and Real World Go Validation run 36279765083 on Linux, Windows, and macOS. The repositories are not exhaustively labeled, so this milestone does not establish real-world precision, recall, or defect-free status.",
-  "runtime_status": "PASS",
-  "human_comprehension_status": "PASS",
   "human_comprehension_questions": {
-    "What is the project and what problem does it solve?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
     "How does failure/recovery behave?": "PASS",
-    "What is the current project state?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
     "What is proven and what is not proven?": "PASS",
-    "What may happen next and what is blocked?": "PASS"
+    "What is the current project state?": "PASS",
+    "What is the project and what problem does it solve?": "PASS",
+    "What may happen next and what is blocked?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS"
   },
-  "sequence_mode": "DURING",
-  "sequence_session": "M05-PUBLIC-REPO-VALIDATION",
-  "sequence_sync_status": "PASS",
-  "truth_gates": {
-    "SOURCE_TESTS": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "PROVENANCE_SYNC": "NOT_PROVEN",
-    "REFERENCE_SYNC": "NOT_PROVEN",
-    "STRUCTURAL_SYNC": "NOT_PROVEN",
-    "SEMANTIC_SYNC": "PASS",
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "DOC_READABILITY": "PASS"
-  },
+  "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "internal/realworld/sources.json, internal/realworld/realworld_test.go, and Real World Go Validation run 36279765083.",
       "id": "M05-PINNED-SOURCES",
       "requirement": "Every public repository used by M05 is checked out at an exact tracked commit SHA and the detached checkout SHA is verified before analysis.",
-      "evidence": "internal/realworld/sources.json, internal/realworld/realworld_test.go, and Real World Go Validation run 36279765083.",
       "status": "PASS"
     },
     {
+      "evidence": "Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739: all three matrix jobs PASS.",
       "id": "M05-THREE-OS-REALWORLD",
       "requirement": "Pinned public repository validation executes and passes on Linux, Windows, and macOS.",
-      "evidence": "Real World Go Validation run 36279765083 at 5ef30be8b6ed0cdf37663c09da20b3d5219c8739: all three matrix jobs PASS.",
       "status": "PASS"
     },
     {
+      "evidence": "preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS.",
       "id": "M05-KNOWN-LIVE-ANCHORS",
       "requirement": "Selected known-live unexported functions from the pinned repositories are not reported as DEADCODE.",
-      "evidence": "preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS.",
       "id": "M05-FINDING-BOUNDARY",
       "requirement": "Any finding produced while analyzing pinned public repositories remains repository-relative, uses a known category/confidence, and never enables safe_autofix.",
-      "evidence": "internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/realworld test log text and M05 acceptance/state contracts.",
       "id": "M05-CLAIM-BOUNDARY",
       "requirement": "Public repository execution is described as compatibility evidence only; unlabeled zero-finding snapshots are not promoted to precision, recall, or defect-free claims.",
-      "evidence": "internal/realworld test log text and M05 acceptance/state contracts.",
       "status": "PASS"
     }
   ],
+  "runtime_checks": [
+    "go test ./internal/realworld -run TestPinnedPublicRepositories -v with the four exact-SHA public repository paths provided by the dedicated GitHub Actions workflow",
+    "go run ./cmd/doctorcode audit . --json --max-findings=10",
+    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
+  ],
+  "runtime_status": "PASS",
+  "schema_version": 1,
+  "sequence_mode": "DURING",
+  "sequence_session": "M05-PUBLIC-REPO-VALIDATION",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -78,9 +65,22 @@
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "runtime_checks": [
-    "go test ./internal/realworld -run TestPinnedPublicRepositories -v with the four exact-SHA public repository paths provided by the dedicated GitHub Actions workflow",
-    "go run ./cmd/doctorcode audit . --json --max-findings=10",
-    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
-  ]
+  "truth_gates": {
+    "BEHAVIORAL_SYNC": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
+    "DOC_SOURCE_TRACEABILITY": "PASS",
+    "DOC_TEST_TRACEABILITY": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "RUNTIME_E2E": "PASS",
+    "SEMANTIC_SYNC": "PASS",
+    "SOURCE_TESTS": "PASS",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "PASS"
+  }
 }

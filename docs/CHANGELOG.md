@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M05 pinned public repository validation candidate
+
+Type: development
+
+- Added a dedicated three-OS workflow that checks out four public Go repositories at exact commit SHAs.
+- Added tracked source/license/provenance metadata and direct detached-HEAD verification.
+- Added selected known-live DEADCODE negative assertions for cobra, bubbles, chi, and testify.
+- Kept public repository finding counts explicitly outside precision/recall claims.
+- Preserved all M02, M03, and M04 labeled benchmark gates.
+
 ## 2026-09-27 — M04 accepted baseline
 
 Type: acceptance

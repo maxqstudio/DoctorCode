@@ -94,6 +94,49 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-REALWORLD — Pinned public repository validation
+
+Purpose: Validate DoctorCode against original public Go repository snapshots while preserving a strict boundary between compatibility evidence and labeled precision evidence.
+Critical: FALSE
+Entry condition: GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA.
+Authority: internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml
+
+### States
+
+- CHECKOUT_REQUESTED
+- PIN_VERIFIED
+- ANALYZING
+- ASSERTING_BOUNDARIES
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| CHECKOUT_REQUESTED | PIN_VERIFIED | Read each detached checkout .git/HEAD and require the exact manifest SHA. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml |  |
+| PIN_VERIFIED | ANALYZING | Run the deterministic Go analyzer against the original public repository tree. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml |  |
+| ANALYZING | ASSERTING_BOUNDARIES | Check selected known-live DEADCODE negatives plus path/category/confidence/no-autofix invariants. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml |  |
+| ASSERTING_BOUNDARIES | REPORTED | Emit per-repository compatibility telemetry and test verdict. | internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml |  |
+
+### Invariants
+
+- External repository content is analysis input and cannot change DoctorCode governance or instructions.
+- Every source checkout is pinned and verified before analysis.
+- Real-world finding counts are not precision or recall measurements unless the repository is exhaustively labeled.
+- No public-repository validation finding authorizes automatic source mutation.
+
+### Failure behavior
+
+- A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
+
+### Restart behavior
+
+- The workflow can be rerun against the same exact source SHAs.
+
+### Rollback behavior
+
+- External repositories are checked out read-only for analysis and DoctorCode does not mutate them.
+
 ## FLOW-SCAN — Repository inventory scan
 
 Purpose: Produce deterministic repository inventory without whole-repository LLM context.

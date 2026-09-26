@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 07c8bee4c546edd381723abad2398dbb2567fbf9
+Authority verified at SHA: 82f9ea6499e5a70930da331fd02f778bca54d660
 Governance profile: strict
 
 ## Current phase
-Phase: M04_REPOSITORY_SHAPED_EVAL
-Status: M04_ACCEPTED
+Phase: M05_PUBLIC_REPO_VALIDATION
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m04-repository-shaped-eval
+Branch: work/m05-public-repo-validation
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 07c8bee4c546edd381723abad2398dbb2567fbf9
+Last accepted SHA: 82f9ea6499e5a70930da331fd02f778bca54d660
 Current candidate SHA: external final acceptance evidence
-Current source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
+Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,23 +33,23 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M04-REPOSITORY-SHAPED-EVAL
+Current sequence session: M05-PUBLIC-REPO-VALIDATION
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M03 accepted baseline is 07c8bee4c546edd381723abad2398dbb2567fbf9.
-- M04 added a 12-case repository-shaped Go corpus without changing detector implementation code.
-- The first M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; only the fixture was corrected.
-- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed strict Skill_Workflow governance run 36279198224.
-- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 on ubuntu-latest, windows-latest, and macos-latest.
-- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- The M02 baseline and M03 adversarial corpora remain passing.
+- M04 accepted baseline is 82f9ea6499e5a70930da331fd02f778bca54d660.
+- M05 pins four public Go repositories by exact commit and validates checkout provenance before analysis.
+- M05 source candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 on Linux, Windows, and macOS.
+- The same candidate passed dedicated Real World Go Validation run 36279765083 on Linux, Windows, and macOS.
+- Pinned snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify were parsed and analyzed successfully on all three operating systems.
+- Selected known-live unexported anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
+- All real-world findings, if any, remain non-autofix and repository-relative.
 
 ## Not proven
-- The three curated corpora do not establish general real-world precision or recall.
-- M04 mini-repositories are synthetic and smaller than production repositories and monorepos.
-- Build constraints are not evaluated as an active target configuration; reference analysis remains visible-tree lexical analysis.
-- Reference counting is not a complete Go compiler/type-system call graph.
+- The four public repository snapshots are not exhaustively labeled, so M05 does not establish their false-positive or false-negative rates.
+- A zero-finding result on a public snapshot is compatibility evidence, not proof that no defects exist or that detector recall is high.
+- Four repositories are not representative of the full Go ecosystem.
+- Reference counting remains conservative visible-tree analysis rather than compiler/type-system whole-program reachability.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 
 ## Known blockers
@@ -59,12 +59,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Freeze final M04 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.
-- For M05, add evidence from real public Go repositories or extracted real-world fixtures before changing confidence levels.
-- Keep language expansion separate from Go confidence promotion so evidence boundaries remain attributable.
+- Synchronize M05 Project Truth documentation and sequence evidence.
+- Run strict Skill_Workflow validation against the synchronized M05 snapshot.
+- Promote M05 only if exact-SHA core CI, public-repository validation, and strict governance all pass.
 
 ## Explicitly blocked
-- Advertising corpus precision as general real-world product precision.
-- Treating build-tag-visible lexical references as proof of runtime reachability on every target.
-- Upgrading DEADCODE HIGH to PROVEN_UNUSED from the current corpora.
+- Publishing real-world precision or recall percentages from the unlabeled public repositories.
+- Treating zero findings as proof that a repository is defect-free.
+- Upgrading DEADCODE HIGH to PROVEN_UNUSED from M05 evidence.
 - Auto-deleting or auto-fixing findings.

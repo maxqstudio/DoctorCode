@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
+Source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
 
 ## Flow inventory
 
@@ -11,6 +11,7 @@ Source digest: fe0bcd19ea6a2039059f8e6028261768520c3af312d21cfee50ca380e61dff36
 |---|---|---|---|---|---|---|
 | FLOW-AUDIT | doctorcode audit or doctorcode next is invoked for an accessible repository. | cmd/doctorcode/main.go, internal/engine/engine.go, internal/analyzers/golang/analyzer.go, internal/evidence/packet.go | ANALYZING, RANKED, PACKED, REPORTED, REPORTED | internal/analyzers/golang/analyzer_test.go, internal/analyzers/golang/corpus_test.go, internal/evidence/packet_test.go | M01-DETECTOR-FOUNDATION | DECLARED |
 | FLOW-BENCHMARK | doctorcode benchmark is invoked with an accessible validated manifest. | cmd/doctorcode/main.go, internal/benchmark/benchmark.go, internal/benchmark/testdata/manifest.json, internal/benchmark/testdata/m03-adversarial.json, internal/benchmark/testdata/m04-repository-shaped.json, internal/analyzers/golang/analyzer.go | VALIDATING_MANIFEST, ANALYZING_CASES, MATCHING_LABELS, GATED, REPORTED | internal/benchmark/benchmark_test.go, internal/analyzers/golang/analyzer_test.go | M04-REPOSITORY-SHAPED-EVAL | DECLARED |
+| FLOW-REALWORLD | GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA. | internal/realworld/sources.json, internal/realworld/realworld_test.go, .github/workflows/real-world-go.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, ASSERTING_BOUNDARIES, REPORTED | internal/realworld/realworld_test.go | M05-PUBLIC-REPO-VALIDATION | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |
 
 ## Observed Python HTTP routes

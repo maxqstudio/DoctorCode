@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 63 files, 1 language categories.
+Observed source inventory: 64 files, 1 language categories.
 
 ## Major components
 
@@ -41,6 +41,7 @@ Observed source inventory: 63 files, 1 language categories.
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
+| Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 
 ## Main data flow
 
@@ -53,6 +54,9 @@ Observed source inventory: 63 files, 1 language categories.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
 - adversarial labeled corpus -> precision benchmark harness: M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases.
 - repository-shaped labeled corpus -> precision benchmark harness: M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules.
+- pinned public Go repositories -> Pinned Public Repository Validator: GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs.
+- Pinned Public Repository Validator -> Go Built-in Analyzer: Original public repository trees are analyzed directly without copying them into DoctorCode.
+- Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
 
 ## Main user workflows
 
@@ -80,6 +84,17 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 - MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
 - GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
 
+### FLOW-REALWORLD — Pinned public repository validation
+
+Validate DoctorCode against original public Go repository snapshots while preserving a strict boundary between compatibility evidence and labeled precision evidence.
+
+Authority: internal/realworld/sources.json, internal/realworld/realworld_test.go, and .github/workflows/real-world-go.yml
+
+- CHECKOUT_REQUESTED -> PIN_VERIFIED : Read each detached checkout .git/HEAD and require the exact manifest SHA.
+- PIN_VERIFIED -> ANALYZING : Run the deterministic Go analyzer against the original public repository tree.
+- ANALYZING -> ASSERTING_BOUNDARIES : Check selected known-live DEADCODE negatives plus path/category/confidence/no-autofix invariants.
+- ASSERTING_BOUNDARIES -> REPORTED : Emit per-repository compatibility telemetry and test verdict.
+
 ### FLOW-SCAN — Repository inventory scan
 
 Produce deterministic repository inventory without whole-repository LLM context.
@@ -92,9 +107,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M04_REPOSITORY_SHAPED_EVAL
+Current phase: M05_PUBLIC_REPO_VALIDATION
 
-Current status: M04_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -130,19 +145,20 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+- FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
 
 ## Current project state
 
 Next authorized actions:
-- Freeze final M04 after removing the temporary doc-sync workflow and rerunning exact-SHA acceptance.
-- For M05, add evidence from real public Go repositories or extracted real-world fixtures before changing confidence levels.
-- Keep language expansion separate from Go confidence promotion so evidence boundaries remain attributable.
+- Synchronize M05 Project Truth documentation and sequence evidence.
+- Run strict Skill_Workflow validation against the synchronized M05 snapshot.
+- Promote M05 only if exact-SHA core CI, public-repository validation, and strict governance all pass.
 
 Blocked actions:
-- Advertising corpus precision as general real-world product precision.
-- Treating build-tag-visible lexical references as proof of runtime reachability on every target.
-- Upgrading DEADCODE HIGH to PROVEN_UNUSED from the current corpora.
+- Publishing real-world precision or recall percentages from the unlabeled public repositories.
+- Treating zero findings as proof that a repository is defect-free.
+- Upgrading DEADCODE HIGH to PROVEN_UNUSED from M05 evidence.
 - Auto-deleting or auto-fixing findings.
 
 Known blockers:
@@ -152,20 +168,20 @@ Known blockers:
 
 ### Proven
 
-- M03 accepted baseline is 07c8bee4c546edd381723abad2398dbb2567fbf9.
-- M04 added a 12-case repository-shaped Go corpus without changing detector implementation code.
-- The first M04 run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424 rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; only the fixture was corrected.
-- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed strict Skill_Workflow governance run 36279198224.
-- M04 synchronized candidate e204829bf14174fd1a3a5dc92e5bc351af4b6b63 passed CI run 36279198188 on ubuntu-latest, windows-latest, and macos-latest.
-- The 12-case repository-shaped corpus reports 7 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
-- The M02 baseline and M03 adversarial corpora remain passing.
+- M04 accepted baseline is 82f9ea6499e5a70930da331fd02f778bca54d660.
+- M05 pins four public Go repositories by exact commit and validates checkout provenance before analysis.
+- M05 source candidate 5ef30be8b6ed0cdf37663c09da20b3d5219c8739 passed core CI run 36279765100 on Linux, Windows, and macOS.
+- The same candidate passed dedicated Real World Go Validation run 36279765083 on Linux, Windows, and macOS.
+- Pinned snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify were parsed and analyzed successfully on all three operating systems.
+- Selected known-live unexported anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
+- All real-world findings, if any, remain non-autofix and repository-relative.
 
 ### Not proven
 
-- The three curated corpora do not establish general real-world precision or recall.
-- M04 mini-repositories are synthetic and smaller than production repositories and monorepos.
-- Build constraints are not evaluated as an active target configuration; reference analysis remains visible-tree lexical analysis.
-- Reference counting is not a complete Go compiler/type-system call graph.
+- The four public repository snapshots are not exhaustively labeled, so M05 does not establish their false-positive or false-negative rates.
+- A zero-finding result on a public snapshot is compatibility evidence, not proof that no defects exist or that detector recall is high.
+- Four repositories are not representative of the full Go ecosystem.
+- Reference counting remains conservative visible-tree analysis rather than compiler/type-system whole-program reachability.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 
 ## Important limitations
