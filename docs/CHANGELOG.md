@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M02 accepted baseline
+
+Type: acceptance
+
+- Accepted a labeled nine-case Go regression benchmark after strict Skill_Workflow validation and Linux, Windows, and macOS CI.
+- Accepted exact corpus evidence of 5 TP, 0 FP, and 0 FN without generalizing those metrics beyond the corpus.
+- Accepted fail-closed manifest path containment and Go source-symlink exclusion.
+- Retained conservative detector confidence and safe_autofix=false.
+
 ## 2026-09-27 — M02 precision benchmark candidate
 
 Type: development

@@ -92,7 +92,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M02_PRECISION_BENCHMARK
 
-Current status: ACCEPTANCE_CANDIDATE
+Current status: M02_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -133,13 +133,13 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M02 generated Project Truth documentation.
-- Run strict Skill_Workflow validation against the synchronized M02 snapshot.
-- Promote M02 only if exact-SHA three-OS CI and strict governance both pass.
+- Freeze the final M02 accepted snapshot after temporary doc-sync workflow removal and exact-SHA revalidation.
+- For M03, expand evaluation evidence before expanding detector claims.
+- Prefer real-world labeled repository fixtures or a second independent corpus before changing confidence levels.
 
 Blocked actions:
 - Advertising 100 percent precision or recall as a general DoctorCode product claim.
-- Raising HIGH or SUSPICIOUS detector confidence based only on the nine-case corpus.
+- Raising HIGH or SUSPICIOUS detector confidence from the nine-case corpus alone.
 - Auto-deleting or auto-fixing findings.
 - Claiming semantic support for languages without a dedicated analyzer and benchmark.
 
@@ -151,16 +151,17 @@ Known blockers:
 ### Proven
 
 - M01 accepted baseline is b9820a7f430723b9d46246a82a69372668831785.
-- M02 source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 passed CI run 36257961484 on ubuntu-latest, windows-latest, and macos-latest.
-- The nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives for the five current rules.
-- Benchmark unit tests prove both unexpected findings and missing expected findings make the benchmark fail.
-- Benchmark case roots are constrained to the manifest directory, including symlink resolution.
-- Go analyzer ignores source symlink entries so repository audit does not follow a .go symlink outside the target tree.
+- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed strict Skill_Workflow governance run 36258248730.
+- M02 synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 on ubuntu-latest, windows-latest, and macos-latest.
+- The exact nine-case labeled Go corpus produced 5 true positives, 0 false positives, and 0 false negatives on the accepted candidate.
+- Benchmark tests prove false positives and false negatives are both blocking signals.
+- Benchmark roots are path-contained and Go repository analysis does not follow source symlink entries.
+- All M01 safety boundaries remain in force: no automatic fix or deletion.
 
 ### Not proven
 
 - The nine-case curated corpus does not establish general real-world precision or recall.
-- The corpus does not cover the full Go language or all adversarial code shapes.
+- The corpus does not cover the full Go language, ecosystem, build tags, generated-code conventions, reflection, or all adversarial code shapes.
 - Semantic support for non-Go languages is not implemented.
 - Safe automatic deletion or automatic fixing remains unsupported.
 - Current generic Skill_Workflow sequence extraction does not resolve Go function call graphs.

@@ -4,18 +4,18 @@
 
 ## Evidence boundary
 
-M02 proves the labeled benchmark harness and the current nine-case Go regression corpus only. On source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 the corpus produced 5 TP, 0 FP, and 0 FN on all three GitHub-hosted operating systems. These numbers are not a general real-world precision or recall claim.
+M02 acceptance proves the labeled benchmark harness and the exact nine-case Go regression corpus only. On synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5, CI run 36258248707 reported 5 TP, 0 FP, and 0 FN and passed on Linux, Windows, and macOS; strict governance run 36258248730 also passed. These numbers are not a general real-world precision or recall claim.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 2d58636b4673c700ddf7e66ae38b1d78b70e4a41f7a1a71284a70a34236008d6
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M02-BENCHMARK-HARNESS | Benchmark harness computes deterministic TP, FP, FN, precision, and recall per rule and in aggregate, and fails when expected/actual labels disagree or configured thresholds are missed. | internal/benchmark/benchmark_test.go plus CI run 36257961484 at 3b8a8dbb413499460de6e97aa06eb62730247105. | PASS |
-| M02-CURATED-GATE | The nine-case labeled Go corpus is a blocking CI regression gate on Linux, Windows, and macOS. | CI run 36257961484: 5 TP, 0 FP, 0 FN, aggregate precision=1 and recall=1 on this corpus only; all three OS jobs passed. | PASS |
-| M02-PATH-CONTAINMENT | Benchmark case roots cannot escape the manifest directory through parent traversal or symlink resolution. | internal/benchmark/benchmark_test.go::TestEvaluateRejectsEscapingCaseRoot and secureCaseRoot. | PASS |
-| M02-SOURCE-SYMLINK | Go repository analysis does not follow .go symlink entries outside the selected repository tree. | internal/analyzers/golang/analyzer_test.go::TestAnalyzerDoesNotFollowGoFileSymlink plus three-OS compile/test CI; symlink creation regression executes on supported Unix runners. | PASS |
-| M02-NO-CLAIM-INFLATION | CLI and project truth describe benchmark metrics as corpus-scoped regression evidence rather than general product precision. | cmd/doctorcode/main.go usage text and .workflow acceptance/state boundary. | PASS |
+| M02-BENCHMARK-HARNESS | Benchmark harness computes deterministic TP, FP, FN, precision, and recall per rule and in aggregate, and fails when expected/actual labels disagree or configured thresholds are missed. | internal/benchmark/benchmark_test.go plus exact synchronized candidate CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5. | PASS |
+| M02-CURATED-GATE | The nine-case labeled Go corpus is a blocking CI regression gate on Linux, Windows, and macOS. | Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5, CI run 36258248707: nine cases, 5 TP, 0 FP, 0 FN, aggregate precision=1 and recall=1 on this corpus only; Linux, Windows, and macOS all PASS. | PASS |
+| M02-PATH-CONTAINMENT | Benchmark case roots cannot escape the manifest directory through parent traversal or symlink resolution. | internal/benchmark/benchmark_test.go::TestEvaluateRejectsEscapingCaseRoot and secureCaseRoot. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
+| M02-SOURCE-SYMLINK | Go repository analysis does not follow .go symlink entries outside the selected repository tree. | internal/analyzers/golang/analyzer_test.go::TestAnalyzerDoesNotFollowGoFileSymlink plus three-OS compile/test CI; symlink creation regression executes on supported Unix runners. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
+| M02-NO-CLAIM-INFLATION | CLI and project truth describe benchmark metrics as corpus-scoped regression evidence rather than general product precision. | cmd/doctorcode/main.go usage text and .workflow acceptance/state boundary. Exact synchronized candidate a1fa64b6aae171e61eb0662049794f88fb5190f5 passed CI run 36258248707 and strict governance run 36258248730. | PASS |
 
 ## Test commands
 
