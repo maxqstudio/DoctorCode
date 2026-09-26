@@ -1,27 +1,36 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
+	"github.com/maxqstudio/DoctorCode/internal/engine"
+	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
 )
 
-const version = "0.0.1-dev"
+const version = "0.1.0-dev"
 
 func main() {
 	if len(os.Args) < 2 {
 		usage()
 		return
 	}
+
 	switch os.Args[1] {
 	case "scan":
 		runScan(os.Args[2:])
 	case "toolchains":
 		runToolchains(os.Args[2:])
+	case "audit":
+		runAudit(os.Args[2:])
+	case "next":
+		runNext(os.Args[2:])
 	case "version", "--version", "-v":
 		fmt.Println(version)
 	case "help", "--help", "-h":
@@ -34,45 +43,39 @@ func main() {
 }
 
 func runScan(args []string) {
-	root := "."
-	asJSON := false
-	for _, arg := range args {
-		if arg == "--json" {
-			asJSON = true
-		} else if !strings.HasPrefix(arg, "-") {
-			root = arg
-		}
+	root, asJSON, _, err := parseArgs(args, 0)
+	if err != nil {
+		die(err)
 	}
 	result, err := scanner.Scan(root)
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "scan failed:", err)
-		os.Exit(1)
+		die(fmt.Errorf("scan failed: %w", err))
 	}
+
 	if asJSON {
 		writeJSON(result)
 		return
 	}
-	fmt.Printf("ROOT %s\nFILES %d\nRECOGNIZED %d\n", result.Root, result.Files, result.RecognizedFiles)
+
+	fmt.Printf("ROOT %s\n", result.Root)
+	fmt.Printf("FILES %d\n", result.Files)
+	fmt.Printf("RECOGNIZED %d\n", result.RecognizedFiles)
 	for _, item := range result.Languages {
 		fmt.Printf("%s %d\n", item.Name, item.Files)
 	}
 }
 
 func runToolchains(args []string) {
-	root := "."
-	asJSON := false
-	for _, arg := range args {
-		if arg == "--json" {
-			asJSON = true
-		} else if !strings.HasPrefix(arg, "-") {
-			root = arg
-		}
+	root, asJSON, _, err := parseArgs(args, 0)
+	if err != nil {
+		die(err)
 	}
 	result := toolchain.Detect(root)
 	if asJSON {
 		writeJSON(result)
 		return
 	}
+
 	for _, item := range result {
 		state := "MISSING"
 		if item.Available {
@@ -89,13 +92,131 @@ func runToolchains(args []string) {
 	}
 }
 
+func runAudit(args []string) {
+	root, asJSON, maxFindings, err := parseArgs(args, 100)
+	if err != nil {
+		die(err)
+	}
+	result, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		die(fmt.Errorf("audit failed: %w", err))
+	}
+	total := len(result.Findings)
+	if maxFindings > 0 && len(result.Findings) > maxFindings {
+		result.Findings = result.Findings[:maxFindings]
+	}
+
+	if asJSON {
+		writeJSON(struct {
+			Root             string      `json:"root"`
+			Analyzers        []string    `json:"analyzers"`
+			TotalFindings    int         `json:"total_findings"`
+			ReturnedFindings int         `json:"returned_findings"`
+			Findings         interface{} `json:"findings"`
+		}{
+			Root: result.Root, Analyzers: result.Analyzers,
+			TotalFindings: total, ReturnedFindings: len(result.Findings), Findings: result.Findings,
+		})
+		return
+	}
+
+	fmt.Printf("ROOT %s\nANALYZERS %s\nFINDINGS %d", result.Root, strings.Join(result.Analyzers, ","), total)
+	if len(result.Findings) != total {
+		fmt.Printf(" returned=%d", len(result.Findings))
+	}
+	fmt.Println()
+	for _, finding := range result.Findings {
+		fmt.Printf("%s %s %s %s:%d %s\n", finding.ID, finding.Category, finding.Confidence, finding.Path, finding.LineStart, finding.Summary)
+	}
+}
+
+func runNext(args []string) {
+	root := "."
+	asJSON := false
+	maxBytes := 4096
+	for _, arg := range args {
+		switch {
+		case arg == "--json":
+			asJSON = true
+		case strings.HasPrefix(arg, "--max-bytes="):
+			value, err := strconv.Atoi(strings.TrimPrefix(arg, "--max-bytes="))
+			if err != nil {
+				die(fmt.Errorf("invalid --max-bytes: %w", err))
+			}
+			maxBytes = value
+		case strings.HasPrefix(arg, "-"):
+			die(fmt.Errorf("unknown option %s", arg))
+		default:
+			root = arg
+		}
+	}
+
+	result, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		die(fmt.Errorf("audit failed: %w", err))
+	}
+	if len(result.Findings) == 0 {
+		if asJSON {
+			writeJSON(map[string]string{"status": "NO_FINDINGS"})
+		} else {
+			fmt.Println("NO_FINDINGS")
+		}
+		return
+	}
+	packet, err := evidence.Build(result.Root, result.Findings[0], maxBytes)
+	if err != nil {
+		die(fmt.Errorf("build evidence packet: %w", err))
+	}
+	if asJSON {
+		writeJSON(packet)
+		return
+	}
+	fmt.Printf("%s %s %s %s:%d\n%s\n", packet.Finding.ID, packet.Finding.Category, packet.Finding.Confidence, packet.Finding.Path, packet.Finding.LineStart, packet.Finding.Summary)
+	for _, item := range packet.Finding.Evidence {
+		fmt.Printf("EVIDENCE %s\n", item)
+	}
+	if packet.SourceExcerpt != "" {
+		fmt.Printf("SOURCE\n%s\n", packet.SourceExcerpt)
+	}
+	if packet.SensitiveExcerptOmitted {
+		fmt.Println("SOURCE OMITTED_SENSITIVE")
+	}
+}
+
+func parseArgs(args []string, defaultMaxFindings int) (string, bool, int, error) {
+	root := "."
+	asJSON := false
+	maxFindings := defaultMaxFindings
+	for _, arg := range args {
+		switch {
+		case arg == "--json":
+			asJSON = true
+		case strings.HasPrefix(arg, "--max-findings="):
+			value, err := strconv.Atoi(strings.TrimPrefix(arg, "--max-findings="))
+			if err != nil {
+				return "", false, 0, fmt.Errorf("invalid --max-findings: %w", err)
+			}
+			maxFindings = value
+		case strings.HasPrefix(arg, "-"):
+			return "", false, 0, fmt.Errorf("unknown option %s", arg)
+		default:
+			root = arg
+		}
+	}
+	return root, asJSON, maxFindings, nil
+}
+
 func writeJSON(value any) {
 	enc := json.NewEncoder(os.Stdout)
 	enc.SetIndent("", "  ")
 	if err := enc.Encode(value); err != nil {
-		fmt.Fprintln(os.Stderr, "json encode failed:", err)
-		os.Exit(1)
+		die(fmt.Errorf("json encode failed: %w", err))
 	}
+}
+
+func die(err error) {
+	fmt.Fprintln(os.Stderr, err)
+	os.Exit(1)
 }
 
 func usage() {
@@ -104,13 +225,15 @@ func usage() {
 Usage:
   doctorcode scan [path] [--json]
   doctorcode toolchains [path] [--json]
+  doctorcode audit [path] [--json] [--max-findings=N]
+  doctorcode next [path] [--json] [--max-bytes=N]
   doctorcode version
 
-M00 bootstrap scope:
-  - cross-platform repository inventory
-  - language detection
-  - compiler/toolchain capability detection
+M01 detector foundation:
+  Go has intentionally narrow built-in rules for BLOAT, SECURITY, SIMPLIFY,
+  LOGIC, and DEADCODE. Findings carry evidence and confidence boundaries.
+  No M01 rule enables automatic deletion or automatic fixing.
 
-BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE detectors are not yet claimed
-as implemented until their dedicated acceptance evidence exists.`)
+Use "doctorcode next --json --max-bytes=4096" to give a small LLM one bounded
+evidence packet instead of the whole repository.`)
 }
