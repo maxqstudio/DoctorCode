@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/maxqstudio/DoctorCode/internal/engine"
+	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"\n\t"github.com/maxqstudio/DoctorCode/internal/benchmark"\n\t"github.com/maxqstudio/DoctorCode/internal/engine"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
@@ -180,6 +180,47 @@ func runNext(args []string) {
 	}
 	if packet.SensitiveExcerptOmitted {
 		fmt.Println("SOURCE OMITTED_SENSITIVE")
+	}
+}
+
+func runBenchmark(args []string) {
+	asJSON := false
+	manifest := ""
+	for _, arg := range args {
+		switch {
+		case arg == "--json":
+			asJSON = true
+		case strings.HasPrefix(arg, "-"):
+			die(fmt.Errorf("unknown option %s", arg))
+		case manifest == "":
+			manifest = arg
+		default:
+			die(errors.New("benchmark accepts exactly one manifest path"))
+		}
+	}
+	if manifest == "" {
+		die(errors.New("benchmark manifest path is required"))
+	}
+
+	report, err := benchmark.Evaluate(context.Background(), manifest, goanalysis.New())
+	if err != nil {
+		die(fmt.Errorf("benchmark failed: %w", err))
+	}
+	if asJSON {
+		writeJSON(report)
+	} else {
+		fmt.Printf("BENCHMARK %s cases=%d precision=%.4f recall=%.4f passed=%t\n",
+			report.Analyzer, report.Cases, report.Metrics.Precision, report.Metrics.Recall, report.Passed)
+		for rule, metrics := range report.Rules {
+			fmt.Printf("%s tp=%d fp=%d fn=%d precision=%.4f recall=%.4f\n",
+				rule, metrics.TruePositive, metrics.FalsePositive, metrics.FalseNegative, metrics.Precision, metrics.Recall)
+		}
+		for _, failure := range report.Failures {
+			fmt.Printf("FAIL %s\n", failure)
+		}
+	}
+	if !report.Passed {
+		os.Exit(1)
 	}
 }
 

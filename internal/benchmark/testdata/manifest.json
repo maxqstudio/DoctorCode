@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "language": "Go",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "deadcode-positive",
+      "root": "cases/deadcode-positive",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "sample.go",
+          "line_start": 6,
+          "summary_contains": "unusedLegacy"
+        }
+      ]
+    },
+    {
+      "name": "logic-positive",
+      "root": "cases/logic-positive",
+      "expected": [
+        {
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.go",
+          "line_start": 8
+        }
+      ]
+    },
+    {
+      "name": "simplify-positive",
+      "root": "cases/simplify-positive",
+      "expected": [
+        {
+          "rule_id": "GO-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.go",
+          "line_start": 4
+        }
+      ]
+    },
+    {
+      "name": "security-positive",
+      "root": "cases/security-positive",
+      "expected": [
+        {
+          "rule_id": "GO-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.go",
+          "line_start": 3,
+          "summary_contains": "apiToken"
+        }
+      ]
+    },
+    {
+      "name": "bloat-positive",
+      "root": "cases/bloat-positive",
+      "expected": [
+        {
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "sample.go",
+          "line_start": 5,
+          "summary_contains": "wrapper"
+        }
+      ]
+    },
+    {
+      "name": "negative-mixed",
+      "root": "cases/negative-mixed",
+      "expected": []
+    },
+    {
+      "name": "deadcode-linkage-escape",
+      "root": "cases/deadcode-linkage-escape",
+      "expected": []
+    },
+    {
+      "name": "deadcode-bodyless",
+      "root": "cases/deadcode-bodyless",
+      "expected": []
+    },
+    {
+      "name": "deadcode-test-reference",
+      "root": "cases/deadcode-test-reference",
+      "expected": []
+    }
+  ]
+}
