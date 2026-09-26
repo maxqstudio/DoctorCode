@@ -1,0 +1,40 @@
+name: Governance Bootstrap
+
+on:
+  push:
+    branches:
+      - "work/**"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  project-truth:
+    name: skill-workflow-ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Generate current sequence evidence
+        run: |
+          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M00-BOOTSTRAP.actual.json --output-mermaid docs/sequence/generated/M00-BOOTSTRAP.actual.mmd --entry cmd/doctorcode/main.go::main
+      - name: Validate sequence
+        run: python .workflow/tools/validate_sequence_sessions.py
+      - name: Compile project truth
+        run: python .workflow/tools/sync_project_truth.py --no-record
+      - name: Validate project docs
+        run: python .workflow/tools/validate_project_docs.py
+      - name: Validate doc quality
+        run: python .workflow/tools/validate_doc_quality.py
+      - name: Upload governance preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: doctorcode-governance-preview
+          path: |
+            docs/
+            .workflow/generated/
+            artifacts/
+          if-no-files-found: error

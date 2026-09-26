@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "session_id": "M00-BOOTSTRAP",
+  "phase": "M00_BOOTSTRAP",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": true,
+  "status": "IN_PROGRESS",
+  "implementation_base_sha": "",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M00-BOOTSTRAP.actual.json",
+    "diagram": "docs/sequence/generated/M00-BOOTSTRAP.actual.mmd",
+    "source_digest": "",
+    "entries": [
+      "cmd/doctorcode/main.go::main"
+    ]
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/language/registry_test.go",
+    "internal/scanner/scanner_test.go",
+    "internal/toolchain/toolchain_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": "artifacts/sequence/M00-BOOTSTRAP.acceptance.json"
+}
