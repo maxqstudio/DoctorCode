@@ -259,6 +259,59 @@
         "GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M04-REPOSITORY-METRICS",
+      "claim": "On corrected source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d, the 12-case M04 repository-shaped corpus reports 7 TP, 0 FP, and 0 FN while M02 and M03 remain passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m04-repository-shaped.json",
+        "internal/benchmark/benchmark.go::Evaluate"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36279033090"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M04-NO-DETECTOR-CHANGE",
+      "claim": "M04 adds repository-shaped evaluation evidence without modifying Go detector implementation code.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m04-repository-shaped.json",
+        ".github/workflows/ci.yml"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "Git history from 07c8bee4c546edd381723abad2398dbb2567fbf9 through 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M04-ORACLE-CORRECTION",
+      "claim": "The first M04 run rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; the fixture was corrected without weakening detector rules.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

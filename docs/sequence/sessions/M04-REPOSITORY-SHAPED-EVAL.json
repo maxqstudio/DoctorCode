@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "session_id": "M04-REPOSITORY-SHAPED-EVAL",
+  "phase": "M04_REPOSITORY_SHAPED_EVAL",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "ACCEPTANCE_CANDIDATE",
+  "implementation_base_sha": "07c8bee4c546edd381723abad2398dbb2567fbf9",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.json",
+    "diagram": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/benchmark/benchmark_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

@@ -115,6 +115,11 @@
       "expected": "passed=true; current 11-case adversarial corpus reports 6 TP, 0 FP, 0 FN"
     },
     {
+      "name": "M04 repository-shaped benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
+      "expected": "passed=true; current 12-case repository-shaped corpus reports 7 TP, 0 FP, 0 FN"
+    },
+    {
       "name": "Static vet",
       "command": "go vet ./...",
       "expected": "exit code 0"

@@ -88,14 +88,15 @@
     {
       "id": "benchmark_harness",
       "name": "Precision Benchmark Harness",
-      "purpose": "Evaluate baseline and adversarial labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
+      "purpose": "Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
       "owns": [
         "benchmark manifest validation",
         "case-root containment",
         "label matching",
         "TP/FP/FN accounting",
         "baseline regression gate",
-        "adversarial regression gate"
+        "adversarial regression gate",
+        "repository-shaped regression gate"
       ],
       "depends_on": [
         "Go analyzer"
@@ -142,6 +143,11 @@
       "from": "adversarial labeled corpus",
       "to": "precision benchmark harness",
       "meaning": "M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases."
+    },
+    {
+      "from": "repository-shaped labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules."
     }
   ],
   "external_boundaries": [

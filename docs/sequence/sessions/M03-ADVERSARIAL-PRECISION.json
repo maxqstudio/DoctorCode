@@ -3,7 +3,7 @@
   "session_id": "M03-ADVERSARIAL-PRECISION",
   "phase": "M03_ADVERSARIAL_PRECISION",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "76903ac9384412274cef4393fe6ba970bab6fec7",
