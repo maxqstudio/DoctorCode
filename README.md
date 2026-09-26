@@ -21,9 +21,21 @@ The project focuses on five defect domains:
 - GitHub Actions is the public repository CI and acceptance runner.
 - Project governance follows `maxqstudio/Skill_Workflow`.
 
+## Documentation
+
+Canonical generated project documentation lives under `docs/`:
+
+- [System overview](docs/SYSTEM_OVERVIEW.md)
+- [Current state](docs/CURRENT_STATE.md)
+- [Project manifest](docs/PROJECT_MANIFEST.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Acceptance matrix](docs/TEST_ACCEPTANCE_MATRIX.md)
+
+The upstream semantic/governance source is `.workflow/*.json`; generated Markdown is not edited by hand.
+
 ## Status
 
-DoctorCode is in bootstrap development. Current support claims are intentionally narrow until CI evidence exists.
+DoctorCode is in bootstrap development. Current support claims are intentionally narrow until CI and detector evidence exists.
 
 ## Support
 
