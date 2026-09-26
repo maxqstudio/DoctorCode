@@ -19,11 +19,11 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M02 precision benchmark is accepted on the development branch.** Current semantic coverage is deliberately narrow, and benchmark results are explicitly corpus-scoped.
+**M03 adversarial precision is accepted on the development branch.** Current semantic coverage remains deliberately narrow, and all benchmark results are explicitly corpus-scoped.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
-| Go | Yes | Yes | **Yes — M01 narrow rules, M02 benchmark-gated** |
+| Go | Yes | Yes | **Yes — narrow rules, baseline + adversarial benchmark-gated** |
 | Python | Yes | Yes | Not yet |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
@@ -61,6 +61,18 @@ DoctorCode now includes a labeled Go benchmark that is executed as a blocking CI
 The accepted M02 corpus contains **9 curated cases**. On the accepted candidate it reports **5 TP, 0 FP, and 0 FN** across the five current rules. That is a regression result for this exact corpus only; it is **not** a claim of 100% real-world precision or recall.
 
 The benchmark fails when an expected finding is missing, when an unexpected finding appears, or when the configured corpus threshold is missed.
+
+### M03 adversarial regression gate
+
+M03 adds a second independent 11-case corpus:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
+```
+
+Before repair, this gate exposed **4 false negatives** that the M02 corpus did not catch: local-name shadowing, a selector/method-name collision, and a duplicate pure condition hidden by redundant parentheses. After the targeted repairs, the M03 corpus reports **6 TP, 0 FP, and 0 FN**, while the original M02 corpus remains passing.
+
+These results remain bounded to the tracked corpora. They do not establish general real-world precision or recall.
 
 ## Quick start
 
@@ -122,7 +134,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Each runner executes unit/corpus tests, the labeled precision benchmark gate, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
+Each runner executes unit/corpus tests, both the M02 baseline and M03 adversarial benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
 
 ## Design principles
 
