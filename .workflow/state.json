@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "phase": "M00_BOOTSTRAP",
+  "status": "IN_PROGRESS",
+  "working_branch": "work/bootstrap-doctorcode-m00",
+  "last_accepted_sha": "",
+  "last_accepted_branch": "",
+  "proven": [
+    "Repository exists and initial README is tracked."
+  ],
+  "not_proven": [
+    "Cross-platform CI matrix.",
+    "Project Truth Compiler final acceptance.",
+    "Semantic detector support for any language.",
+    "BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE accuracy."
+  ],
+  "blockers": [],
+  "next_authorized_actions": [
+    "Run GitHub Actions on M00 bootstrap branch.",
+    "Repair until bootstrap workflows pass.",
+    "Generate canonical docs from current structured specs."
+  ],
+  "blocked_actions": [
+    "Claiming production-ready detector coverage.",
+    "Publishing safe-delete guarantees.",
+    "Stable release before detector benchmarks."
+  ]
+}

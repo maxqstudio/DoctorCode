@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "api_contracts": [],
+  "data_contracts": [
+    {
+      "id": "SCAN_RESULT_V1",
+      "purpose": "Machine-readable repository inventory from doctorcode scan --json",
+      "owner": "internal/model/model.go::ScanResult"
+    },
+    {
+      "id": "TOOLCHAIN_STATUS_V1",
+      "purpose": "Machine-readable compiler/runtime capability from doctorcode toolchains --json",
+      "owner": "internal/model/model.go::ToolchainStatus"
+    },
+    {
+      "id": "FINDING_V1",
+      "purpose": "Initial common shape for future compact findings",
+      "owner": "internal/model/model.go::Finding"
+    }
+  ],
+  "ui_surfaces": [],
+  "runbook_steps": [
+    "go test ./...",
+    "go vet ./...",
+    "go build -trimpath ./cmd/doctorcode",
+    "go run ./cmd/doctorcode scan . --json",
+    "go run ./cmd/doctorcode toolchains . --json"
+  ]
+}

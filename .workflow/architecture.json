@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "components": [
+    {
+      "id": "cli",
+      "name": "CLI",
+      "purpose": "Human/agent interface for deterministic DoctorCode operations.",
+      "owns": [
+        "command parsing",
+        "text and JSON rendering"
+      ],
+      "depends_on": [
+        "scanner",
+        "toolchain registry"
+      ]
+    },
+    {
+      "id": "scanner",
+      "name": "Repository Scanner",
+      "purpose": "Walk repository content deterministically while excluding common generated/dependency directories.",
+      "owns": [
+        "file inventory",
+        "language counts"
+      ],
+      "depends_on": [
+        "language registry"
+      ]
+    },
+    {
+      "id": "language_registry",
+      "name": "Language Registry",
+      "purpose": "Map source extensions to language identities without semantic-analysis claims.",
+      "owns": [
+        "language identity"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "toolchain_registry",
+      "name": "Toolchain Registry",
+      "purpose": "Detect compilers/runtimes and project manifests conservatively.",
+      "owns": [
+        "host capability observation"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "detector_engine",
+      "name": "Detector Engine",
+      "purpose": "Future host for five detector domains.",
+      "owns": [
+        "finding production"
+      ],
+      "depends_on": [
+        "scanner",
+        "language-specific adapters"
+      ]
+    },
+    {
+      "id": "evidence_reducer",
+      "name": "Evidence Reducer",
+      "purpose": "Future bounded context compiler for humans and small LLMs.",
+      "owns": [
+        "token-bounded finding context"
+      ],
+      "depends_on": [
+        "detector engine"
+      ]
+    }
+  ],
+  "data_flows": [
+    {
+      "from": "repository",
+      "to": "repository scanner",
+      "meaning": "Inventory source without sending it to an LLM."
+    },
+    {
+      "from": "repository scanner",
+      "to": "language registry",
+      "meaning": "Classify recognized source files."
+    },
+    {
+      "from": "host environment",
+      "to": "toolchain registry",
+      "meaning": "Observe compiler/runtime availability."
+    },
+    {
+      "from": "detector engine",
+      "to": "evidence reducer",
+      "meaning": "Reduce future findings to bounded packets."
+    }
+  ],
+  "external_boundaries": [
+    "GitHub Actions hosted operating systems",
+    "host compilers and runtimes",
+    "future optional third-party analyzers"
+  ]
+}

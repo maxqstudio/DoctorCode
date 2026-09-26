@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-SCAN",
+  "title": "Repository inventory scan",
+  "purpose": "Produce deterministic repository inventory without whole-repository LLM context.",
+  "authority": "cmd/doctorcode/main.go and internal/scanner/scanner.go",
+  "entry_condition": "doctorcode scan is invoked for an accessible path.",
+  "source_owners": [
+    "cmd/doctorcode/main.go",
+    "internal/scanner/scanner.go",
+    "internal/language/registry.go"
+  ],
+  "transitions": [
+    {
+      "from": "REQUESTED",
+      "to": "WALKING",
+      "action": "Normalize root and walk non-ignored entries."
+    },
+    {
+      "from": "WALKING",
+      "to": "CLASSIFYING",
+      "action": "Classify recognized source files."
+    },
+    {
+      "from": "CLASSIFYING",
+      "to": "REPORTED",
+      "action": "Sort language names and emit text or JSON."
+    }
+  ],
+  "tests": [
+    "internal/scanner/scanner_test.go",
+    "internal/language/registry_test.go"
+  ],
+  "sequence_session": "M00-BOOTSTRAP",
+  "critical": true,
+  "failure_behavior": [
+    "Filesystem walk errors fail closed instead of claiming complete coverage."
+  ]
+}

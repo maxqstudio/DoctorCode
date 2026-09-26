@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "known_defects": [
+    {
+      "id": "KNOWN-M00-001",
+      "summary": "Semantic defect detectors are not implemented in M00.",
+      "status": "OPEN",
+      "impact": "No five-domain detector accuracy claim is valid yet."
+    }
+  ]
+}

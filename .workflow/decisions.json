@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "decisions": [
+    {
+      "id": "ADR-M00-001",
+      "decision": "Use Go for the portable DoctorCode core and expose language/compiler support through adapters.",
+      "reason": "Single-binary distribution and cross-platform CI keep deterministic core use simple.",
+      "status": "ACCEPTED"
+    },
+    {
+      "id": "ADR-M00-002",
+      "decision": "Use GitHub Actions Linux/Windows/macOS runners as public runtime and acceptance authority.",
+      "reason": "The public project must not depend on the Owner PC.",
+      "status": "ACCEPTED"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "DoctorCode",
+    "repository": "maxqstudio/DoctorCode",
+    "purpose": "Deterministically reduce large codebases into small evidence-backed findings for bloat, security, simplification, logic, and dead/stale code so humans and small LLMs can review and repair code with low token usage.",
+    "primary_users": [
+      "software developers",
+      "AI coding agents",
+      "small local LLM users",
+      "maintainers of multi-language repositories"
+    ],
+    "expected_outcomes": [
+      "high-signal machine-readable findings instead of whole-repository prompts",
+      "conservative evidence for deleting unused or stale code",
+      "cross-platform repository and toolchain intelligence",
+      "deterministic verification before findings are called resolved"
+    ]
+  },
+  "technology": {
+    "languages": [
+      "Go"
+    ],
+    "frameworks": [],
+    "persistence": [],
+    "external_systems": [
+      "GitHub Actions",
+      "host compilers and language runtimes"
+    ]
+  },
+  "entry_points": [
+    {
+      "name": "doctorcode scan",
+      "path": "cmd/doctorcode/main.go",
+      "purpose": "Inventory a repository and recognize source languages."
+    },
+    {
+      "name": "doctorcode toolchains",
+      "path": "cmd/doctorcode/main.go",
+      "purpose": "Report compiler/runtime toolchain availability without assuming every host has every compiler."
+    }
+  ],
+  "constraints": [
+    "LLM use remains optional for deterministic core functions.",
+    "Language detection is not semantic analysis.",
+    "Do not auto-delete code without future dead-code safety evidence.",
+    "GitHub Actions is CI and acceptance runner; Owner PC is not used.",
+    "Cross-platform core behavior must pass on Linux, Windows, and macOS."
+  ]
+}

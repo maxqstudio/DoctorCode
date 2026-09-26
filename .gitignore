@@ -1,0 +1,7 @@
+doctorcode
+doctorcode.exe
+*.test
+coverage.out
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "terms": [
+    {
+      "term": "Evidence packet",
+      "meaning": "A bounded machine-readable context describing one finding and its evidence."
+    },
+    {
+      "term": "PROVEN_UNUSED",
+      "meaning": "Reserved future dead-code status requiring stronger evidence than a zero-reference count."
+    }
+  ]
+}
