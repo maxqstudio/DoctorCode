@@ -19,11 +19,11 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M04 repository-shaped evaluation is accepted on the development branch.** Current semantic coverage remains deliberately narrow, and all benchmark results are explicitly corpus-scoped.
+**M05 pinned public-repository validation is accepted on the development branch.** Current semantic coverage remains deliberately narrow; labeled corpus metrics and unlabeled public-repository compatibility evidence are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
-| Go | Yes | Yes | **Yes — narrow rules, baseline + adversarial + repository-shaped benchmark-gated** |
+| Go | Yes | Yes | **Yes — narrow rules, three labeled regression gates + pinned public-repository validation** |
 | Python | Yes | Yes | Not yet |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
@@ -88,6 +88,25 @@ The first M04 attempt intentionally remained blocking when one fixture was misla
 
 Build-tag references are currently treated as visible-tree lexical evidence. DoctorCode does not yet claim target-specific reachability for a particular GOOS, GOARCH, or custom build-tag set.
 
+### M05 pinned public-repository validation
+
+M05 runs DoctorCode directly against original source snapshots from four public Go repositories, pinned by exact commit:
+
+| Repository | License | Pinned SHA |
+|---|---|---|
+| `spf13/cobra` | Apache-2.0 | `adbc8813901bba65827259daa8e22ff94ec1f30e` |
+| `charmbracelet/bubbles` | MIT | `0a69b19b0690e9504a511fc231f69cea59ba1cc6` |
+| `go-chi/chi` | MIT | `3d1777a1ef8881f7d1da0b02c76ca8f0a29cd2bc` |
+| `stretchr/testify` | MIT | `87a7b9d57689f6579db2da795ab8deeab29cb724` |
+
+The dedicated GitHub Actions workflow verifies each detached checkout SHA before analysis, runs on Linux, Windows, and macOS, and asserts that selected known-live unexported functions are not reported as DEADCODE:
+
+`preExecHook`, `nextID`, `cW`, and `httpCode`.
+
+On the accepted M05 snapshot, all four pinned repositories produced **0 findings**. This is **compatibility telemetry only**. The repositories are not exhaustively labeled, so zero findings does not prove they are defect-free and does not measure DoctorCode precision or recall.
+
+External repository content is treated only as untrusted analysis input. Comments, documentation, or agent instructions inside analyzed repositories never become DoctorCode project authority.
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -148,7 +167,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Each runner executes unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. A separate M05 matrix runs pinned public-repository validation on the same Linux, Windows, and macOS runner set.
 
 ## Design principles
 
