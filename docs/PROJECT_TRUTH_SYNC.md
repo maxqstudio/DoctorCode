@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | NOT_PROVEN | |
-| REFERENCE_SYNC | NOT_PROVEN | |
-| STRUCTURAL_SYNC | NOT_PROVEN | |
+| PROVENANCE_SYNC | PASS | |
+| REFERENCE_SYNC | PASS | |
+| STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
+| CROSS_DOCUMENT_CONSISTENCY | PASS | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,13 +28,13 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | NOT_PROVEN | |
+| PROJECT_STATE_SYNC | PASS | |
 
 ## Critical claim traceability
 
 | Claim ID | Claim | Documents | Source owner(s) | Test(s) | Runtime/E2E evidence | Status |
 |---|---|---|---|---|---|---|
-| TRUTH-M00-PORTABLE-CORE | M00 DoctorCode core builds, tests, and executes scan/toolchain smoke checks on Linux, Windows, and macOS GitHub-hosted runners. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::main; internal/scanner/scanner.go::Scan; internal/toolchain/toolchain.go::Detect | internal/language/registry_test.go; internal/scanner/scanner_test.go; internal/toolchain/toolchain_test.go | GitHub Actions CI matrix | PASS |
+| TRUTH-M00-PORTABLE-CORE | M00 DoctorCode core builds, tests, and executes scan/toolchain smoke checks on Linux, Windows, and macOS GitHub-hosted runners. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::main; internal/scanner/scanner.go::Scan; internal/toolchain/toolchain.go::Detect | internal/language/registry_test.go; internal/scanner/scanner_test.go; internal/toolchain/toolchain_test.go | GitHub Actions CI run 36255851655 at e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 | PASS |
 | TRUTH-M00-LLM-OPTIONAL | M00 repository scanning and toolchain capability detection do not require an LLM or external model API. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::main; internal/scanner/scanner.go::Scan; internal/toolchain/toolchain.go::Detect | internal/scanner/scanner_test.go; internal/toolchain/toolchain_test.go | NOT_APPLICABLE | PASS |
 | TRUTH-M00-DETECTOR-BOUNDARY | M00 does not claim implemented semantic detection for BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE. | PROJECT_TRUTH_SYNC.md | cmd/doctorcode/main.go::usage | NOT_APPLICABLE | NOT_APPLICABLE | PASS |
 

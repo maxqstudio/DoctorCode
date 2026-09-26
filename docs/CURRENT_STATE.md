@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M00_BOOTSTRAP
-Status: ACCEPTANCE_CANDIDATE
+Status: M00_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -37,16 +37,16 @@ Current sequence session: M00-BOOTSTRAP
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- Core CI passed on Linux, Windows, and macOS at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
-- Skill_Workflow governance preview passed at 8cc3430dc5b82fa57eaf41aef1a47142a9de84a1.
-- Canonical generated docs were committed by GitHub Actions at f0725c0ff560549f9995bc6b84a366d4dbf03c79.
-- Human-first documentation was semantically reviewed for the M00 scope.
+- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed strict Skill_Workflow governance run 36255851651.
+- Exact candidate e9b1dc0fe38a0e8488df98d1372ec6b6842badc3 passed GitHub Actions CI run 36255851655 on ubuntu-latest, windows-latest, and macos-latest.
+- Canonical generated documentation is tracked and reproducible from .workflow specs plus source facts.
+- M00 human-comprehension, sequence, handoff, cross-document, and project-truth candidate gates are validated.
 
 ## Not proven
-- Final candidate provenance/reference/structural/cross-document gates are pending strict validation on the synchronized snapshot.
 - Go semantic sequence extraction is not supported by the current generic Skill_Workflow extractor.
 - Semantic detector support for any language is not implemented.
 - BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE accuracy is not benchmarked.
+- Safe automatic deletion is not implemented or claimed.
 
 ## Known blockers
 - None declared.
@@ -55,11 +55,11 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize generated docs for this acceptance-candidate spec.
-- Run strict Skill_Workflow validators on the exact synchronized snapshot.
-- Promote M00 only if strict governance and three-OS CI both pass.
+- Begin M01 detector-foundation planning from the accepted M00 baseline.
+- Define benchmark corpus and precision-first acceptance for the five detector domains.
+- Add language-specific semantic adapters incrementally without weakening M00 portability.
 
 ## Explicitly blocked
-- Starting M01 implementation before M00 strict acceptance.
-- Claiming production-ready detector coverage.
-- Publishing safe-delete guarantees.
+- Claiming production-ready semantic detector coverage before detector benchmarks pass.
+- Publishing safe-delete guarantees before reachability and dynamic-reference safety evidence exists.
+- Claiming a compiler or semantic analyzer is supported solely because its file extension is recognized.

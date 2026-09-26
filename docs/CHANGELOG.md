@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-26 — M00 accepted baseline
+
+Type: acceptance
+
+- Portable Go core passed Linux, Windows, and macOS GitHub Actions.
+- Strict Skill_Workflow governance passed on the synchronized candidate.
+- Canonical generated docs are tracked under docs/.
+- Semantic detector implementation remains intentionally deferred beyond M00.
+
 ## 2026-09-26 — M00 bootstrap
 
 Type: development
