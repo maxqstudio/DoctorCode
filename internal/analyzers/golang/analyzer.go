@@ -117,6 +117,9 @@ func parseGoFiles(ctx context.Context, root string, fset *token.FileSet) ([]*par
 			}
 			return nil
 		}
+		if entry.Type()&fs.ModeSymlink != 0 {
+			return nil
+		}
 		ext := strings.ToLower(filepath.Ext(path))
 		if ext == ".s" {
 			asmDirs[filepath.Dir(path)] = true

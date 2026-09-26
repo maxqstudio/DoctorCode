@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -141,6 +142,32 @@ func TestRepositoryAuditSkipsNestedTestdata(t *testing.T) {
 	for _, finding := range findings {
 		if strings.Contains(finding.Path, "testdata/") || strings.Contains(finding.Path, "testdata\\") {
 			t.Fatalf("nested testdata must not leak into repository findings: %#v", finding)
+		}
+	}
+}
+
+func TestAnalyzerDoesNotFollowGoFileSymlink(t *testing.T) {
+	if runtime.GOOS == "windows" {
+		t.Skip("symlink creation may require Windows developer mode or elevated privilege")
+	}
+
+	root := t.TempDir()
+	outside := t.TempDir()
+	target := filepath.Join(outside, "outside.go")
+	if err := os.WriteFile(target, []byte("package demo\nfunc leakedOutside() {}\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Symlink(target, filepath.Join(root, "linked.go")); err != nil {
+		t.Fatal(err)
+	}
+
+	findings, err := New().Analyze(context.Background(), root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, finding := range findings {
+		if strings.Contains(finding.Summary, "leakedOutside") {
+			t.Fatalf("analyzer followed a Go symlink outside the repository: %#v", finding)
 		}
 	}
 }
