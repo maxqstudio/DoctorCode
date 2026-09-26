@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-BENCHMARK",
+  "title": "Labeled precision regression benchmark",
+  "purpose": "Measure detector behavior against a bounded labeled corpus and fail CI when a labeled regression introduces a false positive, false negative, or threshold miss.",
+  "authority": "internal/benchmark/benchmark.go and internal/benchmark/testdata/manifest.json",
+  "entry_condition": "doctorcode benchmark is invoked with an accessible validated manifest.",
+  "source_owners": [
+    "cmd/doctorcode/main.go",
+    "internal/benchmark/benchmark.go",
+    "internal/benchmark/testdata/manifest.json",
+    "internal/analyzers/golang/analyzer.go"
+  ],
+  "states": [
+    "REQUESTED",
+    "VALIDATING_MANIFEST",
+    "ANALYZING_CASES",
+    "MATCHING_LABELS",
+    "GATED",
+    "REPORTED"
+  ],
+  "transitions": [
+    {
+      "from": "REQUESTED",
+      "to": "VALIDATING_MANIFEST",
+      "action": "Parse strict JSON, validate schema and thresholds, and resolve each case root inside the manifest boundary.",
+      "side_effects": []
+    },
+    {
+      "from": "VALIDATING_MANIFEST",
+      "to": "ANALYZING_CASES",
+      "action": "Run the selected deterministic analyzer against each isolated case.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZING_CASES",
+      "to": "MATCHING_LABELS",
+      "action": "Match actual findings to expected rule/path/location labels.",
+      "side_effects": []
+    },
+    {
+      "from": "MATCHING_LABELS",
+      "to": "GATED",
+      "action": "Count TP, FP, FN and calculate aggregate/per-rule precision and recall.",
+      "side_effects": []
+    },
+    {
+      "from": "GATED",
+      "to": "REPORTED",
+      "action": "Emit the report and return failure when mismatches or thresholds fail.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "Benchmark metrics are scoped to the supplied labeled corpus and are not general product precision claims.",
+    "False positives and false negatives both reduce benchmark evidence and block the strict 1.0 corpus threshold.",
+    "Case roots may not resolve outside the manifest directory.",
+    "Benchmark execution does not mutate analyzed source."
+  ],
+  "tests": [
+    "internal/benchmark/benchmark_test.go",
+    "internal/analyzers/golang/analyzer_test.go"
+  ],
+  "sequence_session": "M02-PRECISION-BENCHMARK",
+  "critical": false,
+  "failure_behavior": [
+    "Invalid manifests and escaping case roots fail closed.",
+    "Analyzer errors abort the benchmark instead of returning partial PASS.",
+    "Label mismatch or threshold failure produces passed=false and CLI exit code 1."
+  ],
+  "restart_behavior": [
+    "Benchmark is stateless and can be rerun from the same manifest and source snapshot."
+  ],
+  "rollback_behavior": [
+    "Benchmark execution does not mutate source or benchmark fixtures."
+  ]
+}

@@ -3,7 +3,7 @@
   "session_id": "M01-DETECTOR-FOUNDATION",
   "phase": "M01_DETECTOR_FOUNDATION",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "",

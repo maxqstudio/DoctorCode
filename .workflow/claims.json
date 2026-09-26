@@ -133,6 +133,61 @@
         "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M02-CURATED-METRICS",
+      "claim": "On the nine-case M02 labeled Go corpus, source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 produced 5 true positives, 0 false positives, and 0 false negatives; this claim is corpus-scoped only.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/benchmark.go::Evaluate",
+        "internal/benchmark/testdata/manifest.json"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36257961484"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M02-BENCHMARK-FAIL-CLOSED",
+      "claim": "The M02 benchmark reports failure for both unexpected analyzer findings and missing expected findings, and the CLI exits non-zero when the report does not pass.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/benchmark.go::Evaluate",
+        "cmd/doctorcode/main.go::runBenchmark"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36257961484"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M02-PATH-CONTAINMENT",
+      "claim": "M02 benchmark case roots are constrained to the manifest directory and Go repository analysis skips source symlink entries.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/benchmark.go::secureCaseRoot",
+        "internal/analyzers/golang/analyzer.go::parseGoFiles"
+      ],
+      "tests": [
+        "internal/benchmark/benchmark_test.go",
+        "internal/analyzers/golang/analyzer_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36257961484"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

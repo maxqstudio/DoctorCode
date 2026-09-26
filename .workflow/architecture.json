@@ -82,6 +82,21 @@
       "depends_on": [
         "detector engine"
       ]
+    },
+    {
+      "id": "benchmark_harness",
+      "name": "Precision Benchmark Harness",
+      "purpose": "Evaluate labeled analyzer cases, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
+      "owns": [
+        "benchmark manifest validation",
+        "case-root containment",
+        "label matching",
+        "TP/FP/FN accounting",
+        "threshold gate"
+      ],
+      "depends_on": [
+        "Go analyzer"
+      ]
     }
   ],
   "data_flows": [
@@ -104,6 +119,21 @@
       "from": "evidence reducer",
       "to": "small LLM or human",
       "meaning": "Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default."
+    },
+    {
+      "from": "labeled benchmark corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Manifest declares expected findings for isolated deterministic case roots."
+    },
+    {
+      "from": "Go Built-in Analyzer",
+      "to": "precision benchmark harness",
+      "meaning": "Analyzer findings are matched against labels and converted into TP, FP, and FN counts."
+    },
+    {
+      "from": "precision benchmark harness",
+      "to": "GitHub Actions",
+      "meaning": "Threshold result is a blocking regression gate on all three supported CI operating systems."
     }
   ],
   "external_boundaries": [
@@ -118,6 +148,10 @@
     {
       "name": "Future language analyzers",
       "contract": "Each language declares semantic coverage separately; recognition alone never implies analyzer support."
+    },
+    {
+      "name": "Repository filesystem boundary",
+      "contract": "Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis."
     }
   ]
 }

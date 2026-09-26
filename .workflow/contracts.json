@@ -65,6 +65,36 @@
       "invariants": [
         "missing optional toolchains are reported as unavailable"
       ]
+    },
+    {
+      "name": "BenchmarkManifest V1",
+      "source_of_truth": "internal/benchmark/benchmark.go::Manifest",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed benchmark corpus changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "schema_version is 1",
+        "case roots are relative and resolve inside the manifest directory",
+        "precision and recall thresholds are within 0..1",
+        "expected findings identify rule and path"
+      ]
+    },
+    {
+      "name": "BenchmarkReport V1",
+      "source_of_truth": "internal/benchmark/benchmark.go::Report",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode benchmark"
+      ],
+      "retention": "CI log or caller-defined",
+      "invariants": [
+        "unmatched expected labels count as false negatives",
+        "unmatched actual findings count as false positives",
+        "passed is false when a mismatch or threshold failure exists",
+        "metrics describe only the supplied manifest corpus"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -73,6 +103,11 @@
       "name": "Unit and corpus tests",
       "command": "go test ./...",
       "expected": "exit code 0"
+    },
+    {
+      "name": "Precision benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+      "expected": "passed=true; current nine-case corpus reports 5 TP, 0 FP, 0 FN"
     },
     {
       "name": "Static vet",
