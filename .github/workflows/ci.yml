@@ -29,6 +29,8 @@ jobs:
           cache: false
       - name: Unit and corpus tests
         run: go test ./...
+      - name: Precision benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI
