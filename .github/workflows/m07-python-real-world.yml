@@ -3,6 +3,7 @@ name: M07 Python Real World
 on:
   push:
     branches:
+      - main
       - "work/m07-python-semantic"
       - "work/m08-python-adversarial"
   pull_request:
