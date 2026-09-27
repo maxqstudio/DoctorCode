@@ -78,3 +78,25 @@ jobs:
           test -n "$finding_id"
           go run ./cmd/doctorcode context "$finding_id" .doctorcode-context-smoke-py --json --max-bytes=4096 | python -c 'import json,sys; raw=sys.stdin.read(); packet=json.loads(raw); assert packet["schema_version"] == 2; assert packet["finding"]["id"] == sys.argv[1]; assert packet["budget_bytes"] == 4096; assert packet["related_total"] == 2; assert [item["kind"] for item in packet["related_excerpts"]] == ["reference","test_reference"]; assert [item["path"] for item in packet["related_excerpts"]] == ["src/pkg/core.py","tests/test_core.py"]; assert len(raw.encode()) <= 4096' "$finding_id"
           rm -rf .doctorcode-context-smoke-py
+      - name: Deterministic verification contract smoke test
+        shell: bash
+        run: |
+          rm -rf .doctorcode-verification-smoke
+          mkdir .doctorcode-verification-smoke
+          printf 'package smoke\n\nfunc decision(flag bool) bool {\n\tif flag {\n\t\treturn true\n\t} else {\n\t\treturn false\n\t}\n}\n' > .doctorcode-verification-smoke/sample.go
+          finding_id="$(go run ./cmd/doctorcode audit .doctorcode-verification-smoke --json --max-findings=20 | python -c 'import json,sys; data=json.load(sys.stdin); print(next(item["id"] for item in data["findings"] if item["rule_id"] == "GO-SIMPLIFY-BOOL-RETURN"))')"
+          test -n "$finding_id"
+          go run ./cmd/doctorcode contract "$finding_id" .doctorcode-verification-smoke --json > .doctorcode-verification-smoke/contract.json
+
+          printf 'package smoke\n\nconst apiToken = "hardcoded-production-token-12345"\n\nfunc decision(flag bool) bool {\n\treturn flag\n}\n' > .doctorcode-verification-smoke/sample.go
+          set +e
+          go run ./cmd/doctorcode verify .doctorcode-verification-smoke/contract.json .doctorcode-verification-smoke --json > .doctorcode-verification-smoke/fail.json
+          verify_status=$?
+          set -e
+          test "$verify_status" -ne 0
+          python -c 'import json; result=json.load(open(".doctorcode-verification-smoke/fail.json", encoding="utf-8")); assert result["passed"] is False; assert result["target_resolved"] is True; assert len(result["new_blocking_findings"]) == 1; assert result["new_blocking_findings"][0]["rule_id"] == "GO-SEC-HARDCODED-CREDENTIAL"'
+
+          printf 'package smoke\n\nfunc decision(flag bool) bool {\n\treturn flag\n}\n' > .doctorcode-verification-smoke/sample.go
+          go run ./cmd/doctorcode verify .doctorcode-verification-smoke/contract.json .doctorcode-verification-smoke --json > .doctorcode-verification-smoke/pass.json
+          python -c 'import json; result=json.load(open(".doctorcode-verification-smoke/pass.json", encoding="utf-8")); assert result["passed"] is True; assert result["target_resolved"] is True; assert result["target_current_count"] == 0; assert result.get("new_blocking_findings", []) == []'
+          rm -rf .doctorcode-verification-smoke
