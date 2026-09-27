@@ -17,39 +17,39 @@
   "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "main@575f9bcfe5c1119f0ea4382cdeec94ba345e59ce passed Governance Bootstrap 36302209222, core CI 36302209237, M07 Python Real World 36302209214, M06 Labeled Real World Go 36302209238, and Real World Go 36302209232.",
       "id": "M10-MAIN-BASELINE",
       "requirement": "M10 must branch from an exact post-merge accepted M09 main.",
-      "evidence": "main@575f9bcfe5c1119f0ea4382cdeec94ba345e59ce passed Governance Bootstrap 36302209222, core CI 36302209237, M07 Python Real World 36302209214, M06 Labeled Real World Go 36302209238, and Real World Go 36302209232.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/realworld/m10-python-labels.json tracks six exact anchors: 2 VALID_FINDING and 4 INVALID_FINDING across Click and Flask.",
       "id": "M10-BOUNDED-PYTHON-LABELS",
       "requirement": "Pinned public Python source must have explicit bounded valid/invalid labels without whole-repository precision claims.",
-      "evidence": "internal/realworld/m10-python-labels.json tracks six exact anchors: 2 VALID_FINDING and 4 INVALID_FINDING across Click and Flask.",
       "status": "PASS"
     },
     {
+      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on all three OSes; Ubuntu log reports valid=2 invalid=4.",
       "id": "M10-VALID-ZERO-REF-ANCHORS",
       "requirement": "The two bounded Flask private-function zero-reference findings must remain present at their exact pinned source locations.",
-      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on all three OSes; Ubuntu log reports valid=2 invalid=4.",
       "status": "PASS"
     },
     {
+      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent.",
       "id": "M10-TEST-TREE-NEGATIVE-GUARDS",
       "requirement": "The four labeled private helpers under pinned public test trees must not be emitted as production DEADCODE findings.",
-      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent.",
       "status": "PASS"
     },
     {
+      "evidence": "At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs.",
       "id": "M10-ALL-PRODUCT-LANES",
       "requirement": "Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS.",
-      "evidence": "At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs.",
       "status": "PASS"
     },
     {
+      "evidence": "NOT_PROVEN on the current candidate; governance run 36303351683 correctly failed because generated docs were stale.",
       "id": "M10-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed.",
-      "evidence": "NOT_PROVEN on the current candidate; governance run 36303351683 correctly failed because generated docs were stale.",
       "status": "NOT_PROVEN"
     }
   ],
@@ -65,7 +65,7 @@
   "schema_version": 1,
   "sequence_mode": "DURING",
   "sequence_session": "M10-PYTHON-LABELED-REAL-WORLD",
-  "sequence_sync_status": "NOT_PROVEN",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -81,17 +81,18 @@
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
     "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_LAYOUT": "NOT_PROVEN",
-    "DOC_READABILITY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
     "DOC_TEST_TRACEABILITY": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
     "PROJECT_STATE_SYNC": "NOT_PROVEN",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",
     "SEMANTIC_SYNC": "PASS",
+    "SEQUENCE_SYNC": "PASS",
     "SOURCE_TESTS": "PASS",
     "STRUCTURAL_SYNC": "PASS",
     "TEST_RUNTIME_TRACEABILITY": "PASS"

@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 29924f324db316a9a2985943c09d4711824a1220
+Authority verified at SHA: 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce
 Governance profile: strict
 
 ## Current phase
-Phase: M09_PYTHON_REPOSITORY_SHAPED
-Status: M09_ACCEPTED
+Phase: M10_PYTHON_LABELED_REAL_WORLD
+Status: M10_VALIDATING
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m09-python-repository-shaped
+Branch: work/m10-python-labeled-real-world
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 29924f324db316a9a2985943c09d4711824a1220
+Last accepted SHA: 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce
 Current candidate SHA: external final acceptance evidence
-Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
+Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,29 +33,27 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M09-PYTHON-REPOSITORY-SHAPED
+Current sequence session: M10-PYTHON-LABELED-REAL-WORLD
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M08 is merged and post-merge accepted on main at 29924f324db316a9a2985943c09d4711824a1220.
+- M09 is merged and post-merge accepted on main at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce.
+- Post-merge M09 main passed Governance Bootstrap run 36302209222.
+- Post-merge M09 main passed core CI run 36302209237 on ubuntu-latest, windows-latest, and macos-latest.
+- Post-merge M09 main passed M07 Python Real World run 36302209214 on all three operating systems.
+- Post-merge M09 main passed M06 Labeled Real World Go run 36302209238 on all three operating systems.
+- Post-merge M09 main passed Real World Go Validation run 36302209232 on all three operating systems.
 - DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- Final pre-repair M09 candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 true positives, 5 false positives, and 3 false negatives.
-- M09 repaired conventional src-layout aliases, direct module-level re-export propagation, usage/liveness separation, and exact dotted imported-module resolution.
-- The repaired 14-case M09 corpus reports 5 true positives, 0 false positives, and 0 false negatives.
-- Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed strict Skill_Workflow governance run 36301912060.
-- The same commit passed core CI run 36301912063 on ubuntu-latest, windows-latest, and macos-latest.
-- The same commit passed Real World Go Validation run 36301912067 on all three operating systems.
-- The same commit passed M06 Labeled Real World Go run 36301912070 on all three operating systems.
-- The same commit passed M07 Python Real World run 36301912054 on all three operating systems.
-- Accepted real-world regression workflows now trigger on main and work/** so every phase revalidates prior public/labeled evidence.
+- M10 adds six bounded exact-SHA Python labels: two VALID_FINDING Flask zero-reference anchors and four INVALID_FINDING test-tree guards across Flask and Click.
+- M10 label run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with valid=2 invalid=4.
+- At the same M10 source candidate, core CI run 36303351679, M07 Python Real World run 36303351736, Real World Go run 36303351697, and M06 Labeled Real World Go run 36303351703 all passed across Linux, Windows, and macOS.
 
 ## Not proven
-- M09 corpus metrics are not general Python ecosystem precision or recall.
-- The src-layout alias is limited to one conventional leading src directory and does not infer arbitrary packaging roots or sys.path manipulation.
-- Re-export propagation handles direct module-level from-import edges and does not resolve arbitrary assignments, star-import semantics, import hooks, or runtime mutation.
-- Dotted module resolution depends on explicit import roots and is not a whole-program import graph.
-- Zero conservative references remain insufficient for PROVEN_UNUSED or safe deletion.
-- Python .pyi semantic analysis and automatic source mutation remain unsupported.
+- M10 bounded labels are not exhaustive labels for Click or Flask and are not general Python ecosystem precision or recall.
+- A VALID_FINDING label proves only the declared rule/path/line claim at the pinned source SHA.
+- Zero conservative references remain insufficient for PROVEN_UNUSED, behavioral dispensability, or safe deletion.
+- Test-tree exclusion is a conservative DoctorCode policy and does not prove that all non-test private functions are stale.
+- Automatic Python source mutation remains unsupported and every accepted Python finding keeps safe_autofix=false.
 
 ## Known blockers
 - None declared.
@@ -64,14 +62,14 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize accepted M09 Project Truth documentation.
-- Update README to M09-current and remove the temporary M09 doc-sync workflow.
-- Run final exact-SHA governance plus all core and accepted real-world lanes after cleanup.
-- Open a PR to main immediately after FINAL_ACCEPTED branch evidence passes.
-- After merge, rerun all accepted lanes on the exact main merge SHA before starting M10.
+- Synchronize M10 Project Truth and sequence artifacts from the governed specs.
+- Remove the temporary M10 label-discovery and documentation-sync workflows before final freeze.
+- Run final exact-SHA governance plus core and every accepted real-world lane.
+- After FINAL_ACCEPTED, open and merge the M10 pull request to main immediately.
+- Rerun all applicable acceptance lanes on the exact main merge SHA before starting the next phase.
 
 ## Explicitly blocked
-- Publishing M09 fixture metrics as real-world Python precision or recall.
-- Treating liveness evidence as proof that a function is behaviorally required.
+- Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
 - Treating zero conservative references as safe-delete proof.
 - Auto-deleting or auto-fixing Python findings.
+- Starting the next milestone before M10 is merged and post-merge accepted on main.

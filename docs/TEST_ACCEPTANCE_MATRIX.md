@@ -4,20 +4,19 @@
 
 ## Evidence boundary
 
-M09 acceptance uses 14 repository-shaped Python fixtures. Pre-repair candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 TP, 5 FP, and 3 FN. Repaired synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passes strict governance run 36301912060, core CI run 36301912063, Real World Go run 36301912067, M06 Labeled Real World Go run 36301912070, and M07 Python Real World run 36301912054. The repaired M09 corpus reports 5 TP, 0 FP, and 0 FN. Evidence remains corpus-scoped and does not authorize automatic deletion.
+M10 uses six bounded exact-SHA Python labels across pinned Click and Flask snapshots: two VALID_FINDING Flask DEADCODE zero-reference anchors and four INVALID_FINDING test-tree guards. At source candidate fe0553a698ab7d7c689fb31a02b78b5d9ef11019, M10 run 36303351744 passed on Linux, Windows, and macOS with valid=2 invalid=4; core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, and M06 Labeled Real World Go 36303351703 also passed 3/3 OS. Governance run 36303351683 failed only because generated Project Truth was stale after adding M10 files and therefore does not count as final acceptance. Labels remain bounded and do not authorize automatic deletion.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
+Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M09-GATE-EXPOSED-TOPOLOGY-DEFECTS | Repository-shaped fixtures must expose accepted Python reference-topology defects before repair. | CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121: M09 FAIL with 2 TP, 5 FP, and 3 FN. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-SRC-LAYOUT | Conventional src-layout absolute imports preserve live private functions and one-use wrappers while still isolating genuinely stale siblings. | src-layout-from-import-live, src-layout-bloat-live, and src-layout-dead-isolation pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-PACKAGE-REEXPORT | Direct package-facade re-exports resolve to original private-function candidates without suppressing one-use wrapper evidence. | package-init-reexport-live and package-init-reexport-bloat pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-DOTTED-MODULE-ISOLATION | Dotted module attribute access resolves through the explicit import root without keeping same-named functions in unrelated packages alive. | nested-dotted-module-live and nested-dotted-same-name-isolation pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-LIVENESS-USAGE-SEPARATION | Import/export declarations can keep a candidate conservatively live without inflating the BLOAT one-usage count. | M09 package facade and src-layout wrapper cases pass with PY-BLOAT-PASSTHROUGH-WRAPPER recall restored to 1.0 in run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-REPOSITORY-SHAPED-GATE | The 14-case M09 corpus passes its exact labels after repair. | Run 36301647674: 5 TP, 0 FP, 0 FN; precision=1 and recall=1 within the tracked corpus. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
-| M09-ALL-ACCEPTED-LANES | Every accepted core and real-world regression lane executes on the phase branch across Linux, Windows, and macOS. | Core CI 36301647674; Real World Go 36301647686; M06 Labeled Real World Go 36301647705; M07 Python Real World 36301647658 all SUCCESS 3/3 OS at be60c639c9eab25f34c683fb93bcc7db77eb77fc. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054. | PASS |
+| M10-MAIN-BASELINE | M10 must branch from an exact post-merge accepted M09 main. | main@575f9bcfe5c1119f0ea4382cdeec94ba345e59ce passed Governance Bootstrap 36302209222, core CI 36302209237, M07 Python Real World 36302209214, M06 Labeled Real World Go 36302209238, and Real World Go 36302209232. | PASS |
+| M10-BOUNDED-PYTHON-LABELS | Pinned public Python source must have explicit bounded valid/invalid labels without whole-repository precision claims. | internal/realworld/m10-python-labels.json tracks six exact anchors: 2 VALID_FINDING and 4 INVALID_FINDING across Click and Flask. | PASS |
+| M10-VALID-ZERO-REF-ANCHORS | The two bounded Flask private-function zero-reference findings must remain present at their exact pinned source locations. | M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on all three OSes; Ubuntu log reports valid=2 invalid=4. | PASS |
+| M10-TEST-TREE-NEGATIVE-GUARDS | The four labeled private helpers under pinned public test trees must not be emitted as production DEADCODE findings. | M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent. | PASS |
+| M10-ALL-PRODUCT-LANES | Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS. | At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs. | PASS |
+| M10-STRICT-GOVERNANCE-FINAL | Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed. | NOT_PROVEN on the current candidate; governance run 36303351683 correctly failed because generated docs were stale. | NOT_PROVEN |
 
 ## Test commands
 
@@ -28,6 +27,7 @@ Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f29500378
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
+- go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
@@ -36,13 +36,14 @@ Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f29500378
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
 - go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths
 - go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
+- go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M09-PYTHON-REPOSITORY-SHAPED
+Sequence session contract: M10-PYTHON-LABELED-REAL-WORLD
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence
