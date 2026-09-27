@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M12 Go Related Context accepted baseline
+
+Type: acceptance
+
+- Accepted binding-aware Go related production/test reference context for eligible findings.
+- Accepted packet schema v2 with bounded related excerpts and related_total/truncation signaling.
+- Accepted early repository-boundary rejection before related discovery reads outside source.
+- Accepted three-OS end-to-end related-context CLI behavior while preserving all previous Go/Python regression lanes.
+- Kept M12 Go-only, non-transitive, non-mutating, and outside safe-delete or automatic-repair authority.
+
 ## 2026-09-27 — M12 Go Related Context candidate
 
 Type: development

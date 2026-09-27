@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M12_GO_RELATED_CONTEXT
-Status: M12_VALIDATING
+Status: M12_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -46,6 +46,9 @@ SEQUENCE_SYNC: PASS
 - Evidence packet schema v2 can include bounded Go production and same-package test related excerpts while preserving the caller byte budget and primary source priority.
 - M12 product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI run 36323276401 on Linux, Windows, and macOS, including the end-to-end related-context CLI smoke.
 - At the same product candidate, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 passed on all three operating systems.
+- Final synchronized M12 branch tree edc415a2935307490cf73ec12fed72ff9a0c042b passed Governance Bootstrap run 36323629497.
+- Core CI run 36323629517 at edc415a2935307490cf73ec12fed72ff9a0c042b passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36323629491, M07 Python Real World run 36323629637, M06 Go labels run 36323629567, and Real World Go run 36323629559 all passed on Linux, Windows, and macOS at edc415a2935307490cf73ec12fed72ff9a0c042b.
 
 ## Not proven
 - M12 related discovery is intentionally limited to enclosing top-level non-method Go functions in the same directory and package.
@@ -63,9 +66,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Generate and validate the M12 CURRENT sequence plus deterministic Project Truth.
-- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M12 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
+- Run final exact-SHA acceptance on the finalized M12 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M12 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting the next product phase.
 
 ## Explicitly blocked
 - Claiming Python related-context parity from M12.

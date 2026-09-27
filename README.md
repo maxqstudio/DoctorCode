@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M12 Go Related Context is validating on work/m12-go-related-context from governance-normalized main@2caa530a9e1f284a0446b7ead6d97218de996498.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M12 Go Related Context is accepted on the development branch pending final exact-SHA promotion checks.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|

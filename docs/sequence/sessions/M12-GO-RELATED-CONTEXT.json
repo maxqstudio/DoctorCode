@@ -25,7 +25,7 @@
   "schema_version": 1,
   "scope": "CURRENT",
   "session_id": "M12-GO-RELATED-CONTEXT",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
     "internal/analyzers/golang/related_test.go",
