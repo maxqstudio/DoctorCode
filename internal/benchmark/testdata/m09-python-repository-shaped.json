@@ -38,6 +38,17 @@
       ]
     },
     {
+      "name": "nested-dotted-same-name-isolation",
+      "root": "m09-python/nested-dotted-same-name-isolation",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "pkg_a/core.py",
+          "summary_contains": "_helper"
+        }
+      ]
+    },
+    {
       "name": "test-reference-live",
       "root": "m09-python/test-reference-live",
       "expected": []
