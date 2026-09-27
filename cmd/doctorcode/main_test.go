@@ -1,8 +1,15 @@
 package main
 
 import (
+	"context"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 
+	"github.com/maxqstudio/DoctorCode/internal/engine"
+	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
 
@@ -44,5 +51,51 @@ func TestFindFindingByID(t *testing.T) {
 	}
 	if _, ok := findFindingByID(findings, "MISSING"); ok {
 		t.Fatal("missing finding id should not resolve")
+	}
+}
+
+func TestContextPipelineSelectsExactFindingWithinBudget(t *testing.T) {
+	root := t.TempDir()
+	source := "package demo\n\nfunc firstUnused() {}\n\nfunc secondUnused() {}\n"
+	if err := os.WriteFile(filepath.Join(root, "sample.go"), []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	result, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var target model.Finding
+	for _, finding := range result.Findings {
+		if finding.RuleID == "GO-DEADCODE-ZERO-REF" && strings.Contains(finding.Summary, "secondUnused") {
+			target = finding
+			break
+		}
+	}
+	if target.ID == "" {
+		t.Fatalf("expected secondUnused DEADCODE finding, got %#v", result.Findings)
+	}
+
+	selected, ok := findFindingByID(result.Findings, target.ID)
+	if !ok || selected.ID != target.ID {
+		t.Fatalf("exact finding selection failed: target=%q selected=%#v", target.ID, selected)
+	}
+
+	packet, err := evidence.Build(result.Root, selected, 1024)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if packet.Finding.ID != target.ID {
+		t.Fatalf("packet used wrong finding: want=%q got=%q", target.ID, packet.Finding.ID)
+	}
+	if packet.SourceExcerpt == "" || !strings.Contains(packet.SourceExcerpt, "secondUnused") {
+		t.Fatalf("packet missing selected source excerpt: %#v", packet)
+	}
+	data, err := json.MarshalIndent(packet, "", "  ")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(data)+1 > 1024 {
+		t.Fatalf("context packet exceeds byte budget: %d", len(data)+1)
 	}
 }
