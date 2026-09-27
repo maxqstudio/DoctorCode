@@ -1,0 +1,176 @@
+name: M13 Main Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m13-main-truth-sync"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m13-main-truth-sync
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M13 main acceptance truth
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          product_sha = "3fccbd4398f2a12bd5214be9ed23ee18f46c679c"
+          final_branch_sha = "b83a4a158b5247f81b0406da2c1578b16e3a1913"
+
+          state = load(".workflow/state.json")
+          state["status"] = "M13_MAIN_ACCEPTED"
+          state["working_branch"] = "main"
+          state["last_accepted_sha"] = product_sha
+          state["last_accepted_branch"] = "main"
+          additions = [
+              "Final clean M13 branch tree " + final_branch_sha + " passed Governance Bootstrap 36326412104, Core CI 36326412097, M10 Python labels 36326412090, M07 Python Real World 36326412089, M06 Go labels 36326412059, and Real World Go 36326412109 across Linux, Windows, and macOS.",
+              "M13 Python Related Context merged through PR #11 to main at " + product_sha + ".",
+              "Exact M13 product main Governance Bootstrap run 36326732074 completed success.",
+              "Exact M13 product main Core CI run 36326732203 completed success on ubuntu-latest, windows-latest, and macos-latest.",
+              "Exact M13 product main M10 Labeled Real World Python run 36326732066 completed success on all three operating systems.",
+              "Exact M13 product main M07 Python Real World run 36326731961 completed success on all three operating systems.",
+              "Exact M13 product main M06 Labeled Real World Go run 36326732156 completed success on all three operating systems.",
+              "Exact M13 product main Real World Go Validation run 36326731985 completed success on all three operating systems."
+          ]
+          for item in additions:
+              if item not in state["proven"]:
+                  state["proven"].append(item)
+          state["next_authorized_actions"] = [
+              "Proceed to M14 Deterministic Verification Contract under the Owner directive to continue until DoctorCode is complete.",
+              "Branch M14 only from the governance-normalized M13 main after exact closure acceptance.",
+              "Preserve M13 product acceptance at " + product_sha + " and exact post-merge evidence as immutable historical evidence."
+          ]
+          state["blocked_actions"] = [
+              "Executing arbitrary repository-provided verification commands as trusted authority.",
+              "Treating verification success as proof that an unrelated semantic behavior is correct.",
+              "Treating related context or verification as proof that code is safe to delete without the declared contract.",
+              "Starting MCP or Skill adapters before the deterministic verification contract is accepted."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          acceptance["evidence_boundary"] = (
+              "M13 Python Related Context is product-main accepted at " + product_sha +
+              " after strict governance and every accepted Linux, Windows, and macOS regression lane passed. "
+              "M13 provides bounded schema-v2 Go/Python related context for its declared static scopes only. "
+              "Dynamic dependency completeness, safe deletion, automatic repair, and arbitrary verification command execution remain outside M13 authority."
+          )
+          for req in acceptance["requirements"]:
+              if req["id"] == "M13-STRICT-GOVERNANCE-FINAL":
+                  req["evidence"] = (
+                      "Final clean branch@" + final_branch_sha +
+                      ": Governance Bootstrap 36326412104, Core CI 36326412097, M10 Labeled Real World Python 36326412090, "
+                      "M07 Python Real World 36326412089, M06 Labeled Real World Go 36326412059, and Real World Go Validation "
+                      "36326412109 all completed success; every matrix job passed on Linux, Windows, and macOS."
+                  )
+          if not any(req["id"] == "M13-MAIN-POST-MERGE" for req in acceptance["requirements"]):
+              acceptance["requirements"].append({
+                  "id": "M13-MAIN-POST-MERGE",
+                  "requirement": "The exact M13 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before M14 may branch.",
+                  "evidence": (
+                      "main@" + product_sha +
+                      ": Governance Bootstrap 36326732074, Core CI 36326732203, M10 Labeled Real World Python 36326732066, "
+                      "M07 Python Real World 36326731961, M06 Labeled Real World Go 36326732156, and Real World Go Validation "
+                      "36326731985 all completed success; every matrix job passed on Linux, Windows, and macOS."
+                  ),
+                  "status": "PASS"
+              })
+          save(".workflow/acceptance.json", acceptance)
+
+          claims = load(".workflow/claims.json")
+          if not any(x["id"] == "TRUTH-M13-MAIN-ACCEPTED" for x in claims["claims"]):
+              claims["claims"].append({
+                  "id": "TRUTH-M13-MAIN-ACCEPTED",
+                  "claim": "M13 Python Related Context is merged and post-merge accepted on main at " + product_sha + " after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": [".workflow/state.json", ".workflow/acceptance.json"],
+                  "tests": [
+                      ".github/workflows/governance-bootstrap.yml",
+                      ".github/workflows/ci.yml",
+                      ".github/workflows/m10-python-labeled-real-world.yml",
+                      ".github/workflows/m07-python-real-world.yml",
+                      ".github/workflows/m06-labeled-real-world.yml",
+                      ".github/workflows/real-world-go.yml"
+                  ],
+                  "runtime_evidence": [
+                      "GitHub Actions Governance Bootstrap run 36326732074 at " + product_sha,
+                      "GitHub Actions Core CI run 36326732203 at " + product_sha,
+                      "GitHub Actions M10 Labeled Real World Python run 36326732066 at " + product_sha,
+                      "GitHub Actions M07 Python Real World run 36326731961 at " + product_sha,
+                      "GitHub Actions M06 Labeled Real World Go run 36326732156 at " + product_sha,
+                      "GitHub Actions Real World Go Validation run 36326731985 at " + product_sha
+                  ],
+                  "status": "PASS"
+              })
+          save(".workflow/claims.json", claims)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M13 main accepted baseline" for x in changelog["entries"]):
+              changelog["entries"].insert(0, {
+                  "date": "2026-09-27",
+                  "title": "M13 main accepted baseline",
+                  "type": "acceptance",
+                  "changes": [
+                      "Merged FINAL_ACCEPTED M13 through PR #11 to main at " + product_sha + ".",
+                      "Passed strict Governance Bootstrap on the exact product main merge SHA.",
+                      "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
+                      "Authorized M14 Deterministic Verification Contract while keeping arbitrary repository-provided command execution outside trusted authority."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme = re.sub(
+              r"\*\*M13 Python Related Context is accepted on the development branch pending final exact-SHA promotion checks\.\*\*",
+              "**M13 Python Related Context is accepted on main at " + product_sha + ".**",
+              readme,
+              count=1,
+          )
+          readme_path.write_text(readme, encoding="utf-8")
+
+      - name: Remove temporary workflow from final tree
+        run: git rm .github/workflows/m13-main-truth-sync.yml
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate synchronized M13 main truth
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_cross_document_consistency.py --base 3fccbd4398f2a12bd5214be9ed23ee18f46c679c --require-base
+          python .workflow/tools/validate_project_truth.py
+
+      - name: Commit synchronized M13 main truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m13): synchronize accepted main truth"
+          git push origin HEAD:work/m13-main-truth-sync
