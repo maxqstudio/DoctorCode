@@ -27,7 +27,7 @@ var candidates=[]Candidate{
 	{Language:"MQL5",Tools:[]string{"metaeditor64.exe","metaeditor.exe"}},
 	{Language:"PHP",Tools:[]string{"php"},Manifests:[]string{"composer.json"}},
 	{Language:"PowerShell",Tools:[]string{"pwsh","powershell.exe"}},
-	{Language:"Python",Tools:[]string{"python3","python"},Manifests:[]string{"pyproject.toml","requirements.txt","setup.py"}},
+	{Language:"Python",Tools:[]string{"python3","python","py"},Manifests:[]string{"pyproject.toml","requirements.txt","setup.py"}},
 	{Language:"Ruby",Tools:[]string{"ruby","bundle"},Manifests:[]string{"Gemfile"}},
 	{Language:"Rust",Tools:[]string{"cargo","rustc"},Manifests:[]string{"Cargo.toml"}},
 	{Language:"Shell",Tools:[]string{"bash","sh"}},

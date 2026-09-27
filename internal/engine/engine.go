@@ -2,10 +2,12 @@ package engine
 
 import (
 	"context"
+	"errors"
 	"path/filepath"
 	"sort"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
@@ -18,6 +20,7 @@ func Default() *Engine {
 	return &Engine{
 		analyzers: []detector.Analyzer{
 			goanalysis.New(),
+			pythonanalysis.New(),
 		},
 	}
 }
@@ -32,6 +35,9 @@ func (e *Engine) Audit(ctx context.Context, root string) (model.AuditResult, err
 	for _, analyzer := range e.analyzers {
 		findings, analyzeErr := analyzer.Analyze(ctx, absoluteRoot)
 		if analyzeErr != nil {
+			if errors.Is(analyzeErr, detector.ErrUnavailable) {
+				continue
+			}
 			return model.AuditResult{}, analyzeErr
 		}
 		result.Analyzers = append(result.Analyzers, analyzer.Name())

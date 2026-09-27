@@ -27,6 +27,9 @@ jobs:
         with:
           go-version-file: go.mod
           cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: Unit and corpus tests
         run: go test ./...
       - name: Precision benchmark gate
@@ -35,6 +38,8 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
       - name: M04 repository-shaped benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
+      - name: M07 Python semantic benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI

@@ -10,7 +10,9 @@ import (
 	"strings"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/benchmark"
+	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/engine"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
@@ -191,10 +193,13 @@ func runNext(args []string) {
 func runBenchmark(args []string) {
 	asJSON := false
 	manifest := ""
+	analyzerName := "go"
 	for _, arg := range args {
 		switch {
 		case arg == "--json":
 			asJSON = true
+		case strings.HasPrefix(arg, "--analyzer="):
+			analyzerName = strings.TrimSpace(strings.TrimPrefix(arg, "--analyzer="))
 		case strings.HasPrefix(arg, "-"):
 			die(fmt.Errorf("unknown option %s", arg))
 		case manifest == "":
@@ -207,7 +212,17 @@ func runBenchmark(args []string) {
 		die(errors.New("benchmark manifest path is required"))
 	}
 
-	report, err := benchmark.Evaluate(context.Background(), manifest, goanalysis.New())
+	var analyzer detector.Analyzer
+	switch analyzerName {
+	case "go":
+		analyzer = goanalysis.New()
+	case "python":
+		analyzer = pythonanalysis.New()
+	default:
+		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
+	}
+
+	report, err := benchmark.Evaluate(context.Background(), manifest, analyzer)
 	if err != nil {
 		die(fmt.Errorf("benchmark failed: %w", err))
 	}
@@ -273,7 +288,7 @@ Usage:
   doctorcode toolchains [path] [--json]
   doctorcode audit [path] [--json] [--max-findings=N]
   doctorcode next [path] [--json] [--max-bytes=N]
-  doctorcode benchmark <manifest.json> [--json]
+  doctorcode benchmark <manifest.json> [--analyzer=go|python] [--json]
   doctorcode version
 
 M01 detector foundation:
@@ -281,9 +296,14 @@ M01 detector foundation:
   LOGIC, and DEADCODE. Findings carry evidence and confidence boundaries.
   No M01 rule enables automatic deletion or automatic fixing.
 
-M02 precision benchmark:
-  A labeled corpus measures false positives and false negatives per rule.
+M02+ precision benchmarks:
+  Labeled corpora measure false positives and false negatives per analyzer.
   Benchmark thresholds are regression gates, not general precision claims.
+
+M07 Python semantic adapter:
+  Python uses the host Python 3 standard-library ast parser when available.
+  Missing Python skips the optional analyzer during normal audit; the Python
+  benchmark gate requires the interpreter explicitly.
 
 Use "doctorcode next --json --max-bytes=4096" to give a small LLM one bounded
 evidence packet instead of the whole repository.`)
