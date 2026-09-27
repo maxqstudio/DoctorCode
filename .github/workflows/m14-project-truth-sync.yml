@@ -1,0 +1,62 @@
+name: M14 Project Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m14-deterministic-verification"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m14-deterministic-verification
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M14 governance specs
+        run: python .workflow/tools/m14_sync_temp.py
+
+      - name: Remove temporary sync files from final tree
+        run: |
+          git rm .github/workflows/m14-project-truth-sync.yml
+          git rm .workflow/tools/m14_sync_temp.py
+
+      - name: Generate M14 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.json
+          --output-mermaid docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.mmd
+
+      - name: Validate M14 sequence
+        run: >
+          python .workflow/tools/validate_sequence_contract.py
+          --root .
+          --session docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate generated artifacts before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit synchronized M14 governance
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m14): synchronize deterministic verification project truth"
+          git push origin HEAD:work/m14-deterministic-verification
