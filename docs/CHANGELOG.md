@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M11 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M11 through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.
+- Passed strict Governance Bootstrap on the exact product main merge SHA.
+- Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Kept M11 constrained to exact single-finding context retrieval and repository-contained source excerpts.
+
 ## 2026-09-27 — M11 Context Compiler Foundation accepted baseline
 
 Type: acceptance

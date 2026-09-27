@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M11 Context Compiler Foundation adds exact finding-ID packet retrieval plus repository-root containment for evidence source reads. RED run 36310954183 proved the missing selector and traversal/symlink escapes before repair. Product candidate 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. M11 remains single-finding, byte-bounded, LLM-optional, and does not introduce safe deletion, auto-fix, stale-ID migration, or multi-file dependency inference.
+M11 Context Compiler Foundation is product-main accepted at 3ca18bdca11e436b3a2fa63491976041639eeee2 after strict governance and all accepted Linux, Windows, and macOS regression lanes passed. M11 provides exact current finding-ID packet retrieval and repository-contained excerpt reads only; it remains single-finding, byte-bounded, LLM-optional, non-mutating, and does not authorize safe deletion, auto-fix, stale-ID migration, or arbitrary multi-file dependency inference.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
@@ -17,6 +17,7 @@ Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce4
 | M11-FILESYSTEM-BOUNDARY | Evidence source excerpts must not read outside the resolved repository root through traversal or symlink escape. | internal/evidence/packet_test.go contains blocking traversal and symlink escape tests; sourceExcerpt resolves and checks the path before os.ReadFile. Core CI 36311250640 passed on Linux, Windows, and macOS. | PASS |
 | M11-REGRESSION-MATRIX | M11 must preserve all accepted detector and public-source regression lanes across Linux, Windows, and macOS. | At 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956: Core CI 36311250640, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed across all three operating systems. | PASS |
 | M11-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M11 sequence artifacts must pass strict governance on the final exact M11 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36311808969 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 completed success after generated M11 Project Truth and sequence synchronization; finalization changes governance state only and will be revalidated on its exact SHA. | PASS |
+| M11-MAIN-POST-MERGE | The exact M11 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before becoming the next development base. | main@3ca18bdca11e436b3a2fa63491976041639eeee2: Governance Bootstrap 36312084318, Core CI 36312084324, M10 Labeled Real World Python 36312084320, M07 Python Real World 36312084350, M06 Labeled Real World Go 36312084315, and Real World Go Validation 36312084307 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
 
 ## Test commands
 

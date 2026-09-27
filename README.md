@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M11 Context Compiler Foundation is accepted on the development branch pending final exact-SHA promotion checks.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M11 Context Compiler Foundation is accepted on main at 3ca18bdca11e436b3a2fa63491976041639eeee2.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
