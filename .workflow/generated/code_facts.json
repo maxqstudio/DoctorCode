@@ -59,7 +59,7 @@
       "file": "internal/analyzers/python/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 459
+      "lines": 567
     },
     {
       "directory": "internal/analyzers/python",
@@ -440,6 +440,111 @@
       "lines": 1
     },
     {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-from-import-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-from-import-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 7
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-globals-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/generated-private-negative",
+      "file": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/logic-int-identity-negative",
+      "file": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/security-not-secret-placeholder",
+      "file": "internal/benchmark/testdata/m08-python/security-not-secret-placeholder/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 1
+    },
+    {
       "directory": "internal/detector",
       "file": "internal/detector/detector.go",
       "is_test": false,
@@ -590,6 +695,46 @@
     {
       "caller": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
       "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::_wrapper",
+      "target_token": "other"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::first",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::second",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py::use",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py::use",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::load",
+      "target_token": "getattr"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::load",
+      "target_token": "globals"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py::use",
+      "target_token": "a._helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use",
+      "target_token": "_helper"
     }
   ],
   "python_routes": [],
@@ -785,17 +930,185 @@
       "line_start": 4,
       "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
       "symbol": "choose"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::other",
+      "symbol": "other"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 8,
+      "line_start": 7,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::first",
+      "symbol": "first"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::second",
+      "symbol": "second"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py::_exported",
+      "symbol": "_exported"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::_hook",
+      "symbol": "_hook"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "kind": "function",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::load",
+      "symbol": "load"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::_hook",
+      "symbol": "_hook"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::load",
+      "symbol": "load"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py::_generated_helper",
+      "symbol": "_generated_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py",
+      "kind": "function",
+      "line_end": 6,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py::classify",
+      "symbol": "classify"
     }
   ],
   "schema_version": 1,
-  "source_digest": "f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762",
+  "source_digest": "5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e",
   "source_summary": {
-    "files": 75,
+    "files": 90,
     "languages": {
       "Go": 68,
-      "Python": 7
+      "Python": 22
     },
-    "lines": 3623,
+    "lines": 3797,
     "test_files": 1
   },
   "tests": [

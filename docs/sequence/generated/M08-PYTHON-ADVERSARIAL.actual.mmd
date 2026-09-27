@@ -1,0 +1,66 @@
+%% GENERATED FILE - DO NOT EDIT
+%% SOURCE_DIGEST: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
+%% OBSERVED_HEAD: 992ec772e4fdd36b00112c1bb387b251ff63de6f
+%% GENERATED_BY: generate_sequence_actual.py
+sequenceDiagram
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py___stale_0 as internal/benchmark/testdata/m07-python/all-positive/sample.py::_stale
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py___wrapper_1 as internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py__classify_2 as internal/benchmark/testdata/m07-python/all-positive/sample.py::classify
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py__enabled_3 as internal/benchmark/testdata/m07-python/all-positive/sample.py::enabled
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py__target_4 as internal/benchmark/testdata/m07-python/all-positive/sample.py::target
+    participant internal_benchmark_testdata_m07_python_all_positive_sample_py__use_5 as internal/benchmark/testdata/m07-python/all-positive/sample.py::use
+    participant internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py___wrapper_6 as internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper
+    participant internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__first_7 as internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first
+    participant internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__second_8 as internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second
+    participant internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__target_9 as internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py___hook_10 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_hook
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py___wrapper_11 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__logic_12 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__public_unused_13 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::public_unused
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__ready_14 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__register_15 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::register
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__same_16 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::same
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__target_17 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__use_one_18 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one
+    participant internal_benchmark_testdata_m07_python_conservative_negative_sample_py__use_two_19 as internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two
+    participant internal_benchmark_testdata_m07_python_deadcode_test_reference_sample_py___test_helper_20 as internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper
+    participant internal_benchmark_testdata_m07_python_deadcode_test_reference_test_sample_py__test_helper_21 as internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper
+    participant internal_benchmark_testdata_m07_python_logic_call_negative_sample_py__choose_22 as internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose
+    participant internal_benchmark_testdata_m07_python_logic_call_negative_sample_py__ready_23 as internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_a_py___wrapper_24 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::_wrapper
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_a_py__target_25 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::target
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py___wrapper_26 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::_wrapper
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__first_27 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::first
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__other_28 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::other
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__second_29 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::second
+    participant internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_consumer_py__use_30 as internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py::use
+    participant internal_benchmark_testdata_m08_python_deadcode_all_export_negative_sample_py___exported_31 as internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py::_exported
+    participant internal_benchmark_testdata_m08_python_deadcode_from_import_live_a_py___helper_32 as internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py::_helper
+    participant internal_benchmark_testdata_m08_python_deadcode_from_import_live_b_py__use_33 as internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py::use
+    participant internal_benchmark_testdata_m08_python_deadcode_getattr_self_negative_sample_py___hook_34 as internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::_hook
+    participant internal_benchmark_testdata_m08_python_deadcode_getattr_self_negative_sample_py__load_35 as internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::load
+    participant internal_benchmark_testdata_m08_python_deadcode_globals_negative_sample_py___hook_36 as internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::_hook
+    participant internal_benchmark_testdata_m08_python_deadcode_globals_negative_sample_py__load_37 as internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::load
+    participant internal_benchmark_testdata_m08_python_deadcode_module_attribute_live_a_py___helper_38 as internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py::_helper
+    participant internal_benchmark_testdata_m08_python_deadcode_module_attribute_live_b_py__use_39 as internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py::use
+    participant internal_benchmark_testdata_m08_python_deadcode_same_name_module_collision_a_py___helper_40 as internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py::_helper
+    participant internal_benchmark_testdata_m08_python_deadcode_same_name_module_collision_b_py___helper_41 as internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::_helper
+    participant internal_benchmark_testdata_m08_python_deadcode_same_name_module_collision_b_py__use_42 as internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use
+    participant internal_benchmark_testdata_m08_python_generated_private_negative_generated_py___generated_helper_43 as internal/benchmark/testdata/m08-python/generated-private-negative/generated.py::_generated_helper
+    participant internal_benchmark_testdata_m08_python_logic_int_identity_negative_sample_py__classify_44 as internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py::classify
+    internal_benchmark_testdata_m07_python_all_positive_sample_py___wrapper_1->>internal_benchmark_testdata_m07_python_all_positive_sample_py__target_4: target [STATIC]
+    internal_benchmark_testdata_m07_python_all_positive_sample_py__use_5->>internal_benchmark_testdata_m07_python_all_positive_sample_py___wrapper_1: _wrapper [STATIC]
+    internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py___wrapper_6->>internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__target_9: target [STATIC]
+    internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__first_7->>internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py___wrapper_6: _wrapper [STATIC]
+    internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py__second_8->>internal_benchmark_testdata_m07_python_bloat_multiple_references_sample_py___wrapper_6: _wrapper [STATIC]
+    internal_benchmark_testdata_m07_python_conservative_negative_sample_py___wrapper_11->>internal_benchmark_testdata_m07_python_conservative_negative_sample_py__target_17: target [STATIC]
+    internal_benchmark_testdata_m07_python_conservative_negative_sample_py__logic_12->>internal_benchmark_testdata_m07_python_conservative_negative_sample_py__ready_14: ready [STATIC]
+    internal_benchmark_testdata_m07_python_conservative_negative_sample_py__use_one_18->>internal_benchmark_testdata_m07_python_conservative_negative_sample_py___wrapper_11: _wrapper [STATIC]
+    internal_benchmark_testdata_m07_python_conservative_negative_sample_py__use_two_19->>internal_benchmark_testdata_m07_python_conservative_negative_sample_py___wrapper_11: _wrapper [STATIC]
+    internal_benchmark_testdata_m07_python_deadcode_test_reference_test_sample_py__test_helper_21->>internal_benchmark_testdata_m07_python_deadcode_test_reference_sample_py___test_helper_20: _test_helper [STATIC]
+    internal_benchmark_testdata_m07_python_logic_call_negative_sample_py__choose_22->>internal_benchmark_testdata_m07_python_logic_call_negative_sample_py__ready_23: ready [STATIC]
+    internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_a_py___wrapper_24->>internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_a_py__target_25: target [STATIC]
+    internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py___wrapper_26->>internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__other_28: other [STATIC]
+    internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__first_27->>internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py___wrapper_26: _wrapper [STATIC]
+    internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py__second_29->>internal_benchmark_testdata_m08_python_bloat_same_name_module_collision_b_py___wrapper_26: _wrapper [STATIC]
+    internal_benchmark_testdata_m08_python_deadcode_same_name_module_collision_b_py__use_42->>internal_benchmark_testdata_m08_python_deadcode_same_name_module_collision_b_py___helper_41: _helper [STATIC]

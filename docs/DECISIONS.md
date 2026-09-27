@@ -201,3 +201,35 @@ Status: ACCEPTED
 Treat click/httpx/requests/Flask whole-repository execution as compatibility evidence and only the explicitly reviewed Flask location as a bounded positive label.
 
 Rationale: Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status.
+
+## ADR-M08-001 — Reference counts belong to candidates, not names
+
+Status: ACCEPTED
+
+Track Python private-function references by module/function candidate and resolve recognized imports/attributes conservatively instead of using one global count per identifier name.
+
+Rationale: Global name counts hid dead code and bloat when unrelated modules reused common private function names.
+
+## ADR-M08-002 — Recognize bounded dynamic export references
+
+Status: ACCEPTED
+
+Treat __all__, recognized import aliases, module attributes, getattr literal names, and globals literal subscripts as conservative reference evidence.
+
+Rationale: Python code can intentionally expose or reach private-named functions without a direct Name load; ignoring those forms produced false positives.
+
+## ADR-M08-003 — Identity literals use identity semantics
+
+Status: ACCEPTED
+
+Limit repeated identity-condition logic keys to constants whose values are exactly None, True, or False by identity checks.
+
+Rationale: Python equality makes 1 equal True and 0 equal False, which is not valid for an is/is-not rule.
+
+## ADR-M08-004 — Keep obvious security placeholders quiet
+
+Status: ACCEPTED
+
+Treat not_secret and not-secret markers as obvious placeholder literals for the narrow hardcoded-credential rule.
+
+Rationale: The security rule is SUSPICIOUS review evidence and should avoid predictable non-secret fixture noise.

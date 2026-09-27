@@ -3,7 +3,7 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
+Source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
 Status: CURRENT
 
 | File | Symbol | Kind | Lines@SHA | Responsibility | Reads/Writes | Called By | Tests |
@@ -32,6 +32,27 @@ Status: CURRENT
 | internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | test_helper | function | 3-4 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | ready | function | 1-2 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | choose | function | 4-9 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | target | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | other | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | first | function | 7-8 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | second | function | 10-11 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py | use | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py | _exported | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py | use | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | _hook | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | load | function | 6-7 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | _hook | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | load | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py | use | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | use | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | _generated_helper | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | classify | function | 1-6 | Observed Python symbol | | | |
 
 ## Coverage
 

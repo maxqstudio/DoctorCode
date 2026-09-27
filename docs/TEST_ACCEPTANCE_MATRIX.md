@@ -4,21 +4,19 @@
 
 ## Evidence boundary
 
-M07 acceptance proves DoctorCode's first non-Go semantic adapter using Python standard-library ast. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict governance run 36285384397, core CI run 36285384421, and M07 Python Real World run 36285384388 on Linux, Windows, and macOS. The 6-case labeled Python corpus reports 5 TP, 0 FP, and 0 FN. Exact-SHA click, httpx, requests, and Flask snapshots parse/analyze successfully; only Flask _path_is_ancestor is an explicit bounded positive anchor. DEADCODE remains lexical evidence only, .pyi semantic support is not claimed, and no Python finding authorizes mutation.
+M08 adds a 10-case Python adversarial corpus. Initial candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 FP and 2 FN. Repaired candidate b2b92bbfd4f246d2c50f2bcf17034163b928b603 passes core CI run 36286874063 and pinned public Python run 36286874048 on Linux, Windows, and macOS; M08 reports 2 TP, 0 FP, 0 FN while M07 remains 5 TP, 0 FP, 0 FN. Evidence remains corpus-scoped and does not authorize deletion or general precision claims.
 
 Final tested source: external final acceptance evidence.
-Current source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
+Current source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M07-PYTHON-ADAPTER | DoctorCode exposes a deterministic Python semantic analyzer without an LLM/API or third-party Python parser dependency. | internal/analyzers/python/analyzer.go implements python/stdlib-ast-v1 and executes only the host Python standard-library ast parser; source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passed CI run 36284942936. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict governance run 36285384397 and core CI run 36285384421. | PASS |
-| M07-FIVE-CATEGORIES | Python begins with one conservative rule in each DoctorCode category and no automatic mutation. | PY-BLOAT-PASSTHROUGH-WRAPPER, PY-SEC-HARDCODED-CREDENTIAL, PY-SIMPLIFY-BOOL-RETURN, PY-LOGIC-DUPLICATE-IDENTITY-CONDITION, and PY-DEADCODE-PRIVATE-ZERO-REF are implemented; analyzer conversion always sets safe_autofix=false. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict governance run 36285384397 and core CI run 36285384421. | PASS |
-| M07-LABELED-CORPUS | A labeled Python regression corpus blocks both missing and unexpected findings. | internal/benchmark/testdata/m07-python.json: 6 cases, 5 TP, 0 FP, 0 FN. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed CI run 36285384421 on all three operating systems. | PASS |
-| M07-PARSE-FAIL-CLOSED | Applicable Python files that cannot be parsed must not be silently ignored. | raw parse errors are returned as blocking analysis errors; TestPythonParseFailureIsBlocking passes in core CI run 36284942936. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict governance run 36285384397 and core CI run 36285384421. | PASS |
-| M07-OPTIONAL-RUNTIME | Missing Python runtime during ordinary mixed-repository audit is unavailable capability rather than repository failure. | detector.ErrUnavailable plus engine skip semantics; Python benchmark/public workflows explicitly provision Python 3.13 so acceptance does not rely on an implicit host interpreter. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict governance run 36285384397 and core CI run 36285384421. | PASS |
-| M07-PUBLIC-PINS | Public Python validation uses exact commit SHAs with detached-checkout provenance verification before analysis. | internal/realworld/m07-python-sources.json and TestM07PinnedPythonRepositories; M07 Python Real World run 36284943019 PASS on all three operating systems. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed M07 Python Real World run 36285384388 on all three operating systems and strict governance run 36285384397. | PASS |
-| M07-FLASK-ANCHOR | The reviewed Flask zero-lexical-reference anchor remains detected without being promoted to safe deletion. | pallets/flask d73fa1cdcbd8b1465c151db8924ba58b1dd14e35 src/flask/cli.py:691 _path_is_ancestor; run 36284943019 PASS; finding confidence remains HIGH and safe_autofix=false. Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed M07 Python Real World run 36285384388 on all three operating systems and strict governance run 36285384397. | PASS |
-| M07-THREE-OS | Core Python benchmark and exact-SHA public Python validation both pass on Linux, Windows, and macOS. | Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed core CI run 36285384421 and M07 Python Real World run 36285384388 on Linux, Windows, and macOS; strict governance run 36285384397 also passed. | PASS |
+| M08-GATE-EXPOSED-DEFECTS | The adversarial gate must expose previously accepted Python detector defects before repair. | CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8: M07 PASS; M08 FAIL with 5 false positives and 2 false negatives. | PASS |
+| M08-IDENTITY-STRICTNESS | Python LOGIC identity matching distinguishes None/True/False by identity rather than equality-compatible integers. | logic-int-identity-negative is clean after repair; M08 gate passes in run 36286874063. | PASS |
+| M08-MODULE-AWARE-REFERENCES | Python private-function reference evidence distinguishes same-named functions in different modules while preserving recognized cross-module imports/attributes. | deadcode-same-name-module-collision and bloat-same-name-module-collision are detected; from-import and module-attribute live cases remain clean in run 36286874063. | PASS |
+| M08-DYNAMIC-REFERENCE-GUARDS | Recognized __all__, getattr, and globals string references suppress unsafe zero-reference claims. | deadcode-all-export-negative, deadcode-getattr-self-negative, and deadcode-globals-negative remain clean in run 36286874063. | PASS |
+| M08-SECURITY-PLACEHOLDER | Obvious not_secret/not-secret placeholder strings are not treated as hardcoded credential findings. | security-not-secret-placeholder remains clean in run 36286874063. | PASS |
+| M08-REGRESSION-PRESERVATION | M07 baseline and pinned public Python evidence remain passing after M08 repairs. | Core CI run 36286874063 passes M07 and M08 on all three OS; pinned public Python run 36286874048 passes all three OS. | PASS |
 
 ## Test commands
 
@@ -27,19 +25,20 @@ Current source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b7
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
 ## Runtime checks
 
-- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA paths from .github/workflows/m07-python-real-world.yml
+- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external paths
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M07-PYTHON-SEMANTIC
+Sequence session contract: M08-PYTHON-ADVERSARIAL
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

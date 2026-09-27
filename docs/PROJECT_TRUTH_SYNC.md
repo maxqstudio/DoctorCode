@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -65,6 +65,10 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M07-OPTIONAL-RUNTIME | Ordinary audit skips Python semantic analysis when Python is unavailable, while M07 acceptance workflows provision Python 3.13 explicitly. | PROJECT_TRUTH_SYNC.md | internal/detector/detector.go; internal/engine/engine.go; internal/analyzers/python/analyzer.go; .github/workflows/ci.yml | internal/analyzers/python/analyzer_test.go | GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697 | PASS |
 | TRUTH-M07-PUBLIC-PYTHON | Exact-SHA click, httpx, requests, and Flask snapshots parse and analyze successfully on Linux, Windows, and macOS; Flask _path_is_ancestor at src/flask/cli.py:691 is the bounded positive anchor. | PROJECT_TRUTH_SYNC.md | internal/realworld/m07-python-sources.json; internal/realworld/python_m07_test.go; .github/workflows/m07-python-real-world.yml | internal/realworld/python_m07_test.go | GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697 | PASS |
 | TRUTH-M07-NO-AUTOFIX | All accepted Python findings remain evidence-only and safe_autofix=false. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/analyzers/python/analyzer_test.go; internal/realworld/python_m07_test.go | GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697; GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697 | PASS |
+| TRUTH-M08-PRE-REPAIR-FAIL | Initial M08 adversarial evaluation exposed 5 false positives and 2 false negatives while M07 remained passing. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m08-python-adversarial.json | internal/benchmark/testdata/m08-python-adversarial.json | GitHub Actions CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8 | PASS |
+| TRUTH-M08-REFERENCE-REPAIR | M08 uses candidate/module-aware Python private-function reference evidence plus conservative recognized dynamic/export references. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/benchmark/testdata/m08-python-adversarial.json | GitHub Actions CI run 36286874063 at b2b92bbfd4f246d2c50f2bcf17034163b928b603 | PASS |
+| TRUTH-M08-ADVERSARIAL-PASS | Repaired M08 corpus reports 2 TP, 0 FP, and 0 FN while M07 remains 5 TP, 0 FP, and 0 FN. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m07-python.json; internal/benchmark/testdata/m08-python-adversarial.json | internal/benchmark/testdata/m08-python-adversarial.json | GitHub Actions CI run 36286874063 | PASS |
+| TRUTH-M08-PUBLIC-REGRESSION | Pinned click/httpx/requests/Flask Python validation remains passing on Linux, Windows, and macOS after M08 repair. | PROJECT_TRUTH_SYNC.md | internal/realworld/m07-python-sources.json; .github/workflows/m07-python-real-world.yml | internal/realworld/python_m07_test.go | GitHub Actions M07 Python Real World run 36286874048 | PASS |
 
 ## Claim relations
 

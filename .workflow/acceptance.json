@@ -1,81 +1,68 @@
 {
-  "schema_version": 1,
   "evidence_boundary": "M08 adds a 10-case Python adversarial corpus. Initial candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 FP and 2 FN. Repaired candidate b2b92bbfd4f246d2c50f2bcf17034163b928b603 passes core CI run 36286874063 and pinned public Python run 36286874048 on Linux, Windows, and macOS; M08 reports 2 TP, 0 FP, 0 FN while M07 remains 5 TP, 0 FP, 0 FN. Evidence remains corpus-scoped and does not authorize deletion or general precision claims.",
-  "runtime_status": "PASS",
-  "human_comprehension_status": "PASS",
   "human_comprehension_questions": {
-    "What is the project and what problem does it solve?": "PASS",
-    "Who uses it and what are the primary outcomes?": "PASS",
-    "What are the major components and how do they relate?": "PASS",
-    "How does important data flow through the system?": "PASS",
-    "What are the main user/domain workflows?": "PASS",
-    "What are the important lifecycle states and transitions?": "PASS",
-    "Who/what is authoritative for important decisions?": "PASS",
-    "What is mutable and what is immutable?": "PASS",
     "How does failure/recovery behave?": "PASS",
-    "What is the current project state?": "PASS",
+    "How does important data flow through the system?": "PASS",
+    "What are the important lifecycle states and transitions?": "PASS",
+    "What are the main user/domain workflows?": "PASS",
+    "What are the major components and how do they relate?": "PASS",
+    "What is mutable and what is immutable?": "PASS",
     "What is proven and what is not proven?": "PASS",
-    "What may happen next and what is blocked?": "PASS"
+    "What is the current project state?": "PASS",
+    "What is the project and what problem does it solve?": "PASS",
+    "What may happen next and what is blocked?": "PASS",
+    "Who uses it and what are the primary outcomes?": "PASS",
+    "Who/what is authoritative for important decisions?": "PASS"
   },
-  "sequence_mode": "DURING",
-  "sequence_session": "M08-PYTHON-ADVERSARIAL",
-  "sequence_sync_status": "PASS",
-  "truth_gates": {
-    "SOURCE_TESTS": "PASS",
-    "RUNTIME_E2E": "PASS",
-    "PROVENANCE_SYNC": "NOT_PROVEN",
-    "REFERENCE_SYNC": "NOT_PROVEN",
-    "STRUCTURAL_SYNC": "NOT_PROVEN",
-    "SEMANTIC_SYNC": "PASS",
-    "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
-    "DOC_SOURCE_TRACEABILITY": "PASS",
-    "DOC_TEST_TRACEABILITY": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "DOC_READABILITY": "PASS"
-  },
+  "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8: M07 PASS; M08 FAIL with 5 false positives and 2 false negatives.",
       "id": "M08-GATE-EXPOSED-DEFECTS",
       "requirement": "The adversarial gate must expose previously accepted Python detector defects before repair.",
-      "evidence": "CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8: M07 PASS; M08 FAIL with 5 false positives and 2 false negatives.",
       "status": "PASS"
     },
     {
+      "evidence": "logic-int-identity-negative is clean after repair; M08 gate passes in run 36286874063.",
       "id": "M08-IDENTITY-STRICTNESS",
       "requirement": "Python LOGIC identity matching distinguishes None/True/False by identity rather than equality-compatible integers.",
-      "evidence": "logic-int-identity-negative is clean after repair; M08 gate passes in run 36286874063.",
       "status": "PASS"
     },
     {
+      "evidence": "deadcode-same-name-module-collision and bloat-same-name-module-collision are detected; from-import and module-attribute live cases remain clean in run 36286874063.",
       "id": "M08-MODULE-AWARE-REFERENCES",
       "requirement": "Python private-function reference evidence distinguishes same-named functions in different modules while preserving recognized cross-module imports/attributes.",
-      "evidence": "deadcode-same-name-module-collision and bloat-same-name-module-collision are detected; from-import and module-attribute live cases remain clean in run 36286874063.",
       "status": "PASS"
     },
     {
+      "evidence": "deadcode-all-export-negative, deadcode-getattr-self-negative, and deadcode-globals-negative remain clean in run 36286874063.",
       "id": "M08-DYNAMIC-REFERENCE-GUARDS",
       "requirement": "Recognized __all__, getattr, and globals string references suppress unsafe zero-reference claims.",
-      "evidence": "deadcode-all-export-negative, deadcode-getattr-self-negative, and deadcode-globals-negative remain clean in run 36286874063.",
       "status": "PASS"
     },
     {
+      "evidence": "security-not-secret-placeholder remains clean in run 36286874063.",
       "id": "M08-SECURITY-PLACEHOLDER",
       "requirement": "Obvious not_secret/not-secret placeholder strings are not treated as hardcoded credential findings.",
-      "evidence": "security-not-secret-placeholder remains clean in run 36286874063.",
       "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36286874063 passes M07 and M08 on all three OS; pinned public Python run 36286874048 passes all three OS.",
       "id": "M08-REGRESSION-PRESERVATION",
       "requirement": "M07 baseline and pinned public Python evidence remain passing after M08 repairs.",
-      "evidence": "Core CI run 36286874063 passes M07 and M08 on all three OS; pinned public Python run 36286874048 passes all three OS.",
       "status": "PASS"
     }
   ],
+  "runtime_checks": [
+    "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external paths",
+    "go run ./cmd/doctorcode audit . --json --max-findings=10",
+    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
+  ],
+  "runtime_status": "PASS",
+  "schema_version": 1,
+  "sequence_mode": "DURING",
+  "sequence_session": "M08-PYTHON-ADVERSARIAL",
+  "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -86,9 +73,22 @@
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
-  "runtime_checks": [
-    "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external paths",
-    "go run ./cmd/doctorcode audit . --json --max-findings=10",
-    "go run ./cmd/doctorcode next . --json --max-bytes=4096"
-  ]
+  "truth_gates": {
+    "BEHAVIORAL_SYNC": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "PASS",
+    "DOC_READABILITY": "PASS",
+    "DOC_SOURCE_TRACEABILITY": "PASS",
+    "DOC_TEST_TRACEABILITY": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "PASS",
+    "PROJECT_DOCS_SYNC": "PASS",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROVENANCE_SYNC": "NOT_PROVEN",
+    "REFERENCE_SYNC": "NOT_PROVEN",
+    "RUNTIME_E2E": "PASS",
+    "SEMANTIC_SYNC": "PASS",
+    "SOURCE_TESTS": "PASS",
+    "STRUCTURAL_SYNC": "NOT_PROVEN",
+    "TEST_RUNTIME_TRACEABILITY": "PASS"
+  }
 }

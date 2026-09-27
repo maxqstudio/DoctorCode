@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
+Source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -14,7 +14,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/python/analyzer.go | Go | 459 | internal/analyzers/python | NO |
+| internal/analyzers/python/analyzer.go | Go | 567 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
 | internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
@@ -69,6 +69,21 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | Python | 4 | internal/benchmark/testdata/m07-python/deadcode-test-reference | YES |
 | internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | Python | 9 | internal/benchmark/testdata/m07-python/logic-call-negative | NO |
 | internal/benchmark/testdata/m07-python/security-placeholder/sample.py | Python | 1 | internal/benchmark/testdata/m07-python/security-placeholder | NO |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | Python | 5 | internal/benchmark/testdata/m08-python/bloat-same-name-module-collision | NO |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | Python | 11 | internal/benchmark/testdata/m08-python/bloat-same-name-module-collision | NO |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py | Python | 4 | internal/benchmark/testdata/m08-python/bloat-same-name-module-collision | NO |
+| internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py | Python | 4 | internal/benchmark/testdata/m08-python/deadcode-all-export-negative | NO |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py | Python | 2 | internal/benchmark/testdata/m08-python/deadcode-from-import-live | NO |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py | Python | 4 | internal/benchmark/testdata/m08-python/deadcode-from-import-live | NO |
+| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | Python | 7 | internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative | NO |
+| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | Python | 5 | internal/benchmark/testdata/m08-python/deadcode-globals-negative | NO |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py | Python | 2 | internal/benchmark/testdata/m08-python/deadcode-module-attribute-live | NO |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py | Python | 4 | internal/benchmark/testdata/m08-python/deadcode-module-attribute-live | NO |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py | Python | 2 | internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision | NO |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | Python | 5 | internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision | NO |
+| internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | Python | 4 | internal/benchmark/testdata/m08-python/generated-private-negative | NO |
+| internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | Python | 6 | internal/benchmark/testdata/m08-python/logic-int-identity-negative | NO |
+| internal/benchmark/testdata/m08-python/security-not-secret-placeholder/sample.py | Python | 1 | internal/benchmark/testdata/m08-python/security-not-secret-placeholder | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
 | internal/engine/engine.go | Go | 93 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 104 | internal/evidence | NO |

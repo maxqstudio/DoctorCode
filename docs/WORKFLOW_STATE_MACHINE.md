@@ -94,6 +94,49 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
+
+Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
+Critical: FALSE
+Entry condition: M07 Python semantic adapter is accepted and Python 3.13 is provisioned in CI.
+Authority: internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go
+
+### States
+
+- BASELINE
+- ADVERSARIAL_FAIL
+- TARGETED_REPAIR
+- REGRESSION_PASS
+- PUBLIC_REVALIDATION
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| BASELINE | ADVERSARIAL_FAIL | Run the 10-case corpus and preserve exact FP/FN evidence. | internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go |  |
+| ADVERSARIAL_FAIL | TARGETED_REPAIR | Repair only proven identity/reference/placeholder roots. | internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go |  |
+| TARGETED_REPAIR | REGRESSION_PASS | Require M07 and M08 labeled gates on Linux, Windows, and macOS. | internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go |  |
+| REGRESSION_PASS | PUBLIC_REVALIDATION | Rerun exact-SHA click/httpx/requests/Flask validation on all three operating systems. | internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go |  |
+
+### Invariants
+
+- M07 accepted behavior must remain passing.
+- Dynamic/export reference handling is conservative and limited to recognized syntax patterns.
+- No adversarial result upgrades DEADCODE to safe deletion.
+- All accepted Python findings remain safe_autofix=false.
+
+### Failure behavior
+
+- Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
+
+### Restart behavior
+
+- All corpora and public pins are deterministic and rerunnable.
+
+### Rollback behavior
+
+- M08 reference-semantics repair can be reverted independently to the M07 accepted baseline.
+
 ## FLOW-PYTHON-ANALYSIS — Python semantic analysis
 
 Purpose: Analyze .py source deterministically with a bounded stdlib AST subprocess, preserve unavailable-runtime and parse-failure semantics, and return evidence-backed findings without mutation.
