@@ -19,12 +19,12 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M07 Python semantic adapter is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M08 Python adversarial precision is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
 | Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
-| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; host Python required** |
+| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; adversarial-gated; host Python required** |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
 | Java / Kotlin | Yes | Yes | Not yet |
@@ -163,6 +163,27 @@ That Flask anchor proves the narrow zero-lexical-reference observation only. It 
 
 Python semantic analysis currently covers `.py` source. Recognition of `.pyi` files does **not** mean `.pyi` semantic-analysis support.
 
+### M08 Python adversarial regression gate
+
+M08 adds a second independent Python corpus with 10 deliberately adversarial cases:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
+```
+
+The first M08 run failed with **5 false positives and 2 false negatives** while the accepted M07 corpus still passed. The failures exposed four concrete roots:
+
+1. Python identity constants were checked with equality-compatible membership, so integer `1` could be confused with `True`;
+2. DEADCODE ignored intentional string-based references through `__all__`, `getattr`, and `globals()`;
+3. private-function reference counts were global by identifier name, so same-named functions in unrelated modules could hide one another;
+4. obvious `not_secret` / `not-secret` placeholder literals still triggered the narrow SECURITY rule.
+
+M08 repairs those roots without adding new detector categories. Python private-function references are now candidate/module-aware for recognized imports and module attributes, while selected dynamic/export patterns contribute conservative reference evidence.
+
+The accepted M08 corpus reports **2 TP, 0 FP, and 0 FN**. Only two cases are positive anchors; the other eight are adversarial negative guards. The accepted M07 corpus remains **5 TP, 0 FP, and 0 FN**, and exact-SHA click/httpx/requests/Flask validation remains passing on Linux, Windows, and macOS.
+
+These metrics are corpus-scoped. Recognized dynamic reference handling is intentionally incomplete and does not resolve arbitrary reflection, `eval`/`exec`, plugin loaders, or external callers. Zero conservative references still never means safe deletion.
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -226,7 +247,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, and M07 Python semantic benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05, M06, and M07 matrices run pinned Go compatibility, bounded Go real-world labels, and pinned Python public-source validation on the same Linux, Windows, and macOS runner set.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, and M08 Python adversarial benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05, M06, and Python public-source matrices run pinned Go compatibility, bounded Go real-world labels, and pinned Python public-source validation on the same Linux, Windows, and macOS runner set.
 
 ## Design principles
 
