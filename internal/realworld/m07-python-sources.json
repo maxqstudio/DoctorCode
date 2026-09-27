@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "evidence_boundary": "Exact-SHA public Python compatibility plus bounded expected findings; not exhaustive repository labels and not general precision/recall.",
+  "sources": [
+    {
+      "id": "click",
+      "repository": "pallets/click",
+      "sha": "06b2a678741131fd577ce170e23e5ca0aeba0309",
+      "license": "BSD-3-Clause",
+      "env": "DOCTORCODE_M07_CLICK",
+      "expected": []
+    },
+    {
+      "id": "httpx",
+      "repository": "encode/httpx",
+      "sha": "b5addb64f0161ff6bfe94c124ef76f6a1fba5254",
+      "license": "BSD-3-Clause",
+      "env": "DOCTORCODE_M07_HTTPX",
+      "expected": []
+    },
+    {
+      "id": "requests",
+      "repository": "psf/requests",
+      "sha": "611c6162cbc4ac2020a2f91c7cfa4f3abf9bbb60",
+      "license": "Apache-2.0",
+      "env": "DOCTORCODE_M07_REQUESTS",
+      "expected": []
+    },
+    {
+      "id": "flask",
+      "repository": "pallets/flask",
+      "sha": "d73fa1cdcbd8b1465c151db8924ba58b1dd14e35",
+      "license": "BSD-3-Clause",
+      "env": "DOCTORCODE_M07_FLASK",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "src/flask/cli.py",
+          "line_start": 691,
+          "summary_contains": "_path_is_ancestor"
+        }
+      ]
+    }
+  ]
+}
