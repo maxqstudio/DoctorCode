@@ -1,0 +1,160 @@
+name: M11 Main Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m11-main-truth-sync"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m11-main-truth-sync
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Record accepted M11 main truth
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              Path(path).write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          state = load(".workflow/state.json")
+          state["status"] = "M11_MAIN_ACCEPTED"
+          state["working_branch"] = "main"
+          state["last_accepted_sha"] = "3ca18bdca11e436b3a2fa63491976041639eeee2"
+          state["last_accepted_branch"] = "main"
+          for item in [
+              "M11 Context Compiler Foundation merged through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.",
+              "Exact M11 product main Governance Bootstrap run 36312084318 completed success.",
+              "Exact M11 product main Core CI run 36312084324 completed success on ubuntu-latest, windows-latest, and macos-latest.",
+              "Exact M11 product main M10 Labeled Real World Python run 36312084320 completed success on all three operating systems.",
+              "Exact M11 product main M07 Python Real World run 36312084350 completed success on all three operating systems.",
+              "Exact M11 product main M06 Labeled Real World Go run 36312084315 completed success on all three operating systems.",
+              "Exact M11 product main Real World Go Validation run 36312084307 completed success on all three operating systems."
+          ]:
+              if item not in state["proven"]:
+                  state["proven"].append(item)
+          state["next_authorized_actions"] = [
+              "Await an explicit Owner directive or repository governance update that defines the next milestone; no M12 scope is currently declared.",
+              "When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.",
+              "Preserve M11 product acceptance at 3ca18bdca11e436b3a2fa63491976041639eeee2 and its exact post-merge run evidence as immutable historical evidence."
+          ]
+          state["blocked_actions"] = [
+              "Adding another semantic language without a declared milestone and evidence plan.",
+              "Expanding single-finding context into arbitrary whole-program context inference without explicit scope.",
+              "Treating a context packet as proof that code is safe to delete or auto-fix.",
+              "Starting MCP or Skill adapter product logic without an explicit milestone contract."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          if not any(x.get("id") == "M11-MAIN-POST-MERGE" for x in acceptance["requirements"]):
+              acceptance["requirements"].append({
+                  "id": "M11-MAIN-POST-MERGE",
+                  "requirement": "The exact M11 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before becoming the next development base.",
+                  "evidence": "main@3ca18bdca11e436b3a2fa63491976041639eeee2: Governance Bootstrap 36312084318, Core CI 36312084324, M10 Labeled Real World Python 36312084320, M07 Python Real World 36312084350, M06 Labeled Real World Go 36312084315, and Real World Go Validation 36312084307 all completed success; every matrix job passed on Linux, Windows, and macOS.",
+                  "status": "PASS"
+              })
+          acceptance["evidence_boundary"] = "M11 Context Compiler Foundation is product-main accepted at 3ca18bdca11e436b3a2fa63491976041639eeee2 after strict governance and all accepted Linux, Windows, and macOS regression lanes passed. M11 provides exact current finding-ID packet retrieval and repository-contained excerpt reads only; it remains single-finding, byte-bounded, LLM-optional, non-mutating, and does not authorize safe deletion, auto-fix, stale-ID migration, or arbitrary multi-file dependency inference."
+          acceptance["truth_gates"]["CROSS_DOCUMENT_CONSISTENCY"] = "PASS"
+          acceptance["truth_gates"]["PROJECT_STATE_SYNC"] = "PASS"
+          acceptance["truth_gates"]["SEQUENCE_SYNC"] = "PASS"
+          acceptance["sequence_sync_status"] = "PASS"
+          save(".workflow/acceptance.json", acceptance)
+
+          claims = load(".workflow/claims.json")
+          if not any(x.get("id") == "TRUTH-M11-MAIN-ACCEPTED" for x in claims["claims"]):
+              claims["claims"].append({
+                  "id": "TRUTH-M11-MAIN-ACCEPTED",
+                  "claim": "M11 Context Compiler Foundation is merged and post-merge accepted on main at 3ca18bdca11e436b3a2fa63491976041639eeee2 after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": [".workflow/state.json", ".workflow/acceptance.json"],
+                  "tests": [
+                      ".github/workflows/governance-bootstrap.yml",
+                      ".github/workflows/ci.yml",
+                      ".github/workflows/m10-python-labeled-real-world.yml",
+                      ".github/workflows/m07-python-real-world.yml",
+                      ".github/workflows/m06-labeled-real-world.yml",
+                      ".github/workflows/real-world-go.yml"
+                  ],
+                  "runtime_evidence": [
+                      "GitHub Actions Governance Bootstrap run 36312084318 at 3ca18bdca11e436b3a2fa63491976041639eeee2",
+                      "GitHub Actions Core CI run 36312084324 at 3ca18bdca11e436b3a2fa63491976041639eeee2",
+                      "GitHub Actions M10 Labeled Real World Python run 36312084320 at 3ca18bdca11e436b3a2fa63491976041639eeee2",
+                      "GitHub Actions M07 Python Real World run 36312084350 at 3ca18bdca11e436b3a2fa63491976041639eeee2",
+                      "GitHub Actions M06 Labeled Real World Go run 36312084315 at 3ca18bdca11e436b3a2fa63491976041639eeee2",
+                      "GitHub Actions Real World Go Validation run 36312084307 at 3ca18bdca11e436b3a2fa63491976041639eeee2"
+                  ],
+                  "status": "PASS"
+              })
+          save(".workflow/claims.json", claims)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M11 main accepted baseline" for x in changelog["entries"]):
+              changelog["entries"].insert(0, {
+                  "date": "2026-09-27",
+                  "title": "M11 main accepted baseline",
+                  "type": "acceptance",
+                  "changes": [
+                      "Merged FINAL_ACCEPTED M11 through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.",
+                      "Passed strict Governance Bootstrap on the exact product main merge SHA.",
+                      "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
+                      "Kept M11 constrained to exact single-finding context retrieval and repository-contained source excerpts."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme = re.sub(
+              r"\*\*M11 Context Compiler Foundation is accepted on the development branch pending final exact-SHA promotion checks\.\*\*",
+              "**M11 Context Compiler Foundation is accepted on main at 3ca18bdca11e436b3a2fa63491976041639eeee2.**",
+              readme,
+              count=1,
+          )
+          readme_path.write_text(readme, encoding="utf-8")
+
+      - name: Remove temporary workflow from final tree
+        run: git rm .github/workflows/m11-main-truth-sync.yml
+
+      - name: Regenerate M11 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M11-CONTEXT-COMPILER.actual.json
+          --output-mermaid docs/sequence/generated/M11-CONTEXT-COMPILER.actual.mmd
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate generated artifacts before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit synchronized M11 main truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m11): synchronize accepted main truth"
+          git push origin HEAD:work/m11-main-truth-sync
