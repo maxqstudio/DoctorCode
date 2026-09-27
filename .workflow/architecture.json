@@ -68,7 +68,8 @@
         "Go AST rules",
         "conservative package-function reference counting",
         "binding-aware pure-condition canonicalization",
-        "generated-file-aware Go dead-code evidence boundaries"
+        "generated-file-aware Go dead-code evidence boundaries",
+        "binding-aware related-reference discovery for top-level non-method functions"
       ],
       "purpose": "Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence."
     },
@@ -82,9 +83,11 @@
         "source excerpt bounds",
         "security excerpt suppression",
         "byte budget",
-        "repository-contained source path resolution"
+        "repository-contained source path resolution",
+        "related excerpt prioritization",
+        "related excerpt byte-budget truncation"
       ],
-      "purpose": "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet for small LLMs while enforcing repository-contained source reads."
+      "purpose": "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional related context while enforcing repository-contained source reads."
     },
     {
       "depends_on": [
@@ -193,7 +196,7 @@
     },
     {
       "from": "evidence reducer",
-      "meaning": "Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.",
+      "meaning": "The packet exposes the selected finding, primary excerpt, and budget-permitting related Go excerpts; security excerpts remain omitted and non-Go findings keep primary-source-only context.",
       "to": "small LLM or human"
     },
     {
@@ -285,6 +288,11 @@
       "from": "M09 Python repository-shaped corpus",
       "meaning": "Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation.",
       "to": "precision benchmark harness"
+    },
+    {
+      "from": "Go Built-in Analyzer",
+      "meaning": "For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion.",
+      "to": "evidence reducer"
     }
   ],
   "external_boundaries": [
@@ -319,6 +327,10 @@
     {
       "contract": "Source excerpts are read only after resolving repository root and finding path symlinks and confirming the resolved target remains inside the repository root.",
       "name": "Evidence source filesystem boundary"
+    },
+    {
+      "contract": "M12 follows only enclosing top-level non-method functions and references in the same directory/package. Local shadow bindings and external test packages are excluded; no full type-checker or transitive graph is claimed.",
+      "name": "Go related-context boundary"
     }
   ],
   "schema_version": 1

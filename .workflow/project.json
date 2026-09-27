@@ -63,7 +63,8 @@
     ],
     "frameworks": [],
     "languages": [
-      "Go"
+      "Go",
+      "Python"
     ],
     "persistence": []
   }

@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M12 Go Related Context candidate
+
+Type: development
+
+- Added binding-aware related-location discovery for top-level non-method Go functions.
+- Added packet schema v2 related_total and bounded related_excerpts with production/test kinds.
+- Preserved primary source priority and max-bytes while marking omitted related context as truncated.
+- Rejected parent traversal before Go related discovery can parse an outside file.
+- Added three-OS CLI smoke proving exact finding-ID related context with one production and one same-package test reference.
+- Corrected project technology truth to list both Go and Python.
+
 ## 2026-09-27 — M11 main accepted baseline
 
 Type: acceptance

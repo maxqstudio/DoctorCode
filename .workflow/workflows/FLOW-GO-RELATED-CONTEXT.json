@@ -1,0 +1,72 @@
+{
+  "authority": "internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml",
+  "critical": false,
+  "entry_condition": "The selected current finding resolves to a repository-contained .go source path and is enclosed by a top-level non-method function.",
+  "failure_behavior": [
+    "Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations."
+  ],
+  "flow_id": "FLOW-GO-RELATED-CONTEXT",
+  "invariants": [
+    "Primary selected source is repository-contained before related discovery runs.",
+    "Same-file references require selected ast.Object identity.",
+    "Cross-file references are limited to the same parsed Go package.",
+    "Local shadow identifiers and external test packages are excluded.",
+    "Primary source context has priority over optional related excerpts.",
+    "Packet encoded size never exceeds max-bytes.",
+    "Security findings continue to omit source and related excerpts.",
+    "M12 does not claim Python parity or transitive dependency completeness."
+  ],
+  "purpose": "Enrich one exact current Go finding with deterministic same-package production/test references without exceeding the evidence packet byte budget.",
+  "restart_behavior": [
+    "The flow is stateless and deterministic for an unchanged repository source state."
+  ],
+  "rollback_behavior": [
+    "M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics."
+  ],
+  "schema_version": 1,
+  "sequence_session": "M12-GO-RELATED-CONTEXT",
+  "source_owners": [
+    "internal/analyzers/golang/related.go",
+    "internal/evidence/packet.go",
+    "cmd/doctorcode/main.go"
+  ],
+  "states": [
+    "PRIMARY_PATH_VERIFIED",
+    "FUNCTION_IDENTIFIED",
+    "REFERENCES_CLASSIFIED",
+    "RELATED_EXCERPTS_BOUNDED",
+    "PACKET_REPORTED"
+  ],
+  "tests": [
+    "internal/analyzers/golang/related_test.go",
+    "internal/evidence/packet_test.go",
+    ".github/workflows/ci.yml"
+  ],
+  "title": "Bounded Go related context compilation",
+  "transitions": [
+    {
+      "action": "Parse the selected Go source once and identify the enclosing top-level non-method function.",
+      "from": "PRIMARY_PATH_VERIFIED",
+      "side_effects": [],
+      "to": "FUNCTION_IDENTIFIED"
+    },
+    {
+      "action": "Reuse source AST object identity and inspect same-package Go files for production/test references while excluding local shadows and external test packages.",
+      "from": "FUNCTION_IDENTIFIED",
+      "side_effects": [],
+      "to": "REFERENCES_CLASSIFIED"
+    },
+    {
+      "action": "Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.",
+      "from": "REFERENCES_CLASSIFIED",
+      "side_effects": [],
+      "to": "RELATED_EXCERPTS_BOUNDED"
+    },
+    {
+      "action": "Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.",
+      "from": "RELATED_EXCERPTS_BOUNDED",
+      "side_effects": [],
+      "to": "PACKET_REPORTED"
+    }
+  ]
+}

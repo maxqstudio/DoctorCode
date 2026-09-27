@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M11 Context Compiler Foundation is accepted on main at 3ca18bdca11e436b3a2fa63491976041639eeee2.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M12 Go Related Context is validating on work/m12-go-related-context from governance-normalized main@2caa530a9e1f284a0446b7ead6d97218de996498.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
@@ -254,6 +254,16 @@ M11 adds exact finding-specific retrieval without adding a second analysis autho
 M11 also hardens excerpt reads: repository root and selected source path are resolved through symlinks and the resolved target must remain inside the resolved repository root. Blocking tests cover both `../` traversal and a symlink pointing outside the repository.
 
 This milestone is deliberately a **single-finding context foundation**. It does not yet infer transitive dependencies, collect related tests/symbols across multiple files, migrate stale IDs, or claim exact tokenizer counts.
+### M12 bounded Go related context
+
+M12 upgrades evidence packets to schema version 2 for eligible Go findings. When the selected finding is inside a top-level non-method Go function, DoctorCode reuses that source AST binding and adds deterministic references from the same package. Same-package test references are labeled separately as test_reference; local shadow bindings and external test packages are not guessed as related.
+
+Related excerpts are optional context after the primary selected source. DoctorCode emits at most eight related excerpts, keeps related_total for discovered locations, and marks the packet truncated when the byte budget or cap omits context. The encoded packet still cannot exceed --max-bytes.
+
+The repository boundary is checked before related discovery. A parent-traversal path is rejected before an outside Go file can be parsed, and every emitted related excerpt is independently repository-contained.
+
+M12 is intentionally Go-only related-context enrichment. Python and other languages retain the M11 primary-source-only packet until an explicit parity milestone.
+
 Give a small LLM one highest-priority bounded evidence packet instead of the repository:
 
 ```bash
@@ -288,7 +298,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, bounded next-packet smoke, and the M11 exact finding-specific context smoke. Separate Go compatibility, bounded Go real-world label, Python public-source, and bounded M10 Python label workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, bounded next-packet smoke, and the M12 exact finding-specific related-context smoke. Separate Go compatibility, bounded Go real-world label, Python public-source, and bounded M10 Python label workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
 
 ## Design principles
 
