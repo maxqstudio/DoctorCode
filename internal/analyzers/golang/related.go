@@ -61,12 +61,20 @@ func RelatedLocations(root string, finding model.Finding) ([]RelatedLocation, er
 		return nil, err
 	}
 
-	var files []relatedParsedFile
+	files := []relatedParsedFile{{
+		path:   sourceClean,
+		rel:    filepath.ToSlash(finding.Path),
+		isTest: strings.HasSuffix(strings.ToLower(sourcePath), "_test.go"),
+		file:   sourceFile,
+	}}
 	for _, entry := range entries {
 		if entry.IsDir() || entry.Type()&fs.ModeSymlink != 0 || strings.ToLower(filepath.Ext(entry.Name())) != ".go" {
 			continue
 		}
-		path := filepath.Join(filepath.Dir(sourcePath), entry.Name())
+		path := filepath.Clean(filepath.Join(filepath.Dir(sourcePath), entry.Name()))
+		if path == sourceClean {
+			continue
+		}
 		node, parseErr := parser.ParseFile(fset, path, nil, 0)
 		if parseErr != nil {
 			return nil, fmt.Errorf("parse %s: %w", path, parseErr)
@@ -79,7 +87,7 @@ func RelatedLocations(root string, finding model.Finding) ([]RelatedLocation, er
 			return nil, relErr
 		}
 		files = append(files, relatedParsedFile{
-			path:   filepath.Clean(path),
+			path:   path,
 			rel:    filepath.ToSlash(rel),
 			isTest: strings.HasSuffix(strings.ToLower(entry.Name()), "_test.go"),
 			file:   node,
