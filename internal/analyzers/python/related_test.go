@@ -58,3 +58,17 @@ func mustWritePython(t *testing.T, root, rel, content string) {
 		t.Fatal(err)
 	}
 }
+
+func TestRelatedLocationsFailClosedWhenSelectedModuleRebindsFunctionName(t *testing.T) {
+	root := t.TempDir()
+	mustWritePython(t, root, "module.py", "def _target(flag):\n    if flag:\n        return True\n    else:\n        return False\n\n_target = lambda flag: flag\n\ndef caller():\n    return _target(True)\n")
+	mustWritePython(t, root, "test_module.py", "from module import _target\n\ndef test_target():\n    assert _target(False) is False\n")
+
+	got, err := RelatedLocations(context.Background(), root, model.Finding{Path: "module.py", LineStart: 2, LineEnd: 5})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(got) != 0 {
+		t.Fatalf("module-level rebinding makes the original function relation ambiguous; expected fail-closed empty context, got %#v", got)
+	}
+}
