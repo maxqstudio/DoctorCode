@@ -1,0 +1,57 @@
+name: M14 Acceptance Finalizer
+
+on:
+  push:
+    branches:
+      - "work/m14-deterministic-verification"
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m14-deterministic-verification
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Record M14 accepted state
+        run: python .workflow/tools/m14_finalize_temp.py
+
+      - name: Remove temporary finalizer files from final tree
+        run: |
+          git rm .github/workflows/m14-acceptance-finalizer.yml
+          git rm .workflow/tools/m14_finalize_temp.py
+
+      - name: Regenerate M14 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.json
+          --output-mermaid docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.mmd
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate finalized M14 governance
+        run: |
+          python .workflow/tools/validate_sequence_contract.py --root . --session docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit finalized M14 state
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m14): finalize accepted deterministic verification state"
+          git push origin HEAD:work/m14-deterministic-verification
