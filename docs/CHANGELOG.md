@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M08 accepted baseline
+
+Type: acceptance
+
+- Accepted the 10-case Python adversarial corpus after its first run exposed 5 false positives and 2 false negatives.
+- Accepted module-aware private-function reference evidence and bounded __all__/import/module-attribute/getattr/globals reference guards.
+- Accepted strict None/True/False identity matching and not_secret placeholder filtering.
+- Preserved the M07 Python corpus and pinned click/httpx/requests/Flask validation.
+- Passed strict governance plus Linux, Windows, and macOS core/public Python validation on the synchronized candidate.
+
 ## 2026-09-27 — M08 Python adversarial candidate
 
 Type: development

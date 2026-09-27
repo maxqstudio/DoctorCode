@@ -156,7 +156,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M08_PYTHON_ADVERSARIAL
 
-Current status: ACCEPTANCE_CANDIDATE
+Current status: M08_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -201,14 +201,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M08 Project Truth and sequence documentation.
-- Run strict Skill_Workflow validation against the synchronized M08 snapshot.
-- Promote and freeze M08 only if exact-SHA governance, core CI, and pinned public Python validation all pass.
+- Synchronize accepted M08 Project Truth documentation.
+- Remove temporary M08 doc-sync workflow and update README to M08-current.
+- Freeze M08 only after final exact-SHA strict governance, core CI, and pinned public Python validation all pass without a bot mutator.
+- After M08 freeze, evaluate M09 repository-shaped Python interactions before adding another language.
 
 Blocked actions:
-- Publishing M08 corpus precision/recall as real-world Python metrics.
-- Treating zero conservative references as safe-delete proof.
-- Broadening dynamic-reference claims beyond explicitly recognized patterns.
+- Publishing M08 corpus metrics as real-world precision or recall.
+- Treating zero-reference Python findings as safe-delete proof.
+- Claiming arbitrary dynamic Python reference resolution.
 - Auto-deleting or auto-fixing Python findings.
 
 Known blockers:
@@ -220,21 +221,21 @@ Known blockers:
 
 - M07 accepted baseline is fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e.
 - DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- Initial M08 adversarial candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 false positives and 2 false negatives while the accepted M07 gate remained passing.
-- M08 repaired Python identity matching so integer 0/1 values are not confused with False/True identity constants.
-- M08 reference evidence is candidate/module-aware instead of one global counter per function name.
-- M08 recognizes conservative dynamic/export references from __all__, resolved imports, module attributes, getattr string names, and globals string subscripts.
-- M08 treats not_secret/not-secret literals as obvious placeholder security values.
-- Repaired candidate b2b92bbfd4f246d2c50f2bcf17034163b928b603 passed core CI run 36286874063 on Linux, Windows, and macOS.
-- The same candidate passed pinned public Python validation run 36286874048 on Linux, Windows, and macOS.
-- The 10-case M08 adversarial corpus reports 2 TP, 0 FP, and 0 FN while the M07 six-case corpus remains 5 TP, 0 FP, and 0 FN.
+- Initial M08 candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 false positives and 2 false negatives while M07 stayed passing.
+- M08 repaired Python identity semantics, candidate/module-aware private-function references, recognized __all__/import/module-attribute/getattr/globals references, and not_secret placeholder filtering.
+- Exact synchronized M08 candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict Skill_Workflow governance run 36287085335.
+- The same candidate passed core CI run 36287085344 on ubuntu-latest, windows-latest, and macos-latest.
+- The same candidate passed pinned public Python validation run 36287085354 on ubuntu-latest, windows-latest, and macos-latest.
+- The M08 10-case adversarial corpus reports 2 TP, 0 FP, and 0 FN.
+- The accepted M07 six-case Python corpus remains 5 TP, 0 FP, and 0 FN.
+- Pinned click/httpx/requests/Flask validation remains passing after M08 reference-semantics repair.
 
 ### Not proven
 
-- M08 adversarial results are corpus-scoped and do not establish general Python precision or recall.
-- Dynamic Python reference handling remains conservative and incomplete; arbitrary reflection, eval/exec, plugin loaders, and external callers are not resolved.
-- Module-aware reference counting prefers avoiding false positives and may still miss dead code under unresolved dynamic behavior.
-- The public Python repositories remain incompletely labeled except for bounded tracked anchors.
+- M08 corpus metrics are not general Python ecosystem precision or recall.
+- Recognized dynamic/export references cover only explicit bounded syntax patterns and do not resolve arbitrary reflection, eval/exec, plugin loading, or external callers.
+- Zero conservative references remain insufficient for PROVEN_UNUSED or safe deletion.
+- Public Python snapshots remain incompletely labeled beyond tracked bounded anchors.
 - Python .pyi semantic analysis and automatic mutation remain unsupported.
 
 ## Important limitations

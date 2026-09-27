@@ -538,7 +538,7 @@
       "locator": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py::classify"
     }
   ],
-  "observed_head": "f28f35d16bd8cb7a691827ecd10a353eba227258",
+  "observed_head": "98b5567918a5e583b896cfcf1a0b58fcb765757a",
   "schema_version": 1,
   "source_digest": "5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e"
 }
