@@ -1,0 +1,125 @@
+{
+  "schema_version": 1,
+  "evidence_boundary": "Bounded labels for exact source locations only; not exhaustive repository labels and not safe-delete proof.",
+  "sources": [
+    {
+      "id": "urfave-cli",
+      "repository": "urfave/cli",
+      "sha": "58ec406eff149315193d8632c08317f70f6deee1",
+      "license": "MIT",
+      "env": "DOCTORCODE_M06_URFAVE",
+      "labels": [
+        {
+          "status": "INVALID_FINDING",
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "command_run.go",
+          "line_start": 364,
+          "rationale": "The else-if condition uses err declared by its own short init; it is a different binding from the err declared by the preceding if init."
+        }
+      ]
+    },
+    {
+      "id": "zerolog",
+      "repository": "rs/zerolog",
+      "sha": "5eb5f3a76c09eeadc1f2464baf4a4e3f1037c830",
+      "license": "MIT",
+      "env": "DOCTORCODE_M06_ZEROLOG",
+      "labels": [
+        {
+          "status": "VALID_FINDING",
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "slog.go",
+          "line_start": 144,
+          "summary_contains": "zerologToSlogLevel",
+          "rationale": "Pinned source search shows only the declaration; the unexported function has no lexical references in the package snapshot. This validates the finding, not safe deletion."
+        },
+        {
+          "status": "AMBIGUOUS",
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "encoder_cbor.go",
+          "line_start": 27,
+          "summary_contains": "appendCBOR",
+          "rationale": "The wrapper participates in build-tag-specific encoder abstraction and has a matching alternative implementation; structural bloat is plausible but intent justifies non-blocking ambiguity."
+        }
+      ]
+    },
+    {
+      "id": "fsnotify",
+      "repository": "fsnotify/fsnotify",
+      "sha": "20b1e15ef3c70caeb37ea2bd184f48ef8382669e",
+      "license": "BSD-3-Clause",
+      "env": "DOCTORCODE_M06_FSNOTIFY",
+      "labels": [
+        {
+          "status": "VALID_FINDING",
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "fsnotify.go",
+          "line_start": 444,
+          "summary_contains": "withCreate",
+          "rationale": "Pinned source search shows the helper declaration without a call site; related sendCreate state is used, but withCreate itself is not referenced. This validates zero lexical references only."
+        }
+      ]
+    },
+    {
+      "id": "validator",
+      "repository": "go-playground/validator",
+      "sha": "3487babb14631e6cc37121799c58ba2281598edd",
+      "license": "MIT",
+      "env": "DOCTORCODE_M06_VALIDATOR",
+      "labels": [
+        {
+          "status": "INVALID_FINDING",
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "_examples/validate_fn/enum_enumer.go",
+          "line_start": 25,
+          "summary_contains": "_EnumNoOp",
+          "rationale": "The file is generated and the deliberately uncalled function contains compile-time array-index assertions; zero call sites do not make it stale code."
+        },
+        {
+          "status": "INVALID_FINDING",
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "validator_instance.go",
+          "line_start": 174,
+          "rationale": "The ok identifier is newly bound by a different type assertion in the else-if init and is not the same boolean binding as the preceding branch."
+        },
+        {
+          "status": "INVALID_FINDING",
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "validator_instance.go",
+          "line_start": 184,
+          "rationale": "The ok identifier is newly bound by the string type assertion and is distinct from the ok binding in the outer map type assertion."
+        },
+        {
+          "status": "VALID_FINDING",
+          "rule_id": "GO-SIMPLIFY-BOOL-RETURN",
+          "path": "baked_in.go",
+          "line_start": 2975,
+          "rationale": "Both branches return opposite boolean literals directly from a side-effect-free strings.HasSuffix condition."
+        },
+        {
+          "status": "VALID_FINDING",
+          "rule_id": "GO-SIMPLIFY-BOOL-RETURN",
+          "path": "baked_in.go",
+          "line_start": 2990,
+          "rationale": "Both branches return opposite boolean literals directly from the repeated side-effect-free strings.HasSuffix condition."
+        },
+        {
+          "status": "AMBIGUOUS",
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "baked_in.go",
+          "line_start": 2522,
+          "summary_contains": "hasMinOf",
+          "rationale": "The wrapper is structurally redundant but is registered under the public validation tag name min, so naming/API intent may justify it."
+        },
+        {
+          "status": "AMBIGUOUS",
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "baked_in.go",
+          "line_start": 2710,
+          "summary_contains": "hasMaxOf",
+          "rationale": "The wrapper is structurally redundant but is registered under the public validation tag name max, so naming/API intent may justify it."
+        }
+      ]
+    }
+  ]
+}
