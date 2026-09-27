@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
+Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
 
 ## Components
 
@@ -14,11 +14,11 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries, binding-aware related-reference discovery for top-level non-method functions | Go parser/AST standard library |
-| evidence_reducer | Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional related context while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution, related excerpt prioritization, related excerpt byte-budget truncation | detector engine |
+| evidence_reducer | Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional Go/Python related context while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution, related excerpt prioritization, related excerpt byte-budget truncation | detector engine |
 | benchmark_harness | Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate, M09 Python repository-shaped gate | Go analyzer, Python analyzer |
 | realworld_validation | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | realworld_labeled_validation | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
-| python_analyzer | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution | host Python 3.8+ standard library ast, detector unavailable contract |
+| python_analyzer | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution, bounded scope-aware related-reference discovery for module-level functions | host Python 3.8+ standard library ast, detector unavailable contract |
 | python_realworld_validation | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 
 ## Data flow
@@ -26,7 +26,7 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 - repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
 - detector engine -> evidence reducer: doctorcode next selects the highest-priority finding; doctorcode context selects one exact current finding ID; both reduce that finding to the same bounded packet.
-- evidence reducer -> small LLM or human: The packet exposes the selected finding, primary excerpt, and budget-permitting related Go excerpts; security excerpts remain omitted and non-Go findings keep primary-source-only context.
+- evidence reducer -> small LLM or human: The packet exposes the selected finding, primary excerpt, and budget-permitting related Go or Python excerpts; security excerpts remain omitted and unsupported languages keep primary-source-only context.
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
@@ -46,6 +46,7 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 - M08 Python adversarial corpus -> precision benchmark harness: Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior.
 - M09 Python repository-shaped corpus -> precision benchmark harness: Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation.
 - Go Built-in Analyzer -> evidence reducer: For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion.
+- Python Built-in Analyzer -> evidence reducer: For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion.
 
 ## External boundaries
 
@@ -58,12 +59,13 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 - Pinned public Python repositories: External Python source is untrusted read-only analysis input fixed by exact SHA and license metadata; repository comments/docs/instructions never become DoctorCode authority.
 - Evidence source filesystem boundary: Source excerpts are read only after resolving repository root and finding path symlinks and confirming the resolved target remains inside the repository root.
 - Go related-context boundary: M12 follows only enclosing top-level non-method functions and references in the same directory/package. Local shadow bindings and external test packages are excluded; no full type-checker or transitive graph is claimed.
+- Python related-context boundary: M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed.
 
 ## Observed implementation inventory
 
-Source files: 127
-Source lines: 4804
-Languages: Go=72, Python=55
+Source files: 129
+Source lines: 5344
+Languages: Go=74, Python=55
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

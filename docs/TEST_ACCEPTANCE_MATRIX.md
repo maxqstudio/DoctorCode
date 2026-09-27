@@ -4,22 +4,23 @@
 
 ## Evidence boundary
 
-M12 Go Related Context is product-main accepted at 368c7b05d08d95beb5164d437920bbdd83c39e32 after strict governance and every accepted Linux, Windows, and macOS regression lane passed. M12 enriches eligible top-level non-method Go findings with bounded same-package production/test references only. Python parity, methods, external test packages, transitive dependency graphs, safe deletion, and automatic repair remain outside M12 authority.
+M13 Python Related Context adds bounded production/test reference excerpts for findings enclosed by module-level Python functions. It covers same-file direct references, recognized top-level from-import aliases, recognized top-level module imports/attributes, src-layout aliases, lexical shadow exclusion, and fail-closed module-level rebinding. Product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Dynamic imports, string reflection, package-facade re-export chains, runtime monkey-patching, transitive graphs, safe deletion, and automatic repair remain outside M13 authority.
 
 Final tested source: external final acceptance evidence.
-Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
+Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M12-MAIN-BASELINE | M12 must branch from the current governance-normalized M11 main and retain the pinned Skill_Workflow authority. | work/m12-go-related-context was created from main@2caa530a9e1f284a0446b7ead6d97218de996498; M11 product baseline remains 3ca18bdca11e436b3a2fa63491976041639eeee2; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
-| M12-RED-CONTRACT | The related-context packet contract must be demonstrated absent before implementation. | Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b failed because RelatedLocations, RelatedTotal, and RelatedExcerpts did not exist. | PASS |
-| M12-BINDING-PRECISION | Same-file Go references must preserve AST binding identity, local shadowing must not count, and same-package test references must be distinguished. | Core CI run 36322997947 exposed the reparse identity defect; internal/analyzers/golang/related_test.go now requires exactly one production reference and one test_reference while excluding the local shadow binding and external test package. | PASS |
-| M12-EARLY-FILESYSTEM-BOUNDARY | Repository containment must reject traversal before related discovery parses source outside the root. | Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 failed on an intentionally invalid ../outside.go parse; the repaired Build path validates the primary source before invoking related discovery, and product Core CI 36323276401 passes. | PASS |
-| M12-BOUNDED-PACKET-V2 | Packet schema v2 must add deterministic related_total/related_excerpts without exceeding max-bytes and must mark truncation when not all related context fits. | internal/evidence/packet_test.go covers two related excerpts, tight-budget truncation, accurate excerpt bounds, and existing security/path boundaries; Core CI 36323276401 passed on all three operating systems. | PASS |
-| M12-CLI-E2E | The public context command must return a bounded packet with both a production reference and a same-package test reference for a real audited Go finding. | Core CI run 36323276401 executes the finding-specific related-context smoke on Linux, Windows, and macOS and asserts schema_version=2, related_total=2, reference/test_reference order, exact finding ID, and byte budget. | PASS |
-| M12-REGRESSION-MATRIX | All previously accepted detector and public-source regression lanes must remain passing across Linux, Windows, and macOS. | At bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8: Core CI 36323276401, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 all completed success across all three operating systems. | PASS |
-| M12-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M12 sequence artifacts must pass strict governance on the final exact M12 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36323629497 at edc415a2935307490cf73ec12fed72ff9a0c042b completed success after generated M12 Project Truth and sequence synchronization; finalization is governance-only and will be revalidated on its exact SHA. | PASS |
-| M12-MAIN-POST-MERGE | The exact M12 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before becoming the next development base. | main@368c7b05d08d95beb5164d437920bbdd83c39e32: Governance Bootstrap 36323970886, Core CI 36323970841, M10 Labeled Real World Python 36323970832, M07 Python Real World 36323970756, M06 Labeled Real World Go 36323970803, and Real World Go Validation 36323970845 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M13-MAIN-BASELINE | M13 must branch from governance-normalized M12 main and retain the pinned Skill_Workflow authority. | work/m13-python-related-context starts from main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d; M12 product baseline remains 368c7b05d08d95beb5164d437920bbdd83c39e32; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
+| M13-RED-PROVIDER | Scoped Python related-location behavior must be demonstrated absent before implementation. | Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 failed before Python RelatedLocations existed. | PASS |
+| M13-RED-PACKET-PARITY | The evidence packet must be proven unable to include Python related context before dispatcher integration. | Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d failed the Python related packet contract. | PASS |
+| M13-DISPATCH-REPAIR | Evidence reduction must dispatch eligible .py findings to the Python related provider while preserving Go behavior. | Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed related_total=0 in the Python packet; Core CI 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed after dispatcher integration. | PASS |
+| M13-SHADOW-PRECISION | Local lexical shadows must not be reported as references to the selected module-level function. | internal/analyzers/python/related_test.go requires source, direct-import test, and module-attribute test references while excluding local shadows and unrelated same-named functions; Core CI 36325714821 passes. | PASS |
+| M13-REBIND-FAIL-CLOSED | If the selected module rebinds the selected function name at module scope, related discovery must fail closed instead of attaching references to the replacement binding. | RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd emitted two false relations; repaired product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passes. | PASS |
+| M13-PACKET-PARITY | Python related excerpts must use the same schema-v2 related_total/related_excerpts budget and production/test kind contract accepted for Go. | internal/evidence/packet_test.go plus Core CI run 36325714821 verify Python production + test related excerpts under max-bytes while existing Go packet tests remain passing. | PASS |
+| M13-CLI-E2E | The public context command must return bounded Python production/test related context for a real current audit finding. | Core CI run 36325714821 executes audit -> exact PY-SIMPLIFY-BOOL-RETURN finding ID -> context packet on Linux, Windows, and macOS and asserts schema v2, exact ID, related_total=2, deterministic paths/kinds, and byte budget. | PASS |
+| M13-REGRESSION-MATRIX | All previously accepted Go and Python detector/public-source lanes must remain passing across Linux, Windows, and macOS. | At 40771744b74d91478c7eb60386d718ba4b170e91: Core CI 36325714821, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 all passed across all three operating systems. | PASS |
+| M13-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M13 sequence artifacts must pass strict governance on the final exact M13 branch SHA after temporary workflows are removed. | At 80f735c7be3598dfdf34b6a040d3e49464298a42: Governance Bootstrap 36326117052, Core CI 36326116923, M10 Labeled Real World Python 36326117037, M07 Python Real World 36326116936, M06 Labeled Real World Go 36326116920, and Real World Go Validation 36326116988 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
 
 ## Test commands
 
@@ -32,12 +33,13 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
-- Core CI finding-specific related context smoke test
+- Core CI Go related-context smoke test
+- Core CI Python related-context smoke test
 
 ## Runtime checks
 
 - go test ./...
-- Core CI related-context smoke: isolated Go simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget
+- Core CI Python related-context smoke: isolated Python simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
@@ -48,7 +50,7 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M12-GO-RELATED-CONTEXT
+Sequence session contract: M13-PYTHON-RELATED-CONTEXT
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

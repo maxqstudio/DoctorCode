@@ -195,3 +195,48 @@ func TestPacketRejectsTraversalBeforeRelatedProviderReadsOutside(t *testing.T) {
 		t.Fatalf("related provider read outside root before boundary rejection: %v", err)
 	}
 }
+
+func TestPacketIncludesBoundedPythonRelatedExcerpts(t *testing.T) {
+	root := t.TempDir()
+	core := filepath.Join(root, "src", "pkg")
+	if err := os.MkdirAll(core, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	tests := filepath.Join(root, "tests")
+	if err := os.MkdirAll(tests, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	source := "def _target(flag):\n    if flag:\n        return True\n    else:\n        return False\n\ndef caller():\n    return _target(True)\n"
+	testSource := "from pkg.core import _target\n\ndef test_target():\n    assert _target(False) is False\n"
+	if err := os.WriteFile(filepath.Join(core, "core.py"), []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(tests, "test_core.py"), []byte(testSource), 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	finding := model.Finding{
+		ID: "PY-RELATED", RuleID: "PY-SIMPLIFY-BOOL-RETURN", Category: model.CategorySimplify,
+		Severity: model.SeverityLow, Confidence: model.ConfidenceProven,
+		Path: "src/pkg/core.py", LineStart: 2, LineEnd: 5, Summary: "simplify",
+	}
+	packet, err := Build(root, finding, 4096)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if packet.SchemaVersion != 2 {
+		t.Fatalf("expected schema v2, got %d", packet.SchemaVersion)
+	}
+	if packet.RelatedTotal != 2 || len(packet.RelatedExcerpts) != 2 {
+		t.Fatalf("expected Python production + test related excerpts, got total=%d excerpts=%#v", packet.RelatedTotal, packet.RelatedExcerpts)
+	}
+	if packet.RelatedExcerpts[0].Kind != "reference" || !strings.Contains(packet.RelatedExcerpts[0].Excerpt, "_target(True)") {
+		t.Fatalf("missing Python production related excerpt: %#v", packet.RelatedExcerpts[0])
+	}
+	if packet.RelatedExcerpts[1].Kind != "test_reference" || !strings.Contains(packet.RelatedExcerpts[1].Excerpt, "_target(False)") {
+		t.Fatalf("missing Python test related excerpt: %#v", packet.RelatedExcerpts[1])
+	}
+	if encodedSize(packet) > 4096 {
+		t.Fatalf("packet exceeds budget: %d", encodedSize(packet))
+	}
+}

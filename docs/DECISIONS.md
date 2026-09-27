@@ -321,3 +321,35 @@ Status: ACCEPTED
 Keep the selected finding source as first-priority context, then append at most eight related excerpts in deterministic order while they fit max-bytes; report related_total and mark truncation when context is omitted.
 
 Rationale: The selected defect evidence must never be displaced by optional related context, and bounded packets must remain useful to small local models.
+
+## ADR-M13-001 — Python related context starts at module-level functions
+
+Status: ACCEPTED
+
+For M13, derive related context only when the selected finding is enclosed by a module-level FunctionDef or AsyncFunctionDef.
+
+Rationale: This mirrors M12's bounded scope while avoiding class/method dispatch, nested callable identity, and whole-program dynamic resolution claims.
+
+## ADR-M13-002 — Recognize bounded Python imports and lexical shadows
+
+Status: ACCEPTED
+
+Recognize same-file direct loads plus top-level from-import aliases and module import attributes for the selected module, and exclude references whose lexical scope binds the same local name.
+
+Rationale: Small-model context benefits from caller/test evidence, but name-only matching would attach unrelated local shadows and same-named functions.
+
+## ADR-M13-003 — Fail closed on selected-name module rebinding
+
+Status: ACCEPTED
+
+If any additional module-level binding of the selected function name exists in the selected module, return no related locations for that selected function.
+
+Rationale: Python module names can be rebound after a function definition; without temporal/runtime evaluation, attaching later references to the original function would be unsafe guesswork.
+
+## ADR-M13-004 — Reuse schema-v2 packet budget for Python parity
+
+Status: ACCEPTED
+
+Dispatch eligible .py findings to the Python provider and convert locations into the same deterministic related excerpt pipeline already accepted for Go.
+
+Rationale: One packet contract keeps CLI behavior stable, preserves primary-source priority, and avoids language-specific context serialization.

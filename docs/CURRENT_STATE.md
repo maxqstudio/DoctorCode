@@ -7,16 +7,16 @@ Authority verified at SHA: 368c7b05d08d95beb5164d437920bbdd83c39e32
 Governance profile: strict
 
 ## Current phase
-Phase: M12_GO_RELATED_CONTEXT
-Status: M12_MAIN_ACCEPTED
+Phase: M13_PYTHON_RELATED_CONTEXT
+Status: M13_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m13-python-related-context
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 368c7b05d08d95beb5164d437920bbdd83c39e32
 Current candidate SHA: external final acceptance evidence
-Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
+Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,35 +33,30 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M12-GO-RELATED-CONTEXT
+Current sequence session: M13-PYTHON-RELATED-CONTEXT
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M11 is MAIN_ACCEPTED with product baseline main@3ca18bdca11e436b3a2fa63491976041639eeee2 and governance-normalized current main@2caa530a9e1f284a0446b7ead6d97218de996498.
+- M12 is MAIN_ACCEPTED with product baseline main@368c7b05d08d95beb5164d437920bbdd83c39e32 and governance-normalized starting main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d.
 - Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
-- M12 initial RED Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b proved RelatedLocations and packet related-context fields did not yet exist.
-- M12 first implementation Core CI run 36322997947 at b289f2457196e6060de66a8738fb9e11fc6c8373 exposed a same-file AST object-identity defect while test-file reference discovery already worked.
-- M12 boundary RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 proved related discovery could parse an invalid parent-traversal Go file before repository-boundary rejection.
-- M12 reuses the selected source AST for binding-aware same-file function references and only accepts unresolved cross-file references from the same Go package; external test packages are not guessed.
-- Evidence packet schema v2 can include bounded Go production and same-package test related excerpts while preserving the caller byte budget and primary source priority.
-- M12 product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI run 36323276401 on Linux, Windows, and macOS, including the end-to-end related-context CLI smoke.
-- At the same product candidate, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 passed on all three operating systems.
-- Final synchronized M12 branch tree edc415a2935307490cf73ec12fed72ff9a0c042b passed Governance Bootstrap run 36323629497.
-- Core CI run 36323629517 at edc415a2935307490cf73ec12fed72ff9a0c042b passed on ubuntu-latest, windows-latest, and macos-latest.
-- M10 Python labels run 36323629491, M07 Python Real World run 36323629637, M06 Go labels run 36323629567, and Real World Go run 36323629559 all passed on Linux, Windows, and macOS at edc415a2935307490cf73ec12fed72ff9a0c042b.
-- M12 Go Related Context merged through PR #9 to main at 368c7b05d08d95beb5164d437920bbdd83c39e32.
-- Exact M12 product main Governance Bootstrap run 36323970886 completed success.
-- Exact M12 product main Core CI run 36323970841 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M12 product main M10 Labeled Real World Python run 36323970832 completed success on all three operating systems.
-- Exact M12 product main M07 Python Real World run 36323970756 completed success on all three operating systems.
-- Exact M12 product main M06 Labeled Real World Go run 36323970803 completed success on all three operating systems.
-- Exact M12 product main Real World Go Validation run 36323970845 completed success on all three operating systems.
+- M13 initial RED Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 proved scoped Python RelatedLocations did not yet exist.
+- M13 packet RED Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d proved evidence packets had no Python related-context provider.
+- M13 first implementation Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed that the evidence reducer still dispatched only Go related context.
+- M13 provider plus dispatcher Core CI run 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed Linux, Windows, and macOS.
+- M13 rebinding RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd proved module-level rebinding could misclassify references to a replacement binding as related to the original function.
+- M13 fails closed to empty related context when the selected module has another module-level binding for the selected function name.
+- M13 product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI run 36325714821 on Linux, Windows, and macOS, including the public audit -> exact finding ID -> Python context E2E smoke.
+- At the same M13 product candidate, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 passed on all three operating systems.
+- Final synchronized M13 branch tree 80f735c7be3598dfdf34b6a040d3e49464298a42 passed Governance Bootstrap run 36326117052.
+- Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36326117037, M07 Python Real World run 36326116936, M06 Go labels run 36326116920, and Real World Go run 36326116988 all passed on Linux, Windows, and macOS at 80f735c7be3598dfdf34b6a040d3e49464298a42.
 
 ## Not proven
-- M12 related discovery is intentionally limited to enclosing top-level non-method Go functions in the same directory and package.
-- Go methods, external test packages, Python findings, and other languages retain the M11 primary-source-only context behavior.
-- M12 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.
-- Cross-file same-package references use conservative parser binding behavior rather than a full Go type checker.
+- M13 Python related discovery is intentionally limited to findings enclosed by a module-level FunctionDef or AsyncFunctionDef.
+- Same-file direct references, recognized top-level from-import aliases, and recognized top-level module imports/attributes are covered; dynamic imports, string reflection, package-facade re-export chains, and runtime monkey-patching are not modeled.
+- Local lexical shadows are excluded using conservative scope binding collection; Python's full runtime name-resolution behavior is not claimed.
+- Any additional module-level binding of the selected function name makes M13 fail closed to no related locations for that function.
+- M13 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.
 - At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.
 - The byte budget remains deterministic bytes, not exact tokenizer counts.
 - Context evidence remains review input and never proves safe deletion or authorizes automatic repair.
@@ -73,11 +68,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Proceed to M13 Python Related Context parity under the Owner directive to continue until the DoctorCode product is complete.
-- Branch M13 only from the governance-normalized M12 main after exact closure acceptance.
-- Preserve M12 product acceptance at 368c7b05d08d95beb5164d437920bbdd83c39e32 and exact post-merge evidence as immutable historical evidence.
+- Run final exact-SHA acceptance on the M13_ACCEPTED tree after this governance finalization commit.
+- Open and merge the FINAL_ACCEPTED M13 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before M14.
+- After M13_MAIN_ACCEPTED, proceed to the deterministic verification contract milestone under the Owner directive to continue until DoctorCode is complete.
 
 ## Explicitly blocked
-- Claiming cross-language related-context parity before M13 acceptance.
-- Treating related context as a complete dependency graph or safe-delete proof.
-- Starting MCP/Skill adapters before context parity and deterministic verification are accepted.
+- Starting M14 before exact M13 main post-merge acceptance.
+- Claiming Python related context is a complete dynamic dependency graph.
+- Treating related context as proof that code is safe to delete or auto-fix.
+- Starting MCP or Skill adapters before deterministic verification contracts are accepted.

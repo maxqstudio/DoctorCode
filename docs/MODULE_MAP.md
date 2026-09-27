@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
+Source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -19,6 +19,8 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
+| internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
+| internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
 | internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
@@ -122,8 +124,8 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
 | internal/engine/engine.go | Go | 93 | internal/engine | NO |
-| internal/evidence/packet.go | Go | 237 | internal/evidence | NO |
-| internal/evidence/packet_test.go | Go | 197 | internal/evidence | NO |
+| internal/evidence/packet.go | Go | 272 | internal/evidence | NO |
+| internal/evidence/packet_test.go | Go | 242 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
 | internal/model/model.go | Go | 71 | internal/model | NO |

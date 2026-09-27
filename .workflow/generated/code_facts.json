@@ -90,6 +90,20 @@
       "lines": 142
     },
     {
+      "directory": "internal/analyzers/python",
+      "file": "internal/analyzers/python/related.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 386
+    },
+    {
+      "directory": "internal/analyzers/python",
+      "file": "internal/analyzers/python/related_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 74
+    },
+    {
       "directory": "internal/benchmark",
       "file": "internal/benchmark/benchmark.go",
       "is_test": false,
@@ -815,14 +829,14 @@
       "file": "internal/evidence/packet.go",
       "is_test": false,
       "language": "Go",
-      "lines": 237
+      "lines": 272
     },
     {
       "directory": "internal/evidence",
       "file": "internal/evidence/packet_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 197
+      "lines": 242
     },
     {
       "directory": "internal/language",
@@ -1684,14 +1698,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085",
+  "source_digest": "fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31",
   "source_summary": {
-    "files": 127,
+    "files": 129,
     "languages": {
-      "Go": 72,
+      "Go": 74,
       "Python": 55
     },
-    "lines": 4804,
+    "lines": 5344,
     "test_files": 2
   },
   "tests": [

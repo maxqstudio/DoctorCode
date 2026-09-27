@@ -1,6 +1,7 @@
 package evidence
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -9,8 +10,15 @@ import (
 	"strings"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
+
+type relatedLocation struct {
+	Path string
+	Line int
+	Kind string
+}
 
 type RelatedExcerpt struct {
 	Path      string `json:"path"`
@@ -55,7 +63,7 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 		packet.SourceExcerpt = excerpt
 		packet.Truncated = radius < 3
 		if encodedSize(packet) <= maxBytes {
-			related, relatedErr := goanalysis.RelatedLocations(root, finding)
+			related, relatedErr := discoverRelated(root, finding)
 			if relatedErr != nil {
 				return Packet{}, fmt.Errorf("find related context: %w", relatedErr)
 			}
@@ -161,7 +169,34 @@ func resolveFindingPath(root, findingPath string) (string, error) {
 
 const maxRelatedExcerpts = 8
 
-func appendRelated(root string, packet Packet, locations []goanalysis.RelatedLocation, maxBytes int) (Packet, error) {
+func discoverRelated(root string, finding model.Finding) ([]relatedLocation, error) {
+	switch strings.ToLower(filepath.Ext(finding.Path)) {
+	case ".go":
+		locations, err := goanalysis.RelatedLocations(root, finding)
+		if err != nil {
+			return nil, err
+		}
+		out := make([]relatedLocation, 0, len(locations))
+		for _, item := range locations {
+			out = append(out, relatedLocation{Path: item.Path, Line: item.Line, Kind: item.Kind})
+		}
+		return out, nil
+	case ".py":
+		locations, err := pythonanalysis.RelatedLocations(context.Background(), root, finding)
+		if err != nil {
+			return nil, err
+		}
+		out := make([]relatedLocation, 0, len(locations))
+		for _, item := range locations {
+			out = append(out, relatedLocation{Path: item.Path, Line: item.Line, Kind: item.Kind})
+		}
+		return out, nil
+	default:
+		return nil, nil
+	}
+}
+
+func appendRelated(root string, packet Packet, locations []relatedLocation, maxBytes int) (Packet, error) {
 	packet.RelatedTotal = len(locations)
 	if len(locations) == 0 {
 		return packet, nil
