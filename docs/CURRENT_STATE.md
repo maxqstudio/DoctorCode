@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M11_CONTEXT_COMPILER_FOUNDATION
-Status: M11_VALIDATING
+Status: M11_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -44,6 +44,9 @@ SEQUENCE_SYNC: PASS
 - M11 evidence source reads resolve repository root and finding path symlinks and reject paths outside the resolved repository root.
 - Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed on ubuntu-latest, windows-latest, and macos-latest, including the finding-specific context smoke test.
 - At the same M11 product candidate, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed on Linux, Windows, and macOS.
+- Final synchronized M11 branch candidate eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed Governance Bootstrap run 36311808969.
+- Core CI run 36311809127 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36311809029, M07 Python Real World run 36311808964, M06 Go labels run 36311809123, and Real World Go run 36311808976 all passed on Linux, Windows, and macOS at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0.
 
 ## Not proven
 - M11 context packets remain single-finding packets and do not compile transitive call graphs, related symbols, tests, or multi-file dependency context.
@@ -59,9 +62,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Generate and validate the M11 CURRENT sequence plus deterministic Project Truth.
-- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M11 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
+- Run final exact-SHA acceptance on the finalized M11 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M11 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting another milestone.
 
 ## Explicitly blocked
 - Adding a third semantic language during M11.

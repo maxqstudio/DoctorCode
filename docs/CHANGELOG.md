@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M11 Context Compiler Foundation accepted baseline
+
+Type: acceptance
+
+- Accepted exact finding-ID context retrieval through the existing deterministic audit and bounded evidence packet path.
+- Accepted repository-root containment for evidence source reads, including blocking parent-traversal and resolved symlink-escape tests.
+- Accepted a three-OS end-to-end context smoke from isolated audit fixture to exact-ID context packet.
+- Preserved all previously accepted Go and Python detector/public-source regression lanes.
+- Kept M11 single-finding, LLM-optional, non-mutating, and outside safe-delete or automatic-repair authority.
+
 ## 2026-09-27 — M11 Context Compiler Foundation candidate
 
 Type: development
