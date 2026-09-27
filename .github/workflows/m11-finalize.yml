@@ -1,0 +1,121 @@
+name: M11 Finalize Accepted State
+
+on:
+  push:
+    branches:
+      - "work/m11-context-compiler"
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m11-context-compiler
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Record M11 accepted branch evidence
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              Path(path).write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          state = load(".workflow/state.json")
+          state["status"] = "M11_ACCEPTED"
+          for item in [
+              "Final synchronized M11 branch candidate eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed Governance Bootstrap run 36311808969.",
+              "Core CI run 36311809127 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed on ubuntu-latest, windows-latest, and macos-latest.",
+              "M10 Python labels run 36311809029, M07 Python Real World run 36311808964, M06 Go labels run 36311809123, and Real World Go run 36311808976 all passed on Linux, Windows, and macOS at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0."
+          ]:
+              if item not in state["proven"]:
+                  state["proven"].append(item)
+          state["next_authorized_actions"] = [
+              "Run final exact-SHA acceptance on the finalized M11 branch tree with no temporary workflow present.",
+              "Open and merge the FINAL_ACCEPTED M11 pull request to main.",
+              "Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting another milestone."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          for row in acceptance["requirements"]:
+              if row["id"] == "M11-STRICT-GOVERNANCE-FINAL":
+                  row["status"] = "PASS"
+                  row["evidence"] = "Governance Bootstrap run 36311808969 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 completed success after generated M11 Project Truth and sequence synchronization; finalization changes governance state only and will be revalidated on its exact SHA."
+          acceptance["truth_gates"]["CROSS_DOCUMENT_CONSISTENCY"] = "PASS"
+          acceptance["truth_gates"]["PROJECT_STATE_SYNC"] = "PASS"
+          acceptance["truth_gates"]["SEQUENCE_SYNC"] = "PASS"
+          acceptance["sequence_sync_status"] = "PASS"
+          save(".workflow/acceptance.json", acceptance)
+
+          session = load("docs/sequence/sessions/M11-CONTEXT-COMPILER.json")
+          session["status"] = "ACCEPTED"
+          save("docs/sequence/sessions/M11-CONTEXT-COMPILER.json", session)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M11 Context Compiler Foundation accepted baseline" for x in changelog["entries"]):
+              changelog["entries"].insert(0, {
+                  "date": "2026-09-27",
+                  "title": "M11 Context Compiler Foundation accepted baseline",
+                  "type": "acceptance",
+                  "changes": [
+                      "Accepted exact finding-ID context retrieval through the existing deterministic audit and bounded evidence packet path.",
+                      "Accepted repository-root containment for evidence source reads, including blocking parent-traversal and resolved symlink-escape tests.",
+                      "Accepted a three-OS end-to-end context smoke from isolated audit fixture to exact-ID context packet.",
+                      "Preserved all previously accepted Go and Python detector/public-source regression lanes.",
+                      "Kept M11 single-finding, LLM-optional, non-mutating, and outside safe-delete or automatic-repair authority."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme = re.sub(
+              r"\*\*M11 Context Compiler Foundation is validating[^\n]*\*\*",
+              "**M11 Context Compiler Foundation is accepted on the development branch pending final exact-SHA promotion checks.**",
+              readme,
+              count=1,
+          )
+          readme_path.write_text(readme, encoding="utf-8")
+
+      - name: Remove temporary finalizer from final tree
+        run: git rm .github/workflows/m11-finalize.yml
+
+      - name: Regenerate M11 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M11-CONTEXT-COMPILER.actual.json
+          --output-mermaid docs/sequence/generated/M11-CONTEXT-COMPILER.actual.mmd
+
+      - name: Synchronize final Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate generated artifacts before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit finalized M11 state
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m11): finalize accepted context compiler state"
+          git push origin HEAD:work/m11-context-compiler
