@@ -506,7 +506,7 @@
         "internal/analyzers/python/analyzer.go"
       ],
       "tests": [
-        "internal/analyzers/python/analyzer_test.go::TestPythonParseFailureIsBlocking"
+        "internal/analyzers/python/analyzer_test.go"
       ],
       "runtime_evidence": [
         "GitHub Actions CI run 36284942936"
