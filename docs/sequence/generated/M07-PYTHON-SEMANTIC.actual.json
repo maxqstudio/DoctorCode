@@ -314,7 +314,7 @@
       "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready"
     }
   ],
-  "observed_head": "8cdde2f2c15cad49cb5298d693a25439624260df",
+  "observed_head": "8752793a68aaff9b52a2153b15ebc04ede629eda",
   "schema_version": 1,
   "source_digest": "f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762"
 }
