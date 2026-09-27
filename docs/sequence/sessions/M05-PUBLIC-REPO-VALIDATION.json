@@ -3,7 +3,7 @@
   "session_id": "M05-PUBLIC-REPO-VALIDATION",
   "phase": "M05_PUBLIC_REPO_VALIDATION",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "82f9ea6499e5a70930da331fd02f778bca54d660",

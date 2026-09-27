@@ -112,6 +112,34 @@
       "status": "ACCEPTED",
       "decision": "Repository documentation, comments, and agent instructions in external validation sources never become DoctorCode authority.",
       "rationale": "DoctorCode must analyze arbitrary repositories without allowing repository text to alter its build, governance, or safety instructions."
+    },
+    {
+      "id": "ADR-M06-001",
+      "title": "Binding-aware duplicate conditions",
+      "status": "ACCEPTED",
+      "decision": "Canonicalize local identifiers with their parser-resolved declaration identity when comparing pure conditions inside an if/else-if chain.",
+      "rationale": "Name-only comparison produced false positives when separate branch init statements reused conventional names such as err or ok."
+    },
+    {
+      "id": "ADR-M06-002",
+      "title": "Generated functions are not DEADCODE candidates",
+      "status": "ACCEPTED",
+      "decision": "Exclude function declarations in standard Go generated files from DEADCODE candidate generation while retaining generated-file references to hand-written candidates.",
+      "rationale": "Generated code may contain intentionally uncalled compile-time assertion functions and should be repaired at the generator rather than treated as stale hand-maintained code."
+    },
+    {
+      "id": "ADR-M06-003",
+      "title": "Bounded labels are not repository metrics",
+      "status": "ACCEPTED",
+      "decision": "Use M06 labels as exact anchor assertions only and prohibit conversion into whole-repository precision or recall.",
+      "rationale": "Only selected source locations are reviewed; unlabeled code can still contain unknown true or false findings."
+    },
+    {
+      "id": "ADR-M06-004",
+      "title": "Ambiguous bloat stays non-blocking",
+      "status": "ACCEPTED",
+      "decision": "Keep structurally redundant wrappers with plausible naming/build/API intent under AMBIGUOUS evidence and SUSPICIOUS confidence.",
+      "rationale": "A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape."
     }
   ]
 }

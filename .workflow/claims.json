@@ -367,6 +367,97 @@
         "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M06-SKILL-AUTHORITY",
+      "claim": "M06 uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        ".workflow/SKILL_AUTHORITY.json",
+        ".workflow/tools/selftest_strict_project_workflow.py"
+      ],
+      "tests": [
+        ".workflow/tools/selftest_strict_project_workflow.py"
+      ],
+      "runtime_evidence": [
+        "NOT_APPLICABLE"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M06-GATE-CAUGHT-FOUR-FP",
+      "claim": "The initial M06 bounded-label run exposed four real-world false positives before detector repair.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/m06-labels.json",
+        "internal/realworld/labeled_test.go"
+      ],
+      "tests": [
+        "internal/realworld/labeled_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M06-BINDING-REPAIR",
+      "claim": "M06 condition canonicalization distinguishes same-named identifiers when their parser-resolved lexical bindings differ.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::canonicalCondition"
+      ],
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go",
+        "internal/realworld/labeled_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283099819 at e19ea958de42bbf2101ac5a958879d60c8909fa3"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M06-GENERATED-DEADCODE-REPAIR",
+      "claim": "M06 excludes generated function declarations from DEADCODE candidates while still counting references originating in generated files.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::generatedGoFile",
+        "internal/analyzers/golang/analyzer.go::deadCodeFindings"
+      ],
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go",
+        "internal/realworld/labeled_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283099819"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M06-BOUNDED-LABEL-PASS",
+      "claim": "On repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3, all 4 VALID_FINDING anchors are present and all 4 INVALID_FINDING guards are absent across the M06 bounded public-source labels; 3 AMBIGUOUS observations remain non-blocking.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/m06-labels.json",
+        "internal/realworld/labeled_test.go"
+      ],
+      "tests": [
+        "internal/realworld/labeled_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283099819"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

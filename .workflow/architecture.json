@@ -61,12 +61,12 @@
     {
       "id": "go_analyzer",
       "name": "Go Built-in Analyzer",
-      "purpose": "Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior.",
+      "purpose": "Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence.",
       "owns": [
         "Go AST rules",
         "conservative package-function reference counting",
-        "pure-condition canonicalization",
-        "Go dead-code evidence boundaries"
+        "binding-aware pure-condition canonicalization",
+        "generated-file-aware Go dead-code evidence boundaries"
       ],
       "depends_on": [
         "Go parser/AST standard library"
@@ -114,6 +114,22 @@
       ],
       "depends_on": [
         "Go analyzer",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "id": "realworld_labeled_validation",
+      "name": "Bounded Real-World Label Validator",
+      "purpose": "Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled.",
+      "owns": [
+        "M06 label manifest",
+        "valid-finding anchors",
+        "false-positive guards",
+        "ambiguous non-blocking observations"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "Pinned Public Repository Validator",
         "GitHub Actions"
       ]
     }
@@ -178,6 +194,16 @@
       "from": "Pinned Public Repository Validator",
       "to": "GitHub Actions",
       "meaning": "Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems."
+    },
+    {
+      "from": "M06 bounded labels",
+      "to": "Bounded Real-World Label Validator",
+      "meaning": "Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale."
+    },
+    {
+      "from": "Bounded Real-World Label Validator",
+      "to": "GitHub Actions",
+      "meaning": "Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation."
     }
   ],
   "external_boundaries": [

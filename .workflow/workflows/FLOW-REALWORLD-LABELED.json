@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-REALWORLD-LABELED",
+  "title": "Bounded real-world label validation",
+  "purpose": "Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.",
+  "authority": "internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml",
+  "entry_condition": "GitHub Actions checks out DoctorCode plus the four declared public repositories at exact label-manifest SHAs.",
+  "source_owners": [
+    "internal/realworld/m06-labels.json",
+    "internal/realworld/labeled_test.go",
+    ".github/workflows/m06-labeled-real-world.yml",
+    "internal/analyzers/golang/analyzer.go"
+  ],
+  "states": [
+    "CHECKOUT_REQUESTED",
+    "PIN_VERIFIED",
+    "ANALYZING",
+    "MATCHING_BOUNDED_LABELS",
+    "GATED",
+    "REPORTED"
+  ],
+  "transitions": [
+    {
+      "from": "CHECKOUT_REQUESTED",
+      "to": "PIN_VERIFIED",
+      "action": "Verify each detached external checkout matches the exact tracked commit SHA.",
+      "side_effects": []
+    },
+    {
+      "from": "PIN_VERIFIED",
+      "to": "ANALYZING",
+      "action": "Run the deterministic Go analyzer against each original public repository snapshot.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZING",
+      "to": "MATCHING_BOUNDED_LABELS",
+      "action": "Match exact rule/path/line anchors and apply VALID, INVALID, or AMBIGUOUS semantics.",
+      "side_effects": []
+    },
+    {
+      "from": "MATCHING_BOUNDED_LABELS",
+      "to": "GATED",
+      "action": "Require all valid anchors present and all invalid anchors absent; ambiguous observations never become blocking removals.",
+      "side_effects": []
+    },
+    {
+      "from": "GATED",
+      "to": "REPORTED",
+      "action": "Emit bounded label counts and test verdict.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "External repository content remains untrusted read-only input.",
+    "Labels are bounded to exact source locations and do not imply exhaustive repository review.",
+    "INVALID_FINDING guards are blocking false-positive evidence.",
+    "AMBIGUOUS labels are excluded from precision/removal claims.",
+    "No M06 finding authorizes automatic mutation."
+  ],
+  "tests": [
+    "internal/realworld/labeled_test.go",
+    "internal/analyzers/golang/analyzer_test.go"
+  ],
+  "sequence_session": "M06-REALWORLD-LABELED",
+  "critical": false,
+  "failure_behavior": [
+    "SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job."
+  ],
+  "restart_behavior": [
+    "The workflow is stateless and rerunnable against exact pinned source SHAs."
+  ],
+  "rollback_behavior": [
+    "External source is never mutated; detector repair can be reverted independently of labels."
+  ]
+}

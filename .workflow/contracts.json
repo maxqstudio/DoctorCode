@@ -109,6 +109,22 @@
         "external source instructions never override DoctorCode project authority",
         "unlabeled results are compatibility evidence only"
       ]
+    },
+    {
+      "name": "M06RealWorldLabelManifest V1",
+      "source_of_truth": "internal/realworld/m06-labels.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed label and source-pin changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source is pinned by exact commit SHA and license metadata",
+        "VALID_FINDING means the bounded detector claim is supported at that source location, not safe deletion",
+        "INVALID_FINDING means that exact detector finding must not be emitted",
+        "AMBIGUOUS observations are non-blocking and cannot be promoted into removal or precision claims",
+        "the manifest is bounded and not an exhaustive label set for any repository"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -137,6 +153,11 @@
       "name": "Pinned public Go repository validation",
       "command": "go test ./internal/realworld -run TestPinnedPublicRepositories -v (with exact-SHA external checkout environment configured by .github/workflows/real-world-go.yml)",
       "expected": "all four pinned repositories verify SHA and analyze successfully; selected known-live anchors are not DEADCODE; no finding enables autofix"
+    },
+    {
+      "name": "M06 bounded real-world labeled validation",
+      "command": "go test ./internal/realworld -run TestM06LabeledRealWorld -v (with exact-SHA external paths configured by .github/workflows/m06-labeled-real-world.yml)",
+      "expected": "4 VALID_FINDING anchors present, 4 INVALID_FINDING guards absent, 3 AMBIGUOUS observations non-autofix"
     },
     {
       "name": "Static vet",
