@@ -17,14 +17,14 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 404
+      "lines": 552
     },
     {
       "directory": "cmd/doctorcode",
       "file": "cmd/doctorcode/main_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 101
+      "lines": 129
     },
     {
       "directory": "internal/analyzers/golang",
@@ -914,6 +914,20 @@
       "is_test": false,
       "language": "Go",
       "lines": 16
+    },
+    {
+      "directory": "internal/verification",
+      "file": "internal/verification/verification.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 297
+    },
+    {
+      "directory": "internal/verification",
+      "file": "internal/verification/verification_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 113
     }
   ],
   "python_calls": [
@@ -1698,14 +1712,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31",
+  "source_digest": "0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2",
   "source_summary": {
-    "files": 129,
+    "files": 131,
     "languages": {
-      "Go": 74,
+      "Go": 76,
       "Python": 55
     },
-    "lines": 5344,
+    "lines": 5930,
     "test_files": 2
   },
   "tests": [

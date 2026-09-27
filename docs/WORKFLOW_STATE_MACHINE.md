@@ -139,6 +139,54 @@ Authority: cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/m
 
 - M11 can be reverted without detector changes because context selection is a CLI/evidence-layer extension.
 
+## FLOW-DETERMINISTIC-VERIFICATION — Deterministic repair verification
+
+Purpose: Freeze one analyzer finding baseline before repair and verify analyzer-visible resolution after repair without executing untrusted repository commands.
+Critical: FALSE
+Entry condition: An exact current finding ID exists before repair and doctorcode contract is invoked against that repository state.
+Authority: internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml
+
+### States
+
+- BASELINE_AUDITED
+- CONTRACT_FROZEN
+- REPAIR_EXTERNAL
+- CURRENT_AUDITED
+- CONTRACT_COMPARED
+- RESULT_REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| BASELINE_AUDITED | CONTRACT_FROZEN | Store analyzer identities, target semantic key, target baseline occurrence count, and all target-path baseline semantic counts. | internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml | Writes contract JSON only when the caller redirects CLI output. |
+| CONTRACT_FROZEN | REPAIR_EXTERNAL | A human or coding agent performs the repair outside DoctorCode verification authority. | internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| REPAIR_EXTERNAL | CURRENT_AUDITED | doctorcode verify performs a fresh deterministic audit; repository command strings are not executed. | internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| CURRENT_AUDITED | CONTRACT_COMPARED | Require analyzer-set equality, target semantic count decrease, and no new same-or-higher-severity target-path finding-count increase. | internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| CONTRACT_COMPARED | RESULT_REPORTED | Emit deterministic JSON or text PASS/FAIL; CLI exits nonzero for a failed verification result. | internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+
+### Invariants
+
+- The contract is generated before repair from an exact current finding ID.
+- Target semantic identity excludes line numbers and uses rule_id + path + summary plus occurrence count.
+- Analyzer identity set must remain equal between contract and verification.
+- Contract target metadata must agree with the stored target baseline count and severity.
+- Unknown contract JSON fields fail closed.
+- No repository-provided test, build, shell, hook, or Finding.Verification command is executed.
+- PASS does not imply full runtime behavior correctness, safe deletion, or automatic repair authority.
+
+### Failure behavior
+
+- Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
+
+### Restart behavior
+
+- Verification is stateless beyond the explicit saved contract and can be rerun against any unchanged repaired repository state.
+
+### Rollback behavior
+
+- M14 can be reverted without changing detector findings, evidence packets, or safe_autofix semantics.
+
 ## FLOW-GO-RELATED-CONTEXT — Bounded Go related context compilation
 
 Purpose: Enrich one exact current Go finding with deterministic same-package production/test references without exceeding the evidence packet byte budget.

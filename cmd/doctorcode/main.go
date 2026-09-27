@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -18,6 +19,7 @@ import (
 	"github.com/maxqstudio/DoctorCode/internal/model"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
+	"github.com/maxqstudio/DoctorCode/internal/verification"
 )
 
 const version = "0.1.0-dev"
@@ -39,6 +41,10 @@ func main() {
 		runNext(os.Args[2:])
 	case "context":
 		runContext(os.Args[2:])
+	case "contract":
+		runContract(os.Args[2:])
+	case "verify":
+		runVerify(os.Args[2:])
 	case "benchmark":
 		runBenchmark(os.Args[2:])
 	case "version", "--version", "-v":
@@ -282,6 +288,141 @@ func findFindingByID(findings []model.Finding, findingID string) (model.Finding,
 	return model.Finding{}, false
 }
 
+
+func runContract(args []string) {
+	findingID, root, asJSON, err := parseVerificationArgs("contract", args)
+	if err != nil {
+		die(err)
+	}
+
+	result, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		die(fmt.Errorf("audit failed: %w", err))
+	}
+	contract, err := verification.BuildContract(result, findingID)
+	if err != nil {
+		die(fmt.Errorf("build verification contract: %w", err))
+	}
+
+	if asJSON {
+		writeJSON(contract)
+		return
+	}
+	fmt.Printf("CONTRACT %s %s %s baseline=%d\n",
+		contract.TargetID,
+		contract.TargetRuleID,
+		contract.TargetPath,
+		contract.TargetBaselineCount,
+	)
+}
+
+func runVerify(args []string) {
+	contractPath, root, asJSON, err := parseVerificationArgs("verify", args)
+	if err != nil {
+		die(err)
+	}
+
+	contract, err := readVerificationContract(contractPath)
+	if err != nil {
+		die(fmt.Errorf("read verification contract: %w", err))
+	}
+	current, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		die(fmt.Errorf("audit failed: %w", err))
+	}
+	result, err := verification.Verify(contract, current)
+	if err != nil {
+		die(fmt.Errorf("verify contract: %w", err))
+	}
+
+	if asJSON {
+		writeJSON(result)
+	} else {
+		status := "FAIL"
+		if result.Passed {
+			status = "PASS"
+		}
+		fmt.Printf("VERIFY %s target_resolved=%t baseline=%d current=%d blocking=%d\n",
+			status,
+			result.TargetResolved,
+			result.TargetBaselineCount,
+			result.TargetCurrentCount,
+			len(result.NewBlockingFindings),
+		)
+		for _, item := range result.NewBlockingFindings {
+			fmt.Printf("BLOCKING %s %s %s baseline=%d current=%d\n",
+				item.RuleID,
+				item.Severity,
+				item.Path,
+				item.BaselineCount,
+				item.CurrentCount,
+			)
+		}
+	}
+	if !result.Passed {
+		os.Exit(1)
+	}
+}
+
+func parseVerificationArgs(command string, args []string) (first, root string, asJSON bool, err error) {
+	root = "."
+	positionals := make([]string, 0, 2)
+	for _, arg := range args {
+		switch {
+		case arg == "--json":
+			asJSON = true
+		case strings.HasPrefix(arg, "-"):
+			return "", "", false, fmt.Errorf("unknown option %s", arg)
+		default:
+			positionals = append(positionals, arg)
+		}
+	}
+	if len(positionals) == 0 {
+		return "", "", false, fmt.Errorf("%s requires a primary argument", command)
+	}
+	if len(positionals) > 2 {
+		return "", "", false, fmt.Errorf("%s accepts a primary argument and optional repository path", command)
+	}
+	first = positionals[0]
+	if len(positionals) == 2 {
+		root = positionals[1]
+	}
+	return first, root, asJSON, nil
+}
+
+const maxVerificationContractBytes = 1 << 20
+
+func readVerificationContract(path string) (verification.Contract, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return verification.Contract{}, err
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(io.LimitReader(file, maxVerificationContractBytes+1))
+	if err != nil {
+		return verification.Contract{}, err
+	}
+	if len(data) > maxVerificationContractBytes {
+		return verification.Contract{}, fmt.Errorf("verification contract exceeds %d bytes", maxVerificationContractBytes)
+	}
+
+	decoder := json.NewDecoder(strings.NewReader(string(data)))
+	decoder.DisallowUnknownFields()
+	var contract verification.Contract
+	if err := decoder.Decode(&contract); err != nil {
+		return verification.Contract{}, err
+	}
+	var extra any
+	if err := decoder.Decode(&extra); err != io.EOF {
+		if err == nil {
+			return verification.Contract{}, errors.New("verification contract contains multiple JSON values")
+		}
+		return verification.Contract{}, err
+	}
+	return contract, nil
+}
+
 func runBenchmark(args []string) {
 	asJSON := false
 	manifest := ""
@@ -381,6 +522,8 @@ Usage:
   doctorcode audit [path] [--json] [--max-findings=N]
   doctorcode next [path] [--json] [--max-bytes=N]
   doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
+  doctorcode contract <finding-id> [path] [--json]
+  doctorcode verify <contract.json> [path] [--json]
   doctorcode benchmark <manifest.json> [--analyzer=go|python] [--json]
   doctorcode version
 
@@ -400,5 +543,10 @@ M07 Python semantic adapter:
 
 Use "doctorcode next --json --max-bytes=4096" to give a small LLM one bounded
 evidence packet instead of the whole repository. Use "doctorcode context <finding-id>"
-to reproduce a bounded packet for one deterministic audit finding.`)
+to reproduce a bounded packet for one deterministic audit finding.
+
+Before a repair, use "doctorcode contract <finding-id> --json" to freeze the
+deterministic verification baseline. After the repair, use "doctorcode verify
+<contract.json> --json". Verification re-audits the repository; it never runs
+repository-provided test, shell, build, or verification commands.`)
 }

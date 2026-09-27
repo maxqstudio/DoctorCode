@@ -1,15 +1,15 @@
 {
   "acceptance_report": "",
   "actual": {
-    "diagram": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.mmd",
+    "diagram": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.mmd",
     "entries": [],
-    "graph": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.json",
+    "graph": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.json",
     "source_digest": ""
   },
   "critical": false,
-  "implementation_base_sha": "25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d",
+  "implementation_base_sha": "79ff0ac95b3274e67b70f5dc2cda79360ed2d00a",
   "mode": "DURING",
-  "phase": "M13_PYTHON_RELATED_CONTEXT",
+  "phase": "M14_DETERMINISTIC_VERIFICATION_CONTRACT",
   "plan": {
     "contract": "",
     "diagram": "",
@@ -23,13 +23,13 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "HISTORICAL",
-  "session_id": "M13-PYTHON-RELATED-CONTEXT",
+  "scope": "CURRENT",
+  "session_id": "M14-DETERMINISTIC-VERIFICATION",
   "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
-    "internal/analyzers/python/related_test.go",
-    "internal/evidence/packet_test.go",
+    "internal/verification/verification_test.go",
+    "cmd/doctorcode/main_test.go",
     ".github/workflows/ci.yml"
   ]
 }

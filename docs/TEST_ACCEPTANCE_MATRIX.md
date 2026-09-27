@@ -4,24 +4,23 @@
 
 ## Evidence boundary
 
-M13 Python Related Context is product-main accepted at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c after strict governance and every accepted Linux, Windows, and macOS regression lane passed. M13 provides bounded schema-v2 Go/Python related context for its declared static scopes only. Dynamic dependency completeness, safe deletion, automatic repair, and arbitrary verification command execution remain outside M13 authority.
+M14 Deterministic Verification Contract freezes one pre-repair finding baseline and verifies the post-repair deterministic audit without executing target-repository commands. The stable target key is rule_id + path + summary with occurrence-count reduction, analyzer-set drift fails closed, and new same-or-higher-severity findings on the target path block PASS. Product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Cryptographic contract authentication, arbitrary runtime behavior, repository test execution, safe deletion, and automatic repair remain outside M14 authority.
 
 Final tested source: external final acceptance evidence.
-Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
+Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M13-MAIN-BASELINE | M13 must branch from governance-normalized M12 main and retain the pinned Skill_Workflow authority. | work/m13-python-related-context starts from main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d; M12 product baseline remains 368c7b05d08d95beb5164d437920bbdd83c39e32; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
-| M13-RED-PROVIDER | Scoped Python related-location behavior must be demonstrated absent before implementation. | Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 failed before Python RelatedLocations existed. | PASS |
-| M13-RED-PACKET-PARITY | The evidence packet must be proven unable to include Python related context before dispatcher integration. | Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d failed the Python related packet contract. | PASS |
-| M13-DISPATCH-REPAIR | Evidence reduction must dispatch eligible .py findings to the Python related provider while preserving Go behavior. | Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed related_total=0 in the Python packet; Core CI 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed after dispatcher integration. | PASS |
-| M13-SHADOW-PRECISION | Local lexical shadows must not be reported as references to the selected module-level function. | internal/analyzers/python/related_test.go requires source, direct-import test, and module-attribute test references while excluding local shadows and unrelated same-named functions; Core CI 36325714821 passes. | PASS |
-| M13-REBIND-FAIL-CLOSED | If the selected module rebinds the selected function name at module scope, related discovery must fail closed instead of attaching references to the replacement binding. | RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd emitted two false relations; repaired product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passes. | PASS |
-| M13-PACKET-PARITY | Python related excerpts must use the same schema-v2 related_total/related_excerpts budget and production/test kind contract accepted for Go. | internal/evidence/packet_test.go plus Core CI run 36325714821 verify Python production + test related excerpts under max-bytes while existing Go packet tests remain passing. | PASS |
-| M13-CLI-E2E | The public context command must return bounded Python production/test related context for a real current audit finding. | Core CI run 36325714821 executes audit -> exact PY-SIMPLIFY-BOOL-RETURN finding ID -> context packet on Linux, Windows, and macOS and asserts schema v2, exact ID, related_total=2, deterministic paths/kinds, and byte budget. | PASS |
-| M13-REGRESSION-MATRIX | All previously accepted Go and Python detector/public-source lanes must remain passing across Linux, Windows, and macOS. | At 40771744b74d91478c7eb60386d718ba4b170e91: Core CI 36325714821, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 all passed across all three operating systems. | PASS |
-| M13-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M13 sequence artifacts must pass strict governance on the final exact M13 branch SHA after temporary workflows are removed. | Final clean branch@b83a4a158b5247f81b0406da2c1578b16e3a1913: Governance Bootstrap 36326412104, Core CI 36326412097, M10 Labeled Real World Python 36326412090, M07 Python Real World 36326412089, M06 Labeled Real World Go 36326412059, and Real World Go Validation 36326412109 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
-| M13-MAIN-POST-MERGE | The exact M13 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before M14 may branch. | main@3fccbd4398f2a12bd5214be9ed23ee18f46c679c: Governance Bootstrap 36326732074, Core CI 36326732203, M10 Labeled Real World Python 36326732066, M07 Python Real World 36326731961, M06 Labeled Real World Go 36326732156, and Real World Go Validation 36326731985 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M14-MAIN-BASELINE | M14 must branch from governance-normalized M13 main after M13_MAIN_ACCEPTED and retain the pinned Skill_Workflow authority. | work/m14-deterministic-verification starts from main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a; M13 product baseline remains 3fccbd4398f2a12bd5214be9ed23ee18f46c679c; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
+| M14-RED-CONTRACT | The verification contract API must be demonstrated absent before implementation. | Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify were undefined. | PASS |
+| M14-STABLE-TARGET | Verification must not false-PASS merely because a finding line number changes. | internal/verification/verification_test.go freezes rule_id + path + summary occurrence count; a semantically identical remaining finding at a shifted line preserves current count until an occurrence is actually removed. | PASS |
+| M14-REGRESSION-BLOCK | A repair that resolves the target but introduces a new same-or-higher-severity finding on the target path must fail verification. | Core CI run 36328881587 executes the public CLI negative path with a new hardcoded-credential finding and asserts passed=false before the clean repair passes. | PASS |
+| M14-ANALYZER-DRIFT | A verification contract must fail closed if the analyzer identity set differs between baseline and verification. | internal/verification/verification_test.go TestVerifyFailsClosedWhenAnalyzerSetChanges passes in Core CI 36328881587. | PASS |
+| M14-CONTRACT-INTEGRITY | Target metadata must agree with the stored baseline semantic key count and severity, and unknown JSON fields must be rejected. | RED Core CI 36328795881 exposed the count mismatch; repaired candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 validates target count and severity while cmd tests reject unknown contract fields. | PASS |
+| M14-NO-ARBITRARY-EXECUTION | DoctorCode verification must re-audit deterministically and must not execute repository-provided verification, test, build, or shell command strings. | cmd/doctorcode runVerify loads a strict contract then calls engine.Default().Audit and internal/verification.Verify only; no Finding.Verification string or repository command is dispatched. | PASS |
+| M14-CLI-E2E | The public contract and verify workflow must demonstrate both blocking failure and clean success on Linux, Windows, and macOS. | Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520 passes the deterministic verification contract smoke on all three operating systems. | PASS |
+| M14-REGRESSION-MATRIX | All previously accepted detector and public-source lanes must remain passing across Linux, Windows, and macOS. | At 776bb6467fcc55f4c7192ef06aa07c5469102520: Core CI 36328881587, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 all passed across all three operating systems. | PASS |
+| M14-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M14 sequence artifacts must pass strict governance on the final exact M14 branch SHA after temporary workflows are removed. | At 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70: Governance Bootstrap 36329506408, Core CI 36329506410, M10 Labeled Real World Python 36329506427, M07 Python Real World 36329506385, M06 Labeled Real World Go 36329506403, and Real World Go Validation 36329506404 all completed success; every matrix job passed on Linux, Windows, and macOS. Finalization is governance-only and will be revalidated on its exact SHA. | PASS |
 
 ## Test commands
 
@@ -36,11 +35,12 @@ Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48
 - go build -trimpath ./cmd/doctorcode
 - Core CI Go related-context smoke test
 - Core CI Python related-context smoke test
+- Core CI deterministic verification contract smoke test
 
 ## Runtime checks
 
 - go test ./...
-- Core CI Python related-context smoke: isolated Python simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget
+- Core CI M14 smoke: audit -> exact finding ID -> contract -> repair with new SECURITY regression -> verify FAIL -> clean repair -> verify PASS
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
@@ -51,7 +51,7 @@ Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M13-PYTHON-RELATED-CONTEXT
+Sequence session contract: M14-DETERMINISTIC-VERIFICATION
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

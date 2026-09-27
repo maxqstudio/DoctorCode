@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m14-deterministic-verification
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
-Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
+Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -39,6 +39,8 @@ External systems: GitHub Actions, host compilers and language runtimes
 | doctorcode next | cmd/doctorcode/main.go | Return the highest-priority finding as one byte-bounded evidence packet. |
 | doctorcode context | cmd/doctorcode/main.go | Re-audit and return one exact finding ID as a repository-contained byte-bounded evidence packet. |
 | doctorcode benchmark | cmd/doctorcode/main.go | Evaluate labeled analyzer corpora and enforce deterministic TP/FP/FN regression gates. |
+| doctorcode contract | cmd/doctorcode/main.go | Freeze one exact current finding into a deterministic pre-repair verification baseline. |
+| doctorcode verify | cmd/doctorcode/main.go | Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints. |
 
 ## Critical directories
 

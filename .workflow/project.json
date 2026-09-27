@@ -36,6 +36,16 @@
       "name": "doctorcode benchmark",
       "path": "cmd/doctorcode/main.go",
       "purpose": "Evaluate labeled analyzer corpora and enforce deterministic TP/FP/FN regression gates."
+    },
+    {
+      "name": "doctorcode contract",
+      "path": "cmd/doctorcode/main.go",
+      "purpose": "Freeze one exact current finding into a deterministic pre-repair verification baseline."
+    },
+    {
+      "name": "doctorcode verify",
+      "path": "cmd/doctorcode/main.go",
+      "purpose": "Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints."
     }
   ],
   "project": {

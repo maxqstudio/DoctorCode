@@ -27,13 +27,13 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 129 files, 2 language categories.
+Observed source inventory: 131 files, 2 language categories.
 
 ## Major components
 
 | Component | Purpose | Owns / Decides | Depends On |
 |---|---|---|---|
-| CLI | Human/agent interface for scan, toolchain, audit, highest-priority next-finding, exact finding-specific context, and benchmark operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
+| CLI | Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations. | command parsing, text and JSON rendering, verification contract serialization, verification result rendering | scanner, toolchain registry, detector engine, evidence reducer |
 | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
@@ -45,6 +45,7 @@ Observed source inventory: 129 files, 2 language categories.
 | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
 | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution, bounded scope-aware related-reference discovery for module-level functions | host Python 3.8+ standard library ast, detector unavailable contract |
 | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
+| Deterministic Verification Contract | Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands. | semantic target occurrence baseline, analyzer-set compatibility check, target-path regression delta, verification PASS/FAIL result | detector engine |
 
 ## Main data flow
 
@@ -72,6 +73,9 @@ Observed source inventory: 129 files, 2 language categories.
 - M09 Python repository-shaped corpus -> precision benchmark harness: Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation.
 - Go Built-in Analyzer -> evidence reducer: For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion.
 - Python Built-in Analyzer -> evidence reducer: For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion.
+- detector engine -> Deterministic Verification Contract: Before repair, doctorcode contract freezes analyzer identities plus target-path semantic finding counts for one exact selected finding.
+- repaired repository -> detector engine: doctorcode verify performs a fresh deterministic audit of the current repository state without executing repository-provided commands.
+- Deterministic Verification Contract -> human or AI coding agent: Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.
 
 ## Main user workflows
 
@@ -109,6 +113,18 @@ Authority: cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/m
 - FINDING_SELECTED -> PATH_BOUNDARY_VERIFIED : For non-security excerpts, resolve repository root and source path and reject escape outside the root.
 - PATH_BOUNDARY_VERIFIED -> PACKET_BOUNDED : Build the existing evidence packet under the caller byte budget.
 - PACKET_BOUNDED -> REPORTED : Emit text or JSON without invoking an LLM or mutating source.
+
+### FLOW-DETERMINISTIC-VERIFICATION — Deterministic repair verification
+
+Freeze one analyzer finding baseline before repair and verify analyzer-visible resolution after repair without executing untrusted repository commands.
+
+Authority: internal/verification/verification.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml
+
+- BASELINE_AUDITED -> CONTRACT_FROZEN : Store analyzer identities, target semantic key, target baseline occurrence count, and all target-path baseline semantic counts.
+- CONTRACT_FROZEN -> REPAIR_EXTERNAL : A human or coding agent performs the repair outside DoctorCode verification authority.
+- REPAIR_EXTERNAL -> CURRENT_AUDITED : doctorcode verify performs a fresh deterministic audit; repository command strings are not executed.
+- CURRENT_AUDITED -> CONTRACT_COMPARED : Require analyzer-set equality, target semantic count decrease, and no new same-or-higher-severity target-path finding-count increase.
+- CONTRACT_COMPARED -> RESULT_REPORTED : Emit deterministic JSON or text PASS/FAIL; CLI exits nonzero for a failed verification result.
 
 ### FLOW-GO-RELATED-CONTEXT — Bounded Go related context compilation
 
@@ -214,9 +230,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M13_PYTHON_RELATED_CONTEXT
+Current phase: M14_DETERMINISTIC_VERIFICATION_CONTRACT
 
-Current status: M13_MAIN_ACCEPTED
+Current status: M14_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -253,6 +269,7 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
 - FLOW-CONTEXT-COMPILER: Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
+- FLOW-DETERMINISTIC-VERIFICATION: Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
@@ -266,15 +283,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Proceed to M14 Deterministic Verification Contract under the Owner directive to continue until DoctorCode is complete.
-- Branch M14 only from the governance-normalized M13 main after exact closure acceptance.
-- Preserve M13 product acceptance at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c and exact post-merge evidence as immutable historical evidence.
+- Run final exact-SHA acceptance on the finalized M14 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M14 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting adapter/release milestones.
 
 Blocked actions:
-- Executing arbitrary repository-provided verification commands as trusted authority.
-- Treating verification success as proof that an unrelated semantic behavior is correct.
-- Treating related context or verification as proof that code is safe to delete without the declared contract.
-- Starting MCP or Skill adapters before the deterministic verification contract is accepted.
+- Executing arbitrary repository-provided verification commands as DoctorCode authority.
+- Treating M14 PASS as proof of unrelated runtime or business behavior.
+- Treating verification as safe-delete or automatic-repair authority.
+- Starting MCP or Skill adapters before M14 is MAIN_ACCEPTED.
 
 Known blockers:
 - None declared.
@@ -283,38 +300,31 @@ Known blockers:
 
 ### Proven
 
-- M12 is MAIN_ACCEPTED with product baseline main@368c7b05d08d95beb5164d437920bbdd83c39e32 and governance-normalized starting main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d.
+- M13 is MAIN_ACCEPTED with product baseline main@3fccbd4398f2a12bd5214be9ed23ee18f46c679c and governance-normalized starting main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a.
 - Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
-- M13 initial RED Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 proved scoped Python RelatedLocations did not yet exist.
-- M13 packet RED Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d proved evidence packets had no Python related-context provider.
-- M13 first implementation Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed that the evidence reducer still dispatched only Go related context.
-- M13 provider plus dispatcher Core CI run 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed Linux, Windows, and macOS.
-- M13 rebinding RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd proved module-level rebinding could misclassify references to a replacement binding as related to the original function.
-- M13 fails closed to empty related context when the selected module has another module-level binding for the selected function name.
-- M13 product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI run 36325714821 on Linux, Windows, and macOS, including the public audit -> exact finding ID -> Python context E2E smoke.
-- At the same M13 product candidate, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 passed on all three operating systems.
-- Final synchronized M13 branch tree 80f735c7be3598dfdf34b6a040d3e49464298a42 passed Governance Bootstrap run 36326117052.
-- Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest.
-- M10 Python labels run 36326117037, M07 Python Real World run 36326116936, M06 Go labels run 36326116920, and Real World Go run 36326116988 all passed on Linux, Windows, and macOS at 80f735c7be3598dfdf34b6a040d3e49464298a42.
-- Final clean M13 branch tree b83a4a158b5247f81b0406da2c1578b16e3a1913 passed Governance Bootstrap 36326412104, Core CI 36326412097, M10 Python labels 36326412090, M07 Python Real World 36326412089, M06 Go labels 36326412059, and Real World Go 36326412109 across Linux, Windows, and macOS.
-- M13 Python Related Context merged through PR #11 to main at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c.
-- Exact M13 product main Governance Bootstrap run 36326732074 completed success.
-- Exact M13 product main Core CI run 36326732203 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M13 product main M10 Labeled Real World Python run 36326732066 completed success on all three operating systems.
-- Exact M13 product main M07 Python Real World run 36326731961 completed success on all three operating systems.
-- Exact M13 product main M06 Labeled Real World Go run 36326732156 completed success on all three operating systems.
-- Exact M13 product main Real World Go Validation run 36326731985 completed success on all three operating systems.
+- M14 initial RED Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify did not yet exist.
+- M14 contract-integrity RED Core CI run 36328795881 at 4f145e7900a305dec4a2d277aa6dbd517fba66c0 proved a tampered target_baseline_count could otherwise be accepted.
+- M14 verification contracts match targets by stable semantic key rule_id + path + summary and baseline occurrence count instead of exact line-bound finding ID.
+- M14 verification fails closed when the active analyzer set differs from the contract baseline.
+- M14 verification blocks target resolution when a new finding with severity equal to or higher than the target appears on the target path.
+- M14 contract metadata is checked against its baseline target semantic key for count and severity consistency.
+- M14 never executes repository-provided build, test, shell, hook, or verification command strings.
+- M14 product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI run 36328881587 on Linux, Windows, and macOS, including public CLI negative and positive verification paths.
+- At the same product candidate, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 passed on all three operating systems.
+- Final synchronized M14 branch tree 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed Governance Bootstrap run 36329506408.
+- Core CI run 36329506410 at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed on ubuntu-latest, windows-latest, and macos-latest, including deterministic verification negative and positive E2E paths.
+- M10 Python labels run 36329506427, M07 Python Real World run 36329506385, M06 Go labels run 36329506403, and Real World Go run 36329506404 all passed on Linux, Windows, and macOS at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70.
 
 ### Not proven
 
-- M13 Python related discovery is intentionally limited to findings enclosed by a module-level FunctionDef or AsyncFunctionDef.
-- Same-file direct references, recognized top-level from-import aliases, and recognized top-level module imports/attributes are covered; dynamic imports, string reflection, package-facade re-export chains, and runtime monkey-patching are not modeled.
-- Local lexical shadows are excluded using conservative scope binding collection; Python's full runtime name-resolution behavior is not claimed.
-- Any additional module-level binding of the selected function name makes M13 fail closed to no related locations for that function.
-- M13 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.
-- At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.
-- The byte budget remains deterministic bytes, not exact tokenizer counts.
-- Context evidence remains review input and never proves safe deletion or authorizes automatic repair.
+- M14 semantic identity is rule_id + path + summary + occurrence count; it does not prove exact AST-node identity across arbitrary rewrites.
+- M14 regression comparison is intentionally scoped to the selected finding path, not the entire repository or related-context files.
+- New findings below the target severity do not block M14 PASS, although they remain visible in a normal audit.
+- M14 contract JSON is strict and self-consistent but is not cryptographically signed or authenticated against a malicious editor.
+- M14 analyzer-set equality detects missing or added analyzer identities, but it does not cryptographically attest analyzer implementation bytes.
+- M14 PASS proves the declared analyzer finding count decreased without same-or-higher-severity target-file regression; it does not prove full behavioral correctness.
+- M14 does not execute repository tests, build scripts, package hooks, shell commands, or Finding.Verification strings.
+- M14 does not authorize safe deletion, automatic repair, or mutation.
 
 ## Important limitations
 

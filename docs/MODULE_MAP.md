@@ -3,13 +3,13 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
+Source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 404 | cmd/doctorcode | NO |
-| cmd/doctorcode/main_test.go | Go | 101 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 552 | cmd/doctorcode | NO |
+| cmd/doctorcode/main_test.go | Go | 129 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
@@ -137,5 +137,7 @@ Generated/refreshed: current compiler run
 | internal/scanner/scanner_test.go | Go | 27 | internal/scanner | NO |
 | internal/toolchain/toolchain.go | Go | 68 | internal/toolchain | NO |
 | internal/toolchain/toolchain_test.go | Go | 16 | internal/toolchain | NO |
+| internal/verification/verification.go | Go | 297 | internal/verification | NO |
+| internal/verification/verification_test.go | Go | 113 | internal/verification | NO |
 
 Machine-derived facts do not invent semantic ownership.

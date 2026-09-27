@@ -307,6 +307,34 @@
       "rationale": "One packet contract keeps CLI behavior stable, preserves primary-source priority, and avoids language-specific context serialization.",
       "status": "ACCEPTED",
       "title": "Reuse schema-v2 packet budget for Python parity"
+    },
+    {
+      "decision": "Create a JSON verification contract from the exact current finding before repair, then verify that stored contract after repair.",
+      "id": "ADR-M14-001",
+      "rationale": "After a repair the original line-bound finding ID may disappear or move, so verification needs an explicit pre-repair baseline.",
+      "status": "ACCEPTED",
+      "title": "Freeze verification before repair"
+    },
+    {
+      "decision": "Identify the verification target by rule_id + path + summary and require its occurrence count to decrease from the frozen baseline.",
+      "id": "ADR-M14-002",
+      "rationale": "Existing finding IDs include line numbers; line-only movement must not create a false resolved result.",
+      "status": "ACCEPTED",
+      "title": "Use semantic occurrence count instead of line-bound ID"
+    },
+    {
+      "decision": "PASS requires target resolution and no newly increased semantic finding count at severity equal to or above the original target on the target path.",
+      "id": "ADR-M14-003",
+      "rationale": "A repair that removes one defect by introducing an equal or worse analyzer-visible defect is not an acceptable deterministic verification result.",
+      "status": "ACCEPTED",
+      "title": "Block same-or-higher target-path regressions"
+    },
+    {
+      "decision": "M14 verification uses a fresh DoctorCode audit only; repository-provided tests, builds, shell commands, hooks, and Finding.Verification strings are never executed as verification authority.",
+      "id": "ADR-M14-004",
+      "rationale": "Analyzed repositories are untrusted input and command execution would cross the established read-only analysis boundary.",
+      "status": "ACCEPTED",
+      "title": "Never execute repository verification commands"
     }
   ],
   "schema_version": 1
