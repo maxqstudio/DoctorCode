@@ -180,7 +180,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M10_PYTHON_LABELED_REAL_WORLD
 
-Current status: M10_VALIDATING
+Current status: M10_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -227,11 +227,11 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M10 Project Truth and sequence artifacts from the governed specs.
-- Remove the temporary M10 label-discovery and documentation-sync workflows before final freeze.
-- Run final exact-SHA governance plus core and every accepted real-world lane.
-- After FINAL_ACCEPTED, open and merge the M10 pull request to main immediately.
-- Rerun all applicable acceptance lanes on the exact main merge SHA before starting the next phase.
+- Remove the temporary M10 label-discovery and Project Truth sync workflows in the synchronized finalization commit.
+- Run final exact-SHA Governance Bootstrap, core CI, M10 labeled Python, M07 Python public-source, M06 bounded Go labels, and Go public-source validation.
+- Open and merge the M10 pull request to main immediately after FINAL_ACCEPTED branch evidence passes.
+- Rerun all applicable acceptance lanes on the exact main merge SHA.
+- Synchronize main Project Truth to the exact accepted M10 main SHA before starting the next milestone.
 
 Blocked actions:
 - Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
@@ -256,6 +256,7 @@ Known blockers:
 - M10 adds six bounded exact-SHA Python labels: two VALID_FINDING Flask zero-reference anchors and four INVALID_FINDING test-tree guards across Flask and Click.
 - M10 label run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with valid=2 invalid=4.
 - At the same M10 source candidate, core CI run 36303351679, M07 Python Real World run 36303351736, Real World Go run 36303351697, and M06 Labeled Real World Go run 36303351703 all passed across Linux, Windows, and macOS.
+- Temporary Project Truth sync run 36303858286 validated M10 sequence generation, generated documentation normalization, document quality, and human-comprehension structure before final cleanup.
 
 ### Not proven
 

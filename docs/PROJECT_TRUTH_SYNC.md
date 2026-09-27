@@ -18,7 +18,7 @@ HEAD is recorded externally after the commit exists.
 | STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
+| CROSS_DOCUMENT_CONSISTENCY | PASS | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | NOT_PROVEN | |
+| PROJECT_STATE_SYNC | PASS | |
 
 ## Critical claim traceability
 
@@ -73,6 +73,9 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M09-TOPOLOGY-REPAIR | M09 Python reference evidence handles a conventional src layout, direct module-level re-exports, separated usage/liveness evidence, and exact dotted imported-module attributes. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/benchmark/testdata/m09-python-repository-shaped.json | GitHub Actions CI run 36301912063 at d4c8639617f0edec703dffe549a075a5e6626ff7 | PASS |
 | TRUTH-M09-CORPUS-PASS | The repaired 14-case M09 Python repository-shaped corpus reports 5 TP, 0 FP, and 0 FN. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m09-python-repository-shaped.json | internal/benchmark/testdata/m09-python-repository-shaped.json | GitHub Actions CI run 36301912063 at d4c8639617f0edec703dffe549a075a5e6626ff7 | PASS |
 | TRUTH-M09-ALL-REALWORLD-LANES | Accepted Go compatibility, bounded Go labels, and Python public-source regression workflows run on main and every work/** phase and passed M09 on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | .github/workflows/real-world-go.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/m07-python-real-world.yml | internal/realworld/realworld_test.go; internal/realworld/labeled_test.go; internal/realworld/python_m07_test.go | GitHub Actions Real World Go Validation run 36301912067 at d4c8639617f0edec703dffe549a075a5e6626ff7; GitHub Actions M06 Labeled Real World Go run 36301912070 at d4c8639617f0edec703dffe549a075a5e6626ff7; GitHub Actions M07 Python Real World run 36301912054 at d4c8639617f0edec703dffe549a075a5e6626ff7 | PASS |
+| TRUTH-M09-MAIN-ACCEPTED | M09 was merged to main at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce and the exact main merge SHA passed strict governance plus every accepted Linux, Windows, and macOS regression lane. | PROJECT_TRUTH_SYNC.md | .workflow/state.json | .github/workflows/governance-bootstrap.yml; .github/workflows/ci.yml; .github/workflows/m07-python-real-world.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/real-world-go.yml | GitHub Actions Governance Bootstrap run 36302209222 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce; GitHub Actions core CI run 36302209237 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce; GitHub Actions M07 Python Real World run 36302209214 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce; GitHub Actions M06 Labeled Real World Go run 36302209238 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce; GitHub Actions Real World Go Validation run 36302209232 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce | PASS |
+| TRUTH-M10-BOUNDED-PYTHON-LABELS | M10 tracks six exact-SHA bounded Python labels across Click and Flask: two valid Flask zero-conservative-reference DEADCODE anchors and four invalid test-tree guards; the label set is not exhaustive and does not authorize deletion. | PROJECT_TRUTH_SYNC.md | internal/realworld/m10-python-labels.json; internal/realworld/python_m10_labeled_test.go; .github/workflows/m10-python-labeled-real-world.yml | internal/realworld/python_m10_labeled_test.go | GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 | PASS |
+| TRUTH-M10-REGRESSION-MATRIX | The M10 source candidate preserved core, pinned Python public-source, pinned Go public-source, bounded Go-label, and bounded Python-label gates across Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | .github/workflows/ci.yml; .github/workflows/m07-python-real-world.yml; .github/workflows/real-world-go.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/m10-python-labeled-real-world.yml | internal/realworld/python_m10_labeled_test.go; internal/realworld/python_m07_test.go; internal/realworld/labeled_test.go; internal/realworld/realworld_test.go | GitHub Actions core CI run 36303351679 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019; GitHub Actions M07 Python Real World run 36303351736 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019; GitHub Actions Real World Go Validation run 36303351697 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019; GitHub Actions M06 Labeled Real World Go run 36303351703 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019; GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 | PASS |
 
 ## Claim relations
 
