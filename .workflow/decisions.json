@@ -140,6 +140,41 @@
       "status": "ACCEPTED",
       "decision": "Keep structurally redundant wrappers with plausible naming/build/API intent under AMBIGUOUS evidence and SUSPICIOUS confidence.",
       "rationale": "A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape."
+    },
+    {
+      "id": "ADR-M07-001",
+      "title": "Use Python standard-library AST through the host runtime",
+      "status": "ACCEPTED",
+      "decision": "Implement the first Python semantic adapter by invoking Python's standard-library ast parser through an argv-only subprocess instead of adding a third-party parser or model dependency.",
+      "rationale": "This keeps the Go core small, uses the language's own parser semantics, remains cross-platform when Python is available, and avoids parser-vendor/cgo weight."
+    },
+    {
+      "id": "ADR-M07-002",
+      "title": "Optional runtime is explicit capability",
+      "status": "ACCEPTED",
+      "decision": "Return detector.ErrUnavailable when Python source or a compatible Python interpreter is absent during normal audit, and have the engine skip that analyzer without failing unrelated languages.",
+      "rationale": "Missing optional toolchains must not turn a mixed repository into an audit failure or create a false support claim."
+    },
+    {
+      "id": "ADR-M07-003",
+      "title": "Fail closed on Python parse incompleteness",
+      "status": "ACCEPTED",
+      "decision": "Once Python analysis is applicable, any source read or AST syntax failure blocks the analyzer instead of silently omitting that file.",
+      "rationale": "Silently skipped source could make a zero-finding result look complete when it is not."
+    },
+    {
+      "id": "ADR-M07-004",
+      "title": "Narrow Python rules before recall expansion",
+      "status": "ACCEPTED",
+      "decision": "Start with one intentionally conservative rule per DoctorCode category; keep LOGIC limited to identity comparisons and DEADCODE limited to private undecorated hand-maintained module functions.",
+      "rationale": "Python has dynamic imports, decorators, descriptors, reflection, and plugin conventions that make broad static claims unsafe without more evidence."
+    },
+    {
+      "id": "ADR-M07-005",
+      "title": "Separate public compatibility from labeled metrics",
+      "status": "ACCEPTED",
+      "decision": "Treat click/httpx/requests/Flask whole-repository execution as compatibility evidence and only the explicitly reviewed Flask location as a bounded positive label.",
+      "rationale": "Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status."
     }
   ]
 }

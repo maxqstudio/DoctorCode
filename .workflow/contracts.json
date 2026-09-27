@@ -13,7 +13,7 @@
       "invariants": [
         "category is one of five DoctorCode domains",
         "confidence is explicit",
-        "safe_autofix is false for M01"
+        "safe_autofix remains false for all accepted built-in Go and Python rules"
       ]
     },
     {
@@ -125,6 +125,21 @@
         "AMBIGUOUS observations are non-blocking and cannot be promoted into removal or precision claims",
         "the manifest is bounded and not an exhaustive label set for any repository"
       ]
+    },
+    {
+      "name": "M07PythonSourceManifest V1",
+      "source_of_truth": "internal/realworld/m07-python-sources.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed exact source pin or bounded anchor changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source has repository, exact commit SHA, license, and CI environment key",
+        "unlabeled repository regions are compatibility evidence only",
+        "the Flask _path_is_ancestor anchor proves only the bounded reported condition",
+        "all public Python findings must remain repository-relative and safe_autofix=false"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -178,6 +193,16 @@
       "name": "Bounded packet smoke",
       "command": "go run ./cmd/doctorcode next . --json --max-bytes=4096",
       "expected": "valid bounded JSON or NO_FINDINGS"
+    },
+    {
+      "name": "M07 Python semantic benchmark",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
+      "expected": "passed=true; 6 cases; 5 TP, 0 FP, 0 FN on accepted M07 corpus"
+    },
+    {
+      "name": "M07 pinned public Python validation",
+      "command": "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external checkout environment from .github/workflows/m07-python-real-world.yml",
+      "expected": "all four exact pins verify, all repositories parse/analyze, and Flask _path_is_ancestor bounded anchor is present"
     }
   ]
 }

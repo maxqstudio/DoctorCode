@@ -458,6 +458,118 @@
         "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-PYTHON-SEMANTIC",
+      "claim": "M07 adds python/stdlib-ast-v1 as DoctorCode's first non-Go semantic analyzer with one conservative rule in each of the five DoctorCode categories.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go",
+        "internal/engine/engine.go"
+      ],
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go",
+        "internal/benchmark/testdata/m07-python.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36284942936 at ba0bcd33d8db362275e59cd88d259902945baa02"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-CORPUS",
+      "claim": "The accepted-source M07 Python corpus contains 6 cases and reports 5 TP, 0 FP, and 0 FN, one true positive per current Python rule.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m07-python.json",
+        "internal/benchmark/benchmark.go"
+      ],
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36284942936"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-PARSE-FAIL-CLOSED",
+      "claim": "Applicable Python syntax/read errors block semantic analysis instead of being silently skipped.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go::TestPythonParseFailureIsBlocking"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36284942936"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-OPTIONAL-RUNTIME",
+      "claim": "Ordinary audit skips Python semantic analysis when Python is unavailable, while M07 acceptance workflows provision Python 3.13 explicitly.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/detector/detector.go",
+        "internal/engine/engine.go",
+        "internal/analyzers/python/analyzer.go",
+        ".github/workflows/ci.yml"
+      ],
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36284942936"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-PUBLIC-PYTHON",
+      "claim": "Exact-SHA click, httpx, requests, and Flask snapshots parse and analyze successfully on Linux, Windows, and macOS; Flask _path_is_ancestor at src/flask/cli.py:691 is the bounded positive anchor.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/m07-python-sources.json",
+        "internal/realworld/python_m07_test.go",
+        ".github/workflows/m07-python-real-world.yml"
+      ],
+      "tests": [
+        "internal/realworld/python_m07_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M07 Python Real World run 36284943019 at ba0bcd33d8db362275e59cd88d259902945baa02"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M07-NO-AUTOFIX",
+      "claim": "All accepted Python findings remain evidence-only and safe_autofix=false.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go",
+        "internal/realworld/python_m07_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36284942936",
+        "GitHub Actions M07 Python Real World run 36284943019"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

@@ -3,7 +3,7 @@
   "session_id": "M06-REALWORLD-LABELED",
   "phase": "M06_REALWORLD_LABELED",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "0f7a1e3117375ad2b2413efc0e7221a614a397ec",

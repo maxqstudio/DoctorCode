@@ -49,13 +49,14 @@
     {
       "id": "detector_engine",
       "name": "Detector Engine",
-      "purpose": "Execute registered deterministic language analyzers and provide stable finding ordering.",
+      "purpose": "Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering.",
       "owns": [
         "finding aggregation",
         "priority ordering"
       ],
       "depends_on": [
-        "Go analyzer"
+        "Go analyzer",
+        "Python analyzer"
       ]
     },
     {
@@ -88,7 +89,7 @@
     {
       "id": "benchmark_harness",
       "name": "Precision Benchmark Harness",
-      "purpose": "Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
+      "purpose": "Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
       "owns": [
         "benchmark manifest validation",
         "case-root containment",
@@ -96,10 +97,12 @@
         "TP/FP/FN accounting",
         "baseline regression gate",
         "adversarial regression gate",
-        "repository-shaped regression gate"
+        "repository-shaped regression gate",
+        "M07 Python regression gate"
       ],
       "depends_on": [
-        "Go analyzer"
+        "Go analyzer",
+        "Python analyzer"
       ]
     },
     {
@@ -131,6 +134,37 @@
         "Go analyzer",
         "Pinned Public Repository Validator",
         "GitHub Actions"
+      ]
+    },
+    {
+      "id": "python_analyzer",
+      "name": "Python Built-in Analyzer",
+      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parse behavior.",
+      "owns": [
+        "Python AST subprocess adapter",
+        "five conservative Python rules",
+        "parse-error boundary",
+        "optional-runtime detection"
+      ],
+      "depends_on": [
+        "host Python 3.8+ standard library ast",
+        "detector unavailable contract"
+      ]
+    },
+    {
+      "id": "python_realworld_validation",
+      "name": "Pinned Public Python Validator",
+      "purpose": "Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors.",
+      "owns": [
+        "M07 public source manifest",
+        "exact checkout SHA validation",
+        "Flask bounded positive anchor",
+        "public Python finding safety boundary"
+      ],
+      "depends_on": [
+        "Python analyzer",
+        "GitHub Actions",
+        "Python 3.13 acceptance runtime"
       ]
     }
   ],
@@ -204,6 +238,36 @@
       "from": "Bounded Real-World Label Validator",
       "to": "GitHub Actions",
       "meaning": "Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation."
+    },
+    {
+      "from": "detector engine",
+      "to": "Python Built-in Analyzer",
+      "meaning": "When .py files and a compatible interpreter are present, source is parsed by a bounded standard-library AST subprocess and converted into deterministic findings."
+    },
+    {
+      "from": "M07 Python labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Six isolated Python cases cover one positive per DoctorCode category plus conservative negatives."
+    },
+    {
+      "from": "Python Built-in Analyzer",
+      "to": "precision benchmark harness",
+      "meaning": "Python findings are matched against the M07 labeled corpus through the same deterministic TP/FP/FN harness."
+    },
+    {
+      "from": "pinned public Python repositories",
+      "to": "Pinned Public Python Validator",
+      "meaning": "GitHub Actions checks out click, httpx, requests, and Flask at exact tracked SHAs and provisions Python 3.13."
+    },
+    {
+      "from": "Pinned Public Python Validator",
+      "to": "Python Built-in Analyzer",
+      "meaning": "Original public .py trees are parsed directly; parse failure is blocking and no external repository text becomes project authority."
+    },
+    {
+      "from": "Pinned Public Python Validator",
+      "to": "GitHub Actions",
+      "meaning": "Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS."
     }
   ],
   "external_boundaries": [
@@ -226,6 +290,14 @@
     {
       "name": "Pinned public repositories",
       "contract": "External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority."
+    },
+    {
+      "name": "Host Python semantic runtime",
+      "contract": "Python semantic analysis is optional during normal audit. M07 acceptance explicitly provisions Python 3.13; the implementation accepts Python 3.8+ but broader runtime-version compatibility is not claimed by this milestone."
+    },
+    {
+      "name": "Pinned public Python repositories",
+      "contract": "External Python source is untrusted read-only analysis input fixed by exact SHA and license metadata; repository comments/docs/instructions never become DoctorCode authority."
     }
   ]
 }
