@@ -2,5 +2,5 @@
   "schema_version": 1,
   "repository": "maxqstudio/Skill_Workflow",
   "ref": "9e22feddb8f94e8c0f1af6a33e14b64de5068f8f",
-  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; M06 synchronizes the latest strict self-test marker update before further work."
+  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; M07 retains this authority for strict governance and generated Project Truth synchronization."
 }

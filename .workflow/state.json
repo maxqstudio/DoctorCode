@@ -1,43 +1,44 @@
 {
   "schema_version": 1,
   "phase": "M07_PYTHON_SEMANTIC",
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "M07_ACCEPTED",
   "working_branch": "work/m07-python-semantic",
   "last_accepted_sha": "e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e",
   "last_accepted_branch": "work/m06-realworld-labeled",
   "proven": [
     "M06 accepted baseline is e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e.",
-    "DoctorCode remains pinned to Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
-    "M07 adds python/stdlib-ast-v1, the first non-Go semantic analyzer, using the host Python standard-library ast module without third-party parser packages or LLM/API calls.",
-    "Normal audit treats a missing Python interpreter or a repository with no Python source as analyzer-unavailable instead of failing the whole repository.",
-    "Python syntax/read failures fail closed once Python analysis is applicable; TestPythonParseFailureIsBlocking proves a syntax error does not silently become zero findings.",
-    "M07 provides one deliberately narrow Python rule for each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.",
-    "M07 labeled corpus contains 6 cases and reports 5 true positives, 0 false positives, and 0 false negatives on source candidate ba0bcd33d8db362275e59cd88d259902945baa02.",
-    "Source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passed core CI run 36284942936 on ubuntu-latest, windows-latest, and macos-latest.",
-    "The same candidate passed M07 Python Real World run 36284943019 on ubuntu-latest, windows-latest, and macos-latest.",
-    "Exact-SHA snapshots of pallets/click, encode/httpx, psf/requests, and pallets/flask parse and analyze successfully under the M07 public-repository gate.",
-    "The bounded Flask anchor src/flask/cli.py:691 for _path_is_ancestor remains detected as PY-DEADCODE-PRIVATE-ZERO-REF."
+    "DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
+    "M07 adds python/stdlib-ast-v1 as the first non-Go semantic analyzer, using only the host Python standard-library ast parser and no LLM/API or third-party parser package.",
+    "M07 implements one deliberately narrow Python rule in each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE; all remain safe_autofix=false.",
+    "Applicable Python syntax/read failures fail closed; missing Python or absence of .py source is explicit analyzer-unavailable capability during ordinary audit.",
+    "The M07 six-case labeled corpus reports 5 TP, 0 FP, and 0 FN on the accepted synchronized candidate.",
+    "Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict Skill_Workflow governance run 36285384397.",
+    "The same candidate passed core CI run 36285384421 on ubuntu-latest, windows-latest, and macos-latest.",
+    "The same candidate passed M07 Python Real World run 36285384388 on ubuntu-latest, windows-latest, and macos-latest.",
+    "Exact-SHA snapshots of pallets/click, encode/httpx, psf/requests, and pallets/flask parse and analyze successfully with detached checkout provenance verified.",
+    "The bounded Flask src/flask/cli.py:691 _path_is_ancestor anchor remains detected as PY-DEADCODE-PRIVATE-ZERO-REF with HIGH confidence and no autofix."
   ],
   "not_proven": [
     "The six-case M07 corpus does not establish general Python ecosystem precision or recall.",
-    "The four pinned public repositories are not exhaustively labeled; only the Flask _path_is_ancestor location is an explicit positive anchor.",
-    "PY-DEADCODE-PRIVATE-ZERO-REF proves no conservative lexical Name/Attribute reference in the parsed visible tree, not safe deletion or absence of dynamic/import/plugin callers.",
-    "M07 semantic analysis covers .py files; .pyi recognition does not imply .pyi semantic-analysis support.",
-    "The implementation accepts a Python 3.8+ interpreter, but current cross-platform acceptance evidence is pinned to Python 3.13.",
-    "Python source that is invalid for the active interpreter blocks analysis rather than being silently skipped.",
-    "Automatic mutation remains unsupported and every Python finding keeps safe_autofix=false."
+    "The four public Python repository snapshots are not exhaustively labeled; only the Flask _path_is_ancestor location is an explicit positive anchor.",
+    "PY-DEADCODE-PRIVATE-ZERO-REF proves conservative zero lexical reference evidence, not PROVEN_UNUSED or safe deletion.",
+    "M07 semantic coverage is for .py files; .pyi recognition does not imply semantic-analysis support.",
+    "The implementation accepts Python 3.8+, while current cross-platform acceptance evidence is pinned to Python 3.13.",
+    "Dynamic imports, reflection, plugin registration, external callers, and other Python runtime behaviors are not fully resolved by M07 lexical reference analysis.",
+    "Automatic mutation remains unsupported."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize M07 generated Project Truth documentation and sequence evidence.",
-    "Run strict Skill_Workflow validation against the synchronized M07 snapshot.",
-    "Promote M07 only if exact-SHA core CI, M07 public Python validation, and strict governance all pass."
+    "Synchronize accepted M07 Project Truth documentation.",
+    "Remove temporary M07 discovery and doc-sync workflows.",
+    "Update README to the accepted M07 capability boundary.",
+    "Freeze M07 only after final exact-SHA strict governance, core CI, and public Python validation all pass with no remaining bot mutator."
   ],
   "blocked_actions": [
-    "Advertising the six-case benchmark as general real-world Python precision or recall.",
-    "Treating the Flask DEADCODE anchor as PROVEN_UNUSED or safe-delete authorization.",
-    "Claiming Python .pyi semantic coverage.",
-    "Claiming all Python 3.8 through 3.13 environments are cross-platform acceptance-tested.",
+    "Publishing 100 percent real-world Python precision or recall.",
+    "Treating the Flask DEADCODE anchor as proof that deletion is safe.",
+    "Claiming .pyi semantic-analysis support.",
+    "Claiming cross-version Python 3.8 through 3.13 acceptance from Python 3.13 CI evidence.",
     "Auto-deleting or auto-fixing Python findings."
   ]
 }
