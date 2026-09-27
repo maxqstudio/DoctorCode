@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M12 Go Related Context adds bounded production/test reference excerpts for findings enclosed by a top-level non-method Go function. Binding-aware same-file references, same-package cross-file references, shadowing exclusion, external-test-package exclusion, byte-budget truncation, and traversal-before-provider rejection are tested. Product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Python and non-Go findings retain M11 primary-source-only context.
+M12 Go Related Context is product-main accepted at 368c7b05d08d95beb5164d437920bbdd83c39e32 after strict governance and every accepted Linux, Windows, and macOS regression lane passed. M12 enriches eligible top-level non-method Go findings with bounded same-package production/test references only. Python parity, methods, external test packages, transitive dependency graphs, safe deletion, and automatic repair remain outside M12 authority.
 
 Final tested source: external final acceptance evidence.
 Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
@@ -19,6 +19,7 @@ Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2d
 | M12-CLI-E2E | The public context command must return a bounded packet with both a production reference and a same-package test reference for a real audited Go finding. | Core CI run 36323276401 executes the finding-specific related-context smoke on Linux, Windows, and macOS and asserts schema_version=2, related_total=2, reference/test_reference order, exact finding ID, and byte budget. | PASS |
 | M12-REGRESSION-MATRIX | All previously accepted detector and public-source regression lanes must remain passing across Linux, Windows, and macOS. | At bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8: Core CI 36323276401, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 all completed success across all three operating systems. | PASS |
 | M12-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M12 sequence artifacts must pass strict governance on the final exact M12 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36323629497 at edc415a2935307490cf73ec12fed72ff9a0c042b completed success after generated M12 Project Truth and sequence synchronization; finalization is governance-only and will be revalidated on its exact SHA. | PASS |
+| M12-MAIN-POST-MERGE | The exact M12 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before becoming the next development base. | main@368c7b05d08d95beb5164d437920bbdd83c39e32: Governance Bootstrap 36323970886, Core CI 36323970841, M10 Labeled Real World Python 36323970832, M07 Python Real World 36323970756, M06 Labeled Real World Go 36323970803, and Real World Go Validation 36323970845 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
 
 ## Test commands
 

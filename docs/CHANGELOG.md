@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M12 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M12 through PR #9 to main at 368c7b05d08d95beb5164d437920bbdd83c39e32.
+- Passed strict Governance Bootstrap on the exact product main merge SHA.
+- Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Authorized the next product phase for Python related-context parity under the Owner directive to continue until DoctorCode is complete.
+
 ## 2026-09-27 — M12 Go Related Context accepted baseline
 
 Type: acceptance

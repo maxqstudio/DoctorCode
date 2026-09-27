@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m12-go-related-context
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 3ca18bdca11e436b3a2fa63491976041639eeee2
+Last accepted SHA: 368c7b05d08d95beb5164d437920bbdd83c39e32
 Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
 
 ## Authorities
