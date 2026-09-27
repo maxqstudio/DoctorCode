@@ -353,3 +353,35 @@ Status: ACCEPTED
 Dispatch eligible .py findings to the Python provider and convert locations into the same deterministic related excerpt pipeline already accepted for Go.
 
 Rationale: One packet contract keeps CLI behavior stable, preserves primary-source priority, and avoids language-specific context serialization.
+
+## ADR-M14-001 — Freeze verification before repair
+
+Status: ACCEPTED
+
+Create a JSON verification contract from the exact current finding before repair, then verify that stored contract after repair.
+
+Rationale: After a repair the original line-bound finding ID may disappear or move, so verification needs an explicit pre-repair baseline.
+
+## ADR-M14-002 — Use semantic occurrence count instead of line-bound ID
+
+Status: ACCEPTED
+
+Identify the verification target by rule_id + path + summary and require its occurrence count to decrease from the frozen baseline.
+
+Rationale: Existing finding IDs include line numbers; line-only movement must not create a false resolved result.
+
+## ADR-M14-003 — Block same-or-higher target-path regressions
+
+Status: ACCEPTED
+
+PASS requires target resolution and no newly increased semantic finding count at severity equal to or above the original target on the target path.
+
+Rationale: A repair that removes one defect by introducing an equal or worse analyzer-visible defect is not an acceptable deterministic verification result.
+
+## ADR-M14-004 — Never execute repository verification commands
+
+Status: ACCEPTED
+
+M14 verification uses a fresh DoctorCode audit only; repository-provided tests, builds, shell commands, hooks, and Finding.Verification strings are never executed as verification authority.
+
+Rationale: Analyzed repositories are untrusted input and command execution would cross the established read-only analysis boundary.

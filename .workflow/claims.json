@@ -1161,6 +1161,81 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "claim": "M14 verification freezes a pre-repair semantic target keyed by rule_id, path, and summary plus occurrence count, then requires that count to decrease after a fresh deterministic audit.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M14-STABLE-VERIFICATION",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520"
+      ],
+      "source_owners": [
+        "internal/verification/verification.go",
+        "cmd/doctorcode/main.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/verification/verification_test.go",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "M14 blocks PASS when verification introduces a new finding at least as severe as the target on the selected target path.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M14-REGRESSION-GATE",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520"
+      ],
+      "source_owners": [
+        "internal/verification/verification.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/verification/verification_test.go",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "M14 contract verification re-runs DoctorCode deterministic analyzers only and never executes repository-provided test, build, shell, hook, or Finding.Verification command strings.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M14-NO-ARBITRARY-EXECUTION",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go",
+        "internal/verification/verification.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "M14 fails closed on analyzer-set drift, unknown contract JSON fields, and mismatched target baseline count or severity metadata.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M14-CONTRACT-INTEGRITY",
+      "runtime_evidence": [
+        "RED GitHub Actions Core CI run 36328795881 at 4f145e7900a305dec4a2d277aa6dbd517fba66c0",
+        "GREEN GitHub Actions Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go",
+        "internal/verification/verification.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "cmd/doctorcode/main_test.go",
+        "internal/verification/verification_test.go"
+      ]
     }
   ],
   "relations": [],

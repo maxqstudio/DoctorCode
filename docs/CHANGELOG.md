@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M14 Deterministic Verification Contract candidate
+
+Type: development
+
+- Added doctorcode contract to freeze a pre-repair deterministic finding baseline.
+- Added doctorcode verify to re-audit after repair and require semantic target-count reduction.
+- Added target-path same-or-higher-severity regression blocking.
+- Added analyzer-set drift, strict JSON, and baseline target metadata fail-closed checks.
+- Kept repository-provided commands entirely outside verification execution authority.
+- Added Linux, Windows, and macOS CLI smoke proving regression FAIL followed by clean PASS.
+
 ## 2026-09-27 — M13 main accepted baseline
 
 Type: acceptance

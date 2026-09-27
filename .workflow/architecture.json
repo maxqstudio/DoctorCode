@@ -11,9 +11,11 @@
       "name": "CLI",
       "owns": [
         "command parsing",
-        "text and JSON rendering"
+        "text and JSON rendering",
+        "verification contract serialization",
+        "verification result rendering"
       ],
-      "purpose": "Human/agent interface for scan, toolchain, audit, highest-priority next-finding, exact finding-specific context, and benchmark operations."
+      "purpose": "Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations."
     },
     {
       "depends_on": [
@@ -177,6 +179,20 @@
         "public Python finding safety boundary"
       ],
       "purpose": "Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors."
+    },
+    {
+      "depends_on": [
+        "detector engine"
+      ],
+      "id": "verification_contract",
+      "name": "Deterministic Verification Contract",
+      "owns": [
+        "semantic target occurrence baseline",
+        "analyzer-set compatibility check",
+        "target-path regression delta",
+        "verification PASS/FAIL result"
+      ],
+      "purpose": "Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands."
     }
   ],
   "data_flows": [
@@ -299,6 +315,21 @@
       "from": "Python Built-in Analyzer",
       "meaning": "For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion.",
       "to": "evidence reducer"
+    },
+    {
+      "from": "detector engine",
+      "meaning": "Before repair, doctorcode contract freezes analyzer identities plus target-path semantic finding counts for one exact selected finding.",
+      "to": "Deterministic Verification Contract"
+    },
+    {
+      "from": "repaired repository",
+      "meaning": "doctorcode verify performs a fresh deterministic audit of the current repository state without executing repository-provided commands.",
+      "to": "detector engine"
+    },
+    {
+      "from": "Deterministic Verification Contract",
+      "meaning": "Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.",
+      "to": "human or AI coding agent"
     }
   ],
   "external_boundaries": [
@@ -341,6 +372,10 @@
     {
       "contract": "M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed.",
       "name": "Python related-context boundary"
+    },
+    {
+      "contract": "M14 never executes repository-provided test, build, shell, hook, or Finding.Verification command strings. Verification authority is a fresh DoctorCode deterministic audit plus the frozen contract only.",
+      "name": "Verification execution boundary"
     }
   ],
   "schema_version": 1

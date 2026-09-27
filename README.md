@@ -346,3 +346,11 @@ Python lexical scopes are handled conservatively: local arguments, assignments, 
 
 Dynamic imports, package-facade re-export chains, string reflection, monkey-patching, class/method dispatch, nested callable identity, and transitive dependency graphs remain outside M13's proof boundary. Context remains review evidence only; it never authorizes deletion or automatic repair.
 
+
+### M14 deterministic verification contract
+
+M14 adds a two-step repair-verification workflow. Before editing code, save a contract with doctorcode contract <finding-id> <repo> --json redirected to a contract file. After the repair, run doctorcode verify <contract-file> <repo> --json. The verifier re-audits the current source and requires the target semantic occurrence count to decrease.
+
+Finding IDs contain line numbers, so M14 does not use disappearance of the old ID as proof. The frozen semantic target is rule_id + path + summary plus its baseline occurrence count. Verification also blocks newly increased finding counts on the target path when their severity is equal to or higher than the original target. Analyzer-set drift and inconsistent contract metadata fail closed.
+
+DoctorCode does not run repository tests, builds, shell commands, hooks, or advisory Finding.Verification strings during M14 verification. PASS means only that the declared deterministic analyzer contract passed; it is not proof of full runtime behavior, safe deletion, or automatic repair safety.

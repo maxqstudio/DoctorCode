@@ -2,6 +2,19 @@
   "entries": [
     {
       "changes": [
+        "Added doctorcode contract to freeze a pre-repair deterministic finding baseline.",
+        "Added doctorcode verify to re-audit after repair and require semantic target-count reduction.",
+        "Added target-path same-or-higher-severity regression blocking.",
+        "Added analyzer-set drift, strict JSON, and baseline target metadata fail-closed checks.",
+        "Kept repository-provided commands entirely outside verification execution authority.",
+        "Added Linux, Windows, and macOS CLI smoke proving regression FAIL followed by clean PASS."
+      ],
+      "date": "2026-09-27",
+      "title": "M14 Deterministic Verification Contract candidate",
+      "type": "development"
+    },
+    {
+      "changes": [
         "Merged FINAL_ACCEPTED M13 through PR #11 to main at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c.",
         "Passed strict Governance Bootstrap on the exact product main merge SHA.",
         "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
