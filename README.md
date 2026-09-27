@@ -19,12 +19,12 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M08 Python adversarial precision is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M09 Python repository-shaped evaluation is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
 | Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
-| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; adversarial-gated; host Python required** |
+| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; adversarial + repository-shaped gated; host Python required** |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
 | Java / Kotlin | Yes | Yes | Not yet |
@@ -184,6 +184,27 @@ The accepted M08 corpus reports **2 TP, 0 FP, and 0 FN**. Only two cases are pos
 
 These metrics are corpus-scoped. Recognized dynamic reference handling is intentionally incomplete and does not resolve arbitrary reflection, `eval`/`exec`, plugin loaders, or external callers. Zero conservative references still never means safe deletion.
 
+### M09 Python repository-shaped regression gate
+
+M09 adds **14 mini-repositories** that exercise Python package/import topology which single-file and adversarial snippets do not cover:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
+```
+
+The corpus includes conventional `src/` layouts, package `__init__.py` re-exports, relative and aliased imports, dotted module access, same-named functions in separate packages, test-only references, generated references, namespace packages, `TYPE_CHECKING`, and conditional imports.
+
+The final pre-repair M09 run reported **2 TP, 5 FP, and 3 FN**. The repair introduced four bounded topology changes:
+
+1. files below a leading `src/` are indexed under both repository-relative and conventional package module names;
+2. direct module-level `from ... import ...` re-exports propagate to a bounded fixed point so package facades resolve to the original candidate;
+3. import/export liveness is tracked separately from executable usage, so DEADCODE can stay conservative without inflating the BLOAT one-use count;
+4. dotted attributes are resolved through explicit import roots, while unresolved name fallback is allowed only when exactly one candidate has that private name.
+
+The accepted M09 corpus reports **5 TP, 0 FP, and 0 FN**. M07 and M08 remain passing.
+
+These results remain fixture-scoped. DoctorCode does not infer arbitrary package roots, `sys.path` mutation, star-import semantics, import hooks, runtime symbol assignment, or a whole-program Python import graph. Zero conservative references still never authorizes deletion.
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -235,11 +256,11 @@ The byte cap is deliberate: exact token counts vary by model/tokenizer, while a 
 - Security `next` packets omit source excerpts by default.
 - Python semantic analysis fails closed when an applicable `.py` file cannot be read or parsed.
 - Python DEADCODE is conservative lexical evidence only; dynamic imports, reflection, plugins, and external callers can exist outside the visible tree.
-- Python `.pyi` files may be recognized by the scanner but are not semantically analyzed in M07.
+- Python `.pyi` files may be recognized by the scanner but are not semantically analyzed by the current Python adapter.
 
 ## Cross-platform acceptance
 
-GitHub Actions is the CI/runtime acceptance authority; the Owner PC is not used.
+GitHub Actions is the CI/runtime acceptance authority; the Owner PC is not used. Every FINAL_ACCEPTED phase is promoted to `main`, and the same accepted lanes must pass again on the exact `main` merge SHA before the next phase starts.
 
 Blocking runners:
 
@@ -247,7 +268,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, and M08 Python adversarial benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05, M06, and Python public-source matrices run pinned Go compatibility, bounded Go real-world labels, and pinned Python public-source validation on the same Linux, Windows, and macOS runner set.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate Go compatibility, bounded Go real-world label, and Python public-source workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
 
 ## Design principles
 
