@@ -3,6 +3,17 @@
   "entries": [
     {
       "date": "2026-09-27",
+      "title": "M10 main accepted baseline",
+      "type": "acceptance",
+      "changes": [
+        "Merged FINAL_ACCEPTED M10 through PR #4 to main at 36baeec0057089ffe50c9d3cc25d22d8524c882e.",
+        "Passed strict Governance Bootstrap on the exact main merge SHA.",
+        "Passed core CI, bounded M10 Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
+        "Kept the M10 claim bounded to two valid zero-reference anchors and four invalid test-tree guards; no exhaustive precision/recall or safe-delete claim was introduced."
+      ]
+    },
+    {
+      "date": "2026-09-27",
       "title": "M10 bounded real-world Python labels accepted baseline",
       "type": "acceptance",
       "changes": [

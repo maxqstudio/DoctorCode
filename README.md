@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M10 bounded real-world Python label validation is accepted on the development branch pending final exact-SHA promotion checks.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M10 bounded real-world Python label validation is accepted on `main` at `36baeec0057089ffe50c9d3cc25d22d8524c882e`.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
