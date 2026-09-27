@@ -814,6 +814,35 @@
         "GitHub Actions Real World Go Validation run 36304215947 at 36baeec0057089ffe50c9d3cc25d22d8524c882e"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M10-GOVERNANCE-NORMALIZED",
+      "claim": "The governance-only M10 main truth-sync closure is accepted on main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 with strict governance and all accepted Linux, Windows, and macOS regression lanes passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        ".workflow/state.json",
+        ".workflow/acceptance.json",
+        "docs/CURRENT_STATE.md"
+      ],
+      "tests": [
+        ".github/workflows/governance-bootstrap.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions Governance Bootstrap run 36307506384 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
+        "GitHub Actions core CI run 36307506390 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
+        "GitHub Actions M10 Labeled Real World Python run 36307506393 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
+        "GitHub Actions M07 Python Real World run 36307506407 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
+        "GitHub Actions M06 Labeled Real World Go run 36307506391 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
+        "GitHub Actions Real World Go Validation run 36307506396 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []
