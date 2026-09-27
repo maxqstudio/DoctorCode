@@ -1,0 +1,150 @@
+name: Main Protection Bootstrap
+
+on:
+  push:
+    branches:
+      - "work/main-protection-bootstrap"
+
+permissions:
+  contents: read
+
+jobs:
+  protect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Select administration token
+        id: token
+        shell: bash
+        env:
+          ADMIN_TOKEN: ${{ secrets.DOCTORCODE_ADMIN_TOKEN }}
+          FALLBACK_TOKEN: ${{ github.token }}
+        run: |
+          if [ -n "$ADMIN_TOKEN" ]; then
+            echo "token_source=DOCTORCODE_ADMIN_TOKEN" >> "$GITHUB_OUTPUT"
+            echo "GH_TOKEN=$ADMIN_TOKEN" >> "$GITHUB_ENV"
+          else
+            echo "token_source=GITHUB_TOKEN" >> "$GITHUB_OUTPUT"
+            echo "GH_TOKEN=$FALLBACK_TOKEN" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build ruleset payload
+        shell: python
+        run: |
+          import json
+          checks = [
+              "strict-skill-workflow",
+              "core-ubuntu-latest",
+              "core-windows-latest",
+              "core-macos-latest",
+              "m06-labeled-ubuntu-latest",
+              "m06-labeled-windows-latest",
+              "m06-labeled-macos-latest",
+              "m07-python-ubuntu-latest",
+              "m07-python-windows-latest",
+              "m07-python-macos-latest",
+              "m10-python-labeled-ubuntu-latest",
+              "m10-python-labeled-windows-latest",
+              "m10-python-labeled-macos-latest",
+              "real-world-ubuntu-latest",
+              "real-world-windows-latest",
+              "real-world-macos-latest",
+          ]
+          payload = {
+              "name": "Protect main",
+              "target": "branch",
+              "enforcement": "active",
+              "conditions": {
+                  "ref_name": {
+                      "include": ["refs/heads/main"],
+                      "exclude": [],
+                  }
+              },
+              "rules": [
+                  {"type": "deletion"},
+                  {"type": "non_fast_forward"},
+                  {
+                      "type": "pull_request",
+                      "parameters": {
+                          "allowed_merge_methods": ["merge", "squash", "rebase"],
+                          "dismiss_stale_reviews_on_push": False,
+                          "require_code_owner_review": False,
+                          "require_last_push_approval": False,
+                          "required_approving_review_count": 0,
+                          "required_review_thread_resolution": True,
+                      },
+                  },
+                  {
+                      "type": "required_status_checks",
+                      "parameters": {
+                          "do_not_enforce_on_create": True,
+                          "required_status_checks": [{"context": check} for check in checks],
+                          "strict_required_status_checks_policy": True,
+                      },
+                  },
+              ],
+          }
+          with open("ruleset.json", "w", encoding="utf-8") as handle:
+              json.dump(payload, handle)
+
+      - name: Create or update main ruleset
+        id: apply
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing_id="$(gh api repos/maxqstudio/DoctorCode/rulesets --jq '.[] | select(.name == "Protect main") | .id' | head -n1 || true)"
+          if [ -n "$existing_id" ]; then
+            gh api --method PUT "repos/maxqstudio/DoctorCode/rulesets/$existing_id" --input ruleset.json > ruleset-result.json
+          else
+            gh api --method POST repos/maxqstudio/DoctorCode/rulesets --input ruleset.json > ruleset-result.json
+          fi
+          python - <<'PY'
+          import json
+          data = json.load(open("ruleset-result.json", encoding="utf-8"))
+          assert data["name"] == "Protect main"
+          assert data["enforcement"] == "active"
+          print("RULESET_APPLIED=PASS")
+          print("RULESET_ID=" + str(data["id"]))
+          PY
+
+      - name: Verify active main protection
+        shell: bash
+        run: |
+          set -euo pipefail
+          gh api repos/maxqstudio/DoctorCode/rules/branches/main > active-rules.json
+          python - <<'PY'
+          import json
+          rules = json.load(open("active-rules.json", encoding="utf-8"))
+          by_type = {item["type"]: item for item in rules}
+          required = {"deletion", "non_fast_forward", "pull_request", "required_status_checks"}
+          missing = sorted(required - set(by_type))
+          if missing:
+              raise SystemExit("MAIN_PROTECTION_VERIFY=FAIL missing=" + ",".join(missing))
+          checks = {
+              item["context"]
+              for item in by_type["required_status_checks"]["parameters"]["required_status_checks"]
+          }
+          expected = {
+              "strict-skill-workflow",
+              "core-ubuntu-latest",
+              "core-windows-latest",
+              "core-macos-latest",
+              "m06-labeled-ubuntu-latest",
+              "m06-labeled-windows-latest",
+              "m06-labeled-macos-latest",
+              "m07-python-ubuntu-latest",
+              "m07-python-windows-latest",
+              "m07-python-macos-latest",
+              "m10-python-labeled-ubuntu-latest",
+              "m10-python-labeled-windows-latest",
+              "m10-python-labeled-macos-latest",
+              "real-world-ubuntu-latest",
+              "real-world-windows-latest",
+              "real-world-macos-latest",
+          }
+          missing_checks = sorted(expected - checks)
+          if missing_checks:
+              raise SystemExit("MAIN_PROTECTION_VERIFY=FAIL missing_checks=" + ",".join(missing_checks))
+          if not by_type["required_status_checks"]["parameters"]["strict_required_status_checks_policy"]:
+              raise SystemExit("MAIN_PROTECTION_VERIFY=FAIL strict_required_status_checks_policy=false")
+          print("MAIN_PROTECTION_VERIFY=PASS")
+          PY
