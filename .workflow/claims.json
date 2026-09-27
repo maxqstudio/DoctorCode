@@ -382,7 +382,7 @@
         ".workflow/tools/selftest_strict_project_workflow.py"
       ],
       "runtime_evidence": [
-        "NOT_APPLICABLE"
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "status": "PASS"
     },
@@ -418,7 +418,7 @@
         "internal/realworld/labeled_test.go"
       ],
       "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283099819 at e19ea958de42bbf2101ac5a958879d60c8909fa3"
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "status": "PASS"
     },
@@ -437,7 +437,7 @@
         "internal/realworld/labeled_test.go"
       ],
       "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283099819"
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "status": "PASS"
     },
@@ -455,7 +455,7 @@
         "internal/realworld/labeled_test.go"
       ],
       "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283099819"
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "status": "PASS"
     }

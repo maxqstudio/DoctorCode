@@ -5,7 +5,7 @@
   "mode": "DURING",
   "scope": "CURRENT",
   "critical": false,
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "ACCEPTED",
   "implementation_base_sha": "0f7a1e3117375ad2b2413efc0e7221a614a397ec",
   "plan": {
     "required": false,
