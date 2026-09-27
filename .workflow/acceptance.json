@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M09 acceptance uses 14 repository-shaped Python fixtures. Pre-repair candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 TP, 5 FP, and 3 FN. Repaired synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passes strict governance run 36301912060, core CI run 36301912063, Real World Go run 36301912067, M06 Labeled Real World Go run 36301912070, and M07 Python Real World run 36301912054. The repaired M09 corpus reports 5 TP, 0 FP, and 0 FN. Evidence remains corpus-scoped and does not authorize automatic deletion.",
+  "evidence_boundary": "M10 uses six bounded exact-SHA Python labels across pinned Click and Flask snapshots: two VALID_FINDING Flask DEADCODE zero-reference anchors and four INVALID_FINDING test-tree guards. At source candidate fe0553a698ab7d7c689fb31a02b78b5d9ef11019, M10 run 36303351744 passed on Linux, Windows, and macOS with valid=2 invalid=4; core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, and M06 Labeled Real World Go 36303351703 also passed 3/3 OS. Governance run 36303351683 failed only because generated Project Truth was stale after adding M10 files and therefore does not count as final acceptance. Labels remain bounded and do not authorize automatic deletion.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -17,60 +17,55 @@
   "human_comprehension_status": "PASS",
   "requirements": [
     {
-      "evidence": "CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121: M09 FAIL with 2 TP, 5 FP, and 3 FN. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-GATE-EXPOSED-TOPOLOGY-DEFECTS",
-      "requirement": "Repository-shaped fixtures must expose accepted Python reference-topology defects before repair.",
+      "id": "M10-MAIN-BASELINE",
+      "requirement": "M10 must branch from an exact post-merge accepted M09 main.",
+      "evidence": "main@575f9bcfe5c1119f0ea4382cdeec94ba345e59ce passed Governance Bootstrap 36302209222, core CI 36302209237, M07 Python Real World 36302209214, M06 Labeled Real World Go 36302209238, and Real World Go 36302209232.",
       "status": "PASS"
     },
     {
-      "evidence": "src-layout-from-import-live, src-layout-bloat-live, and src-layout-dead-isolation pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-SRC-LAYOUT",
-      "requirement": "Conventional src-layout absolute imports preserve live private functions and one-use wrappers while still isolating genuinely stale siblings.",
+      "id": "M10-BOUNDED-PYTHON-LABELS",
+      "requirement": "Pinned public Python source must have explicit bounded valid/invalid labels without whole-repository precision claims.",
+      "evidence": "internal/realworld/m10-python-labels.json tracks six exact anchors: 2 VALID_FINDING and 4 INVALID_FINDING across Click and Flask.",
       "status": "PASS"
     },
     {
-      "evidence": "package-init-reexport-live and package-init-reexport-bloat pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-PACKAGE-REEXPORT",
-      "requirement": "Direct package-facade re-exports resolve to original private-function candidates without suppressing one-use wrapper evidence.",
+      "id": "M10-VALID-ZERO-REF-ANCHORS",
+      "requirement": "The two bounded Flask private-function zero-reference findings must remain present at their exact pinned source locations.",
+      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on all three OSes; Ubuntu log reports valid=2 invalid=4.",
       "status": "PASS"
     },
     {
-      "evidence": "nested-dotted-module-live and nested-dotted-same-name-isolation pass in CI run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-DOTTED-MODULE-ISOLATION",
-      "requirement": "Dotted module attribute access resolves through the explicit import root without keeping same-named functions in unrelated packages alive.",
+      "id": "M10-TEST-TREE-NEGATIVE-GUARDS",
+      "requirement": "The four labeled private helpers under pinned public test trees must not be emitted as production DEADCODE findings.",
+      "evidence": "M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent.",
       "status": "PASS"
     },
     {
-      "evidence": "M09 package facade and src-layout wrapper cases pass with PY-BLOAT-PASSTHROUGH-WRAPPER recall restored to 1.0 in run 36301647674. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-LIVENESS-USAGE-SEPARATION",
-      "requirement": "Import/export declarations can keep a candidate conservatively live without inflating the BLOAT one-usage count.",
+      "id": "M10-ALL-PRODUCT-LANES",
+      "requirement": "Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS.",
+      "evidence": "At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs.",
       "status": "PASS"
     },
     {
-      "evidence": "Run 36301647674: 5 TP, 0 FP, 0 FN; precision=1 and recall=1 within the tracked corpus. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-REPOSITORY-SHAPED-GATE",
-      "requirement": "The 14-case M09 corpus passes its exact labels after repair.",
-      "status": "PASS"
-    },
-    {
-      "evidence": "Core CI 36301647674; Real World Go 36301647686; M06 Labeled Real World Go 36301647705; M07 Python Real World 36301647658 all SUCCESS 3/3 OS at be60c639c9eab25f34c683fb93bcc7db77eb77fc. Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed governance 36301912060, core CI 36301912063, Go public 36301912067, Go labeled 36301912070, and Python public 36301912054.",
-      "id": "M09-ALL-ACCEPTED-LANES",
-      "requirement": "Every accepted core and real-world regression lane executes on the phase branch across Linux, Windows, and macOS.",
-      "status": "PASS"
+      "id": "M10-STRICT-GOVERNANCE-FINAL",
+      "requirement": "Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed.",
+      "evidence": "NOT_PROVEN on the current candidate; governance run 36303351683 correctly failed because generated docs were stale.",
+      "status": "NOT_PROVEN"
     }
   ],
   "runtime_checks": [
     "go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths",
     "go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths",
     "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths",
+    "go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths",
     "go run ./cmd/doctorcode audit . --json --max-findings=10",
     "go run ./cmd/doctorcode next . --json --max-bytes=4096"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
   "sequence_mode": "DURING",
-  "sequence_session": "M09-PYTHON-REPOSITORY-SHAPED",
-  "sequence_sync_status": "PASS",
+  "sequence_session": "M10-PYTHON-LABELED-REAL-WORLD",
+  "sequence_sync_status": "NOT_PROVEN",
   "test_commands": [
     "go test ./...",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
@@ -79,19 +74,20 @@
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json",
+    "go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v",
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode"
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
-    "DOC_LAYOUT": "PASS",
-    "DOC_READABILITY": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "DOC_LAYOUT": "NOT_PROVEN",
+    "DOC_READABILITY": "NOT_PROVEN",
     "DOC_SOURCE_TRACEABILITY": "PASS",
     "DOC_TEST_TRACEABILITY": "PASS",
-    "PROJECT_DOCS_NORMALIZED": "PASS",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "PASS",
+    "PROJECT_DOCS_NORMALIZED": "NOT_PROVEN",
+    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",
