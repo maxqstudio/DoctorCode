@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M09 accepted baseline
+
+Type: acceptance
+
+- Accepted the 14-case Python repository-shaped corpus after the final pre-repair run exposed 5 false positives and 3 false negatives.
+- Accepted conventional src-layout aliases, direct package-facade re-export propagation, separated usage/liveness evidence, and exact dotted-module isolation.
+- Accepted a repaired M09 result of 5 TP, 0 FP, and 0 FN while preserving M07 and M08 gates.
+- Expanded all accepted real-world regression workflows to main and work/**.
+- Passed strict governance, core CI, Go public compatibility, bounded Go labels, and Python public-source validation across Linux, Windows, and macOS.
+
 ## 2026-09-27 — M09 Python repository-shaped candidate
 
 Type: development
