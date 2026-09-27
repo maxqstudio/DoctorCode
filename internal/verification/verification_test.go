@@ -92,3 +92,22 @@ func TestBuildContractRejectsMissingFinding(t *testing.T) {
 		t.Fatal("missing finding id must fail")
 	}
 }
+
+
+func TestVerifyRejectsTamperedTargetBaseline(t *testing.T) {
+	baseline := model.AuditResult{
+		Analyzers: []string{"go/stdlib-ast-v1"},
+		Findings: []model.Finding{
+			{ID: "TARGET", RuleID: "GO-SIMPLIFY-BOOL-RETURN", Path: "sample.go", LineStart: 3, Summary: "boolean if/else returns opposite literals and can be represented directly", Severity: model.SeverityLow},
+		},
+	}
+	contract, err := BuildContract(baseline, "TARGET")
+	if err != nil {
+		t.Fatal(err)
+	}
+	contract.TargetBaselineCount = 2
+	_, err = Verify(contract, model.AuditResult{Analyzers: []string{"go/stdlib-ast-v1"}})
+	if err == nil {
+		t.Fatal("tampered target baseline count must fail closed")
+	}
+}
