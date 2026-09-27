@@ -67,3 +67,14 @@ jobs:
           test -n "$finding_id"
           go run ./cmd/doctorcode context "$finding_id" .doctorcode-context-smoke --json --max-bytes=4096 | python -c 'import json,sys; raw=sys.stdin.read(); packet=json.loads(raw); assert packet["schema_version"] == 2; assert packet["finding"]["id"] == sys.argv[1]; assert packet["budget_bytes"] == 4096; assert packet["related_total"] == 2; assert [item["kind"] for item in packet["related_excerpts"]] == ["reference","test_reference"]; assert len(raw.encode()) <= 4096' "$finding_id"
           rm -rf .doctorcode-context-smoke
+      - name: Python related context smoke test
+        shell: bash
+        run: |
+          rm -rf .doctorcode-context-smoke-py
+          mkdir -p .doctorcode-context-smoke-py/src/pkg .doctorcode-context-smoke-py/tests
+          printf 'def _decision(flag):\n    if flag:\n        return True\n    else:\n        return False\n\ndef caller():\n    return _decision(True)\n' > .doctorcode-context-smoke-py/src/pkg/core.py
+          printf 'from pkg.core import _decision\n\ndef test_decision():\n    assert _decision(False) is False\n' > .doctorcode-context-smoke-py/tests/test_core.py
+          finding_id="$(go run ./cmd/doctorcode audit .doctorcode-context-smoke-py --json --max-findings=20 | python -c 'import json,sys; data=json.load(sys.stdin); print(next(item["id"] for item in data["findings"] if item["rule_id"] == "PY-SIMPLIFY-BOOL-RETURN"))')"
+          test -n "$finding_id"
+          go run ./cmd/doctorcode context "$finding_id" .doctorcode-context-smoke-py --json --max-bytes=4096 | python -c 'import json,sys; raw=sys.stdin.read(); packet=json.loads(raw); assert packet["schema_version"] == 2; assert packet["finding"]["id"] == sys.argv[1]; assert packet["budget_bytes"] == 4096; assert packet["related_total"] == 2; assert [item["kind"] for item in packet["related_excerpts"]] == ["reference","test_reference"]; assert [item["path"] for item in packet["related_excerpts"]] == ["src/pkg/core.py","tests/test_core.py"]; assert len(raw.encode()) <= 4096' "$finding_id"
+          rm -rf .doctorcode-context-smoke-py
