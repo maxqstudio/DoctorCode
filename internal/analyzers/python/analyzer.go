@@ -239,12 +239,26 @@ for dirpath, dirnames, filenames in os.walk(ROOT, followlinks=False):
             continue
         files.append((path, relpath(path), source, tree, generated_source(source)))
 
-candidate_names = set()
+candidate_by_key = {}
+candidates_by_name = {}
+candidates_by_module_name = {}
+
+def module_name(rel):
+    value = rel[:-3] if rel.endswith(".py") else rel
+    if value == "__init__":
+        return ""
+    suffix = "/__init__"
+    if value.endswith(suffix):
+        value = value[:-len(suffix)]
+    return value.replace("/", ".").strip(".")
+
+modules_by_rel = {rel: module_name(rel) for _, rel, _, _, _ in files}
 candidates = []
 
 for path, rel, source, tree, generated in files:
     if is_test_path(rel):
         continue
+    module = modules_by_rel[rel]
     for node in tree.body:
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
@@ -255,16 +269,107 @@ for path, rel, source, tree, generated in files:
             continue
         if generated:
             continue
-        candidate_names.add(name)
-        candidates.append((rel, node))
+        key = (rel, name)
+        candidate_by_key[key] = node
+        candidates.append((rel, node, key))
+        candidates_by_name.setdefault(name, []).append(key)
+        candidates_by_module_name.setdefault((module, name), []).append(key)
 
-reference_counts = {name: 0 for name in candidate_names}
+reference_counts = {key: 0 for key in candidate_by_key}
+
+def resolve_from_module(rel, node):
+    if node.level == 0:
+        return node.module or ""
+    current = modules_by_rel.get(rel, "")
+    package = current if rel.endswith("/__init__.py") or rel == "__init__.py" else current.rpartition(".")[0]
+    parts = [part for part in package.split(".") if part]
+    up = max(node.level - 1, 0)
+    if up > len(parts):
+        return node.module or ""
+    base = parts[:len(parts) - up]
+    if node.module:
+        base.extend(node.module.split("."))
+    return ".".join(base)
+
+def increment(keys):
+    for key in set(keys):
+        if key in reference_counts:
+            reference_counts[key] += 1
+
+def local_candidate(rel, name):
+    key = (rel, name)
+    return [key] if key in reference_counts else []
+
 for path, rel, source, tree, generated in files:
+    import_aliases = {}
+    module_aliases = {}
+
     for node in ast.walk(tree):
-        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load) and node.id in reference_counts:
-            reference_counts[node.id] += 1
-        elif isinstance(node, ast.Attribute) and node.attr in reference_counts:
-            reference_counts[node.attr] += 1
+        if isinstance(node, ast.ImportFrom):
+            target_module = resolve_from_module(rel, node)
+            for alias in node.names:
+                if alias.name == "*":
+                    continue
+                local_name = alias.asname or alias.name
+                keys = candidates_by_module_name.get((target_module, alias.name), [])
+                if keys:
+                    import_aliases.setdefault(local_name, []).extend(keys)
+        elif isinstance(node, ast.Import):
+            for alias in node.names:
+                local_name = alias.asname or alias.name.split(".")[0]
+                module_aliases[local_name] = alias.name
+
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
+            increment(local_candidate(rel, node.id))
+            increment(import_aliases.get(node.id, []))
+        elif isinstance(node, ast.Attribute):
+            resolved = False
+            if isinstance(node.value, ast.Name):
+                imported_module = module_aliases.get(node.value.id)
+                if imported_module is not None:
+                    keys = candidates_by_module_name.get((imported_module, node.attr), [])
+                    if keys:
+                        increment(keys)
+                        resolved = True
+            if not resolved:
+                increment(candidates_by_name.get(node.attr, []))
+        elif isinstance(node, ast.Call):
+            if (
+                isinstance(node.func, ast.Name)
+                and node.func.id == "getattr"
+                and len(node.args) >= 2
+                and isinstance(node.args[1], ast.Constant)
+                and isinstance(node.args[1].value, str)
+            ):
+                name = node.args[1].value
+                keys = local_candidate(rel, name)
+                increment(keys if keys else candidates_by_name.get(name, []))
+        elif isinstance(node, ast.Subscript):
+            if (
+                isinstance(node.value, ast.Call)
+                and isinstance(node.value.func, ast.Name)
+                and node.value.func.id == "globals"
+                and not node.value.args
+                and not node.value.keywords
+                and isinstance(node.slice, ast.Constant)
+                and isinstance(node.slice.value, str)
+            ):
+                increment(local_candidate(rel, node.slice.value))
+
+    exported = set()
+    for node in tree.body:
+        value = None
+        if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == "__all__" for target in node.targets):
+            value = node.value
+        elif isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name) and node.target.id == "__all__":
+            value = node.value
+        if value is not None:
+            for child in ast.walk(value):
+                if isinstance(child, ast.Constant) and isinstance(child.value, str):
+                    exported.add(child.value)
+    for name in exported:
+        increment(local_candidate(rel, name))
 
 def emit(rule_id, category, severity, confidence, rel, node, summary, evidence):
     findings.append({
@@ -280,16 +385,17 @@ def emit(rule_id, category, severity, confidence, rel, node, summary, evidence):
         "verification": ["python -m compileall .", "project tests"],
     })
 
-for rel, node in candidates:
-    count = reference_counts.get(node.name, 0)
+for rel, node, key in candidates:
+    count = reference_counts.get(key, 0)
     if count == 0:
         emit(
             "PY-DEADCODE-PRIVATE-ZERO-REF", "DEADCODE", "MEDIUM", "HIGH",
             rel, node,
             "private module-level function %s has no lexical references in the visible Python tree" % node.name,
             [
-                "0 Name-load or Attribute references found across parsed Python files",
+                "0 conservative references found for this module/function candidate",
                 "decorated, dunder, generated, and test-defined functions are excluded from candidates",
+                "__all__, recognized imports, module attributes, getattr string names, and globals string subscripts contribute conservative references",
                 "HIGH is below PROVEN_UNUSED because imports, reflection, plugins, and external callers may exist",
             ],
         )
@@ -315,16 +421,16 @@ def forwarded_call(node):
             return False
     return True
 
-for rel, node in candidates:
-    if reference_counts.get(node.name, 0) == 1 and forwarded_call(node):
+for rel, node, key in candidates:
+    if reference_counts.get(key, 0) == 1 and forwarded_call(node):
         emit(
             "PY-BLOAT-PASSTHROUGH-WRAPPER", "BLOAT", "LOW", "SUSPICIOUS",
             rel, node,
-            "private one-call pass-through wrapper %s has one lexical reference" % node.name,
+            "private one-call pass-through wrapper %s has one conservative reference" % node.name,
             [
                 "body is a single return of another call",
                 "plain positional parameters are forwarded unchanged and in order",
-                "wrapper has exactly one conservative lexical reference",
+                "wrapper has exactly one module-aware conservative reference",
                 "SUSPICIOUS only: naming, policy, instrumentation, or API intent may justify the wrapper",
             ],
         )
@@ -338,7 +444,9 @@ def identity_key(expr):
     if not isinstance(op, (ast.Is, ast.IsNot)):
         return None
     right = expr.comparators[0]
-    if not isinstance(right, ast.Constant) or right.value not in (None, True, False):
+    if not isinstance(right, ast.Constant):
+        return None
+    if not (right.value is None or right.value is True or right.value is False):
         return None
     return (expr.left.id, type(op).__name__, repr(right.value))
 
@@ -409,7 +517,7 @@ def placeholder(value):
     lower = value.strip().lower()
     if lower.startswith("$" + "{") or lower.startswith("$("):
         return True
-    markers = ("example", "dummy", "placeholder", "changeme", "change-me", "notasecret", "not-a-secret", "your_", "your-")
+    markers = ("example", "dummy", "placeholder", "changeme", "change-me", "notasecret", "not-a-secret", "not_secret", "not-secret", "your_", "your-")
     return any(marker in lower for marker in markers)
 
 def assigned_names(target):
