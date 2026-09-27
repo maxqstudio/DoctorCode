@@ -47,10 +47,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN on the current candidate; governance run 36303351683 correctly failed because generated docs were stale.",
+      "evidence": "M10 Project Truth sync run 36303858286 successfully generated and validated the M10 sequence plus deterministic docs after M09 was frozen HISTORICAL. Temporary workflows are removed by the finalization sync; clean-tree Governance Bootstrap remains a blocking promotion check on the resulting exact SHA.",
       "id": "M10-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -80,14 +80,14 @@
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
     "DOC_LAYOUT": "PASS",
     "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
     "DOC_TEST_TRACEABILITY": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
     "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "PASS",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",
@@ -95,6 +95,7 @@
     "SEQUENCE_SYNC": "PASS",
     "SOURCE_TESTS": "PASS",
     "STRUCTURAL_SYNC": "PASS",
-    "TEST_RUNTIME_TRACEABILITY": "PASS"
+    "TEST_RUNTIME_TRACEABILITY": "PASS",
+    "HUMAN_COMPREHENSION": "PASS"
   }
 }

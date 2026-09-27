@@ -20,6 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
+      - name: Remove temporary M10 workflows from final tree
+        run: git rm .github/workflows/m10-python-label-discovery.yml .github/workflows/m10-project-truth-sync.yml
       - name: Generate M10 sequence actual
         run: >
           python .workflow/tools/generate_sequence_actual.py
@@ -31,33 +33,19 @@ jobs:
           python .workflow/tools/validate_sequence_contract.py
           --root .
           --session docs/sequence/sessions/M10-PYTHON-LABELED-REAL-WORLD.json
-      - name: Record sequence gate
-        shell: python
-        run: |
-          import json
-          from pathlib import Path
-          path = Path(".workflow/acceptance.json")
-          data = json.loads(path.read_text(encoding="utf-8"))
-          data["sequence_sync_status"] = "PASS"
-          data.setdefault("truth_gates", {})["SEQUENCE_SYNC"] = "PASS"
-          path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
       - name: Synchronize generated Project Truth
         run: python .workflow/tools/sync_project_truth.py --root .
-      - name: Validate generated artifacts before commit
+      - name: Validate generated artifacts before final commit
         run: |
           python .workflow/tools/validate_sequence_sessions.py
           python .workflow/tools/validate_project_docs.py
           python .workflow/tools/validate_doc_quality.py
           python .workflow/tools/validate_human_comprehension.py --require-pass
-      - name: Commit synchronized artifacts
+      - name: Commit final synchronized tree
         shell: bash
         run: |
-          if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
-            echo "No synchronization changes."
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .workflow/acceptance.json .workflow/generated docs
-          git commit -m "docs(m10): synchronize project truth"
+          git add -A
+          git commit -m "docs(m10): finalize synchronized project truth"
           git push origin HEAD:work/m10-python-labeled-real-world
