@@ -316,6 +316,14 @@ def shadowed(node, name, parents, cache):
         current = parents.get(current)
     return False
 
+module_bindings = BindingCollector()
+for item in selected_tree.body:
+    if item is selected_fn:
+        continue
+    module_bindings.visit(item)
+if TARGET_NAME in module_bindings.bound:
+    result()
+
 locations = []
 seen = set()
 
