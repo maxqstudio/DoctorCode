@@ -1133,6 +1133,34 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "claim": "M13 Python Related Context is merged and post-merge accepted on main at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M13-MAIN-ACCEPTED",
+      "runtime_evidence": [
+        "GitHub Actions Governance Bootstrap run 36326732074 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c",
+        "GitHub Actions Core CI run 36326732203 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c",
+        "GitHub Actions M10 Labeled Real World Python run 36326732066 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c",
+        "GitHub Actions M07 Python Real World run 36326731961 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c",
+        "GitHub Actions M06 Labeled Real World Go run 36326732156 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c",
+        "GitHub Actions Real World Go Validation run 36326731985 at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c"
+      ],
+      "source_owners": [
+        ".workflow/state.json",
+        ".workflow/acceptance.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/governance-bootstrap.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
     }
   ],
   "relations": [],

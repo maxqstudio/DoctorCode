@@ -3,18 +3,18 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 368c7b05d08d95beb5164d437920bbdd83c39e32
+Authority verified at SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
 Governance profile: strict
 
 ## Current phase
 Phase: M13_PYTHON_RELATED_CONTEXT
-Status: M13_ACCEPTED
+Status: M13_MAIN_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m13-python-related-context
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 368c7b05d08d95beb5164d437920bbdd83c39e32
+Last accepted SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
 Current candidate SHA: external final acceptance evidence
 Current source digest: fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31
 
@@ -50,6 +50,14 @@ SEQUENCE_SYNC: PASS
 - Final synchronized M13 branch tree 80f735c7be3598dfdf34b6a040d3e49464298a42 passed Governance Bootstrap run 36326117052.
 - Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36326117037, M07 Python Real World run 36326116936, M06 Go labels run 36326116920, and Real World Go run 36326116988 all passed on Linux, Windows, and macOS at 80f735c7be3598dfdf34b6a040d3e49464298a42.
+- Final clean M13 branch tree b83a4a158b5247f81b0406da2c1578b16e3a1913 passed Governance Bootstrap 36326412104, Core CI 36326412097, M10 Python labels 36326412090, M07 Python Real World 36326412089, M06 Go labels 36326412059, and Real World Go 36326412109 across Linux, Windows, and macOS.
+- M13 Python Related Context merged through PR #11 to main at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c.
+- Exact M13 product main Governance Bootstrap run 36326732074 completed success.
+- Exact M13 product main Core CI run 36326732203 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M13 product main M10 Labeled Real World Python run 36326732066 completed success on all three operating systems.
+- Exact M13 product main M07 Python Real World run 36326731961 completed success on all three operating systems.
+- Exact M13 product main M06 Labeled Real World Go run 36326732156 completed success on all three operating systems.
+- Exact M13 product main Real World Go Validation run 36326731985 completed success on all three operating systems.
 
 ## Not proven
 - M13 Python related discovery is intentionally limited to findings enclosed by a module-level FunctionDef or AsyncFunctionDef.
@@ -68,13 +76,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Run final exact-SHA acceptance on the M13_ACCEPTED tree after this governance finalization commit.
-- Open and merge the FINAL_ACCEPTED M13 pull request to main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before M14.
-- After M13_MAIN_ACCEPTED, proceed to the deterministic verification contract milestone under the Owner directive to continue until DoctorCode is complete.
+- Proceed to M14 Deterministic Verification Contract under the Owner directive to continue until DoctorCode is complete.
+- Branch M14 only from the governance-normalized M13 main after exact closure acceptance.
+- Preserve M13 product acceptance at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c and exact post-merge evidence as immutable historical evidence.
 
 ## Explicitly blocked
-- Starting M14 before exact M13 main post-merge acceptance.
-- Claiming Python related context is a complete dynamic dependency graph.
-- Treating related context as proof that code is safe to delete or auto-fix.
-- Starting MCP or Skill adapters before deterministic verification contracts are accepted.
+- Executing arbitrary repository-provided verification commands as trusted authority.
+- Treating verification success as proof that an unrelated semantic behavior is correct.
+- Treating related context or verification as proof that code is safe to delete without the declared contract.
+- Starting MCP or Skill adapters before the deterministic verification contract is accepted.

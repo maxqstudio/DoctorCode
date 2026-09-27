@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M13 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M13 through PR #11 to main at 3fccbd4398f2a12bd5214be9ed23ee18f46c679c.
+- Passed strict Governance Bootstrap on the exact product main merge SHA.
+- Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Authorized M14 Deterministic Verification Contract while keeping arbitrary repository-provided command execution outside trusted authority.
+
 ## 2026-09-27 — M13 Python Related Context accepted baseline
 
 Type: acceptance
