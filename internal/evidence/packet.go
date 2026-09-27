@@ -47,11 +47,6 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 		return fit(packet, maxBytes)
 	}
 
-	related, err := goanalysis.RelatedLocations(root, finding)
-	if err != nil {
-		return Packet{}, fmt.Errorf("find related context: %w", err)
-	}
-
 	for _, radius := range []int{3, 1, 0} {
 		excerpt, err := sourceExcerpt(root, finding, radius)
 		if err != nil {
@@ -60,6 +55,10 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 		packet.SourceExcerpt = excerpt
 		packet.Truncated = radius < 3
 		if encodedSize(packet) <= maxBytes {
+			related, relatedErr := goanalysis.RelatedLocations(root, finding)
+			if relatedErr != nil {
+				return Packet{}, fmt.Errorf("find related context: %w", relatedErr)
+			}
 			return appendRelated(root, packet, related, maxBytes)
 		}
 	}
@@ -119,7 +118,7 @@ func sourceExcerpt(root string, finding model.Finding, radius int) (string, erro
 	for line := start; line <= end; line++ {
 		fmt.Fprintf(&out, "%d: %s\n", line, lines[line-1])
 	}
-	return strings.TrimSuffix(out.String(), "\n"), nil
+	return strings.TrimSuffix(out.String(), "\n"), start, end, nil
 }
 
 func resolveFindingPath(root, findingPath string) (string, error) {
@@ -178,19 +177,16 @@ func appendRelated(root string, packet Packet, locations []goanalysis.RelatedLoc
 		location := locations[i]
 		added := false
 		for _, radius := range []int{1, 0} {
-			excerpt, err := sourceExcerptAt(root, location.Path, location.Line, radius)
+			excerpt, lineStart, lineEnd, err := sourceExcerptAt(root, location.Path, location.Line, radius)
 			if err != nil {
 				return Packet{}, err
 			}
 			item := RelatedExcerpt{
 				Path:      location.Path,
-				LineStart: location.Line - radius,
-				LineEnd:   location.Line + radius,
+				LineStart: lineStart,
+				LineEnd:   lineEnd,
 				Kind:      location.Kind,
 				Excerpt:   excerpt,
-			}
-			if item.LineStart < 1 {
-				item.LineStart = 1
 			}
 			candidate := packet
 			candidate.RelatedExcerpts = append(append([]RelatedExcerpt(nil), packet.RelatedExcerpts...), item)
@@ -211,18 +207,18 @@ func appendRelated(root string, packet Packet, locations []goanalysis.RelatedLoc
 	return fit(packet, maxBytes)
 }
 
-func sourceExcerptAt(root, relPath string, line, radius int) (string, error) {
+func sourceExcerptAt(root, relPath string, line, radius int) (string, int, int, error) {
 	path, err := resolveFindingPath(root, relPath)
 	if err != nil {
-		return "", err
+		return "", 0, 0, err
 	}
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return "", err
+		return "", 0, 0, err
 	}
 	lines := strings.Split(strings.ReplaceAll(string(data), "\r\n", "\n"), "\n")
 	if line < 1 || line > len(lines) {
-		return "", fmt.Errorf("related context line %d outside %s", line, relPath)
+		return "", 0, 0, fmt.Errorf("related context line %d outside %s", line, relPath)
 	}
 	start := line - radius
 	if start < 1 {
