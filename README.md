@@ -337,3 +337,12 @@ See [SECURITY.md](SECURITY.md) for vulnerability-reporting guidance.
 - [PayPal](https://paypal.me/JacksonJackson1501)
 
 Support is optional and does not affect access to the public repository or its features.
+
+### M13 bounded Python related context
+
+M13 extends the schema-v2 bounded related-context packet to eligible Python findings. A finding must be enclosed by a module-level function. DoctorCode can attach same-file unshadowed direct references plus recognized top-level from-import aliases and module import attributes, including conventional src-layout module aliases.
+
+Python lexical scopes are handled conservatively: local arguments, assignments, imports, nested definitions, comprehensions, and similar bindings can prevent a same-name load from being classified as related. If the selected module contains another module-level binding for the selected function name, M13 fails closed to no related locations because runtime identity is ambiguous.
+
+Dynamic imports, package-facade re-export chains, string reflection, monkey-patching, class/method dispatch, nested callable identity, and transitive dependency graphs remain outside M13's proof boundary. Context remains review evidence only; it never authorizes deletion or automatic repair.
+

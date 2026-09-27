@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M13 Python Related Context candidate
+
+Type: development
+
+- Added bounded related-location discovery for findings enclosed by module-level Python functions.
+- Added same-file direct, top-level from-import alias, and top-level module-attribute reference recognition with src-layout aliases.
+- Excluded local lexical shadows and unrelated same-named functions from related context.
+- Added fail-closed handling for selected-function module-level rebinding after a dedicated RED gate exposed false relations.
+- Routed eligible Python findings through the accepted schema-v2 related_total/related_excerpts packet budget.
+- Added Linux, Windows, and macOS public CLI smoke for audit -> exact finding ID -> Python related context.
+
 ## 2026-09-27 — M12 main accepted baseline
 
 Type: acceptance

@@ -18,7 +18,7 @@ HEAD is recorded externally after the commit exists.
 | STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -87,6 +87,10 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M12-BOUNDARY | M12 validates the selected source path against the repository boundary before invoking Go related discovery, so parent traversal is rejected before an outside Go file is parsed. | PROJECT_TRUTH_SYNC.md | internal/evidence/packet.go | internal/evidence/packet_test.go | RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52; GREEN Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 | PASS |
 | TRUTH-M12-LANGUAGE-BOUNDARY | M12 related-context enrichment is Go-only; Python and other languages retain primary-source-only context until a separately accepted parity milestone. | PROJECT_TRUTH_SYNC.md | .workflow/state.json; internal/evidence/packet.go | internal/evidence/packet_test.go | GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 | PASS |
 | TRUTH-M12-MAIN-ACCEPTED | M12 Go Related Context is merged and post-merge accepted on main at 368c7b05d08d95beb5164d437920bbdd83c39e32 after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully. | PROJECT_TRUTH_SYNC.md | .workflow/state.json; .workflow/acceptance.json | .github/workflows/governance-bootstrap.yml; .github/workflows/ci.yml; .github/workflows/m10-python-labeled-real-world.yml; .github/workflows/m07-python-real-world.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/real-world-go.yml | GitHub Actions Governance Bootstrap run 36323970886 at 368c7b05d08d95beb5164d437920bbdd83c39e32; GitHub Actions Core CI run 36323970841 at 368c7b05d08d95beb5164d437920bbdd83c39e32; GitHub Actions M10 Labeled Real World Python run 36323970832 at 368c7b05d08d95beb5164d437920bbdd83c39e32; GitHub Actions M07 Python Real World run 36323970756 at 368c7b05d08d95beb5164d437920bbdd83c39e32; GitHub Actions M06 Labeled Real World Go run 36323970803 at 368c7b05d08d95beb5164d437920bbdd83c39e32; GitHub Actions Real World Go Validation run 36323970845 at 368c7b05d08d95beb5164d437920bbdd83c39e32 | PASS |
+| TRUTH-M13-PYTHON-RELATED | M13 derives related locations for findings enclosed by module-level Python functions using same-file direct references plus recognized top-level from-import aliases and module imports/attributes, with src-layout module aliases. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/related.go | internal/analyzers/python/related_test.go | GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91 | PASS |
+| TRUTH-M13-SHADOW-REBIND | M13 excludes conservative lexical shadows and fails closed to no related locations when the selected Python module has another module-level binding of the selected function name. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/related.go | internal/analyzers/python/related_test.go | RED GitHub Actions Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd; GREEN GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91 | PASS |
+| TRUTH-M13-PACKET-PARITY | M13 routes eligible Python findings through the same schema-v2 bounded related excerpt contract as Go while preserving primary source priority, max-bytes, related_total, test-reference classification, and security excerpt omission. | PROJECT_TRUTH_SYNC.md | internal/evidence/packet.go | internal/evidence/packet_test.go; .github/workflows/ci.yml | GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91 | PASS |
+| TRUTH-M13-REGRESSION-MATRIX | The M13 product candidate preserved Core CI plus every accepted Go/Python public-source and bounded-label lane on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | .github/workflows/ci.yml | .github/workflows/ci.yml; .github/workflows/m10-python-labeled-real-world.yml; .github/workflows/m07-python-real-world.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/real-world-go.yml | GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91; GitHub Actions M10 Labeled Real World Python run 36325714820 at 40771744b74d91478c7eb60386d718ba4b170e91; GitHub Actions M07 Python Real World run 36325714848 at 40771744b74d91478c7eb60386d718ba4b170e91; GitHub Actions M06 Labeled Real World Go run 36325714812 at 40771744b74d91478c7eb60386d718ba4b170e91; GitHub Actions Real World Go Validation run 36325714823 at 40771744b74d91478c7eb60386d718ba4b170e91 | PASS |
 
 ## Claim relations
 

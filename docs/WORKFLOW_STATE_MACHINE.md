@@ -324,6 +324,56 @@ Authority: internal/realworld/m10-python-labels.json, internal/realworld/python_
 
 - External sources are never mutated; M10 label harness and workflow can be reverted independently of the accepted M09 analyzer.
 
+## FLOW-PYTHON-RELATED-CONTEXT — Bounded Python related context compilation
+
+Purpose: Enrich one exact current Python finding with deterministic bounded production/test references without exceeding the evidence packet byte budget.
+Critical: FALSE
+Entry condition: The selected current finding resolves to a repository-contained .py source path and is enclosed by a module-level function.
+Authority: internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml
+
+### States
+
+- PRIMARY_PATH_VERIFIED
+- FUNCTION_IDENTIFIED
+- BINDING_AMBIGUITY_CHECKED
+- REFERENCES_CLASSIFIED
+- RELATED_EXCERPTS_BOUNDED
+- PACKET_REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| PRIMARY_PATH_VERIFIED | FUNCTION_IDENTIFIED | Parse visible Python source and identify the selected module-level function by source range. | internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml |  |
+| FUNCTION_IDENTIFIED | BINDING_AMBIGUITY_CHECKED | Reject related discovery when another module-level binding of the selected function name makes identity ambiguous. | internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml |  |
+| BINDING_AMBIGUITY_CHECKED | REFERENCES_CLASSIFIED | Collect same-file direct references and recognized top-level import/module-attribute references while excluding lexical shadows. | internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml |  |
+| REFERENCES_CLASSIFIED | RELATED_EXCERPTS_BOUNDED | Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes. | internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml |  |
+| RELATED_EXCERPTS_BOUNDED | PACKET_REPORTED | Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state. | internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml |  |
+
+### Invariants
+
+- Primary selected source is repository-contained before related discovery runs.
+- Only module-level Python functions are eligible for M13 related discovery.
+- Local lexical shadows are excluded conservatively.
+- Additional module-level selected-name bindings cause fail-closed empty related context.
+- Only bounded recognized static import forms are followed; dynamic runtime resolution is not guessed.
+- Primary source context has priority over optional related excerpts.
+- Packet encoded size never exceeds max-bytes.
+- Security findings continue to omit source and related excerpts.
+- M13 does not claim a transitive or complete Python dependency graph.
+
+### Failure behavior
+
+- Parse/read errors fail the context request; ambiguous selected-name module rebinding yields no related locations rather than guessed relations.
+
+### Restart behavior
+
+- The flow is stateless and deterministic for an unchanged repository source state and interpreter semantics.
+
+### Rollback behavior
+
+- M13 can be reverted to M12 Go-only related enrichment without changing detector findings or safe_autofix semantics.
+
 ## FLOW-PYTHON-REPOSITORY-SHAPED — Python repository-shaped regression validation
 
 Purpose: Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.

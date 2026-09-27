@@ -1027,6 +1027,84 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "claim": "M13 derives related locations for findings enclosed by module-level Python functions using same-file direct references plus recognized top-level from-import aliases and module imports/attributes, with src-layout module aliases.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M13-PYTHON-RELATED",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/related.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/python/related_test.go"
+      ]
+    },
+    {
+      "claim": "M13 excludes conservative lexical shadows and fails closed to no related locations when the selected Python module has another module-level binding of the selected function name.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M13-SHADOW-REBIND",
+      "runtime_evidence": [
+        "RED GitHub Actions Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd",
+        "GREEN GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/related.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/python/related_test.go"
+      ]
+    },
+    {
+      "claim": "M13 routes eligible Python findings through the same schema-v2 bounded related excerpt contract as Go while preserving primary source priority, max-bytes, related_total, test-reference classification, and security excerpt omission.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M13-PACKET-PARITY",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"
+      ],
+      "source_owners": [
+        "internal/evidence/packet.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/evidence/packet_test.go",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "The M13 product candidate preserved Core CI plus every accepted Go/Python public-source and bounded-label lane on Linux, Windows, and macOS.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M13-REGRESSION-MATRIX",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91",
+        "GitHub Actions M10 Labeled Real World Python run 36325714820 at 40771744b74d91478c7eb60386d718ba4b170e91",
+        "GitHub Actions M07 Python Real World run 36325714848 at 40771744b74d91478c7eb60386d718ba4b170e91",
+        "GitHub Actions M06 Labeled Real World Go run 36325714812 at 40771744b74d91478c7eb60386d718ba4b170e91",
+        "GitHub Actions Real World Go Validation run 36325714823 at 40771744b74d91478c7eb60386d718ba4b170e91"
+      ],
+      "source_owners": [
+        ".github/workflows/ci.yml"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
     }
   ],
   "relations": [],

@@ -1,0 +1,79 @@
+{
+  "authority": "internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml",
+  "critical": false,
+  "entry_condition": "The selected current finding resolves to a repository-contained .py source path and is enclosed by a module-level function.",
+  "failure_behavior": [
+    "Parse/read errors fail the context request; ambiguous selected-name module rebinding yields no related locations rather than guessed relations."
+  ],
+  "flow_id": "FLOW-PYTHON-RELATED-CONTEXT",
+  "invariants": [
+    "Primary selected source is repository-contained before related discovery runs.",
+    "Only module-level Python functions are eligible for M13 related discovery.",
+    "Local lexical shadows are excluded conservatively.",
+    "Additional module-level selected-name bindings cause fail-closed empty related context.",
+    "Only bounded recognized static import forms are followed; dynamic runtime resolution is not guessed.",
+    "Primary source context has priority over optional related excerpts.",
+    "Packet encoded size never exceeds max-bytes.",
+    "Security findings continue to omit source and related excerpts.",
+    "M13 does not claim a transitive or complete Python dependency graph."
+  ],
+  "purpose": "Enrich one exact current Python finding with deterministic bounded production/test references without exceeding the evidence packet byte budget.",
+  "restart_behavior": [
+    "The flow is stateless and deterministic for an unchanged repository source state and interpreter semantics."
+  ],
+  "rollback_behavior": [
+    "M13 can be reverted to M12 Go-only related enrichment without changing detector findings or safe_autofix semantics."
+  ],
+  "schema_version": 1,
+  "sequence_session": "M13-PYTHON-RELATED-CONTEXT",
+  "source_owners": [
+    "internal/analyzers/python/related.go",
+    "internal/evidence/packet.go"
+  ],
+  "states": [
+    "PRIMARY_PATH_VERIFIED",
+    "FUNCTION_IDENTIFIED",
+    "BINDING_AMBIGUITY_CHECKED",
+    "REFERENCES_CLASSIFIED",
+    "RELATED_EXCERPTS_BOUNDED",
+    "PACKET_REPORTED"
+  ],
+  "tests": [
+    "internal/analyzers/python/related_test.go",
+    "internal/evidence/packet_test.go",
+    ".github/workflows/ci.yml"
+  ],
+  "title": "Bounded Python related context compilation",
+  "transitions": [
+    {
+      "action": "Parse visible Python source and identify the selected module-level function by source range.",
+      "from": "PRIMARY_PATH_VERIFIED",
+      "side_effects": [],
+      "to": "FUNCTION_IDENTIFIED"
+    },
+    {
+      "action": "Reject related discovery when another module-level binding of the selected function name makes identity ambiguous.",
+      "from": "FUNCTION_IDENTIFIED",
+      "side_effects": [],
+      "to": "BINDING_AMBIGUITY_CHECKED"
+    },
+    {
+      "action": "Collect same-file direct references and recognized top-level import/module-attribute references while excluding lexical shadows.",
+      "from": "BINDING_AMBIGUITY_CHECKED",
+      "side_effects": [],
+      "to": "REFERENCES_CLASSIFIED"
+    },
+    {
+      "action": "Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.",
+      "from": "REFERENCES_CLASSIFIED",
+      "side_effects": [],
+      "to": "RELATED_EXCERPTS_BOUNDED"
+    },
+    {
+      "action": "Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.",
+      "from": "RELATED_EXCERPTS_BOUNDED",
+      "side_effects": [],
+      "to": "PACKET_REPORTED"
+    }
+  ]
+}

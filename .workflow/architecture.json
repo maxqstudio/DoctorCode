@@ -87,7 +87,7 @@
         "related excerpt prioritization",
         "related excerpt byte-budget truncation"
       ],
-      "purpose": "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional related context while enforcing repository-contained source reads."
+      "purpose": "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional Go/Python related context while enforcing repository-contained source reads."
     },
     {
       "depends_on": [
@@ -157,7 +157,8 @@
         "recognized dynamic/export liveness guards",
         "conventional src-layout module aliases",
         "direct module-level re-export propagation",
-        "dotted imported-module attribute resolution"
+        "dotted imported-module attribute resolution",
+        "bounded scope-aware related-reference discovery for module-level functions"
       ],
       "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence."
     },
@@ -196,7 +197,7 @@
     },
     {
       "from": "evidence reducer",
-      "meaning": "The packet exposes the selected finding, primary excerpt, and budget-permitting related Go excerpts; security excerpts remain omitted and non-Go findings keep primary-source-only context.",
+      "meaning": "The packet exposes the selected finding, primary excerpt, and budget-permitting related Go or Python excerpts; security excerpts remain omitted and unsupported languages keep primary-source-only context.",
       "to": "small LLM or human"
     },
     {
@@ -293,6 +294,11 @@
       "from": "Go Built-in Analyzer",
       "meaning": "For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion.",
       "to": "evidence reducer"
+    },
+    {
+      "from": "Python Built-in Analyzer",
+      "meaning": "For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion.",
+      "to": "evidence reducer"
     }
   ],
   "external_boundaries": [
@@ -331,6 +337,10 @@
     {
       "contract": "M12 follows only enclosing top-level non-method functions and references in the same directory/package. Local shadow bindings and external test packages are excluded; no full type-checker or transitive graph is claimed.",
       "name": "Go related-context boundary"
+    },
+    {
+      "contract": "M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed.",
+      "name": "Python related-context boundary"
     }
   ],
   "schema_version": 1

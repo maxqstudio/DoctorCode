@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 127 files, 2 language categories.
+Observed source inventory: 129 files, 2 language categories.
 
 ## Major components
 
@@ -39,11 +39,11 @@ Observed source inventory: 127 files, 2 language categories.
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries, binding-aware related-reference discovery for top-level non-method functions | Go parser/AST standard library |
-| Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional related context while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution, related excerpt prioritization, related excerpt byte-budget truncation | detector engine |
+| Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional Go/Python related context while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution, related excerpt prioritization, related excerpt byte-budget truncation | detector engine |
 | Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate, M09 Python repository-shaped gate | Go analyzer, Python analyzer |
 | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
-| Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution | host Python 3.8+ standard library ast, detector unavailable contract |
+| Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution, bounded scope-aware related-reference discovery for module-level functions | host Python 3.8+ standard library ast, detector unavailable contract |
 | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 
 ## Main data flow
@@ -51,7 +51,7 @@ Observed source inventory: 127 files, 2 language categories.
 - repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
 - detector engine -> evidence reducer: doctorcode next selects the highest-priority finding; doctorcode context selects one exact current finding ID; both reduce that finding to the same bounded packet.
-- evidence reducer -> small LLM or human: The packet exposes the selected finding, primary excerpt, and budget-permitting related Go excerpts; security excerpts remain omitted and non-Go findings keep primary-source-only context.
+- evidence reducer -> small LLM or human: The packet exposes the selected finding, primary excerpt, and budget-permitting related Go or Python excerpts; security excerpts remain omitted and unsupported languages keep primary-source-only context.
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
 - precision benchmark harness -> GitHub Actions: Threshold result is a blocking regression gate on all three supported CI operating systems.
@@ -71,6 +71,7 @@ Observed source inventory: 127 files, 2 language categories.
 - M08 Python adversarial corpus -> precision benchmark harness: Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior.
 - M09 Python repository-shaped corpus -> precision benchmark harness: Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation.
 - Go Built-in Analyzer -> evidence reducer: For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion.
+- Python Built-in Analyzer -> evidence reducer: For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion.
 
 ## Main user workflows
 
@@ -155,6 +156,18 @@ Authority: internal/realworld/m10-python-labels.json, internal/realworld/python_
 - MATCHING_BOUNDED_LABELS -> GATED : Require every valid anchor present and every invalid anchor absent on all three operating systems.
 - GATED -> REPORTED : Emit bounded valid/invalid counts and test verdict without extrapolating ecosystem precision.
 
+### FLOW-PYTHON-RELATED-CONTEXT — Bounded Python related context compilation
+
+Enrich one exact current Python finding with deterministic bounded production/test references without exceeding the evidence packet byte budget.
+
+Authority: internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml
+
+- PRIMARY_PATH_VERIFIED -> FUNCTION_IDENTIFIED : Parse visible Python source and identify the selected module-level function by source range.
+- FUNCTION_IDENTIFIED -> BINDING_AMBIGUITY_CHECKED : Reject related discovery when another module-level binding of the selected function name makes identity ambiguous.
+- BINDING_AMBIGUITY_CHECKED -> REFERENCES_CLASSIFIED : Collect same-file direct references and recognized top-level import/module-attribute references while excluding lexical shadows.
+- REFERENCES_CLASSIFIED -> RELATED_EXCERPTS_BOUNDED : Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.
+- RELATED_EXCERPTS_BOUNDED -> PACKET_REPORTED : Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.
+
 ### FLOW-PYTHON-REPOSITORY-SHAPED — Python repository-shaped regression validation
 
 Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.
@@ -201,9 +214,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M12_GO_RELATED_CONTEXT
+Current phase: M13_PYTHON_RELATED_CONTEXT
 
-Current status: M12_MAIN_ACCEPTED
+Current status: M13_VALIDATING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -244,6 +257,7 @@ compiler does not infer them from implementation names.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
+- FLOW-PYTHON-RELATED-CONTEXT: Parse/read errors fail the context request; ambiguous selected-name module rebinding yields no related locations rather than guessed relations.
 - FLOW-PYTHON-REPOSITORY-SHAPED: Any corpus FP/FN, prior-gate regression, real-world matrix failure, parse incompleteness, or strict governance drift blocks M09 promotion.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
@@ -252,14 +266,14 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Proceed to M13 Python Related Context parity under the Owner directive to continue until the DoctorCode product is complete.
-- Branch M13 only from the governance-normalized M12 main after exact closure acceptance.
-- Preserve M12 product acceptance at 368c7b05d08d95beb5164d437920bbdd83c39e32 and exact post-merge evidence as immutable historical evidence.
+- Generate and validate the M13 CURRENT sequence plus deterministic Project Truth.
+- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
+- After FINAL_ACCEPTED, merge M13 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
 
 Blocked actions:
-- Claiming cross-language related-context parity before M13 acceptance.
-- Treating related context as a complete dependency graph or safe-delete proof.
-- Starting MCP/Skill adapters before context parity and deterministic verification are accepted.
+- Claiming Python related context is a complete dynamic dependency graph.
+- Treating related context as proof that code is safe to delete or auto-fix.
+- Starting MCP or Skill adapters before deterministic verification contracts are accepted.
 
 Known blockers:
 - None declared.
@@ -268,32 +282,24 @@ Known blockers:
 
 ### Proven
 
-- M11 is MAIN_ACCEPTED with product baseline main@3ca18bdca11e436b3a2fa63491976041639eeee2 and governance-normalized current main@2caa530a9e1f284a0446b7ead6d97218de996498.
+- M12 is MAIN_ACCEPTED with product baseline main@368c7b05d08d95beb5164d437920bbdd83c39e32 and governance-normalized starting main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d.
 - Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
-- M12 initial RED Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b proved RelatedLocations and packet related-context fields did not yet exist.
-- M12 first implementation Core CI run 36322997947 at b289f2457196e6060de66a8738fb9e11fc6c8373 exposed a same-file AST object-identity defect while test-file reference discovery already worked.
-- M12 boundary RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 proved related discovery could parse an invalid parent-traversal Go file before repository-boundary rejection.
-- M12 reuses the selected source AST for binding-aware same-file function references and only accepts unresolved cross-file references from the same Go package; external test packages are not guessed.
-- Evidence packet schema v2 can include bounded Go production and same-package test related excerpts while preserving the caller byte budget and primary source priority.
-- M12 product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI run 36323276401 on Linux, Windows, and macOS, including the end-to-end related-context CLI smoke.
-- At the same product candidate, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 passed on all three operating systems.
-- Final synchronized M12 branch tree edc415a2935307490cf73ec12fed72ff9a0c042b passed Governance Bootstrap run 36323629497.
-- Core CI run 36323629517 at edc415a2935307490cf73ec12fed72ff9a0c042b passed on ubuntu-latest, windows-latest, and macos-latest.
-- M10 Python labels run 36323629491, M07 Python Real World run 36323629637, M06 Go labels run 36323629567, and Real World Go run 36323629559 all passed on Linux, Windows, and macOS at edc415a2935307490cf73ec12fed72ff9a0c042b.
-- M12 Go Related Context merged through PR #9 to main at 368c7b05d08d95beb5164d437920bbdd83c39e32.
-- Exact M12 product main Governance Bootstrap run 36323970886 completed success.
-- Exact M12 product main Core CI run 36323970841 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M12 product main M10 Labeled Real World Python run 36323970832 completed success on all three operating systems.
-- Exact M12 product main M07 Python Real World run 36323970756 completed success on all three operating systems.
-- Exact M12 product main M06 Labeled Real World Go run 36323970803 completed success on all three operating systems.
-- Exact M12 product main Real World Go Validation run 36323970845 completed success on all three operating systems.
+- M13 initial RED Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 proved scoped Python RelatedLocations did not yet exist.
+- M13 packet RED Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d proved evidence packets had no Python related-context provider.
+- M13 first implementation Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed that the evidence reducer still dispatched only Go related context.
+- M13 provider plus dispatcher Core CI run 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed Linux, Windows, and macOS.
+- M13 rebinding RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd proved module-level rebinding could misclassify references to a replacement binding as related to the original function.
+- M13 fails closed to empty related context when the selected module has another module-level binding for the selected function name.
+- M13 product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI run 36325714821 on Linux, Windows, and macOS, including the public audit -> exact finding ID -> Python context E2E smoke.
+- At the same M13 product candidate, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 passed on all three operating systems.
 
 ### Not proven
 
-- M12 related discovery is intentionally limited to enclosing top-level non-method Go functions in the same directory and package.
-- Go methods, external test packages, Python findings, and other languages retain the M11 primary-source-only context behavior.
-- M12 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.
-- Cross-file same-package references use conservative parser binding behavior rather than a full Go type checker.
+- M13 Python related discovery is intentionally limited to findings enclosed by a module-level FunctionDef or AsyncFunctionDef.
+- Same-file direct references, recognized top-level from-import aliases, and recognized top-level module imports/attributes are covered; dynamic imports, string reflection, package-facade re-export chains, and runtime monkey-patching are not modeled.
+- Local lexical shadows are excluded using conservative scope binding collection; Python's full runtime name-resolution behavior is not claimed.
+- Any additional module-level binding of the selected function name makes M13 fail closed to no related locations for that function.
+- M13 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.
 - At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.
 - The byte budget remains deterministic bytes, not exact tokenizer counts.
 - Context evidence remains review input and never proves safe deletion or authorizes automatic repair.
