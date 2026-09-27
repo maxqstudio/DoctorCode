@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m08-python-adversarial
+Active branch: work/m09-python-repository-shaped
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e
-Current source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
+Last accepted SHA: 29924f324db316a9a2985943c09d4711824a1220
+Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

@@ -4,19 +4,20 @@
 
 ## Evidence boundary
 
-M08 acceptance adds a 10-case Python adversarial corpus. Pre-repair candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 FP and 2 FN while M07 remained passing. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354 on Linux, Windows, and macOS. M08 reports 2 TP, 0 FP, 0 FN and M07 remains 5 TP, 0 FP, 0 FN. Evidence is corpus-scoped and does not authorize deletion.
+M09 uses 14 repository-shaped Python fixtures. Pre-repair candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 TP, 5 FP, and 3 FN. Repaired source af95c1d040db6336c99d06d7a1d993386f11bce7 reaches 5 TP, 0 FP, and 0 FN. Candidate be60c639c9eab25f34c683fb93bcc7db77eb77fc passes core CI plus accepted Go/Python real-world regression lanes on Linux, Windows, and macOS. Evidence is corpus-scoped, conservative, and never authorizes automatic deletion.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
+Current source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M08-GATE-EXPOSED-DEFECTS | The adversarial gate must expose previously accepted Python detector defects before repair. | CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8: M07 PASS; M08 FAIL with 5 false positives and 2 false negatives. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
-| M08-IDENTITY-STRICTNESS | Python LOGIC identity matching distinguishes None/True/False by identity rather than equality-compatible integers. | logic-int-identity-negative is clean after repair; M08 gate passes in run 36286874063. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
-| M08-MODULE-AWARE-REFERENCES | Python private-function reference evidence distinguishes same-named functions in different modules while preserving recognized cross-module imports/attributes. | deadcode-same-name-module-collision and bloat-same-name-module-collision are detected; from-import and module-attribute live cases remain clean in run 36286874063. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
-| M08-DYNAMIC-REFERENCE-GUARDS | Recognized __all__, getattr, and globals string references suppress unsafe zero-reference claims. | deadcode-all-export-negative, deadcode-getattr-self-negative, and deadcode-globals-negative remain clean in run 36286874063. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
-| M08-SECURITY-PLACEHOLDER | Obvious not_secret/not-secret placeholder strings are not treated as hardcoded credential findings. | security-not-secret-placeholder remains clean in run 36286874063. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
-| M08-REGRESSION-PRESERVATION | M07 baseline and pinned public Python evidence remain passing after M08 repairs. | Core CI run 36286874063 passes M07 and M08 on all three OS; pinned public Python run 36286874048 passes all three OS. Exact synchronized candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict governance run 36287085335, core CI run 36287085344, and pinned public Python run 36287085354. | PASS |
+| M09-GATE-EXPOSED-TOPOLOGY-DEFECTS | Repository-shaped fixtures must expose accepted Python reference-topology defects before repair. | CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121: M09 FAIL with 2 TP, 5 FP, and 3 FN. | PASS |
+| M09-SRC-LAYOUT | Conventional src-layout absolute imports preserve live private functions and one-use wrappers while still isolating genuinely stale siblings. | src-layout-from-import-live, src-layout-bloat-live, and src-layout-dead-isolation pass in CI run 36301647674. | PASS |
+| M09-PACKAGE-REEXPORT | Direct package-facade re-exports resolve to original private-function candidates without suppressing one-use wrapper evidence. | package-init-reexport-live and package-init-reexport-bloat pass in CI run 36301647674. | PASS |
+| M09-DOTTED-MODULE-ISOLATION | Dotted module attribute access resolves through the explicit import root without keeping same-named functions in unrelated packages alive. | nested-dotted-module-live and nested-dotted-same-name-isolation pass in CI run 36301647674. | PASS |
+| M09-LIVENESS-USAGE-SEPARATION | Import/export declarations can keep a candidate conservatively live without inflating the BLOAT one-usage count. | M09 package facade and src-layout wrapper cases pass with PY-BLOAT-PASSTHROUGH-WRAPPER recall restored to 1.0 in run 36301647674. | PASS |
+| M09-REPOSITORY-SHAPED-GATE | The 14-case M09 corpus passes its exact labels after repair. | Run 36301647674: 5 TP, 0 FP, 0 FN; precision=1 and recall=1 within the tracked corpus. | PASS |
+| M09-ALL-ACCEPTED-LANES | Every accepted core and real-world regression lane executes on the phase branch across Linux, Windows, and macOS. | Core CI 36301647674; Real World Go 36301647686; M06 Labeled Real World Go 36301647705; M07 Python Real World 36301647658 all SUCCESS 3/3 OS at be60c639c9eab25f34c683fb93bcc7db77eb77fc. | PASS |
 
 ## Test commands
 
@@ -26,19 +27,22 @@ Current source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b1
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
 ## Runtime checks
 
-- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external paths
+- go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
+- go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths
+- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M08-PYTHON-ADVERSARIAL
+Sequence session contract: M09-PYTHON-REPOSITORY-SHAPED
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

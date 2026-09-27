@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -69,6 +69,10 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M08-REFERENCE-REPAIR | M08 uses candidate/module-aware Python private-function reference evidence plus conservative recognized dynamic/export references. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/benchmark/testdata/m08-python-adversarial.json | GitHub Actions CI run 36287085344 at f28f35d16bd8cb7a691827ecd10a353eba227258 | PASS |
 | TRUTH-M08-ADVERSARIAL-PASS | Repaired M08 corpus reports 2 TP, 0 FP, and 0 FN while M07 remains 5 TP, 0 FP, and 0 FN. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m07-python.json; internal/benchmark/testdata/m08-python-adversarial.json | internal/benchmark/testdata/m08-python-adversarial.json | GitHub Actions CI run 36287085344 at f28f35d16bd8cb7a691827ecd10a353eba227258 | PASS |
 | TRUTH-M08-PUBLIC-REGRESSION | Pinned click/httpx/requests/Flask Python validation remains passing on Linux, Windows, and macOS after M08 repair. | PROJECT_TRUTH_SYNC.md | internal/realworld/m07-python-sources.json; .github/workflows/m07-python-real-world.yml | internal/realworld/python_m07_test.go | GitHub Actions M07 Python Real World run 36287085354 at f28f35d16bd8cb7a691827ecd10a353eba227258 | PASS |
+| TRUTH-M09-PRE-REPAIR-FAIL | The final pre-repair 14-case M09 corpus exposed 5 false positives and 3 false negatives while accepted M07/M08 gates remained passing. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m09-python-repository-shaped.json | internal/benchmark/testdata/m09-python-repository-shaped.json | GitHub Actions CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121 | PASS |
+| TRUTH-M09-TOPOLOGY-REPAIR | M09 Python reference evidence handles a conventional src layout, direct module-level re-exports, separated usage/liveness evidence, and exact dotted imported-module attributes. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/benchmark/testdata/m09-python-repository-shaped.json | GitHub Actions CI run 36301647674 at be60c639c9eab25f34c683fb93bcc7db77eb77fc | PASS |
+| TRUTH-M09-CORPUS-PASS | The repaired 14-case M09 Python repository-shaped corpus reports 5 TP, 0 FP, and 0 FN. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m09-python-repository-shaped.json | internal/benchmark/testdata/m09-python-repository-shaped.json | GitHub Actions CI run 36301647674 | PASS |
+| TRUTH-M09-ALL-REALWORLD-LANES | Accepted Go compatibility, bounded Go labels, and Python public-source regression workflows run on main and every work/** phase and passed M09 on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | .github/workflows/real-world-go.yml; .github/workflows/m06-labeled-real-world.yml; .github/workflows/m07-python-real-world.yml | internal/realworld/realworld_test.go; internal/realworld/labeled_test.go; internal/realworld/python_m07_test.go | GitHub Actions runs 36301647686, 36301647705, and 36301647658 at be60c639c9eab25f34c683fb93bcc7db77eb77fc | PASS |
 
 ## Claim relations
 
