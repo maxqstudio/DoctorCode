@@ -1,0 +1,80 @@
+name: M07 Python Discovery
+
+on:
+  push:
+    branches:
+      - "work/m07-python-semantic"
+
+permissions:
+  contents: read
+
+jobs:
+  discover:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout DoctorCode
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          persist-credentials: false
+      - name: Checkout click
+        uses: actions/checkout@v4
+        with:
+          repository: pallets/click
+          ref: 06b2a678741131fd577ce170e23e5ca0aeba0309
+          path: external/click
+          persist-credentials: false
+      - name: Checkout httpx
+        uses: actions/checkout@v4
+        with:
+          repository: encode/httpx
+          ref: b5addb64f0161ff6bfe94c124ef76f6a1fba5254
+          path: external/httpx
+          persist-credentials: false
+      - name: Checkout requests
+        uses: actions/checkout@v4
+        with:
+          repository: psf/requests
+          ref: 611c6162cbc4ac2020a2f91c7cfa4f3abf9bbb60
+          path: external/requests
+          persist-credentials: false
+      - name: Checkout flask
+        uses: actions/checkout@v4
+        with:
+          repository: pallets/flask
+          ref: d73fa1cdcbd8b1465c151db8924ba58b1dd14e35
+          path: external/flask
+          persist-credentials: false
+      - name: Checkout attrs
+        uses: actions/checkout@v4
+        with:
+          repository: python-attrs/attrs
+          ref: 8f767776326faaed11e6c2974798787f6e19b343
+          path: external/attrs
+          persist-credentials: false
+      - name: Checkout rich
+        uses: actions/checkout@v4
+        with:
+          repository: Textualize/rich
+          ref: 9d8f9a372cc5916fd4781fec207ced7ddac2f08f
+          path: external/rich
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: doctorcode/go.mod
+          cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Build DoctorCode
+        working-directory: doctorcode
+        run: go build -trimpath -o ../doctorcode-bin ./cmd/doctorcode
+      - name: Discover Python findings
+        shell: bash
+        run: |
+          set -euo pipefail
+          for repo in click httpx requests flask attrs rich; do
+            echo "=== PYDISCOVERY:${repo} ==="
+            ./doctorcode-bin audit "external/${repo}" --json --max-findings=500
+          done
