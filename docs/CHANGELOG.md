@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M07 accepted baseline
+
+Type: acceptance
+
+- Accepted python/stdlib-ast-v1 as DoctorCode's first non-Go semantic analyzer after strict governance and Linux/Windows/macOS evidence.
+- Accepted one conservative Python rule in each DoctorCode category with a 6-case corpus result of 5 TP, 0 FP, and 0 FN.
+- Accepted fail-closed Python parse behavior and explicit optional-runtime semantics.
+- Accepted exact-SHA public Python validation for click, httpx, requests, and Flask with one bounded Flask DEADCODE anchor.
+- Kept .pyi outside semantic support claims and retained safe_autofix=false for every Python finding.
+
 ## 2026-09-27 — M07 Python semantic adapter candidate
 
 Type: development
