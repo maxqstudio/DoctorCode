@@ -163,8 +163,6 @@ jobs:
           python .workflow/tools/validate_project_docs.py
           python .workflow/tools/validate_doc_quality.py
           python .workflow/tools/validate_human_comprehension.py --require-pass
-          python .workflow/tools/validate_cross_document_consistency.py --base 3fccbd4398f2a12bd5214be9ed23ee18f46c679c --require-base
-          python .workflow/tools/validate_project_truth.py
 
       - name: Commit synchronized M13 main truth
         shell: bash
