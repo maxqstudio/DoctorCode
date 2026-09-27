@@ -34,12 +34,13 @@ func (a *Analyzer) Name() string {
 }
 
 type parsedFile struct {
-	abs    string
-	rel    string
-	dir    string
-	pkg    string
-	isTest bool
-	file   *ast.File
+	abs       string
+	rel       string
+	dir       string
+	pkg       string
+	isTest    bool
+	generated bool
+	file      *ast.File
 }
 
 type packageInfo struct {
@@ -136,16 +137,29 @@ func parseGoFiles(ctx context.Context, root string, fset *token.FileSet) ([]*par
 			return err
 		}
 		files = append(files, &parsedFile{
-			abs:    path,
-			rel:    filepath.ToSlash(rel),
-			dir:    filepath.Dir(path),
-			pkg:    node.Name.Name,
-			isTest: strings.HasSuffix(strings.ToLower(path), "_test.go"),
-			file:   node,
+			abs:       path,
+			rel:       filepath.ToSlash(rel),
+			dir:       filepath.Dir(path),
+			pkg:       node.Name.Name,
+			isTest:    strings.HasSuffix(strings.ToLower(path), "_test.go"),
+			generated: generatedGoFile(node),
+			file:      node,
 		})
 		return nil
 	})
 	return files, asmDirs, err
+}
+
+func generatedGoFile(file *ast.File) bool {
+	for _, group := range file.Comments {
+		for _, comment := range group.List {
+			text := strings.TrimSpace(comment.Text)
+			if strings.HasPrefix(text, "// Code generated ") && strings.HasSuffix(text, " DO NOT EDIT.") {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 func ignoredDirectory(name string) bool {
@@ -251,7 +265,14 @@ func deadCodeFindings(fset *token.FileSet, pkg *packageInfo) []model.Finding {
 	if pkg.risky {
 		return nil
 	}
-	candidates := topLevelCandidates(pkg)
+	allCandidates := topLevelCandidates(pkg)
+	candidates := make([]candidate, 0, len(allCandidates))
+	for _, item := range allCandidates {
+		if item.file.generated {
+			continue
+		}
+		candidates = append(candidates, item)
+	}
 	counts := lexicalReferenceCounts(pkg, candidates)
 	var out []model.Finding
 	for _, item := range candidates {
@@ -416,6 +437,9 @@ func canonicalCondition(expr ast.Expr) string {
 	case *ast.ParenExpr:
 		return canonicalCondition(value.X)
 	case *ast.Ident:
+		if value.Obj != nil {
+			return fmt.Sprintf("id:%s@%d", value.Name, value.Obj.Pos())
+		}
 		return "id:" + value.Name
 	case *ast.BasicLit:
 		return "lit:" + value.Kind.String() + ":" + value.Value
