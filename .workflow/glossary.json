@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "terms": [
+    {
+      "term": "Evidence packet",
+      "definition": "A bounded machine-readable context describing one finding and the evidence required to reason about it."
+    },
+    {
+      "term": "PROVEN_UNUSED",
+      "definition": "Reserved future dead-code status requiring stronger evidence than a zero-reference count."
+    },
+    {
+      "term": "Toolchain capability",
+      "definition": "Observed availability of a compiler or runtime on the current execution host; it is not equivalent to semantic-analysis support."
+    }
+  ]
+}

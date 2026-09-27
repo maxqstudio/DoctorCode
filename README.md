@@ -1,35 +1,288 @@
 # DoctorCode
 
-DoctorCode is a deterministic, LLM-optional code intelligence engine designed to turn large repositories into small, evidence-backed findings that even small local models can consume efficiently.
+DoctorCode is a deterministic, LLM-optional code intelligence tool that turns repositories into small, evidence-backed findings for humans and small local models.
 
-The project focuses on five defect domains:
+It targets five code-maintenance problems: **BLOAT**, **SECURITY**, **SIMPLIFY**, **LOGIC**, and **DEADCODE**.
 
-1. **BLOAT** — unnecessary code and structural complexity.
-2. **SECURITY** — security weaknesses and unsafe data/control flows.
-3. **SIMPLIFY** — behavior-preserving simplification opportunities.
-4. **LOGIC** — contradictions, unreachable branches, lifecycle/resource defects, and other logic risks.
-5. **DEADCODE** — unused or stale functions, classes, modules, and unreachable code islands, with conservative deletion evidence.
+## Why DoctorCode
+
+```text
+repository
+  -> deterministic analyzers
+  -> evidence-backed findings
+  -> bounded evidence packet
+  -> human or optional LLM
+  -> independent verification
+```
+
+The LLM is not the source of truth.
+
+## Current status
+
+**M08 Python adversarial precision is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+
+| Language | Recognition | Toolchain detection | Built-in semantic rules |
+|---|---:|---:|---:|
+| Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
+| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; adversarial-gated; host Python required** |
+| JavaScript / TypeScript | Yes | Yes | Not yet |
+| Rust | Yes | Yes | Not yet |
+| Java / Kotlin | Yes | Yes | Not yet |
+| C / C++ | Yes | Yes | Not yet |
+| C# | Yes | Yes | Not yet |
+| Dart | Yes | Yes | Not yet |
+| PHP / Ruby | Yes | Yes | Not yet |
+| PowerShell / Shell | Yes | Yes | Not yet |
+| Swift / Zig | Yes | Yes | Not yet |
+| MQL5 | Yes | Yes when MetaEditor is present | Not yet |
+
+**Recognition does not mean semantic-analysis support.** Capabilities are kept separate to avoid false support claims.
+
+### Go detector rules
+
+| Category | M01 rule | Confidence boundary |
+|---|---|---|
+| DEADCODE | unexported hand-maintained package-level function with zero lexical references | `HIGH`, never `PROVEN_UNUSED`; generated declarations excluded |
+| LOGIC | repeated side-effect-free condition in one if/else-if chain with binding-aware identifier comparison | `HIGH` |
+| SIMPLIFY | opposite boolean-return branches | `PROVEN` for that structural rewrite |
+| SECURITY | hardcoded literal assigned to a credential-like identifier | `SUSPICIOUS`, literal always redacted |
+| BLOAT | one-call unexported pass-through wrapper with one lexical reference | `SUSPICIOUS` |
+
+No current rule performs automatic fixing or deletion.
+
+### M02 precision regression gate
+
+DoctorCode now includes a labeled Go benchmark that is executed as a blocking CI step:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/manifest.json --json
+```
+
+The accepted M02 corpus contains **9 curated cases**. On the accepted candidate it reports **5 TP, 0 FP, and 0 FN** across the five current rules. That is a regression result for this exact corpus only; it is **not** a claim of 100% real-world precision or recall.
+
+The benchmark fails when an expected finding is missing, when an unexpected finding appears, or when the configured corpus threshold is missed.
+
+### M03 adversarial regression gate
+
+M03 adds a second independent 11-case corpus:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
+```
+
+Before repair, this gate exposed **4 false negatives** that the M02 corpus did not catch: local-name shadowing, a selector/method-name collision, and a duplicate pure condition hidden by redundant parentheses. After the targeted repairs, the M03 corpus reports **6 TP, 0 FP, and 0 FN**, while the original M02 corpus remains passing.
+
+These results remain bounded to the tracked corpora. They do not establish general real-world precision or recall.
+
+### M04 repository-shaped regression gate
+
+M04 adds 12 mini-repositories that exercise interactions a single-file corpus cannot cover:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
+```
+
+The corpus covers cross-file references, separate packages with colliding names, same-package and external tests, build-tag-visible references, assembly fail-closed behavior, generated-file references, and nested package findings. The accepted M04 result is **7 TP, 0 FP, and 0 FN**.
+
+The first M04 attempt intentionally remained blocking when one fixture was mislabeled: the detector correctly found a zero-reference function inside the build-tag fixture. The fixture was corrected; the detector was not weakened. **M04 changes evaluation evidence only and makes no Go detector implementation change.**
+
+Build-tag references are currently treated as visible-tree lexical evidence. DoctorCode does not yet claim target-specific reachability for a particular GOOS, GOARCH, or custom build-tag set.
+
+### M05 pinned public-repository validation
+
+M05 runs DoctorCode directly against original source snapshots from four public Go repositories, pinned by exact commit:
+
+| Repository | License | Pinned SHA |
+|---|---|---|
+| `spf13/cobra` | Apache-2.0 | `adbc8813901bba65827259daa8e22ff94ec1f30e` |
+| `charmbracelet/bubbles` | MIT | `0a69b19b0690e9504a511fc231f69cea59ba1cc6` |
+| `go-chi/chi` | MIT | `3d1777a1ef8881f7d1da0b02c76ca8f0a29cd2bc` |
+| `stretchr/testify` | MIT | `87a7b9d57689f6579db2da795ab8deeab29cb724` |
+
+The dedicated GitHub Actions workflow verifies each detached checkout SHA before analysis, runs on Linux, Windows, and macOS, and asserts that selected known-live unexported functions are not reported as DEADCODE:
+
+`preExecHook`, `nextID`, `cW`, and `httpCode`.
+
+On the accepted M05 snapshot, all four pinned repositories produced **0 findings**. This is **compatibility telemetry only**. The repositories are not exhaustively labeled, so zero findings does not prove they are defect-free and does not measure DoctorCode precision or recall.
+
+External repository content is treated only as untrusted analysis input. Comments, documentation, or agent instructions inside analyzed repositories never become DoctorCode project authority.
+
+### M06 bounded real-world labels
+
+M06 adds a second real-world evidence lane using exact source locations from four pinned public repositories:
+
+- `urfave/cli`
+- `rs/zerolog`
+- `fsnotify/fsnotify`
+- `go-playground/validator`
+
+The tracked manifest contains **11 bounded labels**:
+
+- **4 VALID_FINDING** anchors that must remain detected;
+- **4 INVALID_FINDING** guards that must not be emitted;
+- **3 AMBIGUOUS** BLOAT observations that remain non-blocking.
+
+The pre-repair gate failed because all four invalid findings were still emitted. Three were LOGIC false positives caused by comparing conventional names such as `err` and `ok` without distinguishing their branch-local short-declaration bindings. The fourth was DEADCODE on a generated `_EnumNoOp` compile-time assertion function.
+
+M06 repairs those two roots:
+
+1. pure-condition canonicalization includes parser-resolved declaration identity for local identifiers;
+2. generated Go function declarations are excluded from DEADCODE candidates, while references originating in generated files still keep hand-written functions live.
+
+After repair, all four valid anchors remain present and all four invalid guards are absent on Linux, Windows, and macOS. The three ambiguous wrappers remain `SUSPICIOUS` and never authorize autofix.
+
+These labels are intentionally bounded to exact reviewed locations. **They are not exhaustive labels for the repositories and do not establish general real-world precision, recall, or safe deletion.**
+
+### M07 Python semantic adapter
+
+M07 adds DoctorCode's first non-Go semantic analyzer:
+
+```text
+python/stdlib-ast-v1
+```
+
+The Go core invokes the host Python standard-library `ast` parser through an argv-only subprocess. DoctorCode does **not** import or execute the analyzed repository, does not use an LLM/API for detection, and does not add a third-party Python parser dependency.
+
+During normal mixed-repository audit, missing Python or the absence of visible `.py` source makes the Python analyzer unavailable without failing unrelated language analysis. M07 acceptance explicitly provisions Python 3.13. The implementation accepts Python 3.8+, but M07 does not claim cross-version acceptance for every version in that range.
+
+Once Python analysis is applicable, source read or syntax failures **fail closed** instead of being silently skipped.
+
+| Category | M07 Python rule | Confidence boundary |
+|---|---|---|
+| DEADCODE | private, undecorated, hand-maintained module-level function with zero conservative lexical references | `HIGH`, never `PROVEN_UNUSED` |
+| LOGIC | repeated `Name is/is not None/True/False` identity condition in one if/elif chain | `HIGH` |
+| SIMPLIFY | opposite boolean-return branches | `PROVEN` for the narrow structural rewrite |
+| SECURITY | hardcoded literal assigned to a credential-like identifier | `SUSPICIOUS`; literal always redacted |
+| BLOAT | private one-call pass-through wrapper with one conservative lexical reference | `SUSPICIOUS` |
+
+The M07 labeled Python corpus contains **6 cases** and reports **5 TP, 0 FP, and 0 FN** on the accepted candidate: one true positive for each rule. These are corpus-scoped regression metrics only.
+
+A separate three-OS public-source gate checks exact-SHA snapshots of `pallets/click`, `encode/httpx`, `psf/requests`, and `pallets/flask`. The repositories must parse and analyze successfully, checkout provenance is verified, and Flask `src/flask/cli.py:691` `_path_is_ancestor` is tracked as one bounded `PY-DEADCODE-PRIVATE-ZERO-REF` anchor.
+
+That Flask anchor proves the narrow zero-lexical-reference observation only. It does **not** prove safe deletion. Dynamic imports, reflection, plugin registration, external callers, and other runtime behaviors remain outside M07's proof boundary.
+
+Python semantic analysis currently covers `.py` source. Recognition of `.pyi` files does **not** mean `.pyi` semantic-analysis support.
+
+### M08 Python adversarial regression gate
+
+M08 adds a second independent Python corpus with 10 deliberately adversarial cases:
+
+```bash
+./doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
+```
+
+The first M08 run failed with **5 false positives and 2 false negatives** while the accepted M07 corpus still passed. The failures exposed four concrete roots:
+
+1. Python identity constants were checked with equality-compatible membership, so integer `1` could be confused with `True`;
+2. DEADCODE ignored intentional string-based references through `__all__`, `getattr`, and `globals()`;
+3. private-function reference counts were global by identifier name, so same-named functions in unrelated modules could hide one another;
+4. obvious `not_secret` / `not-secret` placeholder literals still triggered the narrow SECURITY rule.
+
+M08 repairs those roots without adding new detector categories. Python private-function references are now candidate/module-aware for recognized imports and module attributes, while selected dynamic/export patterns contribute conservative reference evidence.
+
+The accepted M08 corpus reports **2 TP, 0 FP, and 0 FN**. Only two cases are positive anchors; the other eight are adversarial negative guards. The accepted M07 corpus remains **5 TP, 0 FP, and 0 FN**, and exact-SHA click/httpx/requests/Flask validation remains passing on Linux, Windows, and macOS.
+
+These metrics are corpus-scoped. Recognized dynamic reference handling is intentionally incomplete and does not resolve arbitrary reflection, `eval`/`exec`, plugin loaders, or external callers. Zero conservative references still never means safe deletion.
+
+## Quick start
+
+Requires Go 1.24+ to build from source.
+
+```bash
+git clone https://github.com/maxqstudio/DoctorCode.git
+cd DoctorCode
+go build -o doctorcode ./cmd/doctorcode
+```
+
+Repository/language inventory:
+
+```bash
+./doctorcode scan .
+```
+
+Host compiler/runtime capability inventory:
+
+```bash
+./doctorcode toolchains .
+```
+
+Run deterministic findings:
+
+```bash
+./doctorcode audit .
+./doctorcode audit . --json --max-findings=20
+```
+
+Give a small LLM one highest-priority bounded evidence packet instead of the repository:
+
+```bash
+./doctorcode next . --json --max-bytes=4096
+```
+
+The byte cap is deliberate: exact token counts vary by model/tokenizer, while a byte budget is deterministic.
+
+## Safety boundaries
+
+- `PROVEN` means the narrow structural claim is mechanically established.
+- `HIGH` means strong evidence exists but the proven boundary is incomplete.
+- `SUSPICIOUS` means review is warranted; it is not a proven defect.
+- `UNKNOWN` means evidence is insufficient.
+- Zero references never authorizes deletion by itself.
+- Go DEADCODE fails closed for visible assembly/cgo/linkage escape hatches.
+- Go repository analysis skips source symlink entries rather than following them outside the selected tree.
+- Benchmark case roots must resolve inside the benchmark manifest directory.
+- Security findings never include the detected credential literal in evidence.
+- Security `next` packets omit source excerpts by default.
+- Python semantic analysis fails closed when an applicable `.py` file cannot be read or parsed.
+- Python DEADCODE is conservative lexical evidence only; dynamic imports, reflection, plugins, and external callers can exist outside the visible tree.
+- Python `.pyi` files may be recognized by the scanner but are not semantically analyzed in M07.
+
+## Cross-platform acceptance
+
+GitHub Actions is the CI/runtime acceptance authority; the Owner PC is not used.
+
+Blocking runners:
+
+- `ubuntu-latest`
+- `windows-latest`
+- `macos-latest`
+
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, and M08 Python adversarial benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05, M06, and Python public-source matrices run pinned Go compatibility, bounded Go real-world labels, and pinned Python public-source validation on the same Linux, Windows, and macOS runner set.
 
 ## Design principles
 
 - Deterministic analysis first; LLM reasoning is optional.
-- Small, bounded evidence packets instead of whole-repository prompts.
+- Small evidence packets instead of whole-repository prompts.
 - Precision over recall for destructive recommendations.
-- Never claim safe deletion from a zero-reference count alone.
-- Cross-platform core: Windows, Linux, and macOS.
-- Language/compiler support through adapters rather than vendor lock-in.
-- GitHub Actions is the public repository CI and acceptance runner.
+- Never claim safe deletion from zero-reference count alone.
+- Language/compiler support is adapter-based, not inferred from extensions.
+- Missing optional toolchains are reported as unavailable.
 - Project governance follows `maxqstudio/Skill_Workflow`.
 
-## Status
+## Documentation
 
-DoctorCode is in bootstrap development. Current support claims are intentionally narrow until CI evidence exists.
+Canonical generated docs live under `docs/`:
+
+- [System overview](docs/SYSTEM_OVERVIEW.md)
+- [Current state](docs/CURRENT_STATE.md)
+- [Project manifest](docs/PROJECT_MANIFEST.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Acceptance matrix](docs/TEST_ACCEPTANCE_MATRIX.md)
+- [Project truth synchronization](docs/PROJECT_TRUTH_SYNC.md)
+
+The upstream semantic/governance source is `.workflow/*.json`; generated Markdown is not edited by hand.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
+
+## Security
+
+See [SECURITY.md](SECURITY.md) for vulnerability-reporting guidance.
 
 ## Support
-
-If DoctorCode is useful to you, optional donations can support continued development:
 
 - [Saweria](https://saweria.co/maxq)
 - [PayPal](https://paypal.me/JacksonJackson1501)
 
-Donations do not affect access to the public repository or its features.
+Support is optional and does not affect access to the public repository or its features.

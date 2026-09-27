@@ -1,0 +1,37 @@
+name: Governance Bootstrap
+
+on:
+  push:
+    branches:
+      - main
+      - "work/**"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  strict-project-truth:
+    name: strict-skill-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Validate tracked project docs
+        run: python .workflow/tools/validate_project_docs.py
+      - name: Validate doc quality
+        run: python .workflow/tools/validate_doc_quality.py
+      - name: Validate human comprehension
+        run: python .workflow/tools/validate_human_comprehension.py --require-pass
+      - name: Validate handoff
+        run: python .workflow/tools/validate_handoff.py
+      - name: Validate cross-document consistency
+        run: python .workflow/tools/validate_cross_document_consistency.py --base fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e --require-base
+      - name: Validate project truth
+        run: python .workflow/tools/validate_project_truth.py
+      - name: Validate sequence sessions
+        run: python .workflow/tools/validate_sequence_sessions.py

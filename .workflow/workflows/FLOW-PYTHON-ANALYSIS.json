@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-PYTHON-ANALYSIS",
+  "title": "Python semantic analysis",
+  "purpose": "Analyze .py source deterministically with a bounded stdlib AST subprocess, preserve unavailable-runtime and parse-failure semantics, and return evidence-backed findings without mutation.",
+  "authority": "internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json",
+  "entry_condition": "Repository contains at least one visible .py file; ordinary audit also requires an available Python 3.8+ interpreter, while acceptance workflows provision Python 3.13.",
+  "source_owners": [
+    "internal/analyzers/python/analyzer.go",
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/engine/engine.go",
+    "cmd/doctorcode/main.go",
+    "internal/benchmark/testdata/m07-python.json",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "states": [
+    "APPLICABILITY_CHECK",
+    "RUNTIME_CHECK",
+    "AST_PARSE",
+    "RULE_EVALUATION",
+    "FINDING_CONVERSION",
+    "SORTED_OUTPUT"
+  ],
+  "transitions": [
+    {
+      "from": "APPLICABILITY_CHECK",
+      "to": "RUNTIME_CHECK",
+      "action": "Detect at least one visible .py file; no Python files returns detector unavailable.",
+      "side_effects": []
+    },
+    {
+      "from": "RUNTIME_CHECK",
+      "to": "AST_PARSE",
+      "action": "Resolve python3, python, or py -3 and require Python 3.8+.",
+      "side_effects": [
+        "spawn bounded interpreter subprocess"
+      ]
+    },
+    {
+      "from": "AST_PARSE",
+      "to": "RULE_EVALUATION",
+      "action": "Walk visible .py files without following source symlinks; any syntax/read error is reported as blocking incomplete analysis.",
+      "side_effects": []
+    },
+    {
+      "from": "RULE_EVALUATION",
+      "to": "FINDING_CONVERSION",
+      "action": "Apply five narrow category rules and serialize redacted evidence as JSON.",
+      "side_effects": []
+    },
+    {
+      "from": "FINDING_CONVERSION",
+      "to": "SORTED_OUTPUT",
+      "action": "Go assigns stable finding IDs, forces safe_autofix=false, and detector engine performs stable priority sorting.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "No Python source is executed or imported by DoctorCode; only ast.parse is used.",
+    "The analyzer subprocess receives argv directly and does not invoke a shell.",
+    "Security literal values are never emitted; only byte length and SHA-256 prefix are retained.",
+    "Syntax/read failures are blocking rather than silently skipped.",
+    "DEADCODE excludes decorated, dunder, generated, and test-defined function candidates and never claims PROVEN_UNUSED.",
+    "LOGIC is limited to repeated Name is/is-not None/True/False identity conditions.",
+    "Every finding keeps safe_autofix=false."
+  ],
+  "tests": [
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/benchmark/testdata/m07-python.json",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "sequence_session": "M07-PYTHON-SEMANTIC",
+  "critical": false,
+  "failure_behavior": [
+    "Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking."
+  ],
+  "restart_behavior": [
+    "Analysis is stateless and can be rerun against the same repository state and interpreter."
+  ],
+  "rollback_behavior": [
+    "The Python analyzer is read-only; rollback is source-control only and no analyzed repository content is mutated."
+  ]
+}

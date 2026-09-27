@@ -1,0 +1,68 @@
+name: Real World Go Validation
+
+on:
+  push:
+    branches:
+      - "work/m05-public-repo-validation"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: real-world-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - name: Checkout DoctorCode
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          persist-credentials: false
+      - name: Checkout cobra
+        uses: actions/checkout@v4
+        with:
+          repository: spf13/cobra
+          ref: adbc8813901bba65827259daa8e22ff94ec1f30e
+          path: external/cobra
+          persist-credentials: false
+      - name: Checkout bubbles
+        uses: actions/checkout@v4
+        with:
+          repository: charmbracelet/bubbles
+          ref: 0a69b19b0690e9504a511fc231f69cea59ba1cc6
+          path: external/bubbles
+          persist-credentials: false
+      - name: Checkout chi
+        uses: actions/checkout@v4
+        with:
+          repository: go-chi/chi
+          ref: 3d1777a1ef8881f7d1da0b02c76ca8f0a29cd2bc
+          path: external/chi
+          persist-credentials: false
+      - name: Checkout testify
+        uses: actions/checkout@v4
+        with:
+          repository: stretchr/testify
+          ref: 87a7b9d57689f6579db2da795ab8deeab29cb724
+          path: external/testify
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: doctorcode/go.mod
+          cache: false
+      - name: Validate pinned public repositories
+        working-directory: doctorcode
+        env:
+          DOCTORCODE_RW_COBRA: external/cobra
+          DOCTORCODE_RW_BUBBLES: external/bubbles
+          DOCTORCODE_RW_CHI: external/chi
+          DOCTORCODE_RW_TESTIFY: external/testify
+        run: go test ./internal/realworld -run TestPinnedPublicRepositories -v

@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "language": "Python",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "all-positive",
+      "root": "m07-python/all-positive",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "sample.py",
+          "summary_contains": "_stale"
+        },
+        {
+          "rule_id": "PY-LOGIC-DUPLICATE-IDENTITY-CONDITION",
+          "path": "sample.py"
+        },
+        {
+          "rule_id": "PY-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.py"
+        },
+        {
+          "rule_id": "PY-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.py",
+          "summary_contains": "api_token"
+        },
+        {
+          "rule_id": "PY-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "sample.py",
+          "summary_contains": "_wrapper"
+        }
+      ]
+    },
+    {
+      "name": "conservative-negative",
+      "root": "m07-python/conservative-negative",
+      "expected": []
+    },
+    {
+      "name": "deadcode-referenced-by-test",
+      "root": "m07-python/deadcode-test-reference",
+      "expected": []
+    },
+    {
+      "name": "security-placeholder",
+      "root": "m07-python/security-placeholder",
+      "expected": []
+    },
+    {
+      "name": "logic-call-negative",
+      "root": "m07-python/logic-call-negative",
+      "expected": []
+    },
+    {
+      "name": "bloat-multiple-references",
+      "root": "m07-python/bloat-multiple-references",
+      "expected": []
+    }
+  ]
+}

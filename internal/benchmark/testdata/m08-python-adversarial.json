@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "language": "Python",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "logic-int-identity-negative",
+      "root": "m08-python/logic-int-identity-negative",
+      "expected": []
+    },
+    {
+      "name": "deadcode-all-export-negative",
+      "root": "m08-python/deadcode-all-export-negative",
+      "expected": []
+    },
+    {
+      "name": "deadcode-getattr-self-negative",
+      "root": "m08-python/deadcode-getattr-self-negative",
+      "expected": []
+    },
+    {
+      "name": "deadcode-globals-negative",
+      "root": "m08-python/deadcode-globals-negative",
+      "expected": []
+    },
+    {
+      "name": "deadcode-same-name-module-collision",
+      "root": "m08-python/deadcode-same-name-module-collision",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "a.py",
+          "summary_contains": "_helper"
+        }
+      ]
+    },
+    {
+      "name": "deadcode-from-import-live",
+      "root": "m08-python/deadcode-from-import-live",
+      "expected": []
+    },
+    {
+      "name": "deadcode-module-attribute-live",
+      "root": "m08-python/deadcode-module-attribute-live",
+      "expected": []
+    },
+    {
+      "name": "bloat-same-name-module-collision",
+      "root": "m08-python/bloat-same-name-module-collision",
+      "expected": [
+        {
+          "rule_id": "PY-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "a.py",
+          "summary_contains": "_wrapper"
+        }
+      ]
+    },
+    {
+      "name": "security-not-secret-placeholder",
+      "root": "m08-python/security-not-secret-placeholder",
+      "expected": []
+    },
+    {
+      "name": "generated-private-negative",
+      "root": "m08-python/generated-private-negative",
+      "expected": []
+    }
+  ]
+}

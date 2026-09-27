@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "api_contracts": [],
+  "data_contracts": [
+    {
+      "name": "Finding V2",
+      "source_of_truth": "internal/model/model.go::Finding",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "registered detector analyzers"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "category is one of five DoctorCode domains",
+        "confidence is explicit",
+        "safe_autofix remains false for all accepted built-in Go and Python rules"
+      ]
+    },
+    {
+      "name": "AuditResult V1",
+      "source_of_truth": "internal/model/model.go::AuditResult",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "detector engine"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "analyzers are named",
+        "findings are stably sorted"
+      ]
+    },
+    {
+      "name": "EvidencePacket V1",
+      "source_of_truth": "internal/evidence/packet.go::Packet",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "evidence reducer"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "serialized packet fits max-bytes",
+        "security findings omit source excerpts by default"
+      ]
+    },
+    {
+      "name": "ScanResult V1",
+      "source_of_truth": "internal/model/model.go::ScanResult",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode scan"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "language recognition is structural only"
+      ]
+    },
+    {
+      "name": "ToolchainStatus V1",
+      "source_of_truth": "internal/model/model.go::ToolchainStatus",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode toolchains"
+      ],
+      "retention": "caller-defined",
+      "invariants": [
+        "missing optional toolchains are reported as unavailable"
+      ]
+    },
+    {
+      "name": "BenchmarkManifest V1",
+      "source_of_truth": "internal/benchmark/benchmark.go::Manifest",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed benchmark corpus changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "schema_version is 1",
+        "case roots are relative and resolve inside the manifest directory",
+        "precision and recall thresholds are within 0..1",
+        "expected findings identify rule and path"
+      ]
+    },
+    {
+      "name": "BenchmarkReport V1",
+      "source_of_truth": "internal/benchmark/benchmark.go::Report",
+      "mutability": "runtime output",
+      "legal_writes": [
+        "doctorcode benchmark"
+      ],
+      "retention": "CI log or caller-defined",
+      "invariants": [
+        "unmatched expected labels count as false negatives",
+        "unmatched actual findings count as false positives",
+        "passed is false when a mismatch or threshold failure exists",
+        "metrics describe only the supplied manifest corpus"
+      ]
+    },
+    {
+      "name": "RealWorldSourceManifest V1",
+      "source_of_truth": "internal/realworld/sources.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed public source pin changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source has repository, exact 40-character commit SHA, license, environment key, and selected negative anchors",
+        "external source instructions never override DoctorCode project authority",
+        "unlabeled results are compatibility evidence only"
+      ]
+    },
+    {
+      "name": "M06RealWorldLabelManifest V1",
+      "source_of_truth": "internal/realworld/m06-labels.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed label and source-pin changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source is pinned by exact commit SHA and license metadata",
+        "VALID_FINDING means the bounded detector claim is supported at that source location, not safe deletion",
+        "INVALID_FINDING means that exact detector finding must not be emitted",
+        "AMBIGUOUS observations are non-blocking and cannot be promoted into removal or precision claims",
+        "the manifest is bounded and not an exhaustive label set for any repository"
+      ]
+    },
+    {
+      "name": "M07PythonSourceManifest V1",
+      "source_of_truth": "internal/realworld/m07-python-sources.json",
+      "mutability": "tracked test input",
+      "legal_writes": [
+        "maintainer-reviewed exact source pin or bounded anchor changes"
+      ],
+      "retention": "version controlled",
+      "invariants": [
+        "every source has repository, exact commit SHA, license, and CI environment key",
+        "unlabeled repository regions are compatibility evidence only",
+        "the Flask _path_is_ancestor anchor proves only the bounded reported condition",
+        "all public Python findings must remain repository-relative and safe_autofix=false"
+      ]
+    }
+  ],
+  "ui_surfaces": [],
+  "runbook_steps": [
+    {
+      "name": "Unit and corpus tests",
+      "command": "go test ./...",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Precision benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+      "expected": "passed=true; current nine-case corpus reports 5 TP, 0 FP, 0 FN"
+    },
+    {
+      "name": "M03 adversarial benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+      "expected": "passed=true; current 11-case adversarial corpus reports 6 TP, 0 FP, 0 FN"
+    },
+    {
+      "name": "M04 repository-shaped benchmark gate",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
+      "expected": "passed=true; current 12-case repository-shaped corpus reports 7 TP, 0 FP, 0 FN"
+    },
+    {
+      "name": "Pinned public Go repository validation",
+      "command": "go test ./internal/realworld -run TestPinnedPublicRepositories -v (with exact-SHA external checkout environment configured by .github/workflows/real-world-go.yml)",
+      "expected": "all four pinned repositories verify SHA and analyze successfully; selected known-live anchors are not DEADCODE; no finding enables autofix"
+    },
+    {
+      "name": "M06 bounded real-world labeled validation",
+      "command": "go test ./internal/realworld -run TestM06LabeledRealWorld -v (with exact-SHA external paths configured by .github/workflows/m06-labeled-real-world.yml)",
+      "expected": "4 VALID_FINDING anchors present, 4 INVALID_FINDING guards absent, 3 AMBIGUOUS observations non-autofix"
+    },
+    {
+      "name": "Static vet",
+      "command": "go vet ./...",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Build CLI",
+      "command": "go build -trimpath ./cmd/doctorcode",
+      "expected": "exit code 0"
+    },
+    {
+      "name": "Audit smoke",
+      "command": "go run ./cmd/doctorcode audit . --json --max-findings=10",
+      "expected": "valid JSON and exit code 0"
+    },
+    {
+      "name": "Bounded packet smoke",
+      "command": "go run ./cmd/doctorcode next . --json --max-bytes=4096",
+      "expected": "valid bounded JSON or NO_FINDINGS"
+    },
+    {
+      "name": "M07 Python semantic benchmark",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
+      "expected": "passed=true; 6 cases; 5 TP, 0 FP, 0 FN on accepted M07 corpus"
+    },
+    {
+      "name": "M07 pinned public Python validation",
+      "command": "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external checkout environment from .github/workflows/m07-python-real-world.yml",
+      "expected": "all four exact pins verify, all repositories parse/analyze, and Flask _path_is_ancestor bounded anchor is present"
+    },
+    {
+      "name": "M08 Python adversarial benchmark",
+      "command": "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json",
+      "expected": "passed=true; 10 cases; 2 TP, 0 FP, 0 FN; accepted M07 Python corpus remains passing"
+    }
+  ]
+}

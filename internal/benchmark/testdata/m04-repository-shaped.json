@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "language": "Go",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "cross-file-live",
+      "root": "m04/cross-file-live",
+      "expected": []
+    },
+    {
+      "name": "cross-file-dead",
+      "root": "m04/cross-file-dead",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "helper.go",
+          "summary_contains": "unusedHelper"
+        }
+      ]
+    },
+    {
+      "name": "multi-package-isolation",
+      "root": "m04/multi-package-isolation",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "pkgone/a.go",
+          "summary_contains": "sharedName"
+        }
+      ]
+    },
+    {
+      "name": "multi-file-bloat",
+      "root": "m04/multi-file-bloat",
+      "expected": [
+        {
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "wrapper.go",
+          "summary_contains": "wrapper"
+        }
+      ]
+    },
+    {
+      "name": "same-package-test-reference",
+      "root": "m04/same-package-test-reference",
+      "expected": []
+    },
+    {
+      "name": "external-test-name-collision",
+      "root": "m04/external-test-name-collision",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "helper.go",
+          "summary_contains": "helper"
+        }
+      ]
+    },
+    {
+      "name": "build-tag-reference",
+      "root": "m04/build-tag-reference",
+      "expected": []
+    },
+    {
+      "name": "assembly-fail-closed",
+      "root": "m04/assembly-fail-closed",
+      "expected": []
+    },
+    {
+      "name": "generated-reference",
+      "root": "m04/generated-reference",
+      "expected": []
+    },
+    {
+      "name": "nested-security",
+      "root": "m04/nested-security",
+      "expected": [
+        {
+          "rule_id": "GO-SEC-HARDCODED-CREDENTIAL",
+          "path": "cmd/app/main.go",
+          "summary_contains": "apiToken"
+        }
+      ]
+    },
+    {
+      "name": "nested-logic",
+      "root": "m04/nested-logic",
+      "expected": [
+        {
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "internal/router/router.go"
+        }
+      ]
+    },
+    {
+      "name": "nested-simplify",
+      "root": "m04/nested-simplify",
+      "expected": [
+        {
+          "rule_id": "GO-SIMPLIFY-BOOL-RETURN",
+          "path": "pkg/flags/flags.go"
+        }
+      ]
+    }
+  ]
+}

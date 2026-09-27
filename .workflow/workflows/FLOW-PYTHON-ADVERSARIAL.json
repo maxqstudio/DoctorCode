@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-PYTHON-ADVERSARIAL",
+  "title": "Python adversarial regression validation",
+  "purpose": "Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.",
+  "authority": "internal/benchmark/testdata/m08-python-adversarial.json and internal/analyzers/python/analyzer.go",
+  "entry_condition": "M07 Python semantic adapter is accepted and Python 3.13 is provisioned in CI.",
+  "source_owners": [
+    "internal/analyzers/python/analyzer.go",
+    "internal/benchmark/testdata/m08-python-adversarial.json",
+    ".github/workflows/ci.yml"
+  ],
+  "states": [
+    "BASELINE",
+    "ADVERSARIAL_FAIL",
+    "TARGETED_REPAIR",
+    "REGRESSION_PASS",
+    "PUBLIC_REVALIDATION"
+  ],
+  "transitions": [
+    {
+      "from": "BASELINE",
+      "to": "ADVERSARIAL_FAIL",
+      "action": "Run the 10-case corpus and preserve exact FP/FN evidence.",
+      "side_effects": []
+    },
+    {
+      "from": "ADVERSARIAL_FAIL",
+      "to": "TARGETED_REPAIR",
+      "action": "Repair only proven identity/reference/placeholder roots.",
+      "side_effects": []
+    },
+    {
+      "from": "TARGETED_REPAIR",
+      "to": "REGRESSION_PASS",
+      "action": "Require M07 and M08 labeled gates on Linux, Windows, and macOS.",
+      "side_effects": []
+    },
+    {
+      "from": "REGRESSION_PASS",
+      "to": "PUBLIC_REVALIDATION",
+      "action": "Rerun exact-SHA click/httpx/requests/Flask validation on all three operating systems.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "M07 accepted behavior must remain passing.",
+    "Dynamic/export reference handling is conservative and limited to recognized syntax patterns.",
+    "No adversarial result upgrades DEADCODE to safe deletion.",
+    "All accepted Python findings remain safe_autofix=false."
+  ],
+  "tests": [
+    "internal/benchmark/testdata/m08-python-adversarial.json",
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "sequence_session": "M08-PYTHON-ADVERSARIAL",
+  "critical": false,
+  "failure_behavior": [
+    "Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08."
+  ],
+  "restart_behavior": [
+    "All corpora and public pins are deterministic and rerunnable."
+  ],
+  "rollback_behavior": [
+    "M08 reference-semantics repair can be reverted independently to the M07 accepted baseline."
+  ]
+}

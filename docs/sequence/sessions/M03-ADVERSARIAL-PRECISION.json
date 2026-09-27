@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "session_id": "M03-ADVERSARIAL-PRECISION",
+  "phase": "M03_ADVERSARIAL_PRECISION",
+  "mode": "DURING",
+  "scope": "HISTORICAL",
+  "critical": false,
+  "status": "ACCEPTED",
+  "implementation_base_sha": "76903ac9384412274cef4393fe6ba970bab6fec7",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.json",
+    "diagram": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/benchmark/benchmark_test.go",
+    "internal/analyzers/golang/analyzer_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

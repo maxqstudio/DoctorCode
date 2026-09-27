@@ -1,0 +1,1117 @@
+{
+  "coverage": {
+    "call_inventory": "Python AST token calls only",
+    "limitations": [
+      "non-Python symbol extraction requires language-specific parsers or Ctags",
+      "dynamic dispatch/dependency injection/reflection are not resolved",
+      "JS/TS function-level semantics are not inferred here"
+    ],
+    "module_inventory": "multi-language by extension",
+    "python_parse_failures": [],
+    "route_inventory": "Python decorator routes only",
+    "symbol_inventory": "Python AST only"
+  },
+  "modules": [
+    {
+      "directory": "cmd/doctorcode",
+      "file": "cmd/doctorcode/main.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 310
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 632
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 274
+    },
+    {
+      "directory": "internal/analyzers/golang",
+      "file": "internal/analyzers/golang/corpus_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 43
+    },
+    {
+      "directory": "internal/analyzers/golang/testdata/negative",
+      "file": "internal/analyzers/golang/testdata/negative/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 17
+    },
+    {
+      "directory": "internal/analyzers/golang/testdata/positive",
+      "file": "internal/analyzers/golang/testdata/positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 28
+    },
+    {
+      "directory": "internal/analyzers/python",
+      "file": "internal/analyzers/python/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 567
+    },
+    {
+      "directory": "internal/analyzers/python",
+      "file": "internal/analyzers/python/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 142
+    },
+    {
+      "directory": "internal/benchmark",
+      "file": "internal/benchmark/benchmark.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 317
+    },
+    {
+      "directory": "internal/benchmark",
+      "file": "internal/benchmark/benchmark_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 160
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/bloat-positive",
+      "file": "internal/benchmark/testdata/cases/bloat-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-bodyless",
+      "file": "internal/benchmark/testdata/cases/deadcode-bodyless/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-linkage-escape",
+      "file": "internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-positive",
+      "file": "internal/benchmark/testdata/cases/deadcode-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/cases/deadcode-test-reference/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/cases/deadcode-test-reference/sample_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/logic-positive",
+      "file": "internal/benchmark/testdata/cases/logic-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/negative-mixed",
+      "file": "internal/benchmark/testdata/cases/negative-mixed/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 18
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/security-positive",
+      "file": "internal/benchmark/testdata/cases/security-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/cases/simplify-positive",
+      "file": "internal/benchmark/testdata/cases/simplify-positive/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/bloat-shadow-local",
+      "file": "internal/benchmark/testdata/m03/bloat-shadow-local/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/bloat-two-references",
+      "file": "internal/benchmark/testdata/m03/bloat-two-references/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-function-value-reference",
+      "file": "internal/benchmark/testdata/m03/deadcode-function-value-reference/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-selector-collision",
+      "file": "internal/benchmark/testdata/m03/deadcode-selector-collision/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/deadcode-shadow-local",
+      "file": "internal/benchmark/testdata/m03/deadcode-shadow-local/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/logic-impure-duplicate",
+      "file": "internal/benchmark/testdata/m03/logic-impure-duplicate/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/logic-parenthesized-duplicate",
+      "file": "internal/benchmark/testdata/m03/logic-parenthesized-duplicate/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/security-placeholder",
+      "file": "internal/benchmark/testdata/m03/security-placeholder/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/security-raw-string",
+      "file": "internal/benchmark/testdata/m03/security-raw-string/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/simplify-inverted",
+      "file": "internal/benchmark/testdata/m03/simplify-inverted/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m03/simplify-same-result",
+      "file": "internal/benchmark/testdata/m03/simplify-same-result/sample.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/assembly-fail-closed",
+      "file": "internal/benchmark/testdata/m04/assembly-fail-closed/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/build-tag-reference",
+      "file": "internal/benchmark/testdata/m04/build-tag-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/build-tag-reference",
+      "file": "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-dead",
+      "file": "internal/benchmark/testdata/m04/cross-file-dead/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-dead",
+      "file": "internal/benchmark/testdata/m04/cross-file-dead/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-live",
+      "file": "internal/benchmark/testdata/m04/cross-file-live/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/cross-file-live",
+      "file": "internal/benchmark/testdata/m04/cross-file-live/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/external-test-name-collision",
+      "file": "internal/benchmark/testdata/m04/external-test-name-collision/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/external-test-name-collision",
+      "file": "internal/benchmark/testdata/m04/external-test-name-collision/helper_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/generated-reference",
+      "file": "internal/benchmark/testdata/m04/generated-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/generated-reference",
+      "file": "internal/benchmark/testdata/m04/generated-reference/zz_generated.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/service.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/target.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-file-bloat",
+      "file": "internal/benchmark/testdata/m04/multi-file-bloat/wrapper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-package-isolation/pkgone",
+      "file": "internal/benchmark/testdata/m04/multi-package-isolation/pkgone/a.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo",
+      "file": "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo/a.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-logic/internal/router",
+      "file": "internal/benchmark/testdata/m04/nested-logic/internal/router/router.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-logic/internal/router",
+      "file": "internal/benchmark/testdata/m04/nested-logic/internal/router/support.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-security/cmd/app",
+      "file": "internal/benchmark/testdata/m04/nested-security/cmd/app/main.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags",
+      "file": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/doc.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags",
+      "file": "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/same-package-test-reference",
+      "file": "internal/benchmark/testdata/m04/same-package-test-reference/helper.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m04/same-package-test-reference",
+      "file": "internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/all-positive",
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 26
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/bloat-multiple-references",
+      "file": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/conservative-negative",
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 39
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/deadcode-test-reference",
+      "file": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py",
+      "is_test": true,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/logic-call-negative",
+      "file": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m07-python/security-placeholder",
+      "file": "internal/benchmark/testdata/m07-python/security-placeholder/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-from-import-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-from-import-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 7
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-globals-negative",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision",
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/generated-private-negative",
+      "file": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/logic-int-identity-negative",
+      "file": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m08-python/security-not-secret-placeholder",
+      "file": "internal/benchmark/testdata/m08-python/security-not-secret-placeholder/sample.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 1
+    },
+    {
+      "directory": "internal/detector",
+      "file": "internal/detector/detector.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 15
+    },
+    {
+      "directory": "internal/engine",
+      "file": "internal/engine/engine.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 93
+    },
+    {
+      "directory": "internal/evidence",
+      "file": "internal/evidence/packet.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 104
+    },
+    {
+      "directory": "internal/evidence",
+      "file": "internal/evidence/packet_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 52
+    },
+    {
+      "directory": "internal/language",
+      "file": "internal/language/registry.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 49
+    },
+    {
+      "directory": "internal/language",
+      "file": "internal/language/registry_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 19
+    },
+    {
+      "directory": "internal/model",
+      "file": "internal/model/model.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 71
+    },
+    {
+      "directory": "internal/realworld",
+      "file": "internal/realworld/labeled_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 118
+    },
+    {
+      "directory": "internal/realworld",
+      "file": "internal/realworld/python_m07_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 97
+    },
+    {
+      "directory": "internal/realworld",
+      "file": "internal/realworld/realworld_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 128
+    },
+    {
+      "directory": "internal/scanner",
+      "file": "internal/scanner/scanner.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 46
+    },
+    {
+      "directory": "internal/scanner",
+      "file": "internal/scanner/scanner_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 27
+    },
+    {
+      "directory": "internal/toolchain",
+      "file": "internal/toolchain/toolchain.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 68
+    },
+    {
+      "directory": "internal/toolchain",
+      "file": "internal/toolchain/toolchain_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 16
+    }
+  ],
+  "python_calls": [
+    {
+      "caller": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper",
+      "target_token": "_test_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::_wrapper",
+      "target_token": "other"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::first",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::second",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py::use",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py::use",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::load",
+      "target_token": "getattr"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::load",
+      "target_token": "globals"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py::use",
+      "target_token": "a._helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use",
+      "target_token": "_helper"
+    }
+  ],
+  "python_routes": [],
+  "python_symbols": [
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 10,
+      "line_start": 9,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 13,
+      "line_start": 12,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_stale",
+      "symbol": "_stale"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 20,
+      "line_start": 15,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::classify",
+      "symbol": "classify"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/all-positive/sample.py",
+      "kind": "function",
+      "line_end": 26,
+      "line_start": 22,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::enabled",
+      "symbol": "enabled"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py",
+      "kind": "function",
+      "line_end": 8,
+      "line_start": 7,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first",
+      "symbol": "first"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py",
+      "kind": "function",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second",
+      "symbol": "second"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::public_unused",
+      "symbol": "public_unused"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::register",
+      "symbol": "register"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_hook",
+      "symbol": "_hook"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 14,
+      "line_start": 13,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready",
+      "symbol": "ready"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 21,
+      "line_start": 16,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "symbol": "logic"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 27,
+      "line_start": 23,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::same",
+      "symbol": "same"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 30,
+      "line_start": 29,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 33,
+      "line_start": 32,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 36,
+      "line_start": 35,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
+      "symbol": "use_one"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py",
+      "kind": "function",
+      "line_end": 39,
+      "line_start": 38,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two",
+      "symbol": "use_two"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper",
+      "symbol": "_test_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper",
+      "symbol": "test_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready",
+      "symbol": "ready"
+    },
+    {
+      "file": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py",
+      "kind": "function",
+      "line_end": 9,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "symbol": "choose"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::other",
+      "symbol": "other"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 8,
+      "line_start": 7,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::first",
+      "symbol": "first"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py::second",
+      "symbol": "second"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py::_exported",
+      "symbol": "_exported"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::_hook",
+      "symbol": "_hook"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py",
+      "kind": "function",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py::load",
+      "symbol": "load"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::_hook",
+      "symbol": "_hook"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py::load",
+      "symbol": "load"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use",
+      "symbol": "use"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m08-python/generated-private-negative/generated.py::_generated_helper",
+      "symbol": "_generated_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py",
+      "kind": "function",
+      "line_end": 6,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py::classify",
+      "symbol": "classify"
+    }
+  ],
+  "schema_version": 1,
+  "source_digest": "5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e",
+  "source_summary": {
+    "files": 90,
+    "languages": {
+      "Go": 68,
+      "Python": 22
+    },
+    "lines": 3797,
+    "test_files": 1
+  },
+  "tests": [
+    "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py"
+  ]
+}

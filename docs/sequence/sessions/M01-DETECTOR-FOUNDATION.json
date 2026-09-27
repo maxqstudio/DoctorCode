@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "session_id": "M01-DETECTOR-FOUNDATION",
+  "phase": "M01_DETECTOR_FOUNDATION",
+  "mode": "DURING",
+  "scope": "HISTORICAL",
+  "critical": false,
+  "status": "ACCEPTED",
+  "implementation_base_sha": "",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.json",
+    "diagram": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/analyzers/golang/analyzer_test.go",
+    "internal/analyzers/golang/corpus_test.go",
+    "internal/evidence/packet_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

@@ -1,0 +1,10 @@
+doctorcode
+doctorcode.exe
+*.test
+coverage.out
+.DS_Store
+.idea/
+.vscode/
+
+__pycache__/
+*.py[cod]

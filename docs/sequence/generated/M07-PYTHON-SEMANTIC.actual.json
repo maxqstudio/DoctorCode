@@ -1,0 +1,320 @@
+{
+  "coverage": {
+    "js_ts_http_module_scan": true,
+    "limitations": [
+      "dynamic dispatch",
+      "dependency injection",
+      "reflection",
+      "callbacks/events",
+      "framework magic not visible statically",
+      "JS/TS function-level call ownership is not fully resolved"
+    ],
+    "python_ast": true,
+    "python_parse_failures": [],
+    "python_route_decorators": true,
+    "runtime_trace": false
+  },
+  "edges": [
+    {
+      "action": "target",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/all-positive/sample.py::target"
+    },
+    {
+      "action": "_wrapper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper"
+    },
+    {
+      "action": "target",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target"
+    },
+    {
+      "action": "_wrapper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper"
+    },
+    {
+      "action": "_wrapper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper"
+    },
+    {
+      "action": "target",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target"
+    },
+    {
+      "action": "ready",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready"
+    },
+    {
+      "action": "_wrapper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper"
+    },
+    {
+      "action": "_wrapper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper"
+    },
+    {
+      "action": "_test_helper",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper"
+    },
+    {
+      "action": "ready",
+      "evidence": "STATIC",
+      "from": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "resolver": "python_ast",
+      "to": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready"
+    }
+  ],
+  "entries": [],
+  "generated": true,
+  "generated_by": "generate_sequence_actual.py",
+  "nodes": [
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_stale",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_stale",
+      "language": "Python",
+      "line_end": 13,
+      "line_start": 12,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_stale"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper",
+      "language": "Python",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::_wrapper"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::classify",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::classify",
+      "language": "Python",
+      "line_end": 20,
+      "line_start": 15,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::classify"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::enabled",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::enabled",
+      "language": "Python",
+      "line_end": 26,
+      "line_start": 22,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::enabled"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::target",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::target",
+      "language": "Python",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::target"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use",
+      "language": "Python",
+      "line_end": 10,
+      "line_start": 9,
+      "locator": "internal/benchmark/testdata/m07-python/all-positive/sample.py::use"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper",
+      "language": "Python",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::_wrapper"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first",
+      "language": "Python",
+      "line_end": 8,
+      "line_start": 7,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::first"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second",
+      "language": "Python",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::second"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target",
+      "language": "Python",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py::target"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_hook",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_hook",
+      "language": "Python",
+      "line_end": 11,
+      "line_start": 10,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_hook"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
+      "language": "Python",
+      "line_end": 33,
+      "line_start": 32,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "language": "Python",
+      "line_end": 21,
+      "line_start": 16,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::public_unused",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::public_unused",
+      "language": "Python",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::public_unused"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready",
+      "language": "Python",
+      "line_end": 14,
+      "line_start": 13,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::ready"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::register",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::register",
+      "language": "Python",
+      "line_end": 7,
+      "line_start": 6,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::register"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::same",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::same",
+      "language": "Python",
+      "line_end": 27,
+      "line_start": 23,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::same"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target",
+      "language": "Python",
+      "line_end": 30,
+      "line_start": 29,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::target"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
+      "language": "Python",
+      "line_end": 36,
+      "line_start": 35,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two",
+      "language": "Python",
+      "line_end": 39,
+      "line_start": 38,
+      "locator": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_two"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper",
+      "language": "Python",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py::_test_helper"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper",
+      "language": "Python",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py::test_helper"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose",
+      "language": "Python",
+      "line_end": 9,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::choose"
+    },
+    {
+      "id": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready",
+      "kind": "function",
+      "label": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready",
+      "language": "Python",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m07-python/logic-call-negative/sample.py::ready"
+    }
+  ],
+  "observed_head": "cf5ede103bae1139a9452eb2c683f0e5a7d932f3",
+  "schema_version": 1,
+  "source_digest": "f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762"
+}

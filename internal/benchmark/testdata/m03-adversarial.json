@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "language": "Go",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "deadcode-shadow-local",
+      "root": "m03/deadcode-shadow-local",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "sample.go",
+          "summary_contains": "unusedHelper"
+        }
+      ]
+    },
+    {
+      "name": "deadcode-selector-collision",
+      "root": "m03/deadcode-selector-collision",
+      "expected": [
+        {
+          "rule_id": "GO-DEADCODE-ZERO-REF",
+          "path": "sample.go",
+          "summary_contains": "unusedHelper"
+        }
+      ]
+    },
+    {
+      "name": "bloat-shadow-local",
+      "root": "m03/bloat-shadow-local",
+      "expected": [
+        {
+          "rule_id": "GO-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "sample.go",
+          "summary_contains": "wrapper"
+        }
+      ]
+    },
+    {
+      "name": "logic-parenthesized-duplicate",
+      "root": "m03/logic-parenthesized-duplicate",
+      "expected": [
+        {
+          "rule_id": "GO-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.go"
+        }
+      ]
+    },
+    {
+      "name": "simplify-inverted",
+      "root": "m03/simplify-inverted",
+      "expected": [
+        {
+          "rule_id": "GO-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.go"
+        }
+      ]
+    },
+    {
+      "name": "security-raw-string",
+      "root": "m03/security-raw-string",
+      "expected": [
+        {
+          "rule_id": "GO-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.go",
+          "summary_contains": "apiToken"
+        }
+      ]
+    },
+    {
+      "name": "deadcode-function-value-reference",
+      "root": "m03/deadcode-function-value-reference",
+      "expected": []
+    },
+    {
+      "name": "bloat-two-references",
+      "root": "m03/bloat-two-references",
+      "expected": []
+    },
+    {
+      "name": "logic-impure-duplicate",
+      "root": "m03/logic-impure-duplicate",
+      "expected": []
+    },
+    {
+      "name": "simplify-same-result",
+      "root": "m03/simplify-same-result",
+      "expected": []
+    },
+    {
+      "name": "security-placeholder",
+      "root": "m03/security-placeholder",
+      "expected": []
+    }
+  ]
+}

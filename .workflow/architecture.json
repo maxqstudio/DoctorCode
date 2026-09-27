@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "components": [
+    {
+      "id": "cli",
+      "name": "CLI",
+      "purpose": "Human/agent interface for scan, toolchain, audit, and bounded next-finding operations.",
+      "owns": [
+        "command parsing",
+        "text and JSON rendering"
+      ],
+      "depends_on": [
+        "scanner",
+        "toolchain registry",
+        "detector engine",
+        "evidence reducer"
+      ]
+    },
+    {
+      "id": "scanner",
+      "name": "Repository Scanner",
+      "purpose": "Walk repository content deterministically while excluding common generated/dependency directories.",
+      "owns": [
+        "file inventory",
+        "language counts"
+      ],
+      "depends_on": [
+        "language registry"
+      ]
+    },
+    {
+      "id": "language_registry",
+      "name": "Language Registry",
+      "purpose": "Map source extensions to language identities without semantic-analysis claims.",
+      "owns": [
+        "language identity"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "toolchain_registry",
+      "name": "Toolchain Registry",
+      "purpose": "Detect compilers/runtimes and project manifests conservatively.",
+      "owns": [
+        "host capability observation"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "detector_engine",
+      "name": "Detector Engine",
+      "purpose": "Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering.",
+      "owns": [
+        "finding aggregation",
+        "priority ordering"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "Python analyzer"
+      ]
+    },
+    {
+      "id": "go_analyzer",
+      "name": "Go Built-in Analyzer",
+      "purpose": "Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence.",
+      "owns": [
+        "Go AST rules",
+        "conservative package-function reference counting",
+        "binding-aware pure-condition canonicalization",
+        "generated-file-aware Go dead-code evidence boundaries"
+      ],
+      "depends_on": [
+        "Go parser/AST standard library"
+      ]
+    },
+    {
+      "id": "evidence_reducer",
+      "name": "Evidence Reducer",
+      "purpose": "Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs.",
+      "owns": [
+        "source excerpt bounds",
+        "security excerpt suppression",
+        "byte budget"
+      ],
+      "depends_on": [
+        "detector engine"
+      ]
+    },
+    {
+      "id": "benchmark_harness",
+      "name": "Precision Benchmark Harness",
+      "purpose": "Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds.",
+      "owns": [
+        "benchmark manifest validation",
+        "case-root containment",
+        "label matching",
+        "TP/FP/FN accounting",
+        "baseline regression gate",
+        "adversarial regression gate",
+        "repository-shaped regression gate",
+        "M07 Python regression gate",
+        "M08 Python adversarial gate"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "Python analyzer"
+      ]
+    },
+    {
+      "id": "realworld_validation",
+      "name": "Pinned Public Repository Validator",
+      "purpose": "Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims.",
+      "owns": [
+        "source provenance manifest",
+        "exact checkout SHA validation",
+        "selected known-live negative assertions",
+        "real-world finding safety boundary"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "id": "realworld_labeled_validation",
+      "name": "Bounded Real-World Label Validator",
+      "purpose": "Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled.",
+      "owns": [
+        "M06 label manifest",
+        "valid-finding anchors",
+        "false-positive guards",
+        "ambiguous non-blocking observations"
+      ],
+      "depends_on": [
+        "Go analyzer",
+        "Pinned Public Repository Validator",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "id": "python_analyzer",
+      "name": "Python Built-in Analyzer",
+      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative module-aware reference evidence.",
+      "owns": [
+        "Python AST subprocess adapter",
+        "five conservative Python rules",
+        "parse-error boundary",
+        "optional-runtime detection",
+        "module-aware private-function reference evidence",
+        "recognized dynamic/export reference guards"
+      ],
+      "depends_on": [
+        "host Python 3.8+ standard library ast",
+        "detector unavailable contract"
+      ]
+    },
+    {
+      "id": "python_realworld_validation",
+      "name": "Pinned Public Python Validator",
+      "purpose": "Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors.",
+      "owns": [
+        "M07 public source manifest",
+        "exact checkout SHA validation",
+        "Flask bounded positive anchor",
+        "public Python finding safety boundary"
+      ],
+      "depends_on": [
+        "Python analyzer",
+        "GitHub Actions",
+        "Python 3.13 acceptance runtime"
+      ]
+    }
+  ],
+  "data_flows": [
+    {
+      "from": "repository",
+      "to": "detector engine",
+      "meaning": "Audit dispatches the visible repository to registered deterministic analyzers."
+    },
+    {
+      "from": "detector engine",
+      "to": "Go Built-in Analyzer",
+      "meaning": "Go source is parsed and narrow findings are generated with explicit confidence."
+    },
+    {
+      "from": "detector engine",
+      "to": "evidence reducer",
+      "meaning": "The sorted highest-priority finding is reduced to a bounded packet for doctorcode next."
+    },
+    {
+      "from": "evidence reducer",
+      "to": "small LLM or human",
+      "meaning": "Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default."
+    },
+    {
+      "from": "labeled benchmark corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Manifest declares expected findings for isolated deterministic case roots."
+    },
+    {
+      "from": "Go Built-in Analyzer",
+      "to": "precision benchmark harness",
+      "meaning": "Analyzer findings are matched against labels and converted into TP, FP, and FN counts."
+    },
+    {
+      "from": "precision benchmark harness",
+      "to": "GitHub Actions",
+      "meaning": "Threshold result is a blocking regression gate on all three supported CI operating systems."
+    },
+    {
+      "from": "adversarial labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "M03 adds independent shadowing, selector-collision, parenthesis, inverse-boolean, raw-string, and negative-control cases."
+    },
+    {
+      "from": "repository-shaped labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "M04 exercises multi-file, multi-package, test-package, build-tag, assembly, generated-file, and nested-path interactions without changing detector rules."
+    },
+    {
+      "from": "pinned public Go repositories",
+      "to": "Pinned Public Repository Validator",
+      "meaning": "GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs."
+    },
+    {
+      "from": "Pinned Public Repository Validator",
+      "to": "Go Built-in Analyzer",
+      "meaning": "Original public repository trees are analyzed directly without copying them into DoctorCode."
+    },
+    {
+      "from": "Pinned Public Repository Validator",
+      "to": "GitHub Actions",
+      "meaning": "Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems."
+    },
+    {
+      "from": "M06 bounded labels",
+      "to": "Bounded Real-World Label Validator",
+      "meaning": "Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale."
+    },
+    {
+      "from": "Bounded Real-World Label Validator",
+      "to": "GitHub Actions",
+      "meaning": "Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation."
+    },
+    {
+      "from": "detector engine",
+      "to": "Python Built-in Analyzer",
+      "meaning": "When .py files and a compatible interpreter are present, source is parsed by a bounded standard-library AST subprocess and converted into deterministic findings."
+    },
+    {
+      "from": "M07 Python labeled corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Six isolated Python cases cover one positive per DoctorCode category plus conservative negatives."
+    },
+    {
+      "from": "Python Built-in Analyzer",
+      "to": "precision benchmark harness",
+      "meaning": "Python findings are matched against the M07 labeled corpus through the same deterministic TP/FP/FN harness."
+    },
+    {
+      "from": "pinned public Python repositories",
+      "to": "Pinned Public Python Validator",
+      "meaning": "GitHub Actions checks out click, httpx, requests, and Flask at exact tracked SHAs and provisions Python 3.13."
+    },
+    {
+      "from": "Pinned Public Python Validator",
+      "to": "Python Built-in Analyzer",
+      "meaning": "Original public .py trees are parsed directly; parse failure is blocking and no external repository text becomes project authority."
+    },
+    {
+      "from": "Pinned Public Python Validator",
+      "to": "GitHub Actions",
+      "meaning": "Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS."
+    },
+    {
+      "from": "M08 Python adversarial corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior."
+    }
+  ],
+  "external_boundaries": [
+    {
+      "name": "GitHub Actions",
+      "contract": "Linux, Windows, and macOS hosted runners are acceptance authority."
+    },
+    {
+      "name": "Host toolchains",
+      "contract": "Compiler/runtime availability is observed, never assumed."
+    },
+    {
+      "name": "Future language analyzers",
+      "contract": "Each language declares semantic coverage separately; recognition alone never implies analyzer support."
+    },
+    {
+      "name": "Repository filesystem boundary",
+      "contract": "Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis."
+    },
+    {
+      "name": "Pinned public repositories",
+      "contract": "External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority."
+    },
+    {
+      "name": "Host Python semantic runtime",
+      "contract": "Python semantic analysis is optional during normal audit. M07 acceptance explicitly provisions Python 3.13; the implementation accepts Python 3.8+ but broader runtime-version compatibility is not claimed by this milestone."
+    },
+    {
+      "name": "Pinned public Python repositories",
+      "contract": "External Python source is untrusted read-only analysis input fixed by exact SHA and license metadata; repository comments/docs/instructions never become DoctorCode authority."
+    }
+  ]
+}

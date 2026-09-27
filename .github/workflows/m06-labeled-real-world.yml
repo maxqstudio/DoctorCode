@@ -1,0 +1,68 @@
+name: M06 Labeled Real World Go
+
+on:
+  push:
+    branches:
+      - "work/m06-realworld-labeled"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: m06-labeled-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - name: Checkout DoctorCode
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          persist-credentials: false
+      - name: Checkout urfave-cli
+        uses: actions/checkout@v4
+        with:
+          repository: urfave/cli
+          ref: 58ec406eff149315193d8632c08317f70f6deee1
+          path: external/urfave-cli
+          persist-credentials: false
+      - name: Checkout zerolog
+        uses: actions/checkout@v4
+        with:
+          repository: rs/zerolog
+          ref: 5eb5f3a76c09eeadc1f2464baf4a4e3f1037c830
+          path: external/zerolog
+          persist-credentials: false
+      - name: Checkout fsnotify
+        uses: actions/checkout@v4
+        with:
+          repository: fsnotify/fsnotify
+          ref: 20b1e15ef3c70caeb37ea2bd184f48ef8382669e
+          path: external/fsnotify
+          persist-credentials: false
+      - name: Checkout validator
+        uses: actions/checkout@v4
+        with:
+          repository: go-playground/validator
+          ref: 3487babb14631e6cc37121799c58ba2281598edd
+          path: external/validator
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: doctorcode/go.mod
+          cache: false
+      - name: Run bounded labeled validation
+        working-directory: doctorcode
+        env:
+          DOCTORCODE_M06_URFAVE: external/urfave-cli
+          DOCTORCODE_M06_ZEROLOG: external/zerolog
+          DOCTORCODE_M06_FSNOTIFY: external/fsnotify
+          DOCTORCODE_M06_VALIDATOR: external/validator
+        run: go test ./internal/realworld -run TestM06LabeledRealWorld -v

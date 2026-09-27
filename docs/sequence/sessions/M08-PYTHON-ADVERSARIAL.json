@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "session_id": "M08-PYTHON-ADVERSARIAL",
+  "phase": "M08_PYTHON_ADVERSARIAL",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "ACCEPTED",
+  "implementation_base_sha": "fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M08-PYTHON-ADVERSARIAL.actual.json",
+    "diagram": "docs/sequence/generated/M08-PYTHON-ADVERSARIAL.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/benchmark/testdata/m08-python-adversarial.json",
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

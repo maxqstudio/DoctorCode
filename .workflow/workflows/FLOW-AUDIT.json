@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-AUDIT",
+  "title": "Deterministic repository audit",
+  "purpose": "Convert visible Go source into explicit findings without sending the repository to an LLM.",
+  "authority": "internal/engine/engine.go and internal/analyzers/golang/analyzer.go",
+  "entry_condition": "doctorcode audit or doctorcode next is invoked for an accessible repository.",
+  "source_owners": [
+    "cmd/doctorcode/main.go",
+    "internal/engine/engine.go",
+    "internal/analyzers/golang/analyzer.go",
+    "internal/evidence/packet.go"
+  ],
+  "states": [
+    "REQUESTED",
+    "ANALYZING",
+    "RANKED",
+    "PACKED",
+    "REPORTED"
+  ],
+  "transitions": [
+    {
+      "from": "REQUESTED",
+      "to": "ANALYZING",
+      "action": "Run registered deterministic language analyzers.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZING",
+      "to": "RANKED",
+      "action": "Sort findings by severity, confidence, path, and location.",
+      "side_effects": []
+    },
+    {
+      "from": "RANKED",
+      "to": "PACKED",
+      "action": "For doctorcode next, build one bounded evidence packet and suppress security source excerpts.",
+      "side_effects": []
+    },
+    {
+      "from": "RANKED",
+      "to": "REPORTED",
+      "action": "For doctorcode audit, emit findings in text or JSON.",
+      "side_effects": []
+    },
+    {
+      "from": "PACKED",
+      "to": "REPORTED",
+      "action": "Emit the single evidence packet.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "No M01 finding enables automatic fix or deletion.",
+    "Security evidence never includes the literal secret value.",
+    "Analyzer support is language-specific and explicit."
+  ],
+  "tests": [
+    "internal/analyzers/golang/analyzer_test.go",
+    "internal/analyzers/golang/corpus_test.go",
+    "internal/evidence/packet_test.go"
+  ],
+  "sequence_session": "M01-DETECTOR-FOUNDATION",
+  "critical": false,
+  "failure_behavior": [
+    "Parse or filesystem errors fail the audit instead of returning partial PASS evidence."
+  ],
+  "restart_behavior": [
+    "Audit is stateless and can be rerun against the same repository tree."
+  ],
+  "rollback_behavior": [
+    "Audit and evidence packet generation do not mutate target source."
+  ]
+}
