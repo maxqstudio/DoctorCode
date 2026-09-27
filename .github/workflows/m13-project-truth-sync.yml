@@ -1,0 +1,441 @@
+name: M13 Project Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m13-python-related-context"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m13-python-related-context
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M13 governance specs
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          state = load(".workflow/state.json")
+          state["phase"] = "M13_PYTHON_RELATED_CONTEXT"
+          state["status"] = "M13_VALIDATING"
+          state["working_branch"] = "work/m13-python-related-context"
+          state["blockers"] = []
+          state["proven"] = [
+              "M12 is MAIN_ACCEPTED with product baseline main@368c7b05d08d95beb5164d437920bbdd83c39e32 and governance-normalized starting main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d.",
+              "Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.",
+              "M13 initial RED Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 proved scoped Python RelatedLocations did not yet exist.",
+              "M13 packet RED Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d proved evidence packets had no Python related-context provider.",
+              "M13 first implementation Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed that the evidence reducer still dispatched only Go related context.",
+              "M13 provider plus dispatcher Core CI run 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed Linux, Windows, and macOS.",
+              "M13 rebinding RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd proved module-level rebinding could misclassify references to a replacement binding as related to the original function.",
+              "M13 fails closed to empty related context when the selected module has another module-level binding for the selected function name.",
+              "M13 product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI run 36325714821 on Linux, Windows, and macOS, including the public audit -> exact finding ID -> Python context E2E smoke.",
+              "At the same M13 product candidate, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 passed on all three operating systems."
+          ]
+          state["not_proven"] = [
+              "M13 Python related discovery is intentionally limited to findings enclosed by a module-level FunctionDef or AsyncFunctionDef.",
+              "Same-file direct references, recognized top-level from-import aliases, and recognized top-level module imports/attributes are covered; dynamic imports, string reflection, package-facade re-export chains, and runtime monkey-patching are not modeled.",
+              "Local lexical shadows are excluded using conservative scope binding collection; Python's full runtime name-resolution behavior is not claimed.",
+              "Any additional module-level binding of the selected function name makes M13 fail closed to no related locations for that function.",
+              "M13 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.",
+              "At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.",
+              "The byte budget remains deterministic bytes, not exact tokenizer counts.",
+              "Context evidence remains review input and never proves safe deletion or authorizes automatic repair."
+          ]
+          state["next_authorized_actions"] = [
+              "Generate and validate the M13 CURRENT sequence plus deterministic Project Truth.",
+              "Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.",
+              "After FINAL_ACCEPTED, merge M13 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA."
+          ]
+          state["blocked_actions"] = [
+              "Claiming Python related context is a complete dynamic dependency graph.",
+              "Treating related context as proof that code is safe to delete or auto-fix.",
+              "Starting MCP or Skill adapters before deterministic verification contracts are accepted."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          acceptance["evidence_boundary"] = (
+              "M13 Python Related Context adds bounded production/test reference excerpts for findings enclosed by "
+              "module-level Python functions. It covers same-file direct references, recognized top-level from-import "
+              "aliases, recognized top-level module imports/attributes, src-layout aliases, lexical shadow exclusion, "
+              "and fail-closed module-level rebinding. Product candidate "
+              "40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI and every accepted real-world lane "
+              "across Linux, Windows, and macOS. Dynamic imports, string reflection, package-facade re-export chains, "
+              "runtime monkey-patching, transitive graphs, safe deletion, and automatic repair remain outside M13 authority."
+          )
+          acceptance["sequence_mode"] = "DURING"
+          acceptance["sequence_session"] = "M13-PYTHON-RELATED-CONTEXT"
+          acceptance["sequence_sync_status"] = "PASS"
+          acceptance["runtime_status"] = "PASS"
+          acceptance["runtime_checks"] = [
+              "go test ./...",
+              "Core CI Python related-context smoke: isolated Python simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget",
+              "go run ./cmd/doctorcode audit . --json --max-findings=10",
+              "go run ./cmd/doctorcode next . --json --max-bytes=4096",
+              "go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths",
+              "go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths",
+              "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths",
+              "go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths"
+          ]
+          acceptance["test_commands"] = [
+              "go test ./...",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json",
+              "go vet ./...",
+              "go build -trimpath ./cmd/doctorcode",
+              "Core CI Go related-context smoke test",
+              "Core CI Python related-context smoke test"
+          ]
+          acceptance["requirements"] = [
+              {
+                  "id": "M13-MAIN-BASELINE",
+                  "requirement": "M13 must branch from governance-normalized M12 main and retain the pinned Skill_Workflow authority.",
+                  "evidence": "work/m13-python-related-context starts from main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d; M12 product baseline remains 368c7b05d08d95beb5164d437920bbdd83c39e32; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-RED-PROVIDER",
+                  "requirement": "Scoped Python related-location behavior must be demonstrated absent before implementation.",
+                  "evidence": "Core CI run 36324660214 at c662800e22723475fc599111ab1bcfb37035f427 failed before Python RelatedLocations existed.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-RED-PACKET-PARITY",
+                  "requirement": "The evidence packet must be proven unable to include Python related context before dispatcher integration.",
+                  "evidence": "Core CI run 36324663921 at 8282b6c7e483502c216aae5b2d9b3f92bcd1373d failed the Python related packet contract.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-DISPATCH-REPAIR",
+                  "requirement": "Evidence reduction must dispatch eligible .py findings to the Python related provider while preserving Go behavior.",
+                  "evidence": "Core CI run 36324823543 at adf8b38b1029ec89a4d6b88c31b802759f34ff59 exposed related_total=0 in the Python packet; Core CI 36324853791 at cc23483125363d5998c8c368b357c1d2307a3f8d passed after dispatcher integration.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-SHADOW-PRECISION",
+                  "requirement": "Local lexical shadows must not be reported as references to the selected module-level function.",
+                  "evidence": "internal/analyzers/python/related_test.go requires source, direct-import test, and module-attribute test references while excluding local shadows and unrelated same-named functions; Core CI 36325714821 passes.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-REBIND-FAIL-CLOSED",
+                  "requirement": "If the selected module rebinds the selected function name at module scope, related discovery must fail closed instead of attaching references to the replacement binding.",
+                  "evidence": "RED Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd emitted two false relations; repaired product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passes.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-PACKET-PARITY",
+                  "requirement": "Python related excerpts must use the same schema-v2 related_total/related_excerpts budget and production/test kind contract accepted for Go.",
+                  "evidence": "internal/evidence/packet_test.go plus Core CI run 36325714821 verify Python production + test related excerpts under max-bytes while existing Go packet tests remain passing.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-CLI-E2E",
+                  "requirement": "The public context command must return bounded Python production/test related context for a real current audit finding.",
+                  "evidence": "Core CI run 36325714821 executes audit -> exact PY-SIMPLIFY-BOOL-RETURN finding ID -> context packet on Linux, Windows, and macOS and asserts schema v2, exact ID, related_total=2, deterministic paths/kinds, and byte budget.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-REGRESSION-MATRIX",
+                  "requirement": "All previously accepted Go and Python detector/public-source lanes must remain passing across Linux, Windows, and macOS.",
+                  "evidence": "At 40771744b74d91478c7eb60386d718ba4b170e91: Core CI 36325714821, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 all passed across all three operating systems.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M13-STRICT-GOVERNANCE-FINAL",
+                  "requirement": "Generated Project Truth and M13 sequence artifacts must pass strict governance on the final exact M13 branch SHA after temporary workflows are removed.",
+                  "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
+                  "status": "NOT_PROVEN"
+              }
+          ]
+          acceptance.setdefault("truth_gates", {})["SEQUENCE_SYNC"] = "PASS"
+          acceptance["truth_gates"]["CROSS_DOCUMENT_CONSISTENCY"] = "NOT_PROVEN"
+          acceptance["truth_gates"]["PROJECT_STATE_SYNC"] = "NOT_PROVEN"
+          save(".workflow/acceptance.json", acceptance)
+
+          claims = load(".workflow/claims.json")
+          known = {x["id"] for x in claims["claims"]}
+          additions = [
+              {
+                  "id": "TRUTH-M13-PYTHON-RELATED",
+                  "claim": "M13 derives related locations for findings enclosed by module-level Python functions using same-file direct references plus recognized top-level from-import aliases and module imports/attributes, with src-layout module aliases.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/analyzers/python/related.go"],
+                  "tests": ["internal/analyzers/python/related_test.go"],
+                  "runtime_evidence": ["GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M13-SHADOW-REBIND",
+                  "claim": "M13 excludes conservative lexical shadows and fails closed to no related locations when the selected Python module has another module-level binding of the selected function name.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/analyzers/python/related.go"],
+                  "tests": ["internal/analyzers/python/related_test.go"],
+                  "runtime_evidence": [
+                      "RED GitHub Actions Core CI run 36325560265 at 127bb23631fe9e806bdc7915493726864557a4cd",
+                      "GREEN GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"
+                  ],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M13-PACKET-PARITY",
+                  "claim": "M13 routes eligible Python findings through the same schema-v2 bounded related excerpt contract as Go while preserving primary source priority, max-bytes, related_total, test-reference classification, and security excerpt omission.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/evidence/packet.go"],
+                  "tests": ["internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+                  "runtime_evidence": ["GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91"],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M13-REGRESSION-MATRIX",
+                  "claim": "The M13 product candidate preserved Core CI plus every accepted Go/Python public-source and bounded-label lane on Linux, Windows, and macOS.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": [".github/workflows/ci.yml"],
+                  "tests": [
+                      ".github/workflows/ci.yml",
+                      ".github/workflows/m10-python-labeled-real-world.yml",
+                      ".github/workflows/m07-python-real-world.yml",
+                      ".github/workflows/m06-labeled-real-world.yml",
+                      ".github/workflows/real-world-go.yml"
+                  ],
+                  "runtime_evidence": [
+                      "GitHub Actions Core CI run 36325714821 at 40771744b74d91478c7eb60386d718ba4b170e91",
+                      "GitHub Actions M10 Labeled Real World Python run 36325714820 at 40771744b74d91478c7eb60386d718ba4b170e91",
+                      "GitHub Actions M07 Python Real World run 36325714848 at 40771744b74d91478c7eb60386d718ba4b170e91",
+                      "GitHub Actions M06 Labeled Real World Go run 36325714812 at 40771744b74d91478c7eb60386d718ba4b170e91",
+                      "GitHub Actions Real World Go Validation run 36325714823 at 40771744b74d91478c7eb60386d718ba4b170e91"
+                  ],
+                  "status": "PASS"
+              }
+          ]
+          for item in additions:
+              if item["id"] not in known:
+                  claims["claims"].append(item)
+          save(".workflow/claims.json", claims)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M13 Python Related Context candidate" for x in changelog["entries"]):
+              changelog["entries"].insert(0, {
+                  "date": "2026-09-27",
+                  "title": "M13 Python Related Context candidate",
+                  "type": "development",
+                  "changes": [
+                      "Added bounded related-location discovery for findings enclosed by module-level Python functions.",
+                      "Added same-file direct, top-level from-import alias, and top-level module-attribute reference recognition with src-layout aliases.",
+                      "Excluded local lexical shadows and unrelated same-named functions from related context.",
+                      "Added fail-closed handling for selected-function module-level rebinding after a dedicated RED gate exposed false relations.",
+                      "Routed eligible Python findings through the accepted schema-v2 related_total/related_excerpts packet budget.",
+                      "Added Linux, Windows, and macOS public CLI smoke for audit -> exact finding ID -> Python related context."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          architecture = load(".workflow/architecture.json")
+          for component in architecture["components"]:
+              if component["id"] == "python_analyzer":
+                  owned = "bounded scope-aware related-reference discovery for module-level functions"
+                  if owned not in component["owns"]:
+                      component["owns"].append(owned)
+              if component["id"] == "evidence_reducer":
+                  component["purpose"] = "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional Go/Python related context while enforcing repository-contained source reads."
+          if not any(x.get("from") == "Python Built-in Analyzer" and x.get("to") == "evidence reducer" for x in architecture["data_flows"]):
+              architecture["data_flows"].append({
+                  "from": "Python Built-in Analyzer",
+                  "to": "evidence reducer",
+                  "meaning": "For an eligible selected Python finding, the related provider supplies deterministic bounded production/test reference locations for packet inclusion."
+              })
+          for flow in architecture["data_flows"]:
+              if flow["from"] == "evidence reducer" and flow["to"] == "small LLM or human":
+                  flow["meaning"] = "The packet exposes the selected finding, primary excerpt, and budget-permitting related Go or Python excerpts; security excerpts remain omitted and unsupported languages keep primary-source-only context."
+          if not any(x["name"] == "Python related-context boundary" for x in architecture["external_boundaries"]):
+              architecture["external_boundaries"].append({
+                  "name": "Python related-context boundary",
+                  "contract": "M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed."
+              })
+          save(".workflow/architecture.json", architecture)
+
+          decisions = load(".workflow/decisions.json")
+          ids = {x["id"] for x in decisions["decisions"]}
+          for item in [
+              {
+                  "id": "ADR-M13-001",
+                  "title": "Python related context starts at module-level functions",
+                  "status": "ACCEPTED",
+                  "decision": "For M13, derive related context only when the selected finding is enclosed by a module-level FunctionDef or AsyncFunctionDef.",
+                  "rationale": "This mirrors M12's bounded scope while avoiding class/method dispatch, nested callable identity, and whole-program dynamic resolution claims."
+              },
+              {
+                  "id": "ADR-M13-002",
+                  "title": "Recognize bounded Python imports and lexical shadows",
+                  "status": "ACCEPTED",
+                  "decision": "Recognize same-file direct loads plus top-level from-import aliases and module import attributes for the selected module, and exclude references whose lexical scope binds the same local name.",
+                  "rationale": "Small-model context benefits from caller/test evidence, but name-only matching would attach unrelated local shadows and same-named functions."
+              },
+              {
+                  "id": "ADR-M13-003",
+                  "title": "Fail closed on selected-name module rebinding",
+                  "status": "ACCEPTED",
+                  "decision": "If any additional module-level binding of the selected function name exists in the selected module, return no related locations for that selected function.",
+                  "rationale": "Python module names can be rebound after a function definition; without temporal/runtime evaluation, attaching later references to the original function would be unsafe guesswork."
+              },
+              {
+                  "id": "ADR-M13-004",
+                  "title": "Reuse schema-v2 packet budget for Python parity",
+                  "status": "ACCEPTED",
+                  "decision": "Dispatch eligible .py findings to the Python provider and convert locations into the same deterministic related excerpt pipeline already accepted for Go.",
+                  "rationale": "One packet contract keeps CLI behavior stable, preserves primary-source priority, and avoids language-specific context serialization."
+              }
+          ]:
+              if item["id"] not in ids:
+                  decisions["decisions"].append(item)
+          save(".workflow/decisions.json", decisions)
+
+          m12 = load("docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json")
+          m12["scope"] = "HISTORICAL"
+          save("docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json", m12)
+
+          save(".workflow/workflows/FLOW-PYTHON-RELATED-CONTEXT.json", {
+              "schema_version": 1,
+              "flow_id": "FLOW-PYTHON-RELATED-CONTEXT",
+              "title": "Bounded Python related context compilation",
+              "purpose": "Enrich one exact current Python finding with deterministic bounded production/test references without exceeding the evidence packet byte budget.",
+              "authority": "internal/analyzers/python/related.go, internal/evidence/packet.go, their tests, and .github/workflows/ci.yml",
+              "entry_condition": "The selected current finding resolves to a repository-contained .py source path and is enclosed by a module-level function.",
+              "source_owners": ["internal/analyzers/python/related.go", "internal/evidence/packet.go"],
+              "states": ["PRIMARY_PATH_VERIFIED", "FUNCTION_IDENTIFIED", "BINDING_AMBIGUITY_CHECKED", "REFERENCES_CLASSIFIED", "RELATED_EXCERPTS_BOUNDED", "PACKET_REPORTED"],
+              "transitions": [
+                  {"from": "PRIMARY_PATH_VERIFIED", "to": "FUNCTION_IDENTIFIED", "action": "Parse visible Python source and identify the selected module-level function by source range.", "side_effects": []},
+                  {"from": "FUNCTION_IDENTIFIED", "to": "BINDING_AMBIGUITY_CHECKED", "action": "Reject related discovery when another module-level binding of the selected function name makes identity ambiguous.", "side_effects": []},
+                  {"from": "BINDING_AMBIGUITY_CHECKED", "to": "REFERENCES_CLASSIFIED", "action": "Collect same-file direct references and recognized top-level import/module-attribute references while excluding lexical shadows.", "side_effects": []},
+                  {"from": "REFERENCES_CLASSIFIED", "to": "RELATED_EXCERPTS_BOUNDED", "action": "Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.", "side_effects": []},
+                  {"from": "RELATED_EXCERPTS_BOUNDED", "to": "PACKET_REPORTED", "action": "Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.", "side_effects": []}
+              ],
+              "invariants": [
+                  "Primary selected source is repository-contained before related discovery runs.",
+                  "Only module-level Python functions are eligible for M13 related discovery.",
+                  "Local lexical shadows are excluded conservatively.",
+                  "Additional module-level selected-name bindings cause fail-closed empty related context.",
+                  "Only bounded recognized static import forms are followed; dynamic runtime resolution is not guessed.",
+                  "Primary source context has priority over optional related excerpts.",
+                  "Packet encoded size never exceeds max-bytes.",
+                  "Security findings continue to omit source and related excerpts.",
+                  "M13 does not claim a transitive or complete Python dependency graph."
+              ],
+              "tests": ["internal/analyzers/python/related_test.go", "internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+              "sequence_session": "M13-PYTHON-RELATED-CONTEXT",
+              "critical": False,
+              "failure_behavior": ["Parse/read errors fail the context request; ambiguous selected-name module rebinding yields no related locations rather than guessed relations."],
+              "restart_behavior": ["The flow is stateless and deterministic for an unchanged repository source state and interpreter semantics."],
+              "rollback_behavior": ["M13 can be reverted to M12 Go-only related enrichment without changing detector findings or safe_autofix semantics."]
+          })
+
+          save("docs/sequence/sessions/M13-PYTHON-RELATED-CONTEXT.json", {
+              "schema_version": 1,
+              "session_id": "M13-PYTHON-RELATED-CONTEXT",
+              "phase": "M13_PYTHON_RELATED_CONTEXT",
+              "mode": "DURING",
+              "scope": "CURRENT",
+              "critical": False,
+              "status": "IN_PROGRESS",
+              "implementation_base_sha": "25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d",
+              "plan": {"required": False, "contract": "", "frozen": False, "frozen_commit": "", "sha256": "", "diagram": ""},
+              "actual": {
+                  "graph": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.json",
+                  "diagram": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.mmd",
+                  "source_digest": "",
+                  "entries": []
+              },
+              "test_traceability_required": True,
+              "tests": ["internal/analyzers/python/related_test.go", "internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+              "runtime_trace": {"required": False, "graph": ""},
+              "acceptance_report": ""
+          })
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme = re.sub(
+              r"\*\*M12 Go Related Context is accepted on the development branch pending final exact-SHA promotion checks\.\*\*",
+              "**M13 Python Related Context is validating on work/m13-python-related-context from governance-normalized M12 main@25ce40a8d60aa0dad8fe50f6d8bcb945dad2482d.**",
+              readme,
+              count=1,
+          )
+          if "### M13 bounded Python related context" not in readme:
+              marker = "### M12 bounded Go related context"
+              idx = readme.find(marker)
+              if idx >= 0:
+                  next_idx = readme.find("\n### ", idx + len(marker))
+                  if next_idx < 0:
+                      next_idx = len(readme)
+                  section = """
+### M13 bounded Python related context
+
+M13 extends the schema-v2 bounded related-context packet to eligible Python findings. A finding must be enclosed by a module-level function. DoctorCode can attach same-file unshadowed direct references plus recognized top-level from-import aliases and module import attributes, including conventional src-layout module aliases.
+
+Python lexical scopes are handled conservatively: local arguments, assignments, imports, nested definitions, comprehensions, and similar bindings can prevent a same-name load from being classified as related. If the selected module contains another module-level binding for the selected function name, M13 fails closed to no related locations because runtime identity is ambiguous.
+
+Dynamic imports, package-facade re-export chains, string reflection, monkey-patching, class/method dispatch, nested callable identity, and transitive dependency graphs remain outside M13's proof boundary. Context remains review evidence only; it never authorizes deletion or automatic repair.
+
+"""
+                  readme = readme[:next_idx] + section + readme[next_idx:]
+          readme_path.write_text(readme, encoding="utf-8")
+
+      - name: Remove temporary workflow from final tree
+        run: git rm .github/workflows/m13-project-truth-sync.yml
+
+      - name: Generate M13 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.json
+          --output-mermaid docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.mmd
+
+      - name: Validate M13 sequence
+        run: >
+          python .workflow/tools/validate_sequence_contract.py
+          --root .
+          --session docs/sequence/sessions/M13-PYTHON-RELATED-CONTEXT.json
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate generated artifacts before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit synchronized M13 governance
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m13): synchronize Python related context project truth"
+          git push origin HEAD:work/m13-python-related-context
