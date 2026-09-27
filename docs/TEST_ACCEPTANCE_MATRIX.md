@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M10 is MAIN_ACCEPTED at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Post-merge Governance Bootstrap 36304216096 and all five three-OS product/real-world matrices (36304215983, 36304215942, 36304216032, 36304215964, 36304215947) completed success. M10 remains bounded to six exact-SHA Python labels—2 VALID_FINDING anchors and 4 INVALID_FINDING guards—and does not establish exhaustive precision/recall or safe deletion.
+M10 product behavior is accepted on main at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Its governance-normalized main closure at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 also passed strict governance and every accepted Linux/Windows/macOS regression lane. M10 remains bounded to six exact-SHA Python labels—2 VALID_FINDING anchors and 4 INVALID_FINDING guards—and does not establish exhaustive precision/recall or safe deletion.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
@@ -18,6 +18,7 @@ Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed7
 | M10-ALL-PRODUCT-LANES | Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS. | At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs. | PASS |
 | M10-STRICT-GOVERNANCE-FINAL | Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed. | M10 Project Truth sync run 36303858286 successfully generated and validated the M10 sequence plus deterministic docs after M09 was frozen HISTORICAL. Temporary workflows are removed by the finalization sync; clean-tree Governance Bootstrap remains a blocking promotion check on the resulting exact SHA. | PASS |
 | M10-MAIN-POST-MERGE | The exact M10 main merge SHA must pass strict governance and every accepted cross-platform regression lane before it becomes the next development base. | main@36baeec0057089ffe50c9d3cc25d22d8524c882e: Governance Bootstrap 36304216096, core CI 36304215983, M10 Labeled Real World Python 36304215942, M07 Python Real World 36304216032, M06 Labeled Real World Go 36304215964, and Real World Go Validation 36304215947 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M10-GOVERNANCE-NORMALIZED-MAIN | The governance-only M10 main truth-sync closure must itself pass strict governance and every accepted cross-platform lane on the exact merged main SHA. | main@3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23: Governance Bootstrap 36307506384, core CI 36307506390, M10 Labeled Real World Python 36307506393, M07 Python Real World 36307506407, M06 Labeled Real World Go 36307506391, and Real World Go Validation 36307506396 all completed success; each matrix passed Linux, Windows, and macOS. | PASS |
 
 ## Test commands
 

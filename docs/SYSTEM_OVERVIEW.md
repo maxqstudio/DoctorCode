@@ -227,17 +227,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize generated Project Truth to the exact accepted M10 main baseline without changing product source.
-- Run exact-SHA governance and all accepted regression lanes on the synchronized governance-only closure.
-- Merge the governance-only closure to main and revalidate main.
-- Before any new milestone, fetch latest Skill_Workflow main and compare it with the pinned DoctorCode authority.
-- Define the next milestone only from repository authority or an explicit new Owner directive; no M11 scope is currently declared in the repository.
+- Await an explicit Owner directive or repository governance update that defines the next milestone; no M11 scope is currently declared.
+- When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.
+- Preserve M10 product acceptance at 36baeec0057089ffe50c9d3cc25d22d8524c882e and governance-normalized main evidence at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 as immutable historical evidence.
 
 Blocked actions:
 - Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
 - Treating zero conservative references as safe-delete proof.
 - Auto-deleting or auto-fixing Python findings.
-- Inventing or starting an M11 scope before the M10 main truth-sync closure is merged and accepted.
+- Inventing or starting an M11 implementation without explicit milestone scope.
 
 Known blockers:
 - None declared.
@@ -264,6 +262,14 @@ Known blockers:
 - Exact post-merge main M07 Python Real World run 36304216032 completed success on all three operating systems.
 - Exact post-merge main M06 Labeled Real World Go run 36304215964 completed success on all three operating systems.
 - Exact post-merge main Real World Go Validation run 36304215947 completed success on all three operating systems.
+- M10 Project Truth governance-only closure merged through PR #5 to main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23.
+- Exact governance-normalized main Governance Bootstrap run 36307506384 completed success.
+- Exact governance-normalized main core CI run 36307506390 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact governance-normalized main M10 Labeled Real World Python run 36307506393 completed success on all three operating systems.
+- Exact governance-normalized main M07 Python Real World run 36307506407 completed success on all three operating systems.
+- Exact governance-normalized main M06 Labeled Real World Go run 36307506391 completed success on all three operating systems.
+- Exact governance-normalized main Real World Go Validation run 36307506396 completed success on all three operating systems.
+- Latest Skill_Workflow main remains exactly 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
 
 ### Not proven
 
