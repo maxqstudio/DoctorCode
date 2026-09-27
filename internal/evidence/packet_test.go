@@ -171,3 +171,27 @@ func TestPacketRelatedContextTruncatesInsideBudget(t *testing.T) {
 		t.Fatalf("packet exceeds budget: %d", encodedSize(packet))
 	}
 }
+
+func TestPacketRejectsTraversalBeforeRelatedProviderReadsOutside(t *testing.T) {
+	parent := t.TempDir()
+	root := filepath.Join(parent, "repo")
+	if err := os.Mkdir(root, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	outside := filepath.Join(parent, "outside.go")
+	if err := os.WriteFile(outside, []byte("this is deliberately invalid go syntax"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	finding := model.Finding{
+		ID: "EARLY-BOUNDARY", RuleID: "R", Category: model.CategoryLogic,
+		Severity: model.SeverityMedium, Confidence: model.ConfidenceHigh,
+		Path: "../outside.go", LineStart: 1, LineEnd: 1, Summary: "escape",
+	}
+	_, err := Build(root, finding, 1024)
+	if err == nil {
+		t.Fatal("expected traversal to be rejected")
+	}
+	if !strings.Contains(err.Error(), "repository root") {
+		t.Fatalf("related provider read outside root before boundary rejection: %v", err)
+	}
+}
