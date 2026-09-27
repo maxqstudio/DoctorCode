@@ -1,0 +1,402 @@
+name: M12 Project Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m12-go-related-context"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m12-go-related-context
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M12 governance specs
+        shell: python
+        run: |
+          import json
+          import re
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          state = load(".workflow/state.json")
+          state["phase"] = "M12_GO_RELATED_CONTEXT"
+          state["status"] = "M12_VALIDATING"
+          state["working_branch"] = "work/m12-go-related-context"
+          state["blockers"] = []
+          state["proven"] = [
+              "M11 is MAIN_ACCEPTED with product baseline main@3ca18bdca11e436b3a2fa63491976041639eeee2 and governance-normalized current main@2caa530a9e1f284a0446b7ead6d97218de996498.",
+              "Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.",
+              "M12 initial RED Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b proved RelatedLocations and packet related-context fields did not yet exist.",
+              "M12 first implementation Core CI run 36322997947 at b289f2457196e6060de66a8738fb9e11fc6c8373 exposed a same-file AST object-identity defect while test-file reference discovery already worked.",
+              "M12 boundary RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 proved related discovery could parse an invalid parent-traversal Go file before repository-boundary rejection.",
+              "M12 reuses the selected source AST for binding-aware same-file function references and only accepts unresolved cross-file references from the same Go package; external test packages are not guessed.",
+              "Evidence packet schema v2 can include bounded Go production and same-package test related excerpts while preserving the caller byte budget and primary source priority.",
+              "M12 product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI run 36323276401 on Linux, Windows, and macOS, including the end-to-end related-context CLI smoke.",
+              "At the same product candidate, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 passed on all three operating systems."
+          ]
+          state["not_proven"] = [
+              "M12 related discovery is intentionally limited to enclosing top-level non-method Go functions in the same directory and package.",
+              "Go methods, external test packages, Python findings, and other languages retain the M11 primary-source-only context behavior.",
+              "M12 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.",
+              "Cross-file same-package references use conservative parser binding behavior rather than a full Go type checker.",
+              "At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.",
+              "The byte budget remains deterministic bytes, not exact tokenizer counts.",
+              "Context evidence remains review input and never proves safe deletion or authorizes automatic repair."
+          ]
+          state["next_authorized_actions"] = [
+              "Generate and validate the M12 CURRENT sequence plus deterministic Project Truth.",
+              "Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.",
+              "After FINAL_ACCEPTED, merge M12 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA."
+          ]
+          state["blocked_actions"] = [
+              "Claiming Python related-context parity from M12.",
+              "Treating lexical related locations as a complete dependency graph.",
+              "Treating a related-context packet as proof that code is safe to delete or auto-fix.",
+              "Expanding into MCP or Skill adapters before context parity and verification contracts are explicitly scoped."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          acceptance["evidence_boundary"] = "M12 Go Related Context adds bounded production/test reference excerpts for findings enclosed by a top-level non-method Go function. Binding-aware same-file references, same-package cross-file references, shadowing exclusion, external-test-package exclusion, byte-budget truncation, and traversal-before-provider rejection are tested. Product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Python and non-Go findings retain M11 primary-source-only context."
+          acceptance["sequence_mode"] = "DURING"
+          acceptance["sequence_session"] = "M12-GO-RELATED-CONTEXT"
+          acceptance["sequence_sync_status"] = "PASS"
+          acceptance["runtime_status"] = "PASS"
+          acceptance["runtime_checks"] = [
+              "go test ./...",
+              "Core CI related-context smoke: isolated Go simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget",
+              "go run ./cmd/doctorcode audit . --json --max-findings=10",
+              "go run ./cmd/doctorcode next . --json --max-bytes=4096",
+              "go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths",
+              "go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths",
+              "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths",
+              "go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths"
+          ]
+          acceptance["test_commands"] = [
+              "go test ./...",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json",
+              "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json",
+              "go vet ./...",
+              "go build -trimpath ./cmd/doctorcode",
+              "Core CI finding-specific related context smoke test"
+          ]
+          acceptance["requirements"] = [
+              {
+                  "id": "M12-MAIN-BASELINE",
+                  "requirement": "M12 must branch from the current governance-normalized M11 main and retain the pinned Skill_Workflow authority.",
+                  "evidence": "work/m12-go-related-context was created from main@2caa530a9e1f284a0446b7ead6d97218de996498; M11 product baseline remains 3ca18bdca11e436b3a2fa63491976041639eeee2; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-RED-CONTRACT",
+                  "requirement": "The related-context packet contract must be demonstrated absent before implementation.",
+                  "evidence": "Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b failed because RelatedLocations, RelatedTotal, and RelatedExcerpts did not exist.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-BINDING-PRECISION",
+                  "requirement": "Same-file Go references must preserve AST binding identity, local shadowing must not count, and same-package test references must be distinguished.",
+                  "evidence": "Core CI run 36322997947 exposed the reparse identity defect; internal/analyzers/golang/related_test.go now requires exactly one production reference and one test_reference while excluding the local shadow binding and external test package.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-EARLY-FILESYSTEM-BOUNDARY",
+                  "requirement": "Repository containment must reject traversal before related discovery parses source outside the root.",
+                  "evidence": "Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 failed on an intentionally invalid ../outside.go parse; the repaired Build path validates the primary source before invoking related discovery, and product Core CI 36323276401 passes.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-BOUNDED-PACKET-V2",
+                  "requirement": "Packet schema v2 must add deterministic related_total/related_excerpts without exceeding max-bytes and must mark truncation when not all related context fits.",
+                  "evidence": "internal/evidence/packet_test.go covers two related excerpts, tight-budget truncation, accurate excerpt bounds, and existing security/path boundaries; Core CI 36323276401 passed on all three operating systems.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-CLI-E2E",
+                  "requirement": "The public context command must return a bounded packet with both a production reference and a same-package test reference for a real audited Go finding.",
+                  "evidence": "Core CI run 36323276401 executes the finding-specific related-context smoke on Linux, Windows, and macOS and asserts schema_version=2, related_total=2, reference/test_reference order, exact finding ID, and byte budget.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-REGRESSION-MATRIX",
+                  "requirement": "All previously accepted detector and public-source regression lanes must remain passing across Linux, Windows, and macOS.",
+                  "evidence": "At bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8: Core CI 36323276401, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 all completed success across all three operating systems.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M12-STRICT-GOVERNANCE-FINAL",
+                  "requirement": "Generated Project Truth and M12 sequence artifacts must pass strict governance on the final exact M12 branch SHA after temporary workflows are removed.",
+                  "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
+                  "status": "NOT_PROVEN"
+              }
+          ]
+          for key in ("CROSS_DOCUMENT_CONSISTENCY", "PROJECT_STATE_SYNC"):
+              acceptance.setdefault("truth_gates", {})[key] = "NOT_PROVEN"
+          acceptance["truth_gates"]["SEQUENCE_SYNC"] = "PASS"
+          save(".workflow/acceptance.json", acceptance)
+
+          claims = load(".workflow/claims.json")
+          known = {x["id"] for x in claims["claims"]}
+          additions = [
+              {
+                  "id": "TRUTH-M12-GO-RELATED",
+                  "claim": "M12 derives related locations for findings enclosed by a top-level non-method Go function, preserving same-file AST object identity and admitting unresolved cross-file identifiers only from the same Go package.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/analyzers/golang/related.go"],
+                  "tests": ["internal/analyzers/golang/related_test.go"],
+                  "runtime_evidence": ["GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M12-PACKET-V2",
+                  "claim": "M12 evidence packet schema version 2 can include bounded related production/test excerpts, reports related_total, caps emitted excerpts at eight, and preserves max-bytes with truncation signaling.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/evidence/packet.go", "cmd/doctorcode/main.go"],
+                  "tests": ["internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+                  "runtime_evidence": ["GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M12-BOUNDARY",
+                  "claim": "M12 validates the selected source path against the repository boundary before invoking Go related discovery, so parent traversal is rejected before an outside Go file is parsed.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": ["internal/evidence/packet.go"],
+                  "tests": ["internal/evidence/packet_test.go"],
+                  "runtime_evidence": ["RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52", "GREEN Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"],
+                  "status": "PASS"
+              },
+              {
+                  "id": "TRUTH-M12-LANGUAGE-BOUNDARY",
+                  "claim": "M12 related-context enrichment is Go-only; Python and other languages retain primary-source-only context until a separately accepted parity milestone.",
+                  "documents": ["PROJECT_TRUTH_SYNC.md"],
+                  "source_owners": [".workflow/state.json", "internal/evidence/packet.go"],
+                  "tests": ["internal/evidence/packet_test.go"],
+                  "runtime_evidence": ["GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"],
+                  "status": "PASS"
+              }
+          ]
+          for item in additions:
+              if item["id"] not in known:
+                  claims["claims"].append(item)
+          save(".workflow/claims.json", claims)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M12 Go Related Context candidate" for x in changelog["entries"]):
+              changelog["entries"].insert(0, {
+                  "date": "2026-09-27",
+                  "title": "M12 Go Related Context candidate",
+                  "type": "development",
+                  "changes": [
+                      "Added binding-aware related-location discovery for top-level non-method Go functions.",
+                      "Added packet schema v2 related_total and bounded related_excerpts with production/test kinds.",
+                      "Preserved primary source priority and max-bytes while marking omitted related context as truncated.",
+                      "Rejected parent traversal before Go related discovery can parse an outside file.",
+                      "Added three-OS CLI smoke proving exact finding-ID related context with one production and one same-package test reference.",
+                      "Corrected project technology truth to list both Go and Python."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          architecture = load(".workflow/architecture.json")
+          for component in architecture["components"]:
+              if component["id"] == "go_analyzer":
+                  if "binding-aware related-reference discovery for top-level non-method functions" not in component["owns"]:
+                      component["owns"].append("binding-aware related-reference discovery for top-level non-method functions")
+              if component["id"] == "evidence_reducer":
+                  component["purpose"] = "Turn a selected deterministic finding into a tokenizer-independent bounded byte packet with primary source and optional related context while enforcing repository-contained source reads."
+                  for owned in ("related excerpt prioritization", "related excerpt byte-budget truncation"):
+                      if owned not in component["owns"]:
+                          component["owns"].append(owned)
+          if not any(x.get("from") == "Go Built-in Analyzer" and x.get("to") == "evidence reducer" for x in architecture["data_flows"]):
+              architecture["data_flows"].append({
+                  "from": "Go Built-in Analyzer",
+                  "to": "evidence reducer",
+                  "meaning": "For an eligible selected Go finding, the related provider supplies deterministic same-package production/test reference locations for bounded excerpt inclusion."
+              })
+          for flow in architecture["data_flows"]:
+              if flow["from"] == "evidence reducer" and flow["to"] == "small LLM or human":
+                  flow["meaning"] = "The packet exposes the selected finding, primary excerpt, and budget-permitting related Go excerpts; security excerpts remain omitted and non-Go findings keep primary-source-only context."
+          if not any(x["name"] == "Go related-context boundary" for x in architecture["external_boundaries"]):
+              architecture["external_boundaries"].append({
+                  "name": "Go related-context boundary",
+                  "contract": "M12 follows only enclosing top-level non-method functions and references in the same directory/package. Local shadow bindings and external test packages are excluded; no full type-checker or transitive graph is claimed."
+              })
+          save(".workflow/architecture.json", architecture)
+
+          decisions = load(".workflow/decisions.json")
+          ids = {x["id"] for x in decisions["decisions"]}
+          for item in [
+              {
+                  "id": "ADR-M12-001",
+                  "title": "Related context starts with enclosing top-level Go functions",
+                  "status": "ACCEPTED",
+                  "decision": "For M12, derive related context only when the selected finding is enclosed by a top-level non-method Go function.",
+                  "rationale": "This yields useful caller/test context without inventing method resolution, whole-program graphs, or cross-language semantics."
+              },
+              {
+                  "id": "ADR-M12-002",
+                  "title": "Preserve binding identity before lexical cross-file fallback",
+                  "status": "ACCEPTED",
+                  "decision": "Reuse the selected source AST so same-file references require exact ast.Object identity; accept nil-object references only from other files in the same Go package, and ignore external test packages.",
+                  "rationale": "Reparsing the source broke object identity, while name-only matching would reintroduce shadowing false relations."
+              },
+              {
+                  "id": "ADR-M12-003",
+                  "title": "Primary source outranks related excerpts under the packet budget",
+                  "status": "ACCEPTED",
+                  "decision": "Keep the selected finding source as first-priority context, then append at most eight related excerpts in deterministic order while they fit max-bytes; report related_total and mark truncation when context is omitted.",
+                  "rationale": "The selected defect evidence must never be displaced by optional related context, and bounded packets must remain useful to small local models."
+              }
+          ]:
+              if item["id"] not in ids:
+                  decisions["decisions"].append(item)
+          save(".workflow/decisions.json", decisions)
+
+          project = load(".workflow/project.json")
+          project["technology"]["languages"] = ["Go", "Python"]
+          save(".workflow/project.json", project)
+
+          m11 = load("docs/sequence/sessions/M11-CONTEXT-COMPILER.json")
+          m11["scope"] = "HISTORICAL"
+          save("docs/sequence/sessions/M11-CONTEXT-COMPILER.json", m11)
+
+          save(".workflow/workflows/FLOW-GO-RELATED-CONTEXT.json", {
+              "schema_version": 1,
+              "flow_id": "FLOW-GO-RELATED-CONTEXT",
+              "title": "Bounded Go related context compilation",
+              "purpose": "Enrich one exact current Go finding with deterministic same-package production/test references without exceeding the evidence packet byte budget.",
+              "authority": "internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml",
+              "entry_condition": "The selected current finding resolves to a repository-contained .go source path and is enclosed by a top-level non-method function.",
+              "source_owners": ["internal/analyzers/golang/related.go", "internal/evidence/packet.go", "cmd/doctorcode/main.go"],
+              "states": ["PRIMARY_PATH_VERIFIED", "FUNCTION_IDENTIFIED", "REFERENCES_CLASSIFIED", "RELATED_EXCERPTS_BOUNDED", "PACKET_REPORTED"],
+              "transitions": [
+                  {"from": "PRIMARY_PATH_VERIFIED", "to": "FUNCTION_IDENTIFIED", "action": "Parse the selected Go source once and identify the enclosing top-level non-method function.", "side_effects": []},
+                  {"from": "FUNCTION_IDENTIFIED", "to": "REFERENCES_CLASSIFIED", "action": "Reuse source AST object identity and inspect same-package Go files for production/test references while excluding local shadows and external test packages.", "side_effects": []},
+                  {"from": "REFERENCES_CLASSIFIED", "to": "RELATED_EXCERPTS_BOUNDED", "action": "Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.", "side_effects": []},
+                  {"from": "RELATED_EXCERPTS_BOUNDED", "to": "PACKET_REPORTED", "action": "Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.", "side_effects": []}
+              ],
+              "invariants": [
+                  "Primary selected source is repository-contained before related discovery runs.",
+                  "Same-file references require selected ast.Object identity.",
+                  "Cross-file references are limited to the same parsed Go package.",
+                  "Local shadow identifiers and external test packages are excluded.",
+                  "Primary source context has priority over optional related excerpts.",
+                  "Packet encoded size never exceeds max-bytes.",
+                  "Security findings continue to omit source and related excerpts.",
+                  "M12 does not claim Python parity or transitive dependency completeness."
+              ],
+              "tests": ["internal/analyzers/golang/related_test.go", "internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+              "sequence_session": "M12-GO-RELATED-CONTEXT",
+              "critical": False,
+              "failure_behavior": ["Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations."],
+              "restart_behavior": ["The flow is stateless and deterministic for an unchanged repository source state."],
+              "rollback_behavior": ["M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics."]
+          })
+
+          save("docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json", {
+              "schema_version": 1,
+              "session_id": "M12-GO-RELATED-CONTEXT",
+              "phase": "M12_GO_RELATED_CONTEXT",
+              "mode": "DURING",
+              "scope": "CURRENT",
+              "critical": False,
+              "status": "IN_PROGRESS",
+              "implementation_base_sha": "2caa530a9e1f284a0446b7ead6d97218de996498",
+              "plan": {"required": False, "contract": "", "frozen": False, "frozen_commit": "", "sha256": "", "diagram": ""},
+              "actual": {
+                  "graph": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.json",
+                  "diagram": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.mmd",
+                  "source_digest": "",
+                  "entries": []
+              },
+              "test_traceability_required": True,
+              "tests": ["internal/analyzers/golang/related_test.go", "internal/evidence/packet_test.go", ".github/workflows/ci.yml"],
+              "runtime_trace": {"required": False, "graph": ""},
+              "acceptance_report": ""
+          })
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          readme = re.sub(
+              r"\*\*M11 Context Compiler Foundation is accepted on main at 3ca18bdca11e436b3a2fa63491976041639eeee2\.\*\*",
+              "**M12 Go Related Context is validating on work/m12-go-related-context from governance-normalized main@2caa530a9e1f284a0446b7ead6d97218de996498.**",
+              readme,
+              count=1,
+          )
+          marker = "Give a small LLM one highest-priority bounded evidence packet instead of the repository:"
+          if "### M12 bounded Go related context" not in readme:
+              section = """### M12 bounded Go related context
+
+          M12 upgrades evidence packets to schema version 2 for eligible Go findings. When the selected finding is inside a top-level non-method Go function, DoctorCode reuses that source AST binding and adds deterministic references from the same package. Same-package test references are labeled separately as test_reference; local shadow bindings and external test packages are not guessed as related.
+
+          Related excerpts are optional context after the primary selected source. DoctorCode emits at most eight related excerpts, keeps related_total for discovered locations, and marks the packet truncated when the byte budget or cap omits context. The encoded packet still cannot exceed --max-bytes.
+
+          The repository boundary is checked before related discovery. A parent-traversal path is rejected before an outside Go file can be parsed, and every emitted related excerpt is independently repository-contained.
+
+          M12 is intentionally Go-only related-context enrichment. Python and other languages retain the M11 primary-source-only packet until an explicit parity milestone.
+
+          """
+              section = "\n".join(line.strip() for line in section.splitlines()) + "\n"
+              readme = readme.replace(marker, section + marker, 1)
+          readme = readme.replace(
+              "the M11 exact finding-specific context smoke.",
+              "the M12 exact finding-specific related-context smoke."
+          )
+          readme_path.write_text(readme, encoding="utf-8")
+
+      - name: Remove temporary workflow from final tree
+        run: git rm .github/workflows/m12-project-truth-sync.yml
+
+      - name: Generate M12 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.json
+          --output-mermaid docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.mmd
+
+      - name: Validate M12 sequence
+        run: >
+          python .workflow/tools/validate_sequence_contract.py
+          --root .
+          --session docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate generated artifacts before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+
+      - name: Commit synchronized M12 governance
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m12): synchronize Go related context project truth"
+          git push origin HEAD:work/m12-go-related-context
