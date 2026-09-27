@@ -1,0 +1,69 @@
+{
+  "authority": "cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml",
+  "critical": false,
+  "entry_condition": "Repository is auditable and caller supplies a finding ID emitted by the current source-state audit.",
+  "failure_behavior": [
+    "Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request."
+  ],
+  "flow_id": "FLOW-CONTEXT-COMPILER",
+  "invariants": [
+    "Context lookup uses exact finding ID equality against the current deterministic audit.",
+    "Unknown or stale finding IDs fail closed.",
+    "Non-security excerpts are read only from resolved paths contained inside the resolved repository root.",
+    "Security findings continue to omit source excerpts by default.",
+    "Packet byte budget remains deterministic and tokenizer-independent.",
+    "Context compilation never changes safe_autofix and never mutates analyzed source."
+  ],
+  "purpose": "Convert one exact current audit finding into a byte-bounded evidence packet while preventing source excerpt reads outside the repository root.",
+  "restart_behavior": [
+    "The flow is stateless and rerunnable against the same current source state."
+  ],
+  "rollback_behavior": [
+    "M11 can be reverted without detector changes because context selection is a CLI/evidence-layer extension."
+  ],
+  "schema_version": 1,
+  "sequence_session": "M11-CONTEXT-COMPILER",
+  "source_owners": [
+    "cmd/doctorcode/main.go",
+    "internal/evidence/packet.go"
+  ],
+  "states": [
+    "AUDIT_REQUESTED",
+    "FINDING_SELECTED",
+    "PATH_BOUNDARY_VERIFIED",
+    "PACKET_BOUNDED",
+    "REPORTED"
+  ],
+  "tests": [
+    "cmd/doctorcode/main_test.go",
+    "internal/evidence/packet_test.go",
+    ".github/workflows/ci.yml"
+  ],
+  "title": "Finding-specific bounded context compilation",
+  "transitions": [
+    {
+      "action": "Run deterministic audit and require an exact finding ID match.",
+      "from": "AUDIT_REQUESTED",
+      "side_effects": [],
+      "to": "FINDING_SELECTED"
+    },
+    {
+      "action": "For non-security excerpts, resolve repository root and source path and reject escape outside the root.",
+      "from": "FINDING_SELECTED",
+      "side_effects": [],
+      "to": "PATH_BOUNDARY_VERIFIED"
+    },
+    {
+      "action": "Build the existing evidence packet under the caller byte budget.",
+      "from": "PATH_BOUNDARY_VERIFIED",
+      "side_effects": [],
+      "to": "PACKET_BOUNDED"
+    },
+    {
+      "action": "Emit text or JSON without invoking an LLM or mutating source.",
+      "from": "PACKET_BOUNDED",
+      "side_effects": [],
+      "to": "REPORTED"
+    }
+  ]
+}

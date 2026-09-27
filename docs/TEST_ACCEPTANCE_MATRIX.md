@@ -4,21 +4,19 @@
 
 ## Evidence boundary
 
-M10 product behavior is accepted on main at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Its governance-normalized main closure at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 also passed strict governance and every accepted Linux/Windows/macOS regression lane. M10 remains bounded to six exact-SHA Python labels—2 VALID_FINDING anchors and 4 INVALID_FINDING guards—and does not establish exhaustive precision/recall or safe deletion.
+M11 Context Compiler Foundation adds exact finding-ID packet retrieval plus repository-root containment for evidence source reads. RED run 36310954183 proved the missing selector and traversal/symlink escapes before repair. Product candidate 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. M11 remains single-finding, byte-bounded, LLM-optional, and does not introduce safe deletion, auto-fix, stale-ID migration, or multi-file dependency inference.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
+Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M10-MAIN-BASELINE | M10 must branch from an exact post-merge accepted M09 main. | main@575f9bcfe5c1119f0ea4382cdeec94ba345e59ce passed Governance Bootstrap 36302209222, core CI 36302209237, M07 Python Real World 36302209214, M06 Labeled Real World Go 36302209238, and Real World Go 36302209232. | PASS |
-| M10-BOUNDED-PYTHON-LABELS | Pinned public Python source must have explicit bounded valid/invalid labels without whole-repository precision claims. | internal/realworld/m10-python-labels.json tracks six exact anchors: 2 VALID_FINDING and 4 INVALID_FINDING across Click and Flask. | PASS |
-| M10-VALID-ZERO-REF-ANCHORS | The two bounded Flask private-function zero-reference findings must remain present at their exact pinned source locations. | M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on all three OSes; Ubuntu log reports valid=2 invalid=4. | PASS |
-| M10-TEST-TREE-NEGATIVE-GUARDS | The four labeled private helpers under pinned public test trees must not be emitted as production DEADCODE findings. | M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent. | PASS |
-| M10-ALL-PRODUCT-LANES | Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS. | At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs. | PASS |
-| M10-STRICT-GOVERNANCE-FINAL | Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed. | M10 Project Truth sync run 36303858286 successfully generated and validated the M10 sequence plus deterministic docs after M09 was frozen HISTORICAL. Temporary workflows are removed by the finalization sync; clean-tree Governance Bootstrap remains a blocking promotion check on the resulting exact SHA. | PASS |
-| M10-MAIN-POST-MERGE | The exact M10 main merge SHA must pass strict governance and every accepted cross-platform regression lane before it becomes the next development base. | main@36baeec0057089ffe50c9d3cc25d22d8524c882e: Governance Bootstrap 36304216096, core CI 36304215983, M10 Labeled Real World Python 36304215942, M07 Python Real World 36304216032, M06 Labeled Real World Go 36304215964, and Real World Go Validation 36304215947 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
-| M10-GOVERNANCE-NORMALIZED-MAIN | The governance-only M10 main truth-sync closure must itself pass strict governance and every accepted cross-platform lane on the exact merged main SHA. | main@3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23: Governance Bootstrap 36307506384, core CI 36307506390, M10 Labeled Real World Python 36307506393, M07 Python Real World 36307506407, M06 Labeled Real World Go 36307506391, and Real World Go Validation 36307506396 all completed success; each matrix passed Linux, Windows, and macOS. | PASS |
+| M11-MAIN-BASELINE | M11 must branch from the exact final accepted M10 main authority and retain the pinned Skill_Workflow authority. | work/m11-context-compiler was created from main@0184e20a563b5f36b2a642fb3f5146c152893f6b; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
+| M11-RED-EVIDENCE | Context selection and filesystem boundary weaknesses must be demonstrated before repair. | Core CI run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63 failed because parseContextArgs/findFindingByID were absent and both traversal/symlink escape tests demonstrated escaped reads. | PASS |
+| M11-EXACT-FINDING-CONTEXT | doctorcode context must select one exact current audit finding by deterministic finding ID and build a bounded packet for that finding. | cmd/doctorcode/main_test.go covers exact selection and the audit-select-packet pipeline; Core CI run 36311250640 passed the finding-specific CLI smoke on all three operating systems. | PASS |
+| M11-FILESYSTEM-BOUNDARY | Evidence source excerpts must not read outside the resolved repository root through traversal or symlink escape. | internal/evidence/packet_test.go contains blocking traversal and symlink escape tests; sourceExcerpt resolves and checks the path before os.ReadFile. Core CI 36311250640 passed on Linux, Windows, and macOS. | PASS |
+| M11-REGRESSION-MATRIX | M11 must preserve all accepted detector and public-source regression lanes across Linux, Windows, and macOS. | At 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956: Core CI 36311250640, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed across all three operating systems. | PASS |
+| M11-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M11 sequence artifacts must pass strict governance on the final exact M11 branch SHA after temporary workflows are removed. | NOT_PROVEN until the synchronized final candidate is checked. | NOT_PROVEN |
 
 ## Test commands
 
@@ -32,20 +30,23 @@ Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed7
 - go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
+- Core CI finding-specific context smoke test
 
 ## Runtime checks
 
+- go test ./...
+- Core CI finding-specific context smoke: isolated Go fixture -> audit exact finding ID -> context same ID -> validate bounded JSON packet
+- go run ./cmd/doctorcode audit . --json --max-findings=10
+- go run ./cmd/doctorcode next . --json --max-bytes=4096
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
 - go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths
 - go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
 - go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
-- go run ./cmd/doctorcode audit . --json --max-findings=10
-- go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M10-PYTHON-LABELED-REAL-WORLD
+Sequence session contract: M11-CONTEXT-COMPILER
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

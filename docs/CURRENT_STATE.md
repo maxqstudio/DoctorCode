@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 36baeec0057089ffe50c9d3cc25d22d8524c882e
+Authority verified at SHA: 0184e20a563b5f36b2a642fb3f5146c152893f6b
 Governance profile: strict
 
 ## Current phase
-Phase: M10_PYTHON_LABELED_REAL_WORLD
-Status: M10_MAIN_ACCEPTED
+Phase: M11_CONTEXT_COMPILER_FOUNDATION
+Status: M11_VALIDATING
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m11-context-compiler
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 36baeec0057089ffe50c9d3cc25d22d8524c882e
+Last accepted SHA: 0184e20a563b5f36b2a642fb3f5146c152893f6b
 Current candidate SHA: external final acceptance evidence
-Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
+Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,43 +33,24 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M10-PYTHON-LABELED-REAL-WORLD
+Current sequence session: M11-CONTEXT-COMPILER
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M09 is merged and post-merge accepted on main at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce.
-- Post-merge M09 main passed Governance Bootstrap run 36302209222.
-- Post-merge M09 main passed core CI run 36302209237 on ubuntu-latest, windows-latest, and macos-latest.
-- Post-merge M09 main passed M07 Python Real World run 36302209214 on all three operating systems.
-- Post-merge M09 main passed M06 Labeled Real World Go run 36302209238 on all three operating systems.
-- Post-merge M09 main passed Real World Go Validation run 36302209232 on all three operating systems.
-- DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- M10 adds six bounded exact-SHA Python labels: two VALID_FINDING Flask zero-reference anchors and four INVALID_FINDING test-tree guards across Flask and Click.
-- M10 label run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with valid=2 invalid=4.
-- At the same M10 source candidate, core CI run 36303351679, M07 Python Real World run 36303351736, Real World Go run 36303351697, and M06 Labeled Real World Go run 36303351703 all passed across Linux, Windows, and macOS.
-- Temporary Project Truth sync run 36303858286 validated M10 sequence generation, generated documentation normalization, document quality, and human-comprehension structure before final cleanup.
-- M10 is merged to main at 36baeec0057089ffe50c9d3cc25d22d8524c882e through PR #4.
-- Exact post-merge main Governance Bootstrap run 36304216096 completed success.
-- Exact post-merge main core CI run 36304215983 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact post-merge main M10 Labeled Real World Python run 36304215942 completed success on all three operating systems.
-- Exact post-merge main M07 Python Real World run 36304216032 completed success on all three operating systems.
-- Exact post-merge main M06 Labeled Real World Go run 36304215964 completed success on all three operating systems.
-- Exact post-merge main Real World Go Validation run 36304215947 completed success on all three operating systems.
-- M10 Project Truth governance-only closure merged through PR #5 to main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23.
-- Exact governance-normalized main Governance Bootstrap run 36307506384 completed success.
-- Exact governance-normalized main core CI run 36307506390 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact governance-normalized main M10 Labeled Real World Python run 36307506393 completed success on all three operating systems.
-- Exact governance-normalized main M07 Python Real World run 36307506407 completed success on all three operating systems.
-- Exact governance-normalized main M06 Labeled Real World Go run 36307506391 completed success on all three operating systems.
-- Exact governance-normalized main Real World Go Validation run 36307506396 completed success on all three operating systems.
-- Latest Skill_Workflow main remains exactly 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
+- M10 final normalized authority is main@0184e20a563b5f36b2a642fb3f5146c152893f6b.
+- Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
+- M11 RED run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63 proved finding-specific context helpers were absent and evidence.Build accepted both parent traversal and a symlink resolving outside the repository root.
+- M11 adds doctorcode context <finding-id> [path] and reuses the deterministic byte-bounded evidence packet used by doctorcode next.
+- M11 evidence source reads resolve repository root and finding path symlinks and reject paths outside the resolved repository root.
+- Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed on ubuntu-latest, windows-latest, and macos-latest, including the finding-specific context smoke test.
+- At the same M11 product candidate, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed on Linux, Windows, and macOS.
 
 ## Not proven
-- M10 bounded labels are not exhaustive labels for Click or Flask and are not general Python ecosystem precision or recall.
-- A VALID_FINDING label proves only the declared rule/path/line claim at the pinned source SHA.
-- Zero conservative references remain insufficient for PROVEN_UNUSED, behavioral dispensability, or safe deletion.
-- Test-tree exclusion is a conservative DoctorCode policy and does not prove that all non-test private functions are stale.
-- Automatic Python source mutation remains unsupported and every accepted Python finding keeps safe_autofix=false.
+- M11 context packets remain single-finding packets and do not compile transitive call graphs, related symbols, tests, or multi-file dependency context.
+- A finding ID is valid for the current audited source state and M11 does not migrate stale IDs across repository changes.
+- The byte budget is deterministic but is not an exact token count for an arbitrary model tokenizer.
+- M11 does not change detector precision claims, confidence levels, or safe_autofix=false semantics.
+- Path containment blocks ordinary traversal and resolved symlink escape at packet construction time; it is not a claim against every filesystem race on a hostile local host.
 
 ## Known blockers
 - None declared.
@@ -78,12 +59,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Await an explicit Owner directive or repository governance update that defines the next milestone; no M11 scope is currently declared.
-- When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.
-- Preserve M10 product acceptance at 36baeec0057089ffe50c9d3cc25d22d8524c882e and governance-normalized main evidence at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 as immutable historical evidence.
+- Generate and validate the M11 CURRENT sequence plus deterministic Project Truth.
+- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
+- After FINAL_ACCEPTED, merge M11 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
 
 ## Explicitly blocked
-- Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
-- Treating zero conservative references as safe-delete proof.
-- Auto-deleting or auto-fixing Python findings.
-- Inventing or starting an M11 implementation without explicit milestone scope.
+- Adding a third semantic language during M11.
+- Expanding M11 into arbitrary multi-file dependency or whole-program context inference.
+- Treating a context packet as proof that code is safe to delete or auto-fix.
+- Starting MCP or Skill adapter product logic before the deterministic context core is accepted.

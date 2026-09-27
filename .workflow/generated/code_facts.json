@@ -17,7 +17,14 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 310
+      "lines": 394
+    },
+    {
+      "directory": "cmd/doctorcode",
+      "file": "cmd/doctorcode/main_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 101
     },
     {
       "directory": "internal/analyzers/golang",
@@ -794,14 +801,14 @@
       "file": "internal/evidence/packet.go",
       "is_test": false,
       "language": "Go",
-      "lines": 104
+      "lines": 144
     },
     {
       "directory": "internal/evidence",
       "file": "internal/evidence/packet_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 52
+      "lines": 107
     },
     {
       "directory": "internal/language",
@@ -1663,14 +1670,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f",
+  "source_digest": "7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3",
   "source_summary": {
-    "files": 124,
+    "files": 125,
     "languages": {
-      "Go": 69,
+      "Go": 70,
       "Python": 55
     },
-    "lines": 4097,
+    "lines": 4377,
     "test_files": 2
   },
   "tests": [

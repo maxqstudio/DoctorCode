@@ -1,104 +1,112 @@
 {
-  "schema_version": 1,
   "entries": [
     {
+      "changes": [
+        "Added doctorcode context <finding-id> for deterministic retrieval of one current audit finding as a bounded evidence packet.",
+        "Added blocking lexical traversal and symlink-escape tests for evidence source reads.",
+        "Resolved repository root and finding source paths before excerpt reads and reject targets outside the repository boundary.",
+        "Added an end-to-end three-OS CI smoke that audits an isolated fixture, captures its exact finding ID, and requests context for that same ID.",
+        "Kept detector rules, confidence boundaries, safe_autofix=false behavior, and accepted Go/Python real-world lanes unchanged."
+      ],
       "date": "2026-09-27",
-      "title": "M10 governance-normalized main closure",
-      "type": "acceptance",
+      "title": "M11 Context Compiler Foundation candidate",
+      "type": "development"
+    },
+    {
       "changes": [
         "Merged governance-only PR #5 after recording exact M10 post-merge evidence in Project Truth.",
         "Revalidated strict governance and every accepted Linux, Windows, and macOS lane on main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23.",
         "Confirmed Skill_Workflow main remains pinned at 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
         "Closed completed M10 promotion actions from CURRENT_STATE and left no undeclared M11 implementation scope."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M10 governance-normalized main closure",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M10 main accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Merged FINAL_ACCEPTED M10 through PR #4 to main at 36baeec0057089ffe50c9d3cc25d22d8524c882e.",
         "Passed strict Governance Bootstrap on the exact main merge SHA.",
         "Passed core CI, bounded M10 Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
         "Kept the M10 claim bounded to two valid zero-reference anchors and four invalid test-tree guards; no exhaustive precision/recall or safe-delete claim was introduced."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M10 main accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M10 bounded real-world Python labels accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Added six exact-SHA bounded Python labels across pinned Click and Flask snapshots: two valid zero-reference anchors and four invalid test-tree guards.",
         "Added a dedicated Linux, Windows, and macOS M10 labeled Python workflow without executing external repository code or installing external project dependencies.",
         "Accepted M10 label evidence with valid=2 and invalid=4 while retaining safe_autofix=false and explicitly avoiding exhaustive precision/recall or safe-delete claims.",
         "Preserved core CI, Python public-source, Go public-source, and bounded Go-label regression lanes across all three operating systems.",
         "Advanced M09 sequence evidence to HISTORICAL when M10 became the CURRENT sequence scope."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M10 bounded real-world Python labels accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M09 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted the 14-case Python repository-shaped corpus after the final pre-repair run exposed 5 false positives and 3 false negatives.",
         "Accepted conventional src-layout aliases, direct package-facade re-export propagation, separated usage/liveness evidence, and exact dotted-module isolation.",
         "Accepted a repaired M09 result of 5 TP, 0 FP, and 0 FN while preserving M07 and M08 gates.",
         "Expanded all accepted real-world regression workflows to main and work/**.",
         "Passed strict governance, core CI, Go public compatibility, bounded Go labels, and Python public-source validation across Linux, Windows, and macOS."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M09 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M09 Python repository-shaped candidate",
-      "type": "development",
       "changes": [
         "Added a 14-case Python repository-shaped corpus covering src layouts, package facades, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name isolation.",
         "Captured a final pre-repair result of 2 TP, 5 FP, and 3 FN.",
         "Added conventional src-layout aliases, direct module-level re-export propagation, separate usage/liveness evidence, and exact dotted imported-module resolution.",
         "Reached 5 TP, 0 FP, and 0 FN on M09 while preserving accepted M07 and M08 gates.",
         "Expanded all accepted real-world regression workflows to main and work/** and passed all three operating systems."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M09 Python repository-shaped candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M08 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted the 10-case Python adversarial corpus after its first run exposed 5 false positives and 2 false negatives.",
         "Accepted module-aware private-function reference evidence and bounded __all__/import/module-attribute/getattr/globals reference guards.",
         "Accepted strict None/True/False identity matching and not_secret placeholder filtering.",
         "Preserved the M07 Python corpus and pinned click/httpx/requests/Flask validation.",
         "Passed strict governance plus Linux, Windows, and macOS core/public Python validation on the synchronized candidate."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M08 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M08 Python adversarial candidate",
-      "type": "development",
       "changes": [
         "Added a 10-case Python adversarial corpus.",
         "Captured an initial 5-FP / 2-FN failure while the M07 baseline remained passing.",
         "Repaired identity constant matching, module-aware reference accounting, bounded dynamic/export references, and obvious not_secret placeholders.",
         "Reached 2 TP, 0 FP, and 0 FN on M08 while preserving M07 5 TP, 0 FP, and 0 FN.",
         "Reran exact-SHA public Python validation successfully across Linux, Windows, and macOS."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M08 Python adversarial candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M07 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted python/stdlib-ast-v1 as DoctorCode's first non-Go semantic analyzer after strict governance and Linux/Windows/macOS evidence.",
         "Accepted one conservative Python rule in each DoctorCode category with a 6-case corpus result of 5 TP, 0 FP, and 0 FN.",
         "Accepted fail-closed Python parse behavior and explicit optional-runtime semantics.",
         "Accepted exact-SHA public Python validation for click, httpx, requests, and Flask with one bounded Flask DEADCODE anchor.",
         "Kept .pyi outside semantic support claims and retained safe_autofix=false for every Python finding."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M07 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M07 Python semantic adapter candidate",
-      "type": "development",
       "changes": [
         "Added python/stdlib-ast-v1 as the first non-Go DoctorCode semantic analyzer.",
         "Added one conservative Python rule for BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE with safe_autofix=false.",
@@ -106,24 +114,24 @@
         "Made Python syntax/read errors fail closed instead of silently reducing coverage.",
         "Added a six-case labeled Python benchmark with 5 TP, 0 FP, and 0 FN on the source candidate.",
         "Added exact-SHA public validation for click, httpx, requests, and Flask across Linux, Windows, and macOS, including a bounded Flask DEADCODE anchor."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M07 Python semantic adapter candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M06 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted bounded real-world labels after the pre-repair gate exposed four false positives.",
         "Accepted binding-aware duplicate-condition comparison for branch-local short declarations.",
         "Accepted generated-function DEADCODE exclusion while retaining references from generated files.",
         "Preserved all four valid bounded findings and kept three ambiguous BLOAT observations non-blocking.",
         "Passed strict Skill_Workflow governance plus Linux, Windows, and macOS core/labeled validation on the synchronized candidate."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M06 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M06 bounded real-world labels candidate",
-      "type": "development",
       "changes": [
         "Synchronized DoctorCode to Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
         "Added 11 bounded real-world labels across four exact-SHA public Go repository snapshots: 4 valid, 4 invalid, and 3 ambiguous.",
@@ -131,144 +139,148 @@
         "Repaired duplicate-condition comparison to respect lexical binding identity.",
         "Excluded generated function declarations from DEADCODE candidates while preserving references from generated files.",
         "Preserved all valid bounded findings and existing M02-M04 regression gates."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M06 bounded real-world labels candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M05 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted exact-SHA public Go repository validation after strict governance, core CI, and dedicated Linux/Windows/macOS external-source validation.",
         "Accepted provenance checks for cobra, bubbles, chi, and testify.",
         "Accepted selected known-live DEADCODE negative assertions while keeping external results outside precision/recall claims.",
         "Recorded zero findings on the four pinned snapshots as compatibility telemetry only."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M05 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M05 pinned public repository validation candidate",
-      "type": "development",
       "changes": [
         "Added a dedicated three-OS workflow that checks out four public Go repositories at exact commit SHAs.",
         "Added tracked source/license/provenance metadata and direct detached-HEAD verification.",
         "Added selected known-live DEADCODE negative assertions for cobra, bubbles, chi, and testify.",
         "Kept public repository finding counts explicitly outside precision/recall claims.",
         "Preserved all M02, M03, and M04 labeled benchmark gates."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M05 pinned public repository validation candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M04 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted a 12-case repository-shaped Go benchmark after Linux, Windows, and macOS CI plus strict Skill_Workflow governance.",
         "Accepted exact corpus evidence of 7 TP, 0 FP, and 0 FN without generalizing it beyond the tracked mini-repositories.",
         "Accepted package/test/build-tag/assembly/generated-file/nested-path interaction evidence without changing detector implementation code.",
         "Preserved M02 and M03 benchmark gates and retained safe_autofix=false."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M04 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M04 repository-shaped evaluation candidate",
-      "type": "development",
       "changes": [
         "Added a 12-case multi-file and multi-package Go benchmark corpus.",
         "Covered package isolation, external tests, build-tag-visible references, assembly fail-closed behavior, generated references, and nested package evidence paths.",
         "Corrected one mislabeled build-tag fixture after the detector validly reported its own zero-reference function.",
         "Made no Go detector source changes.",
         "Preserved M02 and M03 benchmark gates while M04 reached 7 TP, 0 FP, and 0 FN."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M04 repository-shaped evaluation candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M03 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted the 11-case adversarial Go benchmark after it first exposed four false negatives and the repairs closed them.",
         "Accepted package-function reference-counting repair for local shadowing, selector collisions, and method declarations.",
         "Accepted pure-condition canonicalization that ignores redundant parentheses while preserving operator structure.",
         "Preserved the M02 baseline benchmark and passed strict governance plus Linux, Windows, and macOS CI."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M03 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M03 adversarial precision candidate",
-      "type": "development",
       "changes": [
         "Added an independent 11-case adversarial Go benchmark gate.",
         "Captured an initial 4-FN failure before repair.",
         "Repaired package-function reference counting for local shadowing, method declarations, and selector collisions.",
         "Canonicalized pure conditions so redundant parentheses do not hide duplicate conditions.",
         "Preserved the accepted M02 nine-case benchmark while the repaired M03 corpus reached 6 TP, 0 FP, and 0 FN."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M03 adversarial precision candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-27",
-      "title": "M02 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted a labeled nine-case Go regression benchmark after strict Skill_Workflow validation and Linux, Windows, and macOS CI.",
         "Accepted exact corpus evidence of 5 TP, 0 FP, and 0 FN without generalizing those metrics beyond the corpus.",
         "Accepted fail-closed manifest path containment and Go source-symlink exclusion.",
         "Retained conservative detector confidence and safe_autofix=false."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M02 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-27",
-      "title": "M02 precision benchmark candidate",
-      "type": "development",
       "changes": [
         "Added a strict labeled benchmark manifest and deterministic TP/FP/FN evaluator.",
         "Added per-rule and aggregate corpus precision/recall regression gates.",
         "Added blocking benchmark execution to Linux, Windows, and macOS CI.",
         "Added path-containment validation for benchmark roots and source-symlink exclusion for Go analysis.",
         "Recorded the current nine-case result as 5 TP, 0 FP, and 0 FN without generalizing it beyond the corpus."
-      ]
+      ],
+      "date": "2026-09-27",
+      "title": "M02 precision benchmark candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-26",
-      "title": "M01 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Accepted deterministic detector pipeline after Linux, Windows, and macOS CI.",
         "Accepted strict Skill_Workflow governance on synchronized M01 documentation.",
         "Retained conservative confidence boundaries and safe_autofix=false.",
         "Excluded nested Go testdata from normal repository findings while preserving direct corpus analysis."
-      ]
+      ],
+      "date": "2026-09-26",
+      "title": "M01 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-26",
-      "title": "M01 detector foundation candidate",
-      "type": "development",
       "changes": [
         "Added deterministic analyzer interface and stable finding ordering.",
         "Added narrow Go rules for all five DoctorCode categories.",
         "Added curated positive/negative corpus tests.",
         "Added byte-bounded single-finding evidence packets with security source omission.",
         "Kept safe_autofix disabled for every M01 finding."
-      ]
+      ],
+      "date": "2026-09-26",
+      "title": "M01 detector foundation candidate",
+      "type": "development"
     },
     {
-      "date": "2026-09-26",
-      "title": "M00 accepted baseline",
-      "type": "acceptance",
       "changes": [
         "Portable Go core passed Linux, Windows, and macOS GitHub Actions.",
         "Strict Skill_Workflow governance passed on the synchronized candidate.",
         "Canonical generated docs are tracked under docs/.",
         "Semantic detector implementation remains intentionally deferred beyond M00."
-      ]
+      ],
+      "date": "2026-09-26",
+      "title": "M00 accepted baseline",
+      "type": "acceptance"
     },
     {
-      "date": "2026-09-26",
-      "title": "M00 bootstrap",
-      "type": "development",
       "changes": [
         "Initialized DoctorCode portable Go core.",
         "Added Linux, Windows, and macOS GitHub Actions matrix.",
         "Pinned Skill_Workflow governance authority.",
         "Added Saweria and PayPal funding links."
-      ]
+      ],
+      "date": "2026-09-26",
+      "title": "M00 bootstrap",
+      "type": "development"
     }
-  ]
+  ],
+  "schema_version": 1
 }

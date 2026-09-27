@@ -94,6 +94,51 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-CONTEXT-COMPILER — Finding-specific bounded context compilation
+
+Purpose: Convert one exact current audit finding into a byte-bounded evidence packet while preventing source excerpt reads outside the repository root.
+Critical: FALSE
+Entry condition: Repository is auditable and caller supplies a finding ID emitted by the current source-state audit.
+Authority: cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml
+
+### States
+
+- AUDIT_REQUESTED
+- FINDING_SELECTED
+- PATH_BOUNDARY_VERIFIED
+- PACKET_BOUNDED
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| AUDIT_REQUESTED | FINDING_SELECTED | Run deterministic audit and require an exact finding ID match. | cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml |  |
+| FINDING_SELECTED | PATH_BOUNDARY_VERIFIED | For non-security excerpts, resolve repository root and source path and reject escape outside the root. | cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml |  |
+| PATH_BOUNDARY_VERIFIED | PACKET_BOUNDED | Build the existing evidence packet under the caller byte budget. | cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml |  |
+| PACKET_BOUNDED | REPORTED | Emit text or JSON without invoking an LLM or mutating source. | cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml |  |
+
+### Invariants
+
+- Context lookup uses exact finding ID equality against the current deterministic audit.
+- Unknown or stale finding IDs fail closed.
+- Non-security excerpts are read only from resolved paths contained inside the resolved repository root.
+- Security findings continue to omit source excerpts by default.
+- Packet byte budget remains deterministic and tokenizer-independent.
+- Context compilation never changes safe_autofix and never mutates analyzed source.
+
+### Failure behavior
+
+- Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
+
+### Restart behavior
+
+- The flow is stateless and rerunnable against the same current source state.
+
+### Rollback behavior
+
+- M11 can be reverted without detector changes because context selection is a CLI/evidence-layer extension.
+
 ## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.

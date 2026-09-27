@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M11 Context Compiler Foundation candidate
+
+Type: development
+
+- Added doctorcode context <finding-id> for deterministic retrieval of one current audit finding as a bounded evidence packet.
+- Added blocking lexical traversal and symlink-escape tests for evidence source reads.
+- Resolved repository root and finding source paths before excerpt reads and reject targets outside the repository boundary.
+- Added an end-to-end three-OS CI smoke that audits an isolated fixture, captures its exact finding ID, and requests context for that same ID.
+- Kept detector rules, confidence boundaries, safe_autofix=false behavior, and accepted Go/Python real-world lanes unchanged.
+
 ## 2026-09-27 — M10 governance-normalized main closure
 
 Type: acceptance

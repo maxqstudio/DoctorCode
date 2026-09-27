@@ -1,69 +1,71 @@
 {
-  "schema_version": 1,
   "claims": [
     {
-      "id": "TRUTH-M00-PORTABLE-CORE",
       "claim": "M00 DoctorCode core builds, tests, and executes scan/toolchain smoke checks on Linux, Windows, and macOS GitHub-hosted runners.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
+      "id": "TRUTH-M00-PORTABLE-CORE",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36255851655 at e9b1dc0fe38a0e8488df98d1372ec6b6842badc3"
+      ],
       "source_owners": [
         "cmd/doctorcode/main.go::main",
         "internal/scanner/scanner.go::Scan",
         "internal/toolchain/toolchain.go::Detect"
       ],
+      "status": "PASS",
       "tests": [
         "internal/language/registry_test.go",
         "internal/scanner/scanner_test.go",
         "internal/toolchain/toolchain_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36255851655 at e9b1dc0fe38a0e8488df98d1372ec6b6842badc3"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M00-LLM-OPTIONAL",
       "claim": "M00 repository scanning and toolchain capability detection do not require an LLM or external model API.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M00-LLM-OPTIONAL",
+      "runtime_evidence": [
+        "NOT_APPLICABLE"
       ],
       "source_owners": [
         "cmd/doctorcode/main.go::main",
         "internal/scanner/scanner.go::Scan",
         "internal/toolchain/toolchain.go::Detect"
       ],
+      "status": "PASS",
       "tests": [
         "internal/scanner/scanner_test.go",
         "internal/toolchain/toolchain_test.go"
-      ],
-      "runtime_evidence": [
-        "NOT_APPLICABLE"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M00-DETECTOR-BOUNDARY",
       "claim": "M00 does not claim implemented semantic detection for BLOAT, SECURITY, SIMPLIFY, LOGIC, or DEADCODE.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "cmd/doctorcode/main.go::usage"
-      ],
-      "tests": [
-        "NOT_APPLICABLE"
-      ],
+      "id": "TRUTH-M00-DETECTOR-BOUNDARY",
       "runtime_evidence": [
         "NOT_APPLICABLE"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "cmd/doctorcode/main.go::usage"
+      ],
+      "status": "PASS",
+      "tests": [
+        "NOT_APPLICABLE"
+      ]
     },
     {
-      "id": "TRUTH-M01-FIVE-CATEGORIES",
       "claim": "M01 Go analyzer contains one intentionally narrow deterministic rule for each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M01-FIVE-CATEGORIES",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
       ],
       "source_owners": [
         "internal/analyzers/golang/analyzer.go::deadCodeFindings",
@@ -72,452 +74,452 @@
         "internal/analyzers/golang/analyzer.go::simplifyFindings",
         "internal/analyzers/golang/analyzer.go::securityFindings"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/golang/corpus_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M01-NO-AUTOFIX",
       "claim": "M01 findings never authorize automatic fixing or deletion.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/golang/analyzer.go::newFinding"
-      ],
-      "tests": [
-        "internal/analyzers/golang/analyzer_test.go"
-      ],
+      "id": "TRUTH-M01-NO-AUTOFIX",
       "runtime_evidence": [
         "NOT_APPLICABLE"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::newFinding"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M01-SECURITY-REDACTION",
       "claim": "M01 hardcoded-credential findings never emit the literal credential value, and security evidence packets omit source excerpts by default.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M01-SECURITY-REDACTION",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
       ],
       "source_owners": [
         "internal/analyzers/golang/analyzer.go::credentialFinding",
         "internal/evidence/packet.go::Build"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/golang/analyzer_test.go",
         "internal/evidence/packet_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M01-BOUNDED-PACKET",
       "claim": "doctorcode next can emit one evidence packet under a deterministic max-bytes budget instead of exposing the whole repository.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M01-BOUNDED-PACKET",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
       ],
       "source_owners": [
         "internal/evidence/packet.go::Build",
         "cmd/doctorcode/main.go::runNext"
       ],
+      "status": "PASS",
       "tests": [
         "internal/evidence/packet_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36256939396 at 8d5a6f4315ffec8230989147db82419cb73bea8b"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M02-CURATED-METRICS",
       "claim": "On the nine-case M02 labeled Go corpus, source candidate 3b8a8dbb413499460de6e97aa06eb62730247105 produced 5 true positives, 0 false positives, and 0 false negatives; this claim is corpus-scoped only.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M02-CURATED-METRICS",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
       ],
       "source_owners": [
         "internal/benchmark/benchmark.go::Evaluate",
         "internal/benchmark/testdata/manifest.json"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M02-BENCHMARK-FAIL-CLOSED",
       "claim": "The M02 benchmark reports failure for both unexpected analyzer findings and missing expected findings, and the CLI exits non-zero when the report does not pass.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M02-BENCHMARK-FAIL-CLOSED",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
       ],
       "source_owners": [
         "internal/benchmark/benchmark.go::Evaluate",
         "cmd/doctorcode/main.go::runBenchmark"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M02-PATH-CONTAINMENT",
       "claim": "M02 benchmark case roots are constrained to the manifest directory and Go repository analysis skips source symlink entries.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M02-PATH-CONTAINMENT",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
       ],
       "source_owners": [
         "internal/benchmark/benchmark.go::secureCaseRoot",
         "internal/analyzers/golang/analyzer.go::parseGoFiles"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go",
         "internal/analyzers/golang/analyzer_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36258248707 at a1fa64b6aae171e61eb0662049794f88fb5190f5"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M03-GATE-CAUGHT-REGRESSION",
       "claim": "The initial M03 adversarial corpus exposed four false negatives in the M02 detector behavior before repair, with no false positives.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M03-GATE-CAUGHT-REGRESSION",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e"
       ],
       "source_owners": [
         "internal/benchmark/testdata/m03-adversarial.json",
         "internal/benchmark/benchmark.go::Evaluate"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36258651822 at 96f81c8fd4c36ff630605bf54fcbe7b0b9604d3e"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M03-REPAIRED-METRICS",
       "claim": "On repaired source cd4ddcadae7b98efc507baebd9239bdec636fbea, the 11-case M03 adversarial corpus reports 6 TP, 0 FP, and 0 FN while the accepted M02 baseline corpus remains passing.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M03-REPAIRED-METRICS",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79"
       ],
       "source_owners": [
         "internal/analyzers/golang/analyzer.go::lexicalReferenceCounts",
         "internal/analyzers/golang/analyzer.go::canonicalCondition",
         "internal/benchmark/testdata/m03-adversarial.json"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M03-REFERENCE-COLLISION",
       "claim": "M03 reference counting excludes same-named local identifiers, selector names, and function or method declaration names from unrelated package-level function reference counts.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/golang/analyzer.go::lexicalReferenceCounts"
-      ],
-      "tests": [
-        "internal/benchmark/benchmark_test.go"
-      ],
+      "id": "TRUTH-M03-REFERENCE-COLLISION",
       "runtime_evidence": [
         "GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::lexicalReferenceCounts"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M03-PAREN-CANONICAL",
       "claim": "M03 pure-condition comparison ignores redundant parentheses while preserving AST operator structure.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/golang/analyzer.go::canonicalCondition"
-      ],
-      "tests": [
-        "internal/benchmark/benchmark_test.go"
-      ],
+      "id": "TRUTH-M03-PAREN-CANONICAL",
       "runtime_evidence": [
         "GitHub Actions CI run 36259014440 at 0a5196d22334540c7749957a2192ed44d19e7b79"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::canonicalCondition"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M04-REPOSITORY-METRICS",
       "claim": "On corrected source candidate 8a2145f2bf082545bc209bf9ef6f00dcdb3d7e8d, the 12-case M04 repository-shaped corpus reports 7 TP, 0 FP, and 0 FN while M02 and M03 remain passing.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M04-REPOSITORY-METRICS",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
       ],
       "source_owners": [
         "internal/benchmark/testdata/m04-repository-shaped.json",
         "internal/benchmark/benchmark.go::Evaluate"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M04-NO-DETECTOR-CHANGE",
       "claim": "M04 adds repository-shaped evaluation evidence without modifying Go detector implementation code.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M04-NO-DETECTOR-CHANGE",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
       ],
       "source_owners": [
         "internal/benchmark/testdata/m04-repository-shaped.json",
         ".github/workflows/ci.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/benchmark_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M04-ORACLE-CORRECTION",
       "claim": "The first M04 run rejected a mislabeled build-tag fixture because it contained a valid unexported zero-reference function; the fixture was corrected without weakening detector rules.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go"
-      ],
-      "tests": [
-        "internal/benchmark/benchmark_test.go"
-      ],
+      "id": "TRUTH-M04-ORACLE-CORRECTION",
       "runtime_evidence": [
         "GitHub Actions CI run 36278992106 at 6dacb334d1b86b9570c530bfab0392d00dcd3424",
         "GitHub Actions CI run 36279198188 at e204829bf14174fd1a3a5dc92e5bc351af4b6b63"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/benchmark_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M05-PINNED-PUBLIC-SOURCES",
       "claim": "M05 validates exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify on Linux, Windows, and macOS.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M05-PINNED-PUBLIC-SOURCES",
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
       ],
       "source_owners": [
         "internal/realworld/sources.json",
         ".github/workflows/real-world-go.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/realworld_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M05-KNOWN-LIVE-NEGATIVES",
       "claim": "Selected known-live unexported functions preExecHook, nextID, cW, and httpCode are not reported as DEADCODE on the pinned public snapshots.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M05-KNOWN-LIVE-NEGATIVES",
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
       ],
       "source_owners": [
         "internal/realworld/sources.json",
         "internal/realworld/realworld_test.go"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/realworld_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M05-COMPATIBILITY-ONLY",
       "claim": "M05 public-repository results are compatibility evidence only and are not used to claim real-world precision, recall, or absence of defects.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M05-COMPATIBILITY-ONLY",
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
       ],
       "source_owners": [
         "internal/realworld/realworld_test.go",
         ".workflow/acceptance.json"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/realworld_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M06-SKILL-AUTHORITY",
       "claim": "M06 uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M06-SKILL-AUTHORITY",
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "source_owners": [
         ".workflow/SKILL_AUTHORITY.json",
         ".workflow/tools/selftest_strict_project_workflow.py"
       ],
+      "status": "PASS",
       "tests": [
         ".workflow/tools/selftest_strict_project_workflow.py"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M06-GATE-CAUGHT-FOUR-FP",
       "claim": "The initial M06 bounded-label run exposed four real-world false positives before detector repair.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M06-GATE-CAUGHT-FOUR-FP",
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6"
       ],
       "source_owners": [
         "internal/realworld/m06-labels.json",
         "internal/realworld/labeled_test.go"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/labeled_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M06-BINDING-REPAIR",
       "claim": "M06 condition canonicalization distinguishes same-named identifiers when their parser-resolved lexical bindings differ.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/golang/analyzer.go::canonicalCondition"
-      ],
-      "tests": [
-        "internal/analyzers/golang/analyzer_test.go",
-        "internal/realworld/labeled_test.go"
-      ],
+      "id": "TRUTH-M06-BINDING-REPAIR",
       "runtime_evidence": [
         "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/golang/analyzer.go::canonicalCondition"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/golang/analyzer_test.go",
+        "internal/realworld/labeled_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M06-GENERATED-DEADCODE-REPAIR",
       "claim": "M06 excludes generated function declarations from DEADCODE candidates while still counting references originating in generated files.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M06-GENERATED-DEADCODE-REPAIR",
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "source_owners": [
         "internal/analyzers/golang/analyzer.go::generatedGoFile",
         "internal/analyzers/golang/analyzer.go::deadCodeFindings"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/golang/analyzer_test.go",
         "internal/realworld/labeled_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M06-BOUNDED-LABEL-PASS",
       "claim": "On repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3, all 4 VALID_FINDING anchors are present and all 4 INVALID_FINDING guards are absent across the M06 bounded public-source labels; 3 AMBIGUOUS observations remain non-blocking.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M06-BOUNDED-LABEL-PASS",
+      "runtime_evidence": [
+        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
       ],
       "source_owners": [
         "internal/realworld/m06-labels.json",
         "internal/realworld/labeled_test.go"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/labeled_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M07-PYTHON-SEMANTIC",
       "claim": "M07 adds python/stdlib-ast-v1 as DoctorCode's first non-Go semantic analyzer with one conservative rule in each of the five DoctorCode categories.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M07-PYTHON-SEMANTIC",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
       "source_owners": [
         "internal/analyzers/python/analyzer.go",
         "internal/engine/engine.go"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/python/analyzer_test.go",
         "internal/benchmark/testdata/m07-python.json"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M07-CORPUS",
       "claim": "The accepted-source M07 Python corpus contains 6 cases and reports 5 TP, 0 FP, and 0 FN, one true positive per current Python rule.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M07-CORPUS",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
       "source_owners": [
         "internal/benchmark/testdata/m07-python.json",
         "internal/benchmark/benchmark.go"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/python/analyzer_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M07-PARSE-FAIL-CLOSED",
       "claim": "Applicable Python syntax/read errors block semantic analysis instead of being silently skipped.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/python/analyzer.go"
-      ],
-      "tests": [
-        "internal/analyzers/python/analyzer_test.go"
-      ],
+      "id": "TRUTH-M07-PARSE-FAIL-CLOSED",
       "runtime_evidence": [
         "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M07-OPTIONAL-RUNTIME",
       "claim": "Ordinary audit skips Python semantic analysis when Python is unavailable, while M07 acceptance workflows provision Python 3.13 explicitly.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M07-OPTIONAL-RUNTIME",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
       "source_owners": [
         "internal/detector/detector.go",
@@ -525,212 +527,199 @@
         "internal/analyzers/python/analyzer.go",
         ".github/workflows/ci.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/analyzers/python/analyzer_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M07-PUBLIC-PYTHON",
       "claim": "Exact-SHA click, httpx, requests, and Flask snapshots parse and analyze successfully on Linux, Windows, and macOS; Flask _path_is_ancestor at src/flask/cli.py:691 is the bounded positive anchor.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M07-PUBLIC-PYTHON",
+      "runtime_evidence": [
+        "GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
       "source_owners": [
         "internal/realworld/m07-python-sources.json",
         "internal/realworld/python_m07_test.go",
         ".github/workflows/m07-python-real-world.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/python_m07_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M07-NO-AUTOFIX",
       "claim": "All accepted Python findings remain evidence-only and safe_autofix=false.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/python/analyzer.go"
-      ],
-      "tests": [
-        "internal/analyzers/python/analyzer_test.go",
-        "internal/realworld/python_m07_test.go"
-      ],
+      "id": "TRUTH-M07-NO-AUTOFIX",
       "runtime_evidence": [
         "GitHub Actions CI run 36285384421 at 0d51ff432a44d56261a45713127c1f2588093697",
         "GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/python/analyzer_test.go",
+        "internal/realworld/python_m07_test.go"
+      ]
     },
     {
-      "id": "TRUTH-M08-PRE-REPAIR-FAIL",
       "claim": "Initial M08 adversarial evaluation exposed 5 false positives and 2 false negatives while M07 remained passing.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/benchmark/testdata/m08-python-adversarial.json"
-      ],
-      "tests": [
-        "internal/benchmark/testdata/m08-python-adversarial.json"
-      ],
+      "id": "TRUTH-M08-PRE-REPAIR-FAIL",
       "runtime_evidence": [
         "GitHub Actions CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ]
     },
     {
-      "id": "TRUTH-M08-REFERENCE-REPAIR",
       "claim": "M08 uses candidate/module-aware Python private-function reference evidence plus conservative recognized dynamic/export references.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/python/analyzer.go"
-      ],
-      "tests": [
-        "internal/benchmark/testdata/m08-python-adversarial.json"
-      ],
+      "id": "TRUTH-M08-REFERENCE-REPAIR",
       "runtime_evidence": [
         "GitHub Actions CI run 36287085344 at f28f35d16bd8cb7a691827ecd10a353eba227258"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ]
     },
     {
-      "id": "TRUTH-M08-ADVERSARIAL-PASS",
       "claim": "Repaired M08 corpus reports 2 TP, 0 FP, and 0 FN while M07 remains 5 TP, 0 FP, and 0 FN.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M08-ADVERSARIAL-PASS",
+      "runtime_evidence": [
+        "GitHub Actions CI run 36287085344 at f28f35d16bd8cb7a691827ecd10a353eba227258"
       ],
       "source_owners": [
         "internal/benchmark/testdata/m07-python.json",
         "internal/benchmark/testdata/m08-python-adversarial.json"
       ],
+      "status": "PASS",
       "tests": [
         "internal/benchmark/testdata/m08-python-adversarial.json"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions CI run 36287085344 at f28f35d16bd8cb7a691827ecd10a353eba227258"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M08-PUBLIC-REGRESSION",
       "claim": "Pinned click/httpx/requests/Flask Python validation remains passing on Linux, Windows, and macOS after M08 repair.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M08-PUBLIC-REGRESSION",
+      "runtime_evidence": [
+        "GitHub Actions M07 Python Real World run 36287085354 at f28f35d16bd8cb7a691827ecd10a353eba227258"
       ],
       "source_owners": [
         "internal/realworld/m07-python-sources.json",
         ".github/workflows/m07-python-real-world.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/python_m07_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M07 Python Real World run 36287085354 at f28f35d16bd8cb7a691827ecd10a353eba227258"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M09-PRE-REPAIR-FAIL",
       "claim": "The final pre-repair 14-case M09 corpus exposed 5 false positives and 3 false negatives while accepted M07/M08 gates remained passing.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/benchmark/testdata/m09-python-repository-shaped.json"
-      ],
-      "tests": [
-        "internal/benchmark/testdata/m09-python-repository-shaped.json"
-      ],
+      "id": "TRUTH-M09-PRE-REPAIR-FAIL",
       "runtime_evidence": [
         "GitHub Actions CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ]
     },
     {
-      "id": "TRUTH-M09-TOPOLOGY-REPAIR",
       "claim": "M09 Python reference evidence handles a conventional src layout, direct module-level re-exports, separated usage/liveness evidence, and exact dotted imported-module attributes.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/analyzers/python/analyzer.go"
-      ],
-      "tests": [
-        "internal/benchmark/testdata/m09-python-repository-shaped.json"
-      ],
+      "id": "TRUTH-M09-TOPOLOGY-REPAIR",
       "runtime_evidence": [
         "GitHub Actions CI run 36301912063 at d4c8639617f0edec703dffe549a075a5e6626ff7"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ]
     },
     {
-      "id": "TRUTH-M09-CORPUS-PASS",
       "claim": "The repaired 14-case M09 Python repository-shaped corpus reports 5 TP, 0 FP, and 0 FN.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        "internal/benchmark/testdata/m09-python-repository-shaped.json"
-      ],
-      "tests": [
-        "internal/benchmark/testdata/m09-python-repository-shaped.json"
-      ],
+      "id": "TRUTH-M09-CORPUS-PASS",
       "runtime_evidence": [
         "GitHub Actions CI run 36301912063 at d4c8639617f0edec703dffe549a075a5e6626ff7"
       ],
-      "status": "PASS"
+      "source_owners": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ]
     },
     {
-      "id": "TRUTH-M09-ALL-REALWORLD-LANES",
       "claim": "Accepted Go compatibility, bounded Go labels, and Python public-source regression workflows run on main and every work/** phase and passed M09 on Linux, Windows, and macOS.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M09-ALL-REALWORLD-LANES",
+      "runtime_evidence": [
+        "GitHub Actions Real World Go Validation run 36301912067 at d4c8639617f0edec703dffe549a075a5e6626ff7",
+        "GitHub Actions M06 Labeled Real World Go run 36301912070 at d4c8639617f0edec703dffe549a075a5e6626ff7",
+        "GitHub Actions M07 Python Real World run 36301912054 at d4c8639617f0edec703dffe549a075a5e6626ff7"
       ],
       "source_owners": [
         ".github/workflows/real-world-go.yml",
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/m07-python-real-world.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/realworld_test.go",
         "internal/realworld/labeled_test.go",
         "internal/realworld/python_m07_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions Real World Go Validation run 36301912067 at d4c8639617f0edec703dffe549a075a5e6626ff7",
-        "GitHub Actions M06 Labeled Real World Go run 36301912070 at d4c8639617f0edec703dffe549a075a5e6626ff7",
-        "GitHub Actions M07 Python Real World run 36301912054 at d4c8639617f0edec703dffe549a075a5e6626ff7"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M09-MAIN-ACCEPTED",
       "claim": "M09 was merged to main at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce and the exact main merge SHA passed strict governance plus every accepted Linux, Windows, and macOS regression lane.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        ".workflow/state.json"
-      ],
-      "tests": [
-        ".github/workflows/governance-bootstrap.yml",
-        ".github/workflows/ci.yml",
-        ".github/workflows/m07-python-real-world.yml",
-        ".github/workflows/m06-labeled-real-world.yml",
-        ".github/workflows/real-world-go.yml"
-      ],
+      "id": "TRUTH-M09-MAIN-ACCEPTED",
       "runtime_evidence": [
         "GitHub Actions Governance Bootstrap run 36302209222 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce",
         "GitHub Actions core CI run 36302209237 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce",
@@ -738,32 +727,49 @@
         "GitHub Actions M06 Labeled Real World Go run 36302209238 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce",
         "GitHub Actions Real World Go Validation run 36302209232 at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce"
       ],
-      "status": "PASS"
+      "source_owners": [
+        ".workflow/state.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/governance-bootstrap.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
     },
     {
-      "id": "TRUTH-M10-BOUNDED-PYTHON-LABELS",
       "claim": "M10 tracks six exact-SHA bounded Python labels across Click and Flask: two valid Flask zero-conservative-reference DEADCODE anchors and four invalid test-tree guards; the label set is not exhaustive and does not authorize deletion.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M10-BOUNDED-PYTHON-LABELS",
+      "runtime_evidence": [
+        "GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019"
       ],
       "source_owners": [
         "internal/realworld/m10-python-labels.json",
         "internal/realworld/python_m10_labeled_test.go",
         ".github/workflows/m10-python-labeled-real-world.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/python_m10_labeled_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M10-REGRESSION-MATRIX",
       "claim": "The M10 source candidate preserved core, pinned Python public-source, pinned Go public-source, bounded Go-label, and bounded Python-label gates across Linux, Windows, and macOS.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M10-REGRESSION-MATRIX",
+      "runtime_evidence": [
+        "GitHub Actions core CI run 36303351679 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
+        "GitHub Actions M07 Python Real World run 36303351736 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
+        "GitHub Actions Real World Go Validation run 36303351697 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
+        "GitHub Actions M06 Labeled Real World Go run 36303351703 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
+        "GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019"
       ],
       "source_owners": [
         ".github/workflows/ci.yml",
@@ -772,39 +778,20 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/m10-python-labeled-real-world.yml"
       ],
+      "status": "PASS",
       "tests": [
         "internal/realworld/python_m10_labeled_test.go",
         "internal/realworld/python_m07_test.go",
         "internal/realworld/labeled_test.go",
         "internal/realworld/realworld_test.go"
-      ],
-      "runtime_evidence": [
-        "GitHub Actions core CI run 36303351679 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
-        "GitHub Actions M07 Python Real World run 36303351736 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
-        "GitHub Actions Real World Go Validation run 36303351697 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
-        "GitHub Actions M06 Labeled Real World Go run 36303351703 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019",
-        "GitHub Actions M10 Labeled Real World Python run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019"
-      ],
-      "status": "PASS"
+      ]
     },
     {
-      "id": "TRUTH-M10-MAIN-ACCEPTED",
       "claim": "M10 bounded real-world Python label validation is merged and post-merge accepted on main at 36baeec0057089ffe50c9d3cc25d22d8524c882e after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully.",
       "documents": [
         "PROJECT_TRUTH_SYNC.md"
       ],
-      "source_owners": [
-        ".workflow/state.json",
-        ".workflow/acceptance.json"
-      ],
-      "tests": [
-        ".github/workflows/governance-bootstrap.yml",
-        ".github/workflows/ci.yml",
-        ".github/workflows/m10-python-labeled-real-world.yml",
-        ".github/workflows/m07-python-real-world.yml",
-        ".github/workflows/m06-labeled-real-world.yml",
-        ".github/workflows/real-world-go.yml"
-      ],
+      "id": "TRUTH-M10-MAIN-ACCEPTED",
       "runtime_evidence": [
         "GitHub Actions Governance Bootstrap run 36304216096 at 36baeec0057089ffe50c9d3cc25d22d8524c882e",
         "GitHub Actions core CI run 36304215983 at 36baeec0057089ffe50c9d3cc25d22d8524c882e",
@@ -813,19 +800,11 @@
         "GitHub Actions M06 Labeled Real World Go run 36304215964 at 36baeec0057089ffe50c9d3cc25d22d8524c882e",
         "GitHub Actions Real World Go Validation run 36304215947 at 36baeec0057089ffe50c9d3cc25d22d8524c882e"
       ],
-      "status": "PASS"
-    },
-    {
-      "id": "TRUTH-M10-GOVERNANCE-NORMALIZED",
-      "claim": "The governance-only M10 main truth-sync closure is accepted on main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 with strict governance and all accepted Linux, Windows, and macOS regression lanes passing.",
-      "documents": [
-        "PROJECT_TRUTH_SYNC.md"
-      ],
       "source_owners": [
         ".workflow/state.json",
-        ".workflow/acceptance.json",
-        "docs/CURRENT_STATE.md"
+        ".workflow/acceptance.json"
       ],
+      "status": "PASS",
       "tests": [
         ".github/workflows/governance-bootstrap.yml",
         ".github/workflows/ci.yml",
@@ -833,7 +812,14 @@
         ".github/workflows/m07-python-real-world.yml",
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
+      ]
+    },
+    {
+      "claim": "The governance-only M10 main truth-sync closure is accepted on main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 with strict governance and all accepted Linux, Windows, and macOS regression lanes passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
       ],
+      "id": "TRUTH-M10-GOVERNANCE-NORMALIZED",
       "runtime_evidence": [
         "GitHub Actions Governance Bootstrap run 36307506384 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
         "GitHub Actions core CI run 36307506390 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
@@ -842,8 +828,79 @@
         "GitHub Actions M06 Labeled Real World Go run 36307506391 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23",
         "GitHub Actions Real World Go Validation run 36307506396 at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23"
       ],
-      "status": "PASS"
+      "source_owners": [
+        ".workflow/state.json",
+        ".workflow/acceptance.json",
+        "docs/CURRENT_STATE.md"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/governance-bootstrap.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
+    },
+    {
+      "claim": "M11 adds doctorcode context <finding-id> [path], which re-audits the current repository, requires an exact current finding ID match, and builds the same deterministic byte-bounded evidence packet used by doctorcode next.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M11-CONTEXT-ID",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956"
+      ],
+      "source_owners": [
+        "cmd/doctorcode/main.go",
+        "internal/evidence/packet.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "cmd/doctorcode/main_test.go",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "M11 evidence source reads reject lexical traversal and resolved symlink escape outside the repository root before reading the excerpt.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M11-PATH-BOUNDARY",
+      "runtime_evidence": [
+        "RED Core CI run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63",
+        "GREEN Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956"
+      ],
+      "source_owners": [
+        "internal/evidence/packet.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/evidence/packet_test.go"
+      ]
+    },
+    {
+      "claim": "M11 context compilation remains a single-finding packet contract and does not claim transitive multi-file dependency context, stale-ID migration, exact tokenizer counts, safe deletion, or automatic repair.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M11-SINGLE-FINDING-BOUNDARY",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956"
+      ],
+      "source_owners": [
+        ".workflow/state.json",
+        "internal/evidence/packet.go",
+        "cmd/doctorcode/main.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "cmd/doctorcode/main_test.go",
+        "internal/evidence/packet_test.go"
+      ]
     }
   ],
-  "relations": []
+  "relations": [],
+  "schema_version": 1
 }

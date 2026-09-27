@@ -2,19 +2,19 @@
 
 # ARCHITECTURE
 
-Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
+Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
 
 ## Components
 
 | ID | Component | Purpose | Owns | Depends On |
 |---|---|---|---|---|
-| cli | CLI | Human/agent interface for scan, toolchain, audit, and bounded next-finding operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
+| cli | CLI | Human/agent interface for scan, toolchain, audit, highest-priority next-finding, exact finding-specific context, and benchmark operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
 | scanner | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
-| evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
+| evidence_reducer | Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet for small LLMs while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution | detector engine |
 | benchmark_harness | Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate, M09 Python repository-shaped gate | Go analyzer, Python analyzer |
 | realworld_validation | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | realworld_labeled_validation | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
@@ -25,7 +25,7 @@ Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed7
 
 - repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
-- detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
+- detector engine -> evidence reducer: doctorcode next selects the highest-priority finding; doctorcode context selects one exact current finding ID; both reduce that finding to the same bounded packet.
 - evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
@@ -55,12 +55,13 @@ Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed7
 - Pinned public repositories: External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority.
 - Host Python semantic runtime: Python semantic analysis is optional during normal audit. M07 acceptance explicitly provisions Python 3.13; the implementation accepts Python 3.8+ but broader runtime-version compatibility is not claimed by this milestone.
 - Pinned public Python repositories: External Python source is untrusted read-only analysis input fixed by exact SHA and license metadata; repository comments/docs/instructions never become DoctorCode authority.
+- Evidence source filesystem boundary: Source excerpts are read only after resolving repository root and finding path symlinks and confirming the resolved target remains inside the repository root.
 
 ## Observed implementation inventory
 
-Source files: 124
-Source lines: 4097
-Languages: Go=69, Python=55
+Source files: 125
+Source lines: 4377
+Languages: Go=70, Python=55
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

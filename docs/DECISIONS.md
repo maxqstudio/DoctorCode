@@ -281,3 +281,19 @@ Status: ACCEPTED
 Trigger accepted Go public compatibility, bounded Go labels, and Python public-source workflows on main and work/**.
 
 Rationale: Each phase promotion should preserve previously accepted real-world evidence, not only synthetic/core gates for the currently edited language.
+
+## ADR-M11-001 — Context selects exact current finding IDs
+
+Status: ACCEPTED
+
+Implement doctorcode context by re-auditing the current repository and selecting an exact finding ID before building the existing bounded evidence packet.
+
+Rationale: Finding IDs already provide deterministic source-state identity. Reusing audit plus evidence.Build keeps the core small and avoids a second finding store or stale cache.
+
+## ADR-M11-002 — Resolve evidence paths before repository containment checks
+
+Status: ACCEPTED
+
+Resolve the repository root and candidate source path through filesystem symlinks, then reject any target whose relative path escapes the resolved root before reading source.
+
+Rationale: Lexical filepath.Join alone allowed parent traversal and symlink targets outside the repository to expose unrelated local files through evidence packets.
