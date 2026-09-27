@@ -1,0 +1,51 @@
+name: M14 Main Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m14-main-truth-sync"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m14-main-truth-sync
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M14 main accepted truth
+        run: python .workflow/tools/m14_main_sync_temp.py
+
+      - name: Remove temporary closure files
+        run: |
+          git rm .github/workflows/m14-main-truth-sync.yml
+          git rm .workflow/tools/m14_main_sync_temp.py
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Validate M14 main closure
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_cross_document_consistency.py --base 6952187538ffa4a6f3f149db440d1f6f6960ba61 --require-base
+          python .workflow/tools/validate_project_truth.py
+
+      - name: Commit synchronized M14 main truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m14): synchronize accepted main truth"
+          git push origin HEAD:work/m14-main-truth-sync
