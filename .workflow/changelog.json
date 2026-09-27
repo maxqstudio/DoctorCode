@@ -3,6 +3,17 @@
   "entries": [
     {
       "date": "2026-09-27",
+      "title": "M10 governance-normalized main closure",
+      "type": "acceptance",
+      "changes": [
+        "Merged governance-only PR #5 after recording exact M10 post-merge evidence in Project Truth.",
+        "Revalidated strict governance and every accepted Linux, Windows, and macOS lane on main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23.",
+        "Confirmed Skill_Workflow main remains pinned at 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
+        "Closed completed M10 promotion actions from CURRENT_STATE and left no undeclared M11 implementation scope."
+      ]
+    },
+    {
+      "date": "2026-09-27",
       "title": "M10 main accepted baseline",
       "type": "acceptance",
       "changes": [
