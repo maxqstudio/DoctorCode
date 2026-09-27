@@ -1,44 +1,39 @@
 {
   "schema_version": 1,
-  "phase": "M07_PYTHON_SEMANTIC",
-  "status": "M07_ACCEPTED",
-  "working_branch": "work/m07-python-semantic",
-  "last_accepted_sha": "e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e",
-  "last_accepted_branch": "work/m06-realworld-labeled",
+  "phase": "M08_PYTHON_ADVERSARIAL",
+  "status": "ACCEPTANCE_CANDIDATE",
+  "working_branch": "work/m08-python-adversarial",
+  "last_accepted_sha": "fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e",
+  "last_accepted_branch": "work/m07-python-semantic",
   "proven": [
-    "M06 accepted baseline is e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e.",
+    "M07 accepted baseline is fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e.",
     "DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
-    "M07 adds python/stdlib-ast-v1 as the first non-Go semantic analyzer, using only the host Python standard-library ast parser and no LLM/API or third-party parser package.",
-    "M07 implements one deliberately narrow Python rule in each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE; all remain safe_autofix=false.",
-    "Applicable Python syntax/read failures fail closed; missing Python or absence of .py source is explicit analyzer-unavailable capability during ordinary audit.",
-    "The M07 six-case labeled corpus reports 5 TP, 0 FP, and 0 FN on the accepted synchronized candidate.",
-    "Exact synchronized candidate 0d51ff432a44d56261a45713127c1f2588093697 passed strict Skill_Workflow governance run 36285384397.",
-    "The same candidate passed core CI run 36285384421 on ubuntu-latest, windows-latest, and macos-latest.",
-    "The same candidate passed M07 Python Real World run 36285384388 on ubuntu-latest, windows-latest, and macos-latest.",
-    "Exact-SHA snapshots of pallets/click, encode/httpx, psf/requests, and pallets/flask parse and analyze successfully with detached checkout provenance verified.",
-    "The bounded Flask src/flask/cli.py:691 _path_is_ancestor anchor remains detected as PY-DEADCODE-PRIVATE-ZERO-REF with HIGH confidence and no autofix."
+    "Initial M08 adversarial candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 false positives and 2 false negatives while the accepted M07 gate remained passing.",
+    "M08 repaired Python identity matching so integer 0/1 values are not confused with False/True identity constants.",
+    "M08 reference evidence is candidate/module-aware instead of one global counter per function name.",
+    "M08 recognizes conservative dynamic/export references from __all__, resolved imports, module attributes, getattr string names, and globals string subscripts.",
+    "M08 treats not_secret/not-secret literals as obvious placeholder security values.",
+    "Repaired candidate b2b92bbfd4f246d2c50f2bcf17034163b928b603 passed core CI run 36286874063 on Linux, Windows, and macOS.",
+    "The same candidate passed pinned public Python validation run 36286874048 on Linux, Windows, and macOS.",
+    "The 10-case M08 adversarial corpus reports 2 TP, 0 FP, and 0 FN while the M07 six-case corpus remains 5 TP, 0 FP, and 0 FN."
   ],
   "not_proven": [
-    "The six-case M07 corpus does not establish general Python ecosystem precision or recall.",
-    "The four public Python repository snapshots are not exhaustively labeled; only the Flask _path_is_ancestor location is an explicit positive anchor.",
-    "PY-DEADCODE-PRIVATE-ZERO-REF proves conservative zero lexical reference evidence, not PROVEN_UNUSED or safe deletion.",
-    "M07 semantic coverage is for .py files; .pyi recognition does not imply semantic-analysis support.",
-    "The implementation accepts Python 3.8+, while current cross-platform acceptance evidence is pinned to Python 3.13.",
-    "Dynamic imports, reflection, plugin registration, external callers, and other Python runtime behaviors are not fully resolved by M07 lexical reference analysis.",
-    "Automatic mutation remains unsupported."
+    "M08 adversarial results are corpus-scoped and do not establish general Python precision or recall.",
+    "Dynamic Python reference handling remains conservative and incomplete; arbitrary reflection, eval/exec, plugin loaders, and external callers are not resolved.",
+    "Module-aware reference counting prefers avoiding false positives and may still miss dead code under unresolved dynamic behavior.",
+    "The public Python repositories remain incompletely labeled except for bounded tracked anchors.",
+    "Python .pyi semantic analysis and automatic mutation remain unsupported."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize accepted M07 Project Truth documentation.",
-    "Remove temporary M07 discovery and doc-sync workflows.",
-    "Update README to the accepted M07 capability boundary.",
-    "Freeze M07 only after final exact-SHA strict governance, core CI, and public Python validation all pass with no remaining bot mutator."
+    "Synchronize M08 Project Truth and sequence documentation.",
+    "Run strict Skill_Workflow validation against the synchronized M08 snapshot.",
+    "Promote and freeze M08 only if exact-SHA governance, core CI, and pinned public Python validation all pass."
   ],
   "blocked_actions": [
-    "Publishing 100 percent real-world Python precision or recall.",
-    "Treating the Flask DEADCODE anchor as proof that deletion is safe.",
-    "Claiming .pyi semantic-analysis support.",
-    "Claiming cross-version Python 3.8 through 3.13 acceptance from Python 3.13 CI evidence.",
+    "Publishing M08 corpus precision/recall as real-world Python metrics.",
+    "Treating zero conservative references as safe-delete proof.",
+    "Broadening dynamic-reference claims beyond explicitly recognized patterns.",
     "Auto-deleting or auto-fixing Python findings."
   ]
 }

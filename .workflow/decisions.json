@@ -175,6 +175,34 @@
       "status": "ACCEPTED",
       "decision": "Treat click/httpx/requests/Flask whole-repository execution as compatibility evidence and only the explicitly reviewed Flask location as a bounded positive label.",
       "rationale": "Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status."
+    },
+    {
+      "id": "ADR-M08-001",
+      "title": "Reference counts belong to candidates, not names",
+      "status": "ACCEPTED",
+      "decision": "Track Python private-function references by module/function candidate and resolve recognized imports/attributes conservatively instead of using one global count per identifier name.",
+      "rationale": "Global name counts hid dead code and bloat when unrelated modules reused common private function names."
+    },
+    {
+      "id": "ADR-M08-002",
+      "title": "Recognize bounded dynamic export references",
+      "status": "ACCEPTED",
+      "decision": "Treat __all__, recognized import aliases, module attributes, getattr literal names, and globals literal subscripts as conservative reference evidence.",
+      "rationale": "Python code can intentionally expose or reach private-named functions without a direct Name load; ignoring those forms produced false positives."
+    },
+    {
+      "id": "ADR-M08-003",
+      "title": "Identity literals use identity semantics",
+      "status": "ACCEPTED",
+      "decision": "Limit repeated identity-condition logic keys to constants whose values are exactly None, True, or False by identity checks.",
+      "rationale": "Python equality makes 1 equal True and 0 equal False, which is not valid for an is/is-not rule."
+    },
+    {
+      "id": "ADR-M08-004",
+      "title": "Keep obvious security placeholders quiet",
+      "status": "ACCEPTED",
+      "decision": "Treat not_secret and not-secret markers as obvious placeholder literals for the narrow hardcoded-credential rule.",
+      "rationale": "The security rule is SUSPICIOUS review evidence and should avoid predictable non-secret fixture noise."
     }
   ]
 }

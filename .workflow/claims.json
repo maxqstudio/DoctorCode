@@ -570,6 +570,76 @@
         "GitHub Actions M07 Python Real World run 36285384388 at 0d51ff432a44d56261a45713127c1f2588093697"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M08-PRE-REPAIR-FAIL",
+      "claim": "Initial M08 adversarial evaluation exposed 5 false positives and 2 false negatives while M07 remained passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36286720676 at 9954ce27448099d219f3ab5d6dd057ec635bb6a8"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M08-REFERENCE-REPAIR",
+      "claim": "M08 uses candidate/module-aware Python private-function reference evidence plus conservative recognized dynamic/export references.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36286874063 at b2b92bbfd4f246d2c50f2bcf17034163b928b603"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M08-ADVERSARIAL-PASS",
+      "claim": "Repaired M08 corpus reports 2 TP, 0 FP, and 0 FN while M07 remains 5 TP, 0 FP, and 0 FN.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m07-python.json",
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m08-python-adversarial.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36286874063"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M08-PUBLIC-REGRESSION",
+      "claim": "Pinned click/httpx/requests/Flask Python validation remains passing on Linux, Windows, and macOS after M08 repair.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/realworld/m07-python-sources.json",
+        ".github/workflows/m07-python-real-world.yml"
+      ],
+      "tests": [
+        "internal/realworld/python_m07_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M07 Python Real World run 36286874048"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []

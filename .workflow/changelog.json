@@ -3,6 +3,18 @@
   "entries": [
     {
       "date": "2026-09-27",
+      "title": "M08 Python adversarial candidate",
+      "type": "development",
+      "changes": [
+        "Added a 10-case Python adversarial corpus.",
+        "Captured an initial 5-FP / 2-FN failure while the M07 baseline remained passing.",
+        "Repaired identity constant matching, module-aware reference accounting, bounded dynamic/export references, and obvious not_secret placeholders.",
+        "Reached 2 TP, 0 FP, and 0 FN on M08 while preserving M07 5 TP, 0 FP, and 0 FN.",
+        "Reran exact-SHA public Python validation successfully across Linux, Windows, and macOS."
+      ]
+    },
+    {
+      "date": "2026-09-27",
       "title": "M07 accepted baseline",
       "type": "acceptance",
       "changes": [

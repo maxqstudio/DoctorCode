@@ -98,7 +98,8 @@
         "baseline regression gate",
         "adversarial regression gate",
         "repository-shaped regression gate",
-        "M07 Python regression gate"
+        "M07 Python regression gate",
+        "M08 Python adversarial gate"
       ],
       "depends_on": [
         "Go analyzer",
@@ -139,12 +140,14 @@
     {
       "id": "python_analyzer",
       "name": "Python Built-in Analyzer",
-      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parse behavior.",
+      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative module-aware reference evidence.",
       "owns": [
         "Python AST subprocess adapter",
         "five conservative Python rules",
         "parse-error boundary",
-        "optional-runtime detection"
+        "optional-runtime detection",
+        "module-aware private-function reference evidence",
+        "recognized dynamic/export reference guards"
       ],
       "depends_on": [
         "host Python 3.8+ standard library ast",
@@ -268,6 +271,11 @@
       "from": "Pinned Public Python Validator",
       "to": "GitHub Actions",
       "meaning": "Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS."
+    },
+    {
+      "from": "M08 Python adversarial corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior."
     }
   ],
   "external_boundaries": [
