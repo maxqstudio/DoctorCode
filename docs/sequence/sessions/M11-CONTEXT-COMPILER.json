@@ -1,0 +1,35 @@
+{
+  "acceptance_report": "",
+  "actual": {
+    "diagram": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.mmd",
+    "entries": [],
+    "graph": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.json",
+    "source_digest": ""
+  },
+  "critical": false,
+  "implementation_base_sha": "0184e20a563b5f36b2a642fb3f5146c152893f6b",
+  "mode": "DURING",
+  "phase": "M11_CONTEXT_COMPILER_FOUNDATION",
+  "plan": {
+    "contract": "",
+    "diagram": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "required": false,
+    "sha256": ""
+  },
+  "runtime_trace": {
+    "graph": "",
+    "required": false
+  },
+  "schema_version": 1,
+  "scope": "CURRENT",
+  "session_id": "M11-CONTEXT-COMPILER",
+  "status": "ACCEPTED",
+  "test_traceability_required": true,
+  "tests": [
+    "cmd/doctorcode/main_test.go",
+    "internal/evidence/packet_test.go",
+    ".github/workflows/ci.yml"
+  ]
+}

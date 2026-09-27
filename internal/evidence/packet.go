@@ -69,7 +69,10 @@ func encodedSize(packet Packet) int {
 }
 
 func sourceExcerpt(root string, finding model.Finding, radius int) (string, error) {
-	path := filepath.Join(root, filepath.FromSlash(finding.Path))
+	path, err := resolveFindingPath(root, finding.Path)
+	if err != nil {
+		return "", err
+	}
 	data, err := os.ReadFile(path)
 	if err != nil {
 		return "", err
@@ -101,4 +104,41 @@ func sourceExcerpt(root string, finding model.Finding, radius int) (string, erro
 		fmt.Fprintf(&out, "%d: %s\n", line, lines[line-1])
 	}
 	return strings.TrimSuffix(out.String(), "\n"), nil
+}
+
+func resolveFindingPath(root, findingPath string) (string, error) {
+	if strings.TrimSpace(findingPath) == "" {
+		return "", errors.New("finding path is empty")
+	}
+
+	rootAbs, err := filepath.Abs(root)
+	if err != nil {
+		return "", fmt.Errorf("resolve repository root: %w", err)
+	}
+	rootResolved, err := filepath.EvalSymlinks(rootAbs)
+	if err != nil {
+		return "", fmt.Errorf("resolve repository root: %w", err)
+	}
+
+	localPath := filepath.FromSlash(findingPath)
+	if filepath.IsAbs(localPath) {
+		return "", fmt.Errorf("finding path escapes repository root: %s", findingPath)
+	}
+	candidateAbs, err := filepath.Abs(filepath.Join(rootResolved, localPath))
+	if err != nil {
+		return "", fmt.Errorf("resolve finding path: %w", err)
+	}
+	candidateResolved, err := filepath.EvalSymlinks(candidateAbs)
+	if err != nil {
+		return "", fmt.Errorf("resolve finding path: %w", err)
+	}
+
+	rel, err := filepath.Rel(rootResolved, candidateResolved)
+	if err != nil {
+		return "", fmt.Errorf("compare finding path with repository root: %w", err)
+	}
+	if rel == ".." || strings.HasPrefix(rel, ".."+string(os.PathSeparator)) || filepath.IsAbs(rel) {
+		return "", fmt.Errorf("finding path escapes repository root: %s", findingPath)
+	}
+	return candidateResolved, nil
 }

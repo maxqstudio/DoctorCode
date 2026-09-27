@@ -27,19 +27,19 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 124 files, 2 language categories.
+Observed source inventory: 125 files, 2 language categories.
 
 ## Major components
 
 | Component | Purpose | Owns / Decides | Depends On |
 |---|---|---|---|
-| CLI | Human/agent interface for scan, toolchain, audit, and bounded next-finding operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
+| CLI | Human/agent interface for scan, toolchain, audit, highest-priority next-finding, exact finding-specific context, and benchmark operations. | command parsing, text and JSON rendering | scanner, toolchain registry, detector engine, evidence reducer |
 | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
-| Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
+| Evidence Reducer | Turn a selected deterministic finding into a tokenizer-independent bounded byte packet for small LLMs while enforcing repository-contained source reads. | source excerpt bounds, security excerpt suppression, byte budget, repository-contained source path resolution | detector engine |
 | Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate, M09 Python repository-shaped gate | Go analyzer, Python analyzer |
 | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
@@ -50,7 +50,7 @@ Observed source inventory: 124 files, 2 language categories.
 
 - repository -> detector engine: Audit dispatches the visible repository to registered deterministic analyzers.
 - detector engine -> Go Built-in Analyzer: Go source is parsed and narrow findings are generated with explicit confidence.
-- detector engine -> evidence reducer: The sorted highest-priority finding is reduced to a bounded packet for doctorcode next.
+- detector engine -> evidence reducer: doctorcode next selects the highest-priority finding; doctorcode context selects one exact current finding ID; both reduce that finding to the same bounded packet.
 - evidence reducer -> small LLM or human: Only finding evidence and a bounded source excerpt are exposed; security excerpts are omitted by default.
 - labeled benchmark corpus -> precision benchmark harness: Manifest declares expected findings for isolated deterministic case roots.
 - Go Built-in Analyzer -> precision benchmark harness: Analyzer findings are matched against labels and converted into TP, FP, and FN counts.
@@ -96,6 +96,17 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 - ANALYZING_CASES -> MATCHING_LABELS : Match actual findings to expected rule/path/location labels.
 - MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
 - GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
+
+### FLOW-CONTEXT-COMPILER — Finding-specific bounded context compilation
+
+Convert one exact current audit finding into a byte-bounded evidence packet while preventing source excerpt reads outside the repository root.
+
+Authority: cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, and .github/workflows/ci.yml
+
+- AUDIT_REQUESTED -> FINDING_SELECTED : Run deterministic audit and require an exact finding ID match.
+- FINDING_SELECTED -> PATH_BOUNDARY_VERIFIED : For non-security excerpts, resolve repository root and source path and reject escape outside the root.
+- PATH_BOUNDARY_VERIFIED -> PACKET_BOUNDED : Build the existing evidence packet under the caller byte budget.
+- PACKET_BOUNDED -> REPORTED : Emit text or JSON without invoking an LLM or mutating source.
 
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
@@ -178,9 +189,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M10_PYTHON_LABELED_REAL_WORLD
+Current phase: M11_CONTEXT_COMPILER_FOUNDATION
 
-Current status: M10_MAIN_ACCEPTED
+Current status: M11_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -216,6 +227,7 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+- FLOW-CONTEXT-COMPILER: Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
@@ -227,15 +239,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Await an explicit Owner directive or repository governance update that defines the next milestone; no M11 scope is currently declared.
-- When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.
-- Preserve M10 product acceptance at 36baeec0057089ffe50c9d3cc25d22d8524c882e and governance-normalized main evidence at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23 as immutable historical evidence.
+- Run final exact-SHA acceptance on the finalized M11 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M11 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting another milestone.
 
 Blocked actions:
-- Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
-- Treating zero conservative references as safe-delete proof.
-- Auto-deleting or auto-fixing Python findings.
-- Inventing or starting an M11 implementation without explicit milestone scope.
+- Adding a third semantic language during M11.
+- Expanding M11 into arbitrary multi-file dependency or whole-program context inference.
+- Treating a context packet as proof that code is safe to delete or auto-fix.
+- Starting MCP or Skill adapter product logic before the deterministic context core is accepted.
 
 Known blockers:
 - None declared.
@@ -244,40 +256,24 @@ Known blockers:
 
 ### Proven
 
-- M09 is merged and post-merge accepted on main at 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce.
-- Post-merge M09 main passed Governance Bootstrap run 36302209222.
-- Post-merge M09 main passed core CI run 36302209237 on ubuntu-latest, windows-latest, and macos-latest.
-- Post-merge M09 main passed M07 Python Real World run 36302209214 on all three operating systems.
-- Post-merge M09 main passed M06 Labeled Real World Go run 36302209238 on all three operating systems.
-- Post-merge M09 main passed Real World Go Validation run 36302209232 on all three operating systems.
-- DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- M10 adds six bounded exact-SHA Python labels: two VALID_FINDING Flask zero-reference anchors and four INVALID_FINDING test-tree guards across Flask and Click.
-- M10 label run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with valid=2 invalid=4.
-- At the same M10 source candidate, core CI run 36303351679, M07 Python Real World run 36303351736, Real World Go run 36303351697, and M06 Labeled Real World Go run 36303351703 all passed across Linux, Windows, and macOS.
-- Temporary Project Truth sync run 36303858286 validated M10 sequence generation, generated documentation normalization, document quality, and human-comprehension structure before final cleanup.
-- M10 is merged to main at 36baeec0057089ffe50c9d3cc25d22d8524c882e through PR #4.
-- Exact post-merge main Governance Bootstrap run 36304216096 completed success.
-- Exact post-merge main core CI run 36304215983 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact post-merge main M10 Labeled Real World Python run 36304215942 completed success on all three operating systems.
-- Exact post-merge main M07 Python Real World run 36304216032 completed success on all three operating systems.
-- Exact post-merge main M06 Labeled Real World Go run 36304215964 completed success on all three operating systems.
-- Exact post-merge main Real World Go Validation run 36304215947 completed success on all three operating systems.
-- M10 Project Truth governance-only closure merged through PR #5 to main at 3f1b8b0ea9f67ba8cf5698585f9e91a9319d6c23.
-- Exact governance-normalized main Governance Bootstrap run 36307506384 completed success.
-- Exact governance-normalized main core CI run 36307506390 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact governance-normalized main M10 Labeled Real World Python run 36307506393 completed success on all three operating systems.
-- Exact governance-normalized main M07 Python Real World run 36307506407 completed success on all three operating systems.
-- Exact governance-normalized main M06 Labeled Real World Go run 36307506391 completed success on all three operating systems.
-- Exact governance-normalized main Real World Go Validation run 36307506396 completed success on all three operating systems.
-- Latest Skill_Workflow main remains exactly 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
+- M10 final normalized authority is main@0184e20a563b5f36b2a642fb3f5146c152893f6b.
+- Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
+- M11 RED run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63 proved finding-specific context helpers were absent and evidence.Build accepted both parent traversal and a symlink resolving outside the repository root.
+- M11 adds doctorcode context <finding-id> [path] and reuses the deterministic byte-bounded evidence packet used by doctorcode next.
+- M11 evidence source reads resolve repository root and finding path symlinks and reject paths outside the resolved repository root.
+- Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed on ubuntu-latest, windows-latest, and macos-latest, including the finding-specific context smoke test.
+- At the same M11 product candidate, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed on Linux, Windows, and macOS.
+- Final synchronized M11 branch candidate eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed Governance Bootstrap run 36311808969.
+- Core CI run 36311809127 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36311809029, M07 Python Real World run 36311808964, M06 Go labels run 36311809123, and Real World Go run 36311808976 all passed on Linux, Windows, and macOS at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0.
 
 ### Not proven
 
-- M10 bounded labels are not exhaustive labels for Click or Flask and are not general Python ecosystem precision or recall.
-- A VALID_FINDING label proves only the declared rule/path/line claim at the pinned source SHA.
-- Zero conservative references remain insufficient for PROVEN_UNUSED, behavioral dispensability, or safe deletion.
-- Test-tree exclusion is a conservative DoctorCode policy and does not prove that all non-test private functions are stale.
-- Automatic Python source mutation remains unsupported and every accepted Python finding keeps safe_autofix=false.
+- M11 context packets remain single-finding packets and do not compile transitive call graphs, related symbols, tests, or multi-file dependency context.
+- A finding ID is valid for the current audited source state and M11 does not migrate stale IDs across repository changes.
+- The byte budget is deterministic but is not an exact token count for an arbitrary model tokenizer.
+- M11 does not change detector precision claims, confidence levels, or safe_autofix=false semantics.
+- Path containment blocks ordinary traversal and resolved symlink escape at packet construction time; it is not a claim against every filesystem race on a hostile local host.
 
 ## Important limitations
 

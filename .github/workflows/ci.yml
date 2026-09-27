@@ -56,3 +56,13 @@ jobs:
         run: go run ./cmd/doctorcode audit . --json --max-findings=10
       - name: Bounded next-finding smoke test
         run: go run ./cmd/doctorcode next . --json --max-bytes=4096
+      - name: Finding-specific context smoke test
+        shell: bash
+        run: |
+          rm -rf .doctorcode-context-smoke
+          mkdir .doctorcode-context-smoke
+          printf 'package smoke\n\nfunc unusedContextTarget() {}\n' > .doctorcode-context-smoke/sample.go
+          finding_id="$(go run ./cmd/doctorcode audit .doctorcode-context-smoke --json --max-findings=1 | python -c 'import json,sys; data=json.load(sys.stdin); print(data["findings"][0]["id"])')"
+          test -n "$finding_id"
+          go run ./cmd/doctorcode context "$finding_id" .doctorcode-context-smoke --json --max-bytes=2048 | python -c 'import json,sys; packet=json.load(sys.stdin); assert packet["finding"]["id"] == sys.argv[1]; assert packet["budget_bytes"] == 2048' "$finding_id"
+          rm -rf .doctorcode-context-smoke

@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M10 bounded real-world Python label validation is accepted on `main` at `36baeec0057089ffe50c9d3cc25d22d8524c882e`.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M11 Context Compiler Foundation is accepted on the development branch pending final exact-SHA promotion checks.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
@@ -240,6 +240,20 @@ Run deterministic findings:
 ./doctorcode audit . --json --max-findings=20
 ```
 
+### M11 finding-specific context compiler
+
+M11 adds exact finding-specific retrieval without adding a second analysis authority. First obtain a deterministic finding ID from `doctorcode audit`, then request a bounded packet for that exact current finding:
+
+```bash
+./doctorcode audit . --json --max-findings=20
+./doctorcode context <finding-id> . --json --max-bytes=4096
+```
+
+`context` re-audits the current source state and fails if the supplied ID is absent, so a stale ID is never silently redirected to a different finding. It reuses the same byte-bounded packet builder as `next`; it does not invoke an LLM, mutate code, or change detector confidence.
+
+M11 also hardens excerpt reads: repository root and selected source path are resolved through symlinks and the resolved target must remain inside the resolved repository root. Blocking tests cover both `../` traversal and a symlink pointing outside the repository.
+
+This milestone is deliberately a **single-finding context foundation**. It does not yet infer transitive dependencies, collect related tests/symbols across multiple files, migrate stale IDs, or claim exact tokenizer counts.
 Give a small LLM one highest-priority bounded evidence packet instead of the repository:
 
 ```bash
@@ -274,7 +288,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate Go compatibility, bounded Go real-world label, Python public-source, and bounded M10 Python label workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, bounded next-packet smoke, and the M11 exact finding-specific context smoke. Separate Go compatibility, bounded Go real-world label, Python public-source, and bounded M10 Python label workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
 
 ## Design principles
 

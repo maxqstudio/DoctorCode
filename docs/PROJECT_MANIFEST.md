@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m11-context-compiler
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 36baeec0057089ffe50c9d3cc25d22d8524c882e
-Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
+Last accepted SHA: 0184e20a563b5f36b2a642fb3f5146c152893f6b
+Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -35,6 +35,10 @@ External systems: GitHub Actions, host compilers and language runtimes
 |---|---|---|
 | doctorcode scan | cmd/doctorcode/main.go | Inventory a repository and recognize source languages. |
 | doctorcode toolchains | cmd/doctorcode/main.go | Report compiler/runtime toolchain availability without assuming every host has every compiler. |
+| doctorcode audit | cmd/doctorcode/main.go | Run registered deterministic semantic analyzers and emit normalized findings. |
+| doctorcode next | cmd/doctorcode/main.go | Return the highest-priority finding as one byte-bounded evidence packet. |
+| doctorcode context | cmd/doctorcode/main.go | Re-audit and return one exact finding ID as a repository-contained byte-bounded evidence packet. |
+| doctorcode benchmark | cmd/doctorcode/main.go | Evaluate labeled analyzer corpora and enforce deterministic TP/FP/FN regression gates. |
 
 ## Critical directories
 

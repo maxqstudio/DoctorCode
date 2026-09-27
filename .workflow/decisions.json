@@ -1,250 +1,264 @@
 {
-  "schema_version": 1,
   "decisions": [
     {
-      "id": "ADR-M00-001",
-      "title": "Portable Go core",
-      "status": "ACCEPTED",
       "decision": "Use Go for the portable DoctorCode core and expose language/compiler support through adapters.",
-      "rationale": "Single-binary distribution and cross-platform CI keep deterministic core use simple."
+      "id": "ADR-M00-001",
+      "rationale": "Single-binary distribution and cross-platform CI keep deterministic core use simple.",
+      "status": "ACCEPTED",
+      "title": "Portable Go core"
     },
     {
-      "id": "ADR-M00-002",
-      "title": "GitHub Actions acceptance authority",
-      "status": "ACCEPTED",
       "decision": "Use GitHub Actions Linux, Windows, and macOS runners as public runtime and acceptance authority.",
-      "rationale": "The public project must not depend on the Owner PC."
+      "id": "ADR-M00-002",
+      "rationale": "The public project must not depend on the Owner PC.",
+      "status": "ACCEPTED",
+      "title": "GitHub Actions acceptance authority"
     },
     {
-      "id": "ADR-M00-003",
-      "title": "Fail closed on unsupported sequence extraction",
-      "status": "ACCEPTED",
       "decision": "Do not infer a Go call graph from the current generic Skill_Workflow sequence extractor.",
-      "rationale": "Current generic extraction covers Python AST and JS/TS HTTP structure, not Go symbol call graphs."
+      "id": "ADR-M00-003",
+      "rationale": "Current generic extraction covers Python AST and JS/TS HTTP structure, not Go symbol call graphs.",
+      "status": "ACCEPTED",
+      "title": "Fail closed on unsupported sequence extraction"
     },
     {
-      "id": "ADR-M01-001",
-      "title": "Byte-bounded evidence packets",
-      "status": "ACCEPTED",
       "decision": "Use a deterministic byte cap for M01 evidence packets rather than claiming tokenizer-independent exact token counts.",
-      "rationale": "Tokenization differs by model; a byte cap is deterministic and still constrains context size for small LLMs."
+      "id": "ADR-M01-001",
+      "rationale": "Tokenization differs by model; a byte cap is deterministic and still constrains context size for small LLMs.",
+      "status": "ACCEPTED",
+      "title": "Byte-bounded evidence packets"
     },
     {
-      "id": "ADR-M01-002",
-      "title": "No automatic M01 mutation",
-      "status": "ACCEPTED",
       "decision": "Every M01 finding sets safe_autofix=false.",
-      "rationale": "The first semantic rules need evidence and verification maturity before DoctorCode is allowed to mutate source."
+      "id": "ADR-M01-002",
+      "rationale": "The first semantic rules need evidence and verification maturity before DoctorCode is allowed to mutate source.",
+      "status": "ACCEPTED",
+      "title": "No automatic M01 mutation"
     },
     {
-      "id": "ADR-M02-001",
-      "title": "Corpus-scoped precision evidence",
-      "status": "ACCEPTED",
       "decision": "Treat M02 precision and recall values as regression metrics for the exact labeled corpus only.",
-      "rationale": "A small curated corpus can prove regression behavior for its cases but cannot establish general real-world detector precision."
+      "id": "ADR-M02-001",
+      "rationale": "A small curated corpus can prove regression behavior for its cases but cannot establish general real-world detector precision.",
+      "status": "ACCEPTED",
+      "title": "Corpus-scoped precision evidence"
     },
     {
-      "id": "ADR-M02-002",
-      "title": "False positives and false negatives are both blocking",
-      "status": "ACCEPTED",
       "decision": "Match expected and actual findings explicitly so both unexpected findings and missing findings fail the benchmark.",
-      "rationale": "Coverage-only or happy-path benchmarks would create false confidence and would not protect detector precision or recall."
+      "id": "ADR-M02-002",
+      "rationale": "Coverage-only or happy-path benchmarks would create false confidence and would not protect detector precision or recall.",
+      "status": "ACCEPTED",
+      "title": "False positives and false negatives are both blocking"
     },
     {
-      "id": "ADR-M02-003",
-      "title": "Closed filesystem benchmark boundary",
-      "status": "ACCEPTED",
       "decision": "Require case roots to resolve inside the manifest directory and skip Go source symlink entries during repository analysis.",
-      "rationale": "Benchmark and audit input paths are untrusted filesystem boundaries; following escaping symlinks could analyze or expose files outside the selected scope."
+      "id": "ADR-M02-003",
+      "rationale": "Benchmark and audit input paths are untrusted filesystem boundaries; following escaping symlinks could analyze or expose files outside the selected scope.",
+      "status": "ACCEPTED",
+      "title": "Closed filesystem benchmark boundary"
     },
     {
-      "id": "ADR-M03-001",
-      "title": "Adversarial evidence before claim expansion",
-      "status": "ACCEPTED",
       "decision": "Add adversarial positive and negative controls to existing detector rules before raising confidence or expanding product claims.",
-      "rationale": "The first adversarial suite found four false negatives that the original happy-path corpus did not expose."
+      "id": "ADR-M03-001",
+      "rationale": "The first adversarial suite found four false negatives that the original happy-path corpus did not expose.",
+      "status": "ACCEPTED",
+      "title": "Adversarial evidence before claim expansion"
     },
     {
-      "id": "ADR-M03-002",
-      "title": "Preserve baseline while repairing adversarial misses",
-      "status": "ACCEPTED",
       "decision": "Every M03 repair must pass both the accepted M02 baseline corpus and the M03 adversarial corpus on all supported CI operating systems.",
-      "rationale": "A detector repair is not accepted if it fixes the new cases by regressing previously accepted behavior."
+      "id": "ADR-M03-002",
+      "rationale": "A detector repair is not accepted if it fixes the new cases by regressing previously accepted behavior.",
+      "status": "ACCEPTED",
+      "title": "Preserve baseline while repairing adversarial misses"
     },
     {
-      "id": "ADR-M04-001",
-      "title": "Repository-shaped evidence before capability expansion",
-      "status": "ACCEPTED",
       "decision": "Validate existing Go rules against multi-file and multi-package mini-repositories before adding a new semantic language adapter or destructive behavior.",
-      "rationale": "Single-file corpora cannot exercise package boundaries, external tests, generated references, build-tag-visible references, or nested evidence paths."
+      "id": "ADR-M04-001",
+      "rationale": "Single-file corpora cannot exercise package boundaries, external tests, generated references, build-tag-visible references, or nested evidence paths.",
+      "status": "ACCEPTED",
+      "title": "Repository-shaped evidence before capability expansion"
     },
     {
-      "id": "ADR-M04-002",
-      "title": "Visible-tree build-tag reference semantics",
-      "status": "ACCEPTED",
       "decision": "For current lexical reference evidence, count visible Go references even when they reside in a build-tagged file rather than claiming target-specific runtime reachability.",
-      "rationale": "DoctorCode does not yet select an active GOOS/GOARCH/build-tag configuration; counting visible references is the safer fail-closed behavior for DEADCODE."
+      "id": "ADR-M04-002",
+      "rationale": "DoctorCode does not yet select an active GOOS/GOARCH/build-tag configuration; counting visible references is the safer fail-closed behavior for DEADCODE.",
+      "status": "ACCEPTED",
+      "title": "Visible-tree build-tag reference semantics"
     },
     {
-      "id": "ADR-M04-003",
-      "title": "Do not repair the detector to satisfy a bad oracle",
-      "status": "ACCEPTED",
       "decision": "When a corpus mismatch is caused by an invalid expected label and detector evidence is valid, repair the fixture rather than suppressing or weakening the rule.",
-      "rationale": "Benchmark data is evidence input, not an unquestionable source of truth."
+      "id": "ADR-M04-003",
+      "rationale": "Benchmark data is evidence input, not an unquestionable source of truth.",
+      "status": "ACCEPTED",
+      "title": "Do not repair the detector to satisfy a bad oracle"
     },
     {
-      "id": "ADR-M05-001",
-      "title": "Pin external validation inputs",
-      "status": "ACCEPTED",
       "decision": "Validate public repositories only at exact tracked commit SHAs with checkout provenance verified before analysis.",
-      "rationale": "Floating branches would make acceptance non-reproducible and allow unrelated upstream changes to alter DoctorCode evidence."
+      "id": "ADR-M05-001",
+      "rationale": "Floating branches would make acceptance non-reproducible and allow unrelated upstream changes to alter DoctorCode evidence.",
+      "status": "ACCEPTED",
+      "title": "Pin external validation inputs"
     },
     {
-      "id": "ADR-M05-002",
-      "title": "Separate compatibility from precision",
-      "status": "ACCEPTED",
       "decision": "Treat unlabeled whole-repository analysis as compatibility/runtime evidence and keep precision/recall claims restricted to labeled corpora.",
-      "rationale": "A successful scan or zero findings cannot reveal unknown false positives or false negatives without exhaustive labels."
+      "id": "ADR-M05-002",
+      "rationale": "A successful scan or zero findings cannot reveal unknown false positives or false negatives without exhaustive labels.",
+      "status": "ACCEPTED",
+      "title": "Separate compatibility from precision"
     },
     {
-      "id": "ADR-M05-003",
-      "title": "External content is untrusted input",
-      "status": "ACCEPTED",
       "decision": "Repository documentation, comments, and agent instructions in external validation sources never become DoctorCode authority.",
-      "rationale": "DoctorCode must analyze arbitrary repositories without allowing repository text to alter its build, governance, or safety instructions."
+      "id": "ADR-M05-003",
+      "rationale": "DoctorCode must analyze arbitrary repositories without allowing repository text to alter its build, governance, or safety instructions.",
+      "status": "ACCEPTED",
+      "title": "External content is untrusted input"
     },
     {
-      "id": "ADR-M06-001",
-      "title": "Binding-aware duplicate conditions",
-      "status": "ACCEPTED",
       "decision": "Canonicalize local identifiers with their parser-resolved declaration identity when comparing pure conditions inside an if/else-if chain.",
-      "rationale": "Name-only comparison produced false positives when separate branch init statements reused conventional names such as err or ok."
+      "id": "ADR-M06-001",
+      "rationale": "Name-only comparison produced false positives when separate branch init statements reused conventional names such as err or ok.",
+      "status": "ACCEPTED",
+      "title": "Binding-aware duplicate conditions"
     },
     {
-      "id": "ADR-M06-002",
-      "title": "Generated functions are not DEADCODE candidates",
-      "status": "ACCEPTED",
       "decision": "Exclude function declarations in standard Go generated files from DEADCODE candidate generation while retaining generated-file references to hand-written candidates.",
-      "rationale": "Generated code may contain intentionally uncalled compile-time assertion functions and should be repaired at the generator rather than treated as stale hand-maintained code."
+      "id": "ADR-M06-002",
+      "rationale": "Generated code may contain intentionally uncalled compile-time assertion functions and should be repaired at the generator rather than treated as stale hand-maintained code.",
+      "status": "ACCEPTED",
+      "title": "Generated functions are not DEADCODE candidates"
     },
     {
-      "id": "ADR-M06-003",
-      "title": "Bounded labels are not repository metrics",
-      "status": "ACCEPTED",
       "decision": "Use M06 labels as exact anchor assertions only and prohibit conversion into whole-repository precision or recall.",
-      "rationale": "Only selected source locations are reviewed; unlabeled code can still contain unknown true or false findings."
+      "id": "ADR-M06-003",
+      "rationale": "Only selected source locations are reviewed; unlabeled code can still contain unknown true or false findings.",
+      "status": "ACCEPTED",
+      "title": "Bounded labels are not repository metrics"
     },
     {
-      "id": "ADR-M06-004",
-      "title": "Ambiguous bloat stays non-blocking",
-      "status": "ACCEPTED",
       "decision": "Keep structurally redundant wrappers with plausible naming/build/API intent under AMBIGUOUS evidence and SUSPICIOUS confidence.",
-      "rationale": "A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape."
+      "id": "ADR-M06-004",
+      "rationale": "A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape.",
+      "status": "ACCEPTED",
+      "title": "Ambiguous bloat stays non-blocking"
     },
     {
-      "id": "ADR-M07-001",
-      "title": "Use Python standard-library AST through the host runtime",
-      "status": "ACCEPTED",
       "decision": "Implement the first Python semantic adapter by invoking Python's standard-library ast parser through an argv-only subprocess instead of adding a third-party parser or model dependency.",
-      "rationale": "This keeps the Go core small, uses the language's own parser semantics, remains cross-platform when Python is available, and avoids parser-vendor/cgo weight."
+      "id": "ADR-M07-001",
+      "rationale": "This keeps the Go core small, uses the language's own parser semantics, remains cross-platform when Python is available, and avoids parser-vendor/cgo weight.",
+      "status": "ACCEPTED",
+      "title": "Use Python standard-library AST through the host runtime"
     },
     {
-      "id": "ADR-M07-002",
-      "title": "Optional runtime is explicit capability",
-      "status": "ACCEPTED",
       "decision": "Return detector.ErrUnavailable when Python source or a compatible Python interpreter is absent during normal audit, and have the engine skip that analyzer without failing unrelated languages.",
-      "rationale": "Missing optional toolchains must not turn a mixed repository into an audit failure or create a false support claim."
+      "id": "ADR-M07-002",
+      "rationale": "Missing optional toolchains must not turn a mixed repository into an audit failure or create a false support claim.",
+      "status": "ACCEPTED",
+      "title": "Optional runtime is explicit capability"
     },
     {
-      "id": "ADR-M07-003",
-      "title": "Fail closed on Python parse incompleteness",
-      "status": "ACCEPTED",
       "decision": "Once Python analysis is applicable, any source read or AST syntax failure blocks the analyzer instead of silently omitting that file.",
-      "rationale": "Silently skipped source could make a zero-finding result look complete when it is not."
+      "id": "ADR-M07-003",
+      "rationale": "Silently skipped source could make a zero-finding result look complete when it is not.",
+      "status": "ACCEPTED",
+      "title": "Fail closed on Python parse incompleteness"
     },
     {
-      "id": "ADR-M07-004",
-      "title": "Narrow Python rules before recall expansion",
-      "status": "ACCEPTED",
       "decision": "Start with one intentionally conservative rule per DoctorCode category; keep LOGIC limited to identity comparisons and DEADCODE limited to private undecorated hand-maintained module functions.",
-      "rationale": "Python has dynamic imports, decorators, descriptors, reflection, and plugin conventions that make broad static claims unsafe without more evidence."
+      "id": "ADR-M07-004",
+      "rationale": "Python has dynamic imports, decorators, descriptors, reflection, and plugin conventions that make broad static claims unsafe without more evidence.",
+      "status": "ACCEPTED",
+      "title": "Narrow Python rules before recall expansion"
     },
     {
-      "id": "ADR-M07-005",
-      "title": "Separate public compatibility from labeled metrics",
-      "status": "ACCEPTED",
       "decision": "Treat click/httpx/requests/Flask whole-repository execution as compatibility evidence and only the explicitly reviewed Flask location as a bounded positive label.",
-      "rationale": "Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status."
+      "id": "ADR-M07-005",
+      "rationale": "Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status.",
+      "status": "ACCEPTED",
+      "title": "Separate public compatibility from labeled metrics"
     },
     {
-      "id": "ADR-M08-001",
-      "title": "Reference counts belong to candidates, not names",
-      "status": "ACCEPTED",
       "decision": "Track Python private-function references by module/function candidate and resolve recognized imports/attributes conservatively instead of using one global count per identifier name.",
-      "rationale": "Global name counts hid dead code and bloat when unrelated modules reused common private function names."
+      "id": "ADR-M08-001",
+      "rationale": "Global name counts hid dead code and bloat when unrelated modules reused common private function names.",
+      "status": "ACCEPTED",
+      "title": "Reference counts belong to candidates, not names"
     },
     {
-      "id": "ADR-M08-002",
-      "title": "Recognize bounded dynamic export references",
-      "status": "ACCEPTED",
       "decision": "Treat __all__, recognized import aliases, module attributes, getattr literal names, and globals literal subscripts as conservative reference evidence.",
-      "rationale": "Python code can intentionally expose or reach private-named functions without a direct Name load; ignoring those forms produced false positives."
+      "id": "ADR-M08-002",
+      "rationale": "Python code can intentionally expose or reach private-named functions without a direct Name load; ignoring those forms produced false positives.",
+      "status": "ACCEPTED",
+      "title": "Recognize bounded dynamic export references"
     },
     {
-      "id": "ADR-M08-003",
-      "title": "Identity literals use identity semantics",
-      "status": "ACCEPTED",
       "decision": "Limit repeated identity-condition logic keys to constants whose values are exactly None, True, or False by identity checks.",
-      "rationale": "Python equality makes 1 equal True and 0 equal False, which is not valid for an is/is-not rule."
+      "id": "ADR-M08-003",
+      "rationale": "Python equality makes 1 equal True and 0 equal False, which is not valid for an is/is-not rule.",
+      "status": "ACCEPTED",
+      "title": "Identity literals use identity semantics"
     },
     {
-      "id": "ADR-M08-004",
-      "title": "Keep obvious security placeholders quiet",
-      "status": "ACCEPTED",
       "decision": "Treat not_secret and not-secret markers as obvious placeholder literals for the narrow hardcoded-credential rule.",
-      "rationale": "The security rule is SUSPICIOUS review evidence and should avoid predictable non-secret fixture noise."
+      "id": "ADR-M08-004",
+      "rationale": "The security rule is SUSPICIOUS review evidence and should avoid predictable non-secret fixture noise.",
+      "status": "ACCEPTED",
+      "title": "Keep obvious security placeholders quiet"
     },
     {
-      "id": "ADR-DELIVERY-001",
-      "title": "Promote every accepted phase to main",
-      "status": "ACCEPTED",
       "decision": "After a phase reaches FINAL_ACCEPTED on its work branch, merge it to main immediately. Required GitHub Actions must pass before merge, and main must rerun the same applicable acceptance lanes after the merge before becoming the next development base.",
-      "rationale": "Keeping multiple accepted phases only on work branches made main stale and weakened public release authority. Main should always represent the latest accepted baseline."
+      "id": "ADR-DELIVERY-001",
+      "rationale": "Keeping multiple accepted phases only on work branches made main stale and weakened public release authority. Main should always represent the latest accepted baseline.",
+      "status": "ACCEPTED",
+      "title": "Promote every accepted phase to main"
     },
     {
-      "id": "ADR-M09-001",
-      "title": "Recognize conventional src-layout module aliases",
-      "status": "ACCEPTED",
       "decision": "For Python files under a leading src directory, index both filesystem-derived src.package.module and conventional package.module aliases.",
-      "rationale": "Absolute imports in src-layout projects refer to the installed package name rather than the repository-relative src prefix; missing that alias produced false DEADCODE and missed BLOAT findings."
+      "id": "ADR-M09-001",
+      "rationale": "Absolute imports in src-layout projects refer to the installed package name rather than the repository-relative src prefix; missing that alias produced false DEADCODE and missed BLOAT findings.",
+      "status": "ACCEPTED",
+      "title": "Recognize conventional src-layout module aliases"
     },
     {
-      "id": "ADR-M09-002",
-      "title": "Propagate direct from-import re-exports",
-      "status": "ACCEPTED",
       "decision": "Propagate direct module-level from-import symbol forwarding to a bounded fixed point so package facades resolve back to original candidates.",
-      "rationale": "Package __init__.py facades are common Python repository structure; treating them as unrelated modules produced false DEADCODE and lost one-use wrapper evidence."
+      "id": "ADR-M09-002",
+      "rationale": "Package __init__.py facades are common Python repository structure; treating them as unrelated modules produced false DEADCODE and lost one-use wrapper evidence.",
+      "status": "ACCEPTED",
+      "title": "Propagate direct from-import re-exports"
     },
     {
-      "id": "ADR-M09-003",
-      "title": "Separate usage from liveness evidence",
-      "status": "ACCEPTED",
       "decision": "Track executable/usage references separately from declarative import/export liveness evidence.",
-      "rationale": "Imports and __all__ should conservatively prevent a zero-reference DEADCODE claim but must not inflate the BLOAT rule's exactly-one-usage condition."
+      "id": "ADR-M09-003",
+      "rationale": "Imports and __all__ should conservatively prevent a zero-reference DEADCODE claim but must not inflate the BLOAT rule's exactly-one-usage condition.",
+      "status": "ACCEPTED",
+      "title": "Separate usage from liveness evidence"
     },
     {
-      "id": "ADR-M09-004",
-      "title": "Resolve dotted attributes exactly before fallback",
-      "status": "ACCEPTED",
       "decision": "Resolve dotted attributes through explicit import roots and only use unresolved name fallback when exactly one candidate with that private name exists.",
-      "rationale": "Global fallback by attribute name could keep unrelated same-named functions alive and hide real dead code."
+      "id": "ADR-M09-004",
+      "rationale": "Global fallback by attribute name could keep unrelated same-named functions alive and hide real dead code.",
+      "status": "ACCEPTED",
+      "title": "Resolve dotted attributes exactly before fallback"
     },
     {
-      "id": "ADR-M09-005",
-      "title": "Run all accepted real-world lanes on every phase",
-      "status": "ACCEPTED",
       "decision": "Trigger accepted Go public compatibility, bounded Go labels, and Python public-source workflows on main and work/**.",
-      "rationale": "Each phase promotion should preserve previously accepted real-world evidence, not only synthetic/core gates for the currently edited language."
+      "id": "ADR-M09-005",
+      "rationale": "Each phase promotion should preserve previously accepted real-world evidence, not only synthetic/core gates for the currently edited language.",
+      "status": "ACCEPTED",
+      "title": "Run all accepted real-world lanes on every phase"
+    },
+    {
+      "decision": "Implement doctorcode context by re-auditing the current repository and selecting an exact finding ID before building the existing bounded evidence packet.",
+      "id": "ADR-M11-001",
+      "rationale": "Finding IDs already provide deterministic source-state identity. Reusing audit plus evidence.Build keeps the core small and avoids a second finding store or stale cache.",
+      "status": "ACCEPTED",
+      "title": "Context selects exact current finding IDs"
+    },
+    {
+      "decision": "Resolve the repository root and candidate source path through filesystem symlinks, then reject any target whose relative path escapes the resolved root before reading source.",
+      "id": "ADR-M11-002",
+      "rationale": "Lexical filepath.Join alone allowed parent traversal and symlink targets outside the repository to expose unrelated local files through evidence packets.",
+      "status": "ACCEPTED",
+      "title": "Resolve evidence paths before repository containment checks"
     }
-  ]
+  ],
+  "schema_version": 1
 }

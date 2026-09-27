@@ -15,6 +15,7 @@ import (
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/engine"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
+	"github.com/maxqstudio/DoctorCode/internal/model"
 	"github.com/maxqstudio/DoctorCode/internal/scanner"
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
 )
@@ -36,6 +37,8 @@ func main() {
 		runAudit(os.Args[2:])
 	case "next":
 		runNext(os.Args[2:])
+	case "context":
+		runContext(os.Args[2:])
 	case "benchmark":
 		runBenchmark(os.Args[2:])
 	case "version", "--version", "-v":
@@ -190,6 +193,85 @@ func runNext(args []string) {
 	}
 }
 
+
+func runContext(args []string) {
+	findingID, root, asJSON, maxBytes, err := parseContextArgs(args)
+	if err != nil {
+		die(err)
+	}
+
+	result, err := engine.Default().Audit(context.Background(), root)
+	if err != nil {
+		die(fmt.Errorf("audit failed: %w", err))
+	}
+	finding, ok := findFindingByID(result.Findings, findingID)
+	if !ok {
+		die(fmt.Errorf("finding %q not found", findingID))
+	}
+	packet, err := evidence.Build(result.Root, finding, maxBytes)
+	if err != nil {
+		die(fmt.Errorf("build evidence packet: %w", err))
+	}
+	if asJSON {
+		writeJSON(packet)
+		return
+	}
+	fmt.Printf("%s %s %s %s:%d\n%s\n", packet.Finding.ID, packet.Finding.Category, packet.Finding.Confidence, packet.Finding.Path, packet.Finding.LineStart, packet.Finding.Summary)
+	for _, item := range packet.Finding.Evidence {
+		fmt.Printf("EVIDENCE %s\n", item)
+	}
+	if packet.SourceExcerpt != "" {
+		fmt.Printf("SOURCE\n%s\n", packet.SourceExcerpt)
+	}
+	if packet.SensitiveExcerptOmitted {
+		fmt.Println("SOURCE OMITTED_SENSITIVE")
+	}
+}
+
+func parseContextArgs(args []string) (findingID, root string, asJSON bool, maxBytes int, err error) {
+	root = "."
+	maxBytes = 4096
+	positionals := make([]string, 0, 2)
+
+	for _, arg := range args {
+		switch {
+		case arg == "--json":
+			asJSON = true
+		case strings.HasPrefix(arg, "--max-bytes="):
+			value, parseErr := strconv.Atoi(strings.TrimPrefix(arg, "--max-bytes="))
+			if parseErr != nil {
+				return "", "", false, 0, fmt.Errorf("invalid --max-bytes: %w", parseErr)
+			}
+			maxBytes = value
+		case strings.HasPrefix(arg, "-"):
+			return "", "", false, 0, fmt.Errorf("unknown option %s", arg)
+		default:
+			positionals = append(positionals, arg)
+		}
+	}
+
+	if len(positionals) == 0 {
+		return "", "", false, 0, errors.New("context finding id is required")
+	}
+	if len(positionals) > 2 {
+		return "", "", false, 0, errors.New("context accepts a finding id and optional repository path")
+	}
+	findingID = positionals[0]
+	if len(positionals) == 2 {
+		root = positionals[1]
+	}
+	return findingID, root, asJSON, maxBytes, nil
+}
+
+func findFindingByID(findings []model.Finding, findingID string) (model.Finding, bool) {
+	for _, finding := range findings {
+		if finding.ID == findingID {
+			return finding, true
+		}
+	}
+	return model.Finding{}, false
+}
+
 func runBenchmark(args []string) {
 	asJSON := false
 	manifest := ""
@@ -288,6 +370,7 @@ Usage:
   doctorcode toolchains [path] [--json]
   doctorcode audit [path] [--json] [--max-findings=N]
   doctorcode next [path] [--json] [--max-bytes=N]
+  doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
   doctorcode benchmark <manifest.json> [--analyzer=go|python] [--json]
   doctorcode version
 
@@ -306,5 +389,6 @@ M07 Python semantic adapter:
   benchmark gate requires the interpreter explicitly.
 
 Use "doctorcode next --json --max-bytes=4096" to give a small LLM one bounded
-evidence packet instead of the whole repository.`)
+evidence packet instead of the whole repository. Use "doctorcode context <finding-id>"
+to reproduce a bounded packet for one deterministic audit finding.`)
 }
