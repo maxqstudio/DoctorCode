@@ -233,3 +233,11 @@ Status: ACCEPTED
 Treat not_secret and not-secret markers as obvious placeholder literals for the narrow hardcoded-credential rule.
 
 Rationale: The security rule is SUSPICIOUS review evidence and should avoid predictable non-secret fixture noise.
+
+## ADR-DELIVERY-001 — Promote every accepted phase to main
+
+Status: ACCEPTED
+
+After a phase reaches FINAL_ACCEPTED on its work branch, merge it to main immediately. Required GitHub Actions must pass before merge, and main must rerun the same applicable acceptance lanes after the merge before becoming the next development base.
+
+Rationale: Keeping multiple accepted phases only on work branches made main stale and weakened public release authority. Main should always represent the latest accepted baseline.
