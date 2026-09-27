@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M09 Python repository-shaped evaluation is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M10 bounded real-world Python label validation is accepted on the development branch pending final exact-SHA promotion checks.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
@@ -205,6 +205,12 @@ The accepted M09 corpus reports **5 TP, 0 FP, and 0 FN**. M07 and M08 remain pas
 
 These results remain fixture-scoped. DoctorCode does not infer arbitrary package roots, `sys.path` mutation, star-import semantics, import hooks, runtime symbol assignment, or a whole-program Python import graph. Zero conservative references still never authorizes deletion.
 
+### M10 bounded real-world Python labels
+
+M10 adds a dedicated exact-SHA label gate over selected Click and Flask source locations. The tracked set contains **2 VALID_FINDING anchors** and **4 INVALID_FINDING guards**. The valid anchors are the Flask private helpers `src/flask/app.py:74::_make_timedelta` and `src/flask/cli.py:691::_path_is_ancestor`, each validating only the narrow `PY-DEADCODE-PRIVATE-ZERO-REF` claim. The invalid anchors are private helpers under pinned Click/Flask test trees that must remain excluded from production DEADCODE candidates.
+
+The accepted M10 label run reports **valid=2, invalid=4** on Linux, Windows, and macOS. This is a bounded regression gate only: it is not an exhaustive review of either repository, does not establish general Python precision or recall, and does not prove that either valid finding is safe to delete. External repositories remain untrusted read-only analysis input and their code is not executed by the M10 workflow.
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -268,7 +274,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate Go compatibility, bounded Go real-world label, and Python public-source workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, M07 Python semantic, M08 Python adversarial, and M09 Python repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate Go compatibility, bounded Go real-world label, Python public-source, and bounded M10 Python label workflows also run on Linux, Windows, and macOS for `main` and every `work/**` phase branch.
 
 ## Design principles
 

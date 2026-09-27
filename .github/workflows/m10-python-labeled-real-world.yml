@@ -1,0 +1,56 @@
+name: M10 Labeled Real World Python
+
+on:
+  push:
+    branches:
+      - main
+      - "work/**"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: m10-python-labeled-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - name: Checkout DoctorCode
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          persist-credentials: false
+      - name: Checkout click
+        uses: actions/checkout@v4
+        with:
+          repository: pallets/click
+          ref: 06b2a678741131fd577ce170e23e5ca0aeba0309
+          path: external/click
+          persist-credentials: false
+      - name: Checkout flask
+        uses: actions/checkout@v4
+        with:
+          repository: pallets/flask
+          ref: d73fa1cdcbd8b1465c151db8924ba58b1dd14e35
+          path: external/flask
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: doctorcode/go.mod
+          cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Run bounded labeled Python validation
+        working-directory: doctorcode
+        env:
+          DOCTORCODE_M10_CLICK: external/click
+          DOCTORCODE_M10_FLASK: external/flask
+        run: go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v

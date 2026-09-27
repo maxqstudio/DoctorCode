@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M10 bounded real-world Python labels accepted baseline
+
+Type: acceptance
+
+- Added six exact-SHA bounded Python labels across pinned Click and Flask snapshots: two valid zero-reference anchors and four invalid test-tree guards.
+- Added a dedicated Linux, Windows, and macOS M10 labeled Python workflow without executing external repository code or installing external project dependencies.
+- Accepted M10 label evidence with valid=2 and invalid=4 while retaining safe_autofix=false and explicitly avoiding exhaustive precision/recall or safe-delete claims.
+- Preserved core CI, Python public-source, Go public-source, and bounded Go-label regression lanes across all three operating systems.
+- Advanced M09 sequence evidence to HISTORICAL when M10 became the CURRENT sequence scope.
+
 ## 2026-09-27 — M09 accepted baseline
 
 Type: acceptance

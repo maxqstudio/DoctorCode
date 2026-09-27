@@ -185,6 +185,53 @@ Authority: internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m0
 
 - The Python analyzer is read-only; rollback is source-control only and no analyzed repository content is mutated.
 
+## FLOW-PYTHON-REALWORLD-LABELED — Bounded real-world Python label validation
+
+Purpose: Use exact pinned public Python source to validate bounded positive and negative findings without converting selected labels into whole-repository precision or safe-delete claims.
+Critical: FALSE
+Entry condition: M09 is post-merge accepted on main and GitHub Actions can provision Python 3.13 plus the declared exact-SHA public sources.
+Authority: internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml
+
+### States
+
+- CHECKOUT_REQUESTED
+- PIN_VERIFIED
+- ANALYZING
+- MATCHING_BOUNDED_LABELS
+- GATED
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| CHECKOUT_REQUESTED | PIN_VERIFIED | Verify each detached external checkout matches the exact tracked commit SHA. | internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml |  |
+| PIN_VERIFIED | ANALYZING | Run the deterministic Python analyzer against each original public repository snapshot. | internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml |  |
+| ANALYZING | MATCHING_BOUNDED_LABELS | Match exact rule/path/line/summary anchors and apply VALID_FINDING or INVALID_FINDING semantics. | internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml |  |
+| MATCHING_BOUNDED_LABELS | GATED | Require every valid anchor present and every invalid anchor absent on all three operating systems. | internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml |  |
+| GATED | REPORTED | Emit bounded valid/invalid counts and test verdict without extrapolating ecosystem precision. | internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml |  |
+
+### Invariants
+
+- External repository content remains untrusted read-only analysis input.
+- Labels are bounded to exact source locations and exact pinned commits.
+- VALID_FINDING proves only the declared structural rule claim, not behavioral dispensability or safe deletion.
+- INVALID_FINDING guards are blocking false-positive evidence.
+- Every Python finding remains safe_autofix=false.
+- M10 does not execute external repository code or install its project dependencies.
+
+### Failure behavior
+
+- SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
+
+### Restart behavior
+
+- The workflow is stateless and rerunnable against the same exact pinned source SHAs.
+
+### Rollback behavior
+
+- External sources are never mutated; M10 label harness and workflow can be reverted independently of the accepted M09 analyzer.
+
 ## FLOW-PYTHON-REPOSITORY-SHAPED — Python repository-shaped regression validation
 
 Purpose: Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.

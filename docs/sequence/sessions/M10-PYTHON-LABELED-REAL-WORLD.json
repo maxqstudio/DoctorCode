@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "session_id": "M10-PYTHON-LABELED-REAL-WORLD",
+  "phase": "M10_PYTHON_LABELED_REAL_WORLD",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "ACCEPTED",
+  "implementation_base_sha": "575f9bcfe5c1119f0ea4382cdeec94ba345e59ce",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.json",
+    "diagram": "docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/realworld/m10-python-labels.json",
+    "internal/realworld/python_m10_labeled_test.go",
+    ".github/workflows/m10-python-labeled-real-world.yml",
+    "internal/realworld/python_m07_test.go",
+    "internal/realworld/labeled_test.go",
+    "internal/realworld/realworld_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

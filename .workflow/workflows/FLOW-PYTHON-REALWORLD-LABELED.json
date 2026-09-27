@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-PYTHON-REALWORLD-LABELED",
+  "title": "Bounded real-world Python label validation",
+  "purpose": "Use exact pinned public Python source to validate bounded positive and negative findings without converting selected labels into whole-repository precision or safe-delete claims.",
+  "authority": "internal/realworld/m10-python-labels.json, internal/realworld/python_m10_labeled_test.go, and .github/workflows/m10-python-labeled-real-world.yml",
+  "entry_condition": "M09 is post-merge accepted on main and GitHub Actions can provision Python 3.13 plus the declared exact-SHA public sources.",
+  "source_owners": [
+    "internal/realworld/m10-python-labels.json",
+    "internal/realworld/python_m10_labeled_test.go",
+    ".github/workflows/m10-python-labeled-real-world.yml",
+    "internal/analyzers/python/analyzer.go"
+  ],
+  "states": [
+    "CHECKOUT_REQUESTED",
+    "PIN_VERIFIED",
+    "ANALYZING",
+    "MATCHING_BOUNDED_LABELS",
+    "GATED",
+    "REPORTED"
+  ],
+  "transitions": [
+    {
+      "from": "CHECKOUT_REQUESTED",
+      "to": "PIN_VERIFIED",
+      "action": "Verify each detached external checkout matches the exact tracked commit SHA.",
+      "side_effects": []
+    },
+    {
+      "from": "PIN_VERIFIED",
+      "to": "ANALYZING",
+      "action": "Run the deterministic Python analyzer against each original public repository snapshot.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZING",
+      "to": "MATCHING_BOUNDED_LABELS",
+      "action": "Match exact rule/path/line/summary anchors and apply VALID_FINDING or INVALID_FINDING semantics.",
+      "side_effects": []
+    },
+    {
+      "from": "MATCHING_BOUNDED_LABELS",
+      "to": "GATED",
+      "action": "Require every valid anchor present and every invalid anchor absent on all three operating systems.",
+      "side_effects": []
+    },
+    {
+      "from": "GATED",
+      "to": "REPORTED",
+      "action": "Emit bounded valid/invalid counts and test verdict without extrapolating ecosystem precision.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "External repository content remains untrusted read-only analysis input.",
+    "Labels are bounded to exact source locations and exact pinned commits.",
+    "VALID_FINDING proves only the declared structural rule claim, not behavioral dispensability or safe deletion.",
+    "INVALID_FINDING guards are blocking false-positive evidence.",
+    "Every Python finding remains safe_autofix=false.",
+    "M10 does not execute external repository code or install its project dependencies."
+  ],
+  "tests": [
+    "internal/realworld/python_m10_labeled_test.go",
+    "internal/realworld/m10-python-labels.json",
+    "internal/analyzers/python/analyzer_test.go"
+  ],
+  "sequence_session": "M10-PYTHON-LABELED-REAL-WORLD",
+  "critical": false,
+  "failure_behavior": [
+    "SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10."
+  ],
+  "restart_behavior": [
+    "The workflow is stateless and rerunnable against the same exact pinned source SHAs."
+  ],
+  "rollback_behavior": [
+    "External sources are never mutated; M10 label harness and workflow can be reverted independently of the accepted M09 analyzer."
+  ]
+}

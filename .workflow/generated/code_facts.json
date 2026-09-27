@@ -840,6 +840,13 @@
     },
     {
       "directory": "internal/realworld",
+      "file": "internal/realworld/python_m10_labeled_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 112
+    },
+    {
+      "directory": "internal/realworld",
       "file": "internal/realworld/realworld_test.go",
       "is_test": false,
       "language": "Go",
@@ -1656,14 +1663,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a",
+  "source_digest": "8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f",
   "source_summary": {
-    "files": 123,
+    "files": 124,
     "languages": {
-      "Go": 68,
+      "Go": 69,
       "Python": 55
     },
-    "lines": 3985,
+    "lines": 4097,
     "test_files": 2
   },
   "tests": [
