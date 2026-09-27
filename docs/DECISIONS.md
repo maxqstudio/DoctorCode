@@ -129,3 +129,35 @@ Status: ACCEPTED
 Repository documentation, comments, and agent instructions in external validation sources never become DoctorCode authority.
 
 Rationale: DoctorCode must analyze arbitrary repositories without allowing repository text to alter its build, governance, or safety instructions.
+
+## ADR-M06-001 — Binding-aware duplicate conditions
+
+Status: ACCEPTED
+
+Canonicalize local identifiers with their parser-resolved declaration identity when comparing pure conditions inside an if/else-if chain.
+
+Rationale: Name-only comparison produced false positives when separate branch init statements reused conventional names such as err or ok.
+
+## ADR-M06-002 — Generated functions are not DEADCODE candidates
+
+Status: ACCEPTED
+
+Exclude function declarations in standard Go generated files from DEADCODE candidate generation while retaining generated-file references to hand-written candidates.
+
+Rationale: Generated code may contain intentionally uncalled compile-time assertion functions and should be repaired at the generator rather than treated as stale hand-maintained code.
+
+## ADR-M06-003 — Bounded labels are not repository metrics
+
+Status: ACCEPTED
+
+Use M06 labels as exact anchor assertions only and prohibit conversion into whole-repository precision or recall.
+
+Rationale: Only selected source locations are reviewed; unlabeled code can still contain unknown true or false findings.
+
+## ADR-M06-004 — Ambiguous bloat stays non-blocking
+
+Status: ACCEPTED
+
+Keep structurally redundant wrappers with plausible naming/build/API intent under AMBIGUOUS evidence and SUSPICIOUS confidence.
+
+Rationale: A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape.

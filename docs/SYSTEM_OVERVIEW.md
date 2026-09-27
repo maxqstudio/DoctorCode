@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 64 files, 1 language categories.
+Observed source inventory: 65 files, 1 language categories.
 
 ## Major components
 
@@ -38,10 +38,11 @@ Observed source inventory: 64 files, 1 language categories.
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
-| Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
+| Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
 | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
+| Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
 
 ## Main data flow
 
@@ -57,6 +58,8 @@ Observed source inventory: 64 files, 1 language categories.
 - pinned public Go repositories -> Pinned Public Repository Validator: GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs.
 - Pinned Public Repository Validator -> Go Built-in Analyzer: Original public repository trees are analyzed directly without copying them into DoctorCode.
 - Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
+- M06 bounded labels -> Bounded Real-World Label Validator: Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale.
+- Bounded Real-World Label Validator -> GitHub Actions: Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation.
 
 ## Main user workflows
 
@@ -84,6 +87,18 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 - MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
 - GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
 
+### FLOW-REALWORLD-LABELED — Bounded real-world label validation
+
+Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.
+
+Authority: internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml
+
+- CHECKOUT_REQUESTED -> PIN_VERIFIED : Verify each detached external checkout matches the exact tracked commit SHA.
+- PIN_VERIFIED -> ANALYZING : Run the deterministic Go analyzer against each original public repository snapshot.
+- ANALYZING -> MATCHING_BOUNDED_LABELS : Match exact rule/path/line anchors and apply VALID, INVALID, or AMBIGUOUS semantics.
+- MATCHING_BOUNDED_LABELS -> GATED : Require all valid anchors present and all invalid anchors absent; ambiguous observations never become blocking removals.
+- GATED -> REPORTED : Emit bounded label counts and test verdict.
+
 ### FLOW-REALWORLD — Pinned public repository validation
 
 Validate DoctorCode against original public Go repository snapshots while preserving a strict boundary between compatibility evidence and labeled precision evidence.
@@ -107,9 +122,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M05_PUBLIC_REPO_VALIDATION
+Current phase: M06_REALWORLD_LABELED
 
-Current status: M05_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -145,20 +160,21 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+- FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
 
 ## Current project state
 
 Next authorized actions:
-- Freeze final M05 after temporary doc-sync removal and exact-SHA revalidation.
-- For M06, add an independently labeled real-world-derived dataset or a second semantic language adapter without weakening Go evidence boundaries.
-- Keep public compatibility telemetry separate from labeled precision metrics.
+- Synchronize M06 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M06 snapshot.
+- Promote M06 only if exact-SHA core CI, M06 labeled validation, and strict governance all pass.
 
 Blocked actions:
-- Publishing 100 percent real-world precision or recall.
-- Treating zero findings on the four public repositories as proof they contain no defects.
-- Upgrading DEADCODE HIGH to PROVEN_UNUSED from M05 evidence.
+- Publishing M06 anchor pass results as general real-world precision or recall.
+- Treating VALID_FINDING DEADCODE anchors as PROVEN_UNUSED or safe-delete authorization.
+- Converting AMBIGUOUS BLOAT observations into removal recommendations without additional evidence.
 - Auto-deleting or auto-fixing findings.
 
 Known blockers:
@@ -168,20 +184,23 @@ Known blockers:
 
 ### Proven
 
-- M04 accepted baseline is 82f9ea6499e5a70930da331fd02f778bca54d660.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed strict Skill_Workflow governance run 36279964523.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed core CI run 36279964419 on Linux, Windows, and macOS.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402 on Linux, Windows, and macOS.
-- Exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify all parsed and analyzed successfully.
-- Selected known-live anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
-- Each pinned public snapshot produced zero findings on the accepted candidate; this is compatibility telemetry only.
+- M05 accepted baseline is 0f7a1e3117375ad2b2413efc0e7221a614a397ec.
+- DoctorCode Skill_Workflow authority is synchronized to 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
+- M06 discovery identified real findings on exact-SHA public Go repository snapshots and separated valid, invalid, and ambiguous labels.
+- Pre-repair candidate 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed M06 labeled run 36283027030 because all four INVALID_FINDING anchors were still emitted.
+- The four pre-repair false positives were one scoped err condition, two scoped ok conditions, and one generated compile-time assertion function.
+- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed core CI run 36283099829 on Linux, Windows, and macOS.
+- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed M06 Labeled Real World Go run 36283099819 on Linux, Windows, and macOS.
+- The M06 manifest contains 4 VALID_FINDING anchors, 4 INVALID_FINDING guards, and 3 AMBIGUOUS observations.
+- Post-repair discovery preserves the two real DEADCODE findings, two PROVEN SIMPLIFY findings, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
 
 ### Not proven
 
-- The public repository snapshots are not exhaustively labeled, so zero findings do not establish correctness, high recall, or absence of defects.
-- Four repositories are not representative of the full Go ecosystem.
-- The public repository validation does not measure detector precision or false-negative rate.
-- Reference counting remains conservative visible-tree analysis rather than compiler/type-system whole-program reachability.
+- M06 labels are bounded anchors rather than exhaustive labels for the four repositories.
+- M06 does not establish real-world precision or recall for the whole Go ecosystem.
+- VALID_FINDING DEADCODE labels prove zero lexical references in pinned snapshots, not safe deletion.
+- AMBIGUOUS BLOAT observations intentionally do not establish that the wrappers should be removed.
+- The label set has not been independently double-reviewed by multiple human reviewers.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 
 ## Important limitations

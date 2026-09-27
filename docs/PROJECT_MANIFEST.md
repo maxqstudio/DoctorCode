@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m05-public-repo-validation
+Active branch: work/m06-realworld-labeled
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 82f9ea6499e5a70930da331fd02f778bca54d660
-Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
+Last accepted SHA: 0f7a1e3117375ad2b2413efc0e7221a614a397ec
+Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

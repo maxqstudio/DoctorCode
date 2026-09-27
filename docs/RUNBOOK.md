@@ -7,7 +7,8 @@
 3. M03 adversarial benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json — expected: passed=true; current 11-case adversarial corpus reports 6 TP, 0 FP, 0 FN
 4. M04 repository-shaped benchmark gate — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json — expected: passed=true; current 12-case repository-shaped corpus reports 7 TP, 0 FP, 0 FN
 5. Pinned public Go repository validation — go test ./internal/realworld -run TestPinnedPublicRepositories -v (with exact-SHA external checkout environment configured by .github/workflows/real-world-go.yml) — expected: all four pinned repositories verify SHA and analyze successfully; selected known-live anchors are not DEADCODE; no finding enables autofix
-6. Static vet — go vet ./... — expected: exit code 0
-7. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
-8. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
-9. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS
+6. M06 bounded real-world labeled validation — go test ./internal/realworld -run TestM06LabeledRealWorld -v (with exact-SHA external paths configured by .github/workflows/m06-labeled-real-world.yml) — expected: 4 VALID_FINDING anchors present, 4 INVALID_FINDING guards absent, 3 AMBIGUOUS observations non-autofix
+7. Static vet — go vet ./... — expected: exit code 0
+8. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
+9. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
+10. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS

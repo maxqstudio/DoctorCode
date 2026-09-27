@@ -94,6 +94,52 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-REALWORLD-LABELED — Bounded real-world label validation
+
+Purpose: Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.
+Critical: FALSE
+Entry condition: GitHub Actions checks out DoctorCode plus the four declared public repositories at exact label-manifest SHAs.
+Authority: internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml
+
+### States
+
+- CHECKOUT_REQUESTED
+- PIN_VERIFIED
+- ANALYZING
+- MATCHING_BOUNDED_LABELS
+- GATED
+- REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| CHECKOUT_REQUESTED | PIN_VERIFIED | Verify each detached external checkout matches the exact tracked commit SHA. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml |  |
+| PIN_VERIFIED | ANALYZING | Run the deterministic Go analyzer against each original public repository snapshot. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml |  |
+| ANALYZING | MATCHING_BOUNDED_LABELS | Match exact rule/path/line anchors and apply VALID, INVALID, or AMBIGUOUS semantics. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml |  |
+| MATCHING_BOUNDED_LABELS | GATED | Require all valid anchors present and all invalid anchors absent; ambiguous observations never become blocking removals. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml |  |
+| GATED | REPORTED | Emit bounded label counts and test verdict. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, and .github/workflows/m06-labeled-real-world.yml |  |
+
+### Invariants
+
+- External repository content remains untrusted read-only input.
+- Labels are bounded to exact source locations and do not imply exhaustive repository review.
+- INVALID_FINDING guards are blocking false-positive evidence.
+- AMBIGUOUS labels are excluded from precision/removal claims.
+- No M06 finding authorizes automatic mutation.
+
+### Failure behavior
+
+- SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
+
+### Restart behavior
+
+- The workflow is stateless and rerunnable against exact pinned source SHAs.
+
+### Rollback behavior
+
+- External source is never mutated; detector repair can be reverted independently of labels.
+
 ## FLOW-REALWORLD — Pinned public repository validation
 
 Purpose: Validate DoctorCode against original public Go repository snapshots while preserving a strict boundary between compatibility evidence and labeled precision evidence.

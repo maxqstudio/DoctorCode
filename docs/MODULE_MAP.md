@@ -3,14 +3,14 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
+Source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
 | cmd/doctorcode/main.go | Go | 290 | cmd/doctorcode | NO |
-| internal/analyzers/golang/analyzer.go | Go | 608 | internal/analyzers/golang | NO |
-| internal/analyzers/golang/analyzer_test.go | Go | 195 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
@@ -67,6 +67,7 @@ Generated/refreshed: current compiler run
 | internal/language/registry.go | Go | 49 | internal/language | NO |
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
 | internal/model/model.go | Go | 71 | internal/model | NO |
+| internal/realworld/labeled_test.go | Go | 118 | internal/realworld | NO |
 | internal/realworld/realworld_test.go | Go | 128 | internal/realworld | NO |
 | internal/scanner/scanner.go | Go | 46 | internal/scanner | NO |
 | internal/scanner/scanner_test.go | Go | 27 | internal/scanner | NO |

@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 82f9ea6499e5a70930da331fd02f778bca54d660
+Authority verified at SHA: 0f7a1e3117375ad2b2413efc0e7221a614a397ec
 Governance profile: strict
 
 ## Current phase
-Phase: M05_PUBLIC_REPO_VALIDATION
-Status: M05_ACCEPTED
+Phase: M06_REALWORLD_LABELED
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m05-public-repo-validation
+Branch: work/m06-realworld-labeled
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 82f9ea6499e5a70930da331fd02f778bca54d660
+Last accepted SHA: 0f7a1e3117375ad2b2413efc0e7221a614a397ec
 Current candidate SHA: external final acceptance evidence
-Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
+Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,23 +33,26 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M05-PUBLIC-REPO-VALIDATION
+Current sequence session: M06-REALWORLD-LABELED
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M04 accepted baseline is 82f9ea6499e5a70930da331fd02f778bca54d660.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed strict Skill_Workflow governance run 36279964523.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed core CI run 36279964419 on Linux, Windows, and macOS.
-- M05 exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402 on Linux, Windows, and macOS.
-- Exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify all parsed and analyzed successfully.
-- Selected known-live anchors preExecHook, nextID, cW, and httpCode were not reported as DEADCODE.
-- Each pinned public snapshot produced zero findings on the accepted candidate; this is compatibility telemetry only.
+- M05 accepted baseline is 0f7a1e3117375ad2b2413efc0e7221a614a397ec.
+- DoctorCode Skill_Workflow authority is synchronized to 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
+- M06 discovery identified real findings on exact-SHA public Go repository snapshots and separated valid, invalid, and ambiguous labels.
+- Pre-repair candidate 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed M06 labeled run 36283027030 because all four INVALID_FINDING anchors were still emitted.
+- The four pre-repair false positives were one scoped err condition, two scoped ok conditions, and one generated compile-time assertion function.
+- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed core CI run 36283099829 on Linux, Windows, and macOS.
+- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed M06 Labeled Real World Go run 36283099819 on Linux, Windows, and macOS.
+- The M06 manifest contains 4 VALID_FINDING anchors, 4 INVALID_FINDING guards, and 3 AMBIGUOUS observations.
+- Post-repair discovery preserves the two real DEADCODE findings, two PROVEN SIMPLIFY findings, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
 
 ## Not proven
-- The public repository snapshots are not exhaustively labeled, so zero findings do not establish correctness, high recall, or absence of defects.
-- Four repositories are not representative of the full Go ecosystem.
-- The public repository validation does not measure detector precision or false-negative rate.
-- Reference counting remains conservative visible-tree analysis rather than compiler/type-system whole-program reachability.
+- M06 labels are bounded anchors rather than exhaustive labels for the four repositories.
+- M06 does not establish real-world precision or recall for the whole Go ecosystem.
+- VALID_FINDING DEADCODE labels prove zero lexical references in pinned snapshots, not safe deletion.
+- AMBIGUOUS BLOAT observations intentionally do not establish that the wrappers should be removed.
+- The label set has not been independently double-reviewed by multiple human reviewers.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 
 ## Known blockers
@@ -59,12 +62,12 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Freeze final M05 after temporary doc-sync removal and exact-SHA revalidation.
-- For M06, add an independently labeled real-world-derived dataset or a second semantic language adapter without weakening Go evidence boundaries.
-- Keep public compatibility telemetry separate from labeled precision metrics.
+- Synchronize M06 generated Project Truth documentation.
+- Run strict Skill_Workflow validation against the synchronized M06 snapshot.
+- Promote M06 only if exact-SHA core CI, M06 labeled validation, and strict governance all pass.
 
 ## Explicitly blocked
-- Publishing 100 percent real-world precision or recall.
-- Treating zero findings on the four public repositories as proof they contain no defects.
-- Upgrading DEADCODE HIGH to PROVEN_UNUSED from M05 evidence.
+- Publishing M06 anchor pass results as general real-world precision or recall.
+- Treating VALID_FINDING DEADCODE anchors as PROVEN_UNUSED or safe-delete authorization.
+- Converting AMBIGUOUS BLOAT observations into removal recommendations without additional evidence.
 - Auto-deleting or auto-fixing findings.

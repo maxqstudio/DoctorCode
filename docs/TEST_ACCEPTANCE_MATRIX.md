@@ -4,18 +4,20 @@
 
 ## Evidence boundary
 
-M05 acceptance proves cross-platform compatibility against four exact-SHA public Go repository snapshots plus selected known-live negative assertions. Exact synchronized candidate 193910d73723149e191eb9f7529d379db630a5a3 passed strict governance run 36279964523, core CI run 36279964419, and Real World Go Validation run 36279964402 on Linux, Windows, and macOS. The four snapshots each produced zero findings on this candidate; that is compatibility telemetry only and does not establish real-world precision, recall, or defect-free status.
+M06 uses 11 bounded labels on exact-SHA public Go source: 4 VALID_FINDING anchors, 4 INVALID_FINDING guards, and 3 AMBIGUOUS observations. Pre-repair run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed on all four invalid guards. Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passes core CI run 36283099829 and M06 labeled run 36283099819 on Linux, Windows, and macOS. These bounded labels are not exhaustive repository labels and do not establish general real-world precision, recall, or safe deletion.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
+Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M05-PINNED-SOURCES | Every public repository used by M05 is checked out at an exact tracked commit SHA and the detached checkout SHA is verified before analysis. | internal/realworld/sources.json and realworld_test.go; exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402 with detached exact-SHA verification. | PASS |
-| M05-THREE-OS-REALWORLD | Pinned public repository validation executes and passes on Linux, Windows, and macOS. | Exact candidate 193910d73723149e191eb9f7529d379db630a5a3, Real World Go Validation run 36279964402: Linux, Windows, and macOS all PASS. | PASS |
-| M05-KNOWN-LIVE-ANCHORS | Selected known-live unexported functions from the pinned repositories are not reported as DEADCODE. | preExecHook in cobra, nextID in bubbles, cW in chi, and httpCode in testify are asserted by internal/realworld/realworld_test.go; run 36279765083 PASS. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
-| M05-FINDING-BOUNDARY | Any finding produced while analyzing pinned public repositories remains repository-relative, uses a known category/confidence, and never enables safe_autofix. | internal/realworld/realworld_test.go::assertFindingBoundary; Real World Go Validation run 36279765083 PASS. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
-| M05-CLAIM-BOUNDARY | Public repository execution is described as compatibility evidence only; unlabeled zero-finding snapshots are not promoted to precision, recall, or defect-free claims. | internal/realworld test log text and M05 acceptance/state contracts. Exact candidate 193910d73723149e191eb9f7529d379db630a5a3 passed Real World Go Validation run 36279964402, core CI run 36279964419, and strict governance run 36279964523. | PASS |
+| M06-SKILL-AUTHORITY | M06 begins from the latest adopted Skill_Workflow authority. | .workflow/SKILL_AUTHORITY.json pins 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f and the corresponding strict self-test file is vendored. | PASS |
+| M06-BOUNDED-LABELS | M06 tracks explicit valid, invalid, and ambiguous labels against exact pinned public source snapshots. | internal/realworld/m06-labels.json contains 4 VALID_FINDING, 4 INVALID_FINDING, and 3 AMBIGUOUS labels across urfave/cli, rs/zerolog, fsnotify/fsnotify, and go-playground/validator. | PASS |
+| M06-GATE-CAUGHT-FALSE-POSITIVES | The labeled gate must fail when a detector emits a finding explicitly labeled invalid. | Run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed on exactly four INVALID_FINDING anchors: urfave command_run.go:364, validator enum_enumer.go:25, validator_instance.go:174, and validator_instance.go:184. | PASS |
+| M06-BINDING-IDENTITY | Duplicate-condition comparison distinguishes identifiers with different lexical bindings in separate if/else-if init statements. | internal/analyzers/golang/analyzer.go::canonicalCondition includes ast.Object declaration identity; TestLogicDistinguishesIfInitBindings and M06 urfave/validator guards pass on repaired source. | PASS |
+| M06-GENERATED-DEADCODE | Generated function declarations are not treated as hand-maintained DEADCODE candidates, while generated files may still keep hand-written functions live through references. | generatedGoFile detection plus TestDeadCodeSkipsGeneratedFunctionCandidates and TestGeneratedFilesStillContributeReferences; validator _EnumNoOp invalid guard no longer emits. | PASS |
+| M06-VALID-PRESERVATION | Repairing false positives must preserve bounded valid findings and conservative ambiguous findings. | Run 36283099819 passes all 4 VALID_FINDING anchors and all 4 INVALID_FINDING guards; post-repair discovery run 36283099825 retains zerolog/fsnotify DEADCODE, validator SIMPLIFY, and SUSPICIOUS BLOAT observations. | PASS |
+| M06-THREE-OS | Core regression and bounded labeled validation both pass on Linux, Windows, and macOS. | Core CI run 36283099829 and M06 Labeled Real World Go run 36283099819 at e19ea958de42bbf2101ac5a958879d60c8909fa3. | PASS |
 
 ## Test commands
 
@@ -28,14 +30,14 @@ Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9
 
 ## Runtime checks
 
-- go test ./internal/realworld -run TestPinnedPublicRepositories -v with the four exact-SHA public repository paths provided by the dedicated GitHub Actions workflow
+- go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA public repository paths from .github/workflows/m06-labeled-real-world.yml
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M05-PUBLIC-REPO-VALIDATION
+Sequence session contract: M06-REALWORLD-LABELED
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

@@ -24,14 +24,14 @@
       "file": "internal/analyzers/golang/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 608
+      "lines": 632
     },
     {
       "directory": "internal/analyzers/golang",
       "file": "internal/analyzers/golang/analyzer_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 195
+      "lines": 274
     },
     {
       "directory": "internal/analyzers/golang",
@@ -427,6 +427,13 @@
     },
     {
       "directory": "internal/realworld",
+      "file": "internal/realworld/labeled_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 118
+    },
+    {
+      "directory": "internal/realworld",
       "file": "internal/realworld/realworld_test.go",
       "is_test": false,
       "language": "Go",
@@ -465,13 +472,13 @@
   "python_routes": [],
   "python_symbols": [],
   "schema_version": 1,
-  "source_digest": "719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba",
+  "source_digest": "39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69",
   "source_summary": {
-    "files": 64,
+    "files": 65,
     "languages": {
-      "Go": 64
+      "Go": 65
     },
-    "lines": 2583,
+    "lines": 2804,
     "test_files": 0
   },
   "tests": []

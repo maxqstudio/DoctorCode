@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9f4611ba
+Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 
 ## Components
 
@@ -13,10 +13,11 @@ Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
 | detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
-| go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with adversarial regression evidence for reference-collision and condition-canonicalization behavior. | Go AST rules, conservative package-function reference counting, pure-condition canonicalization, Go dead-code evidence boundaries | Go parser/AST standard library |
+| go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
 | benchmark_harness | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
 | realworld_validation | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
+| realworld_labeled_validation | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
 
 ## Data flow
 
@@ -32,6 +33,8 @@ Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9
 - pinned public Go repositories -> Pinned Public Repository Validator: GitHub Actions checks out four permissively licensed repositories at exact tracked SHAs.
 - Pinned Public Repository Validator -> Go Built-in Analyzer: Original public repository trees are analyzed directly without copying them into DoctorCode.
 - Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
+- M06 bounded labels -> Bounded Real-World Label Validator: Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale.
+- Bounded Real-World Label Validator -> GitHub Actions: Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation.
 
 ## External boundaries
 
@@ -43,9 +46,9 @@ Current source digest: 719e91d389ba042f731a12fe7fe13c7d5aa43ad139cbb7b1f51e94bd9
 
 ## Observed implementation inventory
 
-Source files: 64
-Source lines: 2583
-Languages: Go=64
+Source files: 65
+Source lines: 2804
+Languages: Go=65
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M06 bounded real-world labels candidate
+
+Type: development
+
+- Synchronized DoctorCode to Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
+- Added 11 bounded real-world labels across four exact-SHA public Go repository snapshots: 4 valid, 4 invalid, and 3 ambiguous.
+- Captured a pre-repair run where all four invalid anchors were emitted.
+- Repaired duplicate-condition comparison to respect lexical binding identity.
+- Excluded generated function declarations from DEADCODE candidates while preserving references from generated files.
+- Preserved all valid bounded findings and existing M02-M04 regression gates.
+
 ## 2026-09-27 — M05 accepted baseline
 
 Type: acceptance
