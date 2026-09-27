@@ -1,37 +1,38 @@
 {
   "schema_version": 1,
   "phase": "M09_PYTHON_REPOSITORY_SHAPED",
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "M09_ACCEPTED",
   "working_branch": "work/m09-python-repository-shaped",
   "last_accepted_sha": "29924f324db316a9a2985943c09d4711824a1220",
   "last_accepted_branch": "main",
   "proven": [
     "M08 is merged and post-merge accepted on main at 29924f324db316a9a2985943c09d4711824a1220.",
     "DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
-    "Initial 14-case M09 repository-shaped candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 true positives, 5 false positives, and 3 false negatives while prior Python gates remained passing.",
-    "M09 adds conventional src-layout module aliases without changing the repository filesystem boundary.",
-    "M09 propagates direct module-level from-import re-exports to a bounded fixed point so package facades can resolve to original private-function candidates.",
-    "M09 separates executable/usage reference counts from import/export liveness evidence so DEADCODE remains conservative without inflating the one-use BLOAT rule.",
-    "M09 resolves dotted module attributes through explicit import roots and limits unresolved attribute fallback to unique candidate names.",
-    "Repaired source af95c1d040db6336c99d06d7a1d993386f11bce7 passes the M09 corpus with 5 true positives, 0 false positives, and 0 false negatives.",
-    "Candidate be60c639c9eab25f34c683fb93bcc7db77eb77fc passed core CI run 36301647674 on Linux, Windows, and macOS.",
-    "The same candidate passed Real World Go Validation run 36301647686, M06 Labeled Real World Go run 36301647705, and M07 Python Real World run 36301647658 on Linux, Windows, and macOS.",
-    "Accepted real-world regression workflows now run on main and every work/** phase branch."
+    "Final pre-repair M09 candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 true positives, 5 false positives, and 3 false negatives.",
+    "M09 repaired conventional src-layout aliases, direct module-level re-export propagation, usage/liveness separation, and exact dotted imported-module resolution.",
+    "The repaired 14-case M09 corpus reports 5 true positives, 0 false positives, and 0 false negatives.",
+    "Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed strict Skill_Workflow governance run 36301912060.",
+    "The same commit passed core CI run 36301912063 on ubuntu-latest, windows-latest, and macos-latest.",
+    "The same commit passed Real World Go Validation run 36301912067 on all three operating systems.",
+    "The same commit passed M06 Labeled Real World Go run 36301912070 on all three operating systems.",
+    "The same commit passed M07 Python Real World run 36301912054 on all three operating systems.",
+    "Accepted real-world regression workflows now trigger on main and work/** so every phase revalidates prior public/labeled evidence."
   ],
   "not_proven": [
-    "M09 corpus precision and recall are scoped to the tracked 14 repository-shaped fixtures and are not general Python ecosystem metrics.",
-    "The conventional src-layout alias recognizes one leading src component; arbitrary packaging roots and custom sys.path manipulation remain unresolved.",
-    "Re-export propagation covers direct module-level from-import relationships, not arbitrary assignment, import hooks, star-import inference, or runtime mutation.",
-    "Dotted module resolution depends on explicit import roots and does not build a whole-program Python import graph.",
+    "M09 corpus metrics are not general Python ecosystem precision or recall.",
+    "The src-layout alias is limited to one conventional leading src directory and does not infer arbitrary packaging roots or sys.path manipulation.",
+    "Re-export propagation handles direct module-level from-import edges and does not resolve arbitrary assignments, star-import semantics, import hooks, or runtime mutation.",
+    "Dotted module resolution depends on explicit import roots and is not a whole-program import graph.",
     "Zero conservative references remain insufficient for PROVEN_UNUSED or safe deletion.",
     "Python .pyi semantic analysis and automatic source mutation remain unsupported."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize M09 Project Truth and sequence documentation.",
-    "Run strict Skill_Workflow validation against the synchronized M09 snapshot.",
-    "Promote M09 only if exact-SHA governance, core CI, Go public compatibility, Go bounded labels, and Python public validation all pass on Linux, Windows, and macOS.",
-    "After FINAL_ACCEPTED, merge M09 to main immediately and rerun all accepted lanes on the main merge SHA."
+    "Synchronize accepted M09 Project Truth documentation.",
+    "Update README to M09-current and remove the temporary M09 doc-sync workflow.",
+    "Run final exact-SHA governance plus all core and accepted real-world lanes after cleanup.",
+    "Open a PR to main immediately after FINAL_ACCEPTED branch evidence passes.",
+    "After merge, rerun all accepted lanes on the exact main merge SHA before starting M10."
   ],
   "blocked_actions": [
     "Publishing M09 fixture metrics as real-world Python precision or recall.",
