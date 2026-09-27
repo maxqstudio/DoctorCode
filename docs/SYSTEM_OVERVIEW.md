@@ -203,7 +203,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M12_GO_RELATED_CONTEXT
 
-Current status: M12_ACCEPTED
+Current status: M12_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -252,15 +252,14 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run final exact-SHA acceptance on the finalized M12 branch tree with no temporary workflow present.
-- Open and merge the FINAL_ACCEPTED M12 pull request to main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting the next product phase.
+- Proceed to M13 Python Related Context parity under the Owner directive to continue until the DoctorCode product is complete.
+- Branch M13 only from the governance-normalized M12 main after exact closure acceptance.
+- Preserve M12 product acceptance at 368c7b05d08d95beb5164d437920bbdd83c39e32 and exact post-merge evidence as immutable historical evidence.
 
 Blocked actions:
-- Claiming Python related-context parity from M12.
-- Treating lexical related locations as a complete dependency graph.
-- Treating a related-context packet as proof that code is safe to delete or auto-fix.
-- Expanding into MCP or Skill adapters before context parity and verification contracts are explicitly scoped.
+- Claiming cross-language related-context parity before M13 acceptance.
+- Treating related context as a complete dependency graph or safe-delete proof.
+- Starting MCP/Skill adapters before context parity and deterministic verification are accepted.
 
 Known blockers:
 - None declared.
@@ -281,6 +280,13 @@ Known blockers:
 - Final synchronized M12 branch tree edc415a2935307490cf73ec12fed72ff9a0c042b passed Governance Bootstrap run 36323629497.
 - Core CI run 36323629517 at edc415a2935307490cf73ec12fed72ff9a0c042b passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36323629491, M07 Python Real World run 36323629637, M06 Go labels run 36323629567, and Real World Go run 36323629559 all passed on Linux, Windows, and macOS at edc415a2935307490cf73ec12fed72ff9a0c042b.
+- M12 Go Related Context merged through PR #9 to main at 368c7b05d08d95beb5164d437920bbdd83c39e32.
+- Exact M12 product main Governance Bootstrap run 36323970886 completed success.
+- Exact M12 product main Core CI run 36323970841 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M12 product main M10 Labeled Real World Python run 36323970832 completed success on all three operating systems.
+- Exact M12 product main M07 Python Real World run 36323970756 completed success on all three operating systems.
+- Exact M12 product main M06 Labeled Real World Go run 36323970803 completed success on all three operating systems.
+- Exact M12 product main Real World Go Validation run 36323970845 completed success on all three operating systems.
 
 ### Not proven
 
