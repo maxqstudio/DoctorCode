@@ -12,3 +12,5 @@
 8. Build CLI — go build -trimpath ./cmd/doctorcode — expected: exit code 0
 9. Audit smoke — go run ./cmd/doctorcode audit . --json --max-findings=10 — expected: valid JSON and exit code 0
 10. Bounded packet smoke — go run ./cmd/doctorcode next . --json --max-bytes=4096 — expected: valid bounded JSON or NO_FINDINGS
+11. M07 Python semantic benchmark — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json — expected: passed=true; 6 cases; 5 TP, 0 FP, 0 FN on accepted M07 corpus
+12. M07 pinned public Python validation — go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA external checkout environment from .github/workflows/m07-python-real-world.yml — expected: all four exact pins verify, all repositories parse/analyze, and Flask _path_is_ancestor bounded anchor is present

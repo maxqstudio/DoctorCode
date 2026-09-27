@@ -3,17 +3,19 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 290 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 310 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
+| internal/analyzers/python/analyzer.go | Go | 459 | internal/analyzers/python | NO |
+| internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
 | internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
@@ -60,14 +62,22 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go | Go | 9 | internal/benchmark/testdata/m04/nested-simplify/pkg/flags | NO |
 | internal/benchmark/testdata/m04/same-package-test-reference/helper.go | Go | 3 | internal/benchmark/testdata/m04/same-package-test-reference | NO |
 | internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go | Go | 3 | internal/benchmark/testdata/m04/same-package-test-reference | NO |
-| internal/detector/detector.go | Go | 12 | internal/detector | NO |
-| internal/engine/engine.go | Go | 87 | internal/engine | NO |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | Python | 26 | internal/benchmark/testdata/m07-python/all-positive | NO |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | Python | 11 | internal/benchmark/testdata/m07-python/bloat-multiple-references | NO |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | Python | 39 | internal/benchmark/testdata/m07-python/conservative-negative | NO |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py | Python | 2 | internal/benchmark/testdata/m07-python/deadcode-test-reference | NO |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | Python | 4 | internal/benchmark/testdata/m07-python/deadcode-test-reference | YES |
+| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | Python | 9 | internal/benchmark/testdata/m07-python/logic-call-negative | NO |
+| internal/benchmark/testdata/m07-python/security-placeholder/sample.py | Python | 1 | internal/benchmark/testdata/m07-python/security-placeholder | NO |
+| internal/detector/detector.go | Go | 15 | internal/detector | NO |
+| internal/engine/engine.go | Go | 93 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 104 | internal/evidence | NO |
 | internal/evidence/packet_test.go | Go | 52 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
 | internal/model/model.go | Go | 71 | internal/model | NO |
 | internal/realworld/labeled_test.go | Go | 118 | internal/realworld | NO |
+| internal/realworld/python_m07_test.go | Go | 97 | internal/realworld | NO |
 | internal/realworld/realworld_test.go | Go | 128 | internal/realworld | NO |
 | internal/scanner/scanner.go | Go | 46 | internal/scanner | NO |
 | internal/scanner/scanner_test.go | Go | 27 | internal/scanner | NO |

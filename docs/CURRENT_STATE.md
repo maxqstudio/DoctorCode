@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 0f7a1e3117375ad2b2413efc0e7221a614a397ec
+Authority verified at SHA: e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e
 Governance profile: strict
 
 ## Current phase
-Phase: M06_REALWORLD_LABELED
-Status: M06_ACCEPTED
+Phase: M07_PYTHON_SEMANTIC
+Status: ACCEPTANCE_CANDIDATE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m06-realworld-labeled
+Branch: work/m07-python-semantic
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 0f7a1e3117375ad2b2413efc0e7221a614a397ec
+Last accepted SHA: e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e
 Current candidate SHA: external final acceptance evidence
-Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Current source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,28 +33,30 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M06-REALWORLD-LABELED
+Current sequence session: M07-PYTHON-SEMANTIC
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M05 accepted baseline is 0f7a1e3117375ad2b2413efc0e7221a614a397ec.
-- DoctorCode Skill_Workflow authority is synchronized to 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- Pre-repair M06 run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 emitted all four explicitly invalid real-world findings.
-- M06 repaired duplicate-condition comparison so same-named identifiers with different lexical bindings are not treated as equivalent.
-- M06 excludes generated function declarations from DEADCODE candidates while preserving references originating in generated files.
-- Synchronized M06 candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict Skill_Workflow governance run 36283292157.
-- The same candidate passed core CI run 36283292113 on ubuntu-latest, windows-latest, and macos-latest.
-- The same candidate passed M06 Labeled Real World Go run 36283292198 on ubuntu-latest, windows-latest, and macos-latest.
-- All 4 VALID_FINDING anchors remain present, all 4 INVALID_FINDING guards are absent, and 3 AMBIGUOUS observations remain non-blocking.
-- Post-repair discovery retains bounded zerolog/fsnotify DEADCODE, validator SIMPLIFY, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
+- M06 accepted baseline is e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e.
+- DoctorCode remains pinned to Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
+- M07 adds python/stdlib-ast-v1, the first non-Go semantic analyzer, using the host Python standard-library ast module without third-party parser packages or LLM/API calls.
+- Normal audit treats a missing Python interpreter or a repository with no Python source as analyzer-unavailable instead of failing the whole repository.
+- Python syntax/read failures fail closed once Python analysis is applicable; TestPythonParseFailureIsBlocking proves a syntax error does not silently become zero findings.
+- M07 provides one deliberately narrow Python rule for each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.
+- M07 labeled corpus contains 6 cases and reports 5 true positives, 0 false positives, and 0 false negatives on source candidate ba0bcd33d8db362275e59cd88d259902945baa02.
+- Source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passed core CI run 36284942936 on ubuntu-latest, windows-latest, and macos-latest.
+- The same candidate passed M07 Python Real World run 36284943019 on ubuntu-latest, windows-latest, and macos-latest.
+- Exact-SHA snapshots of pallets/click, encode/httpx, psf/requests, and pallets/flask parse and analyze successfully under the M07 public-repository gate.
+- The bounded Flask anchor src/flask/cli.py:691 for _path_is_ancestor remains detected as PY-DEADCODE-PRIVATE-ZERO-REF.
 
 ## Not proven
-- M06 labels are bounded anchors and do not exhaustively label any of the four repositories.
-- M06 does not establish general Go ecosystem precision or recall.
-- VALID_FINDING DEADCODE anchors prove zero lexical references in pinned source snapshots, not safe deletion.
-- AMBIGUOUS BLOAT observations do not prove code should be removed.
-- The label set has not been independently double-reviewed by multiple human reviewers.
-- Semantic support for non-Go languages and automatic source mutation remain unsupported.
+- The six-case M07 corpus does not establish general Python ecosystem precision or recall.
+- The four pinned public repositories are not exhaustively labeled; only the Flask _path_is_ancestor location is an explicit positive anchor.
+- PY-DEADCODE-PRIVATE-ZERO-REF proves no conservative lexical Name/Attribute reference in the parsed visible tree, not safe deletion or absence of dynamic/import/plugin callers.
+- M07 semantic analysis covers .py files; .pyi recognition does not imply .pyi semantic-analysis support.
+- The implementation accepts a Python 3.8+ interpreter, but current cross-platform acceptance evidence is pinned to Python 3.13.
+- Python source that is invalid for the active interpreter blocks analysis rather than being silently skipped.
+- Automatic mutation remains unsupported and every Python finding keeps safe_autofix=false.
 
 ## Known blockers
 - None declared.
@@ -63,12 +65,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize accepted M06 Project Truth documentation.
-- Remove the temporary M06 discovery and doc-sync workflows.
-- Freeze M06 only after final exact-SHA strict governance, core CI, and labeled real-world validation all pass.
+- Synchronize M07 generated Project Truth documentation and sequence evidence.
+- Run strict Skill_Workflow validation against the synchronized M07 snapshot.
+- Promote M07 only if exact-SHA core CI, M07 public Python validation, and strict governance all pass.
 
 ## Explicitly blocked
-- Publishing the bounded anchor pass as general real-world precision or recall.
-- Promoting DEADCODE HIGH to PROVEN_UNUSED from M06 evidence.
-- Converting AMBIGUOUS BLOAT findings into automatic removal.
-- Auto-deleting or auto-fixing findings.
+- Advertising the six-case benchmark as general real-world Python precision or recall.
+- Treating the Flask DEADCODE anchor as PROVEN_UNUSED or safe-delete authorization.
+- Claiming Python .pyi semantic coverage.
+- Claiming all Python 3.8 through 3.13 environments are cross-platform acceptance-tested.
+- Auto-deleting or auto-fixing Python findings.

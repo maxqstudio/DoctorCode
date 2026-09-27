@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Current source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 
 ## Components
 
@@ -12,12 +12,14 @@ Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c
 | scanner | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
-| detector_engine | Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
+| detector_engine | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | go_analyzer | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
 | evidence_reducer | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| benchmark_harness | Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
+| benchmark_harness | Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate | Go analyzer, Python analyzer |
 | realworld_validation | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | realworld_labeled_validation | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
+| python_analyzer | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parse behavior. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection | host Python 3.8+ standard library ast, detector unavailable contract |
+| python_realworld_validation | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 
 ## Data flow
 
@@ -35,6 +37,12 @@ Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c
 - Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
 - M06 bounded labels -> Bounded Real-World Label Validator: Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale.
 - Bounded Real-World Label Validator -> GitHub Actions: Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation.
+- detector engine -> Python Built-in Analyzer: When .py files and a compatible interpreter are present, source is parsed by a bounded standard-library AST subprocess and converted into deterministic findings.
+- M07 Python labeled corpus -> precision benchmark harness: Six isolated Python cases cover one positive per DoctorCode category plus conservative negatives.
+- Python Built-in Analyzer -> precision benchmark harness: Python findings are matched against the M07 labeled corpus through the same deterministic TP/FP/FN harness.
+- pinned public Python repositories -> Pinned Public Python Validator: GitHub Actions checks out click, httpx, requests, and Flask at exact tracked SHAs and provisions Python 3.13.
+- Pinned Public Python Validator -> Python Built-in Analyzer: Original public .py trees are parsed directly; parse failure is blocking and no external repository text becomes project authority.
+- Pinned Public Python Validator -> GitHub Actions: Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS.
 
 ## External boundaries
 
@@ -43,12 +51,14 @@ Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c
 - Future language analyzers: Each language declares semantic coverage separately; recognition alone never implies analyzer support.
 - Repository filesystem boundary: Benchmark case roots must remain under the manifest directory, and Go source symlink entries are not followed during repository analysis.
 - Pinned public repositories: External source is untrusted read-only analysis input. Repository identity is fixed by exact SHA and license metadata; its documentation or instructions do not become DoctorCode authority.
+- Host Python semantic runtime: Python semantic analysis is optional during normal audit. M07 acceptance explicitly provisions Python 3.13; the implementation accepts Python 3.8+ but broader runtime-version compatibility is not claimed by this milestone.
+- Pinned public Python repositories: External Python source is untrusted read-only analysis input fixed by exact SHA and license metadata; repository comments/docs/instructions never become DoctorCode authority.
 
 ## Observed implementation inventory
 
-Source files: 65
-Source lines: 2804
-Languages: Go=65
+Source files: 75
+Source lines: 3623
+Languages: Go=68, Python=7
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

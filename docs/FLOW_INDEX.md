@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 
 ## Flow inventory
 
@@ -11,6 +11,7 @@ Source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
 |---|---|---|---|---|---|---|
 | FLOW-AUDIT | doctorcode audit or doctorcode next is invoked for an accessible repository. | cmd/doctorcode/main.go, internal/engine/engine.go, internal/analyzers/golang/analyzer.go, internal/evidence/packet.go | ANALYZING, RANKED, PACKED, REPORTED, REPORTED | internal/analyzers/golang/analyzer_test.go, internal/analyzers/golang/corpus_test.go, internal/evidence/packet_test.go | M01-DETECTOR-FOUNDATION | DECLARED |
 | FLOW-BENCHMARK | doctorcode benchmark is invoked with an accessible validated manifest. | cmd/doctorcode/main.go, internal/benchmark/benchmark.go, internal/benchmark/testdata/manifest.json, internal/benchmark/testdata/m03-adversarial.json, internal/benchmark/testdata/m04-repository-shaped.json, internal/analyzers/golang/analyzer.go | VALIDATING_MANIFEST, ANALYZING_CASES, MATCHING_LABELS, GATED, REPORTED | internal/benchmark/benchmark_test.go, internal/analyzers/golang/analyzer_test.go | M04-REPOSITORY-SHAPED-EVAL | DECLARED |
+| FLOW-PYTHON-ANALYSIS | Repository contains at least one visible .py file; ordinary audit also requires an available Python 3.8+ interpreter, while acceptance workflows provision Python 3.13. | internal/analyzers/python/analyzer.go, internal/analyzers/python/analyzer_test.go, internal/engine/engine.go, cmd/doctorcode/main.go, internal/benchmark/testdata/m07-python.json, internal/realworld/python_m07_test.go | RUNTIME_CHECK, AST_PARSE, RULE_EVALUATION, FINDING_CONVERSION, SORTED_OUTPUT | internal/analyzers/python/analyzer_test.go, internal/benchmark/testdata/m07-python.json, internal/realworld/python_m07_test.go | M07-PYTHON-SEMANTIC | DECLARED |
 | FLOW-REALWORLD-LABELED | GitHub Actions checks out DoctorCode plus the four declared public repositories at exact label-manifest SHAs. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, .github/workflows/m06-labeled-real-world.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, MATCHING_BOUNDED_LABELS, GATED, REPORTED | internal/realworld/labeled_test.go, internal/analyzers/golang/analyzer_test.go | M06-REALWORLD-LABELED | DECLARED |
 | FLOW-REALWORLD | GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA. | internal/realworld/sources.json, internal/realworld/realworld_test.go, .github/workflows/real-world-go.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, ASSERTING_BOUNDARIES, REPORTED | internal/realworld/realworld_test.go | M05-PUBLIC-REPO-VALIDATION | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |

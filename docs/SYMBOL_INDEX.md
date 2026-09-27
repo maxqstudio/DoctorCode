@@ -3,12 +3,35 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 Status: CURRENT
 
 | File | Symbol | Kind | Lines@SHA | Responsibility | Reads/Writes | Called By | Tests |
 |---|---|---|---|---|---|---|---|
-| | | | | | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | target | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | _wrapper | function | 6-7 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | use | function | 9-10 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | _stale | function | 12-13 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | classify | function | 15-20 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | enabled | function | 22-26 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | target | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | first | function | 7-8 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | second | function | 10-11 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | public_unused | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | register | function | 6-7 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | _hook | function | 10-11 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | ready | function | 13-14 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | logic | function | 16-21 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | same | function | 23-27 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | target | function | 29-30 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | _wrapper | function | 32-33 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | use_one | function | 35-36 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | use_two | function | 38-39 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py | _test_helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | test_helper | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | ready | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | choose | function | 4-9 | Observed Python symbol | | | |
 
 ## Coverage
 

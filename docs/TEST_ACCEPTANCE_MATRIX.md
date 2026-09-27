@@ -4,20 +4,21 @@
 
 ## Evidence boundary
 
-M06 acceptance uses 11 bounded labels on exact-SHA public Go source: 4 VALID_FINDING anchors, 4 INVALID_FINDING guards, and 3 AMBIGUOUS observations. Pre-repair run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed because all four invalid guards were emitted. Repaired synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198 on Linux, Windows, and macOS. Final freeze still requires validation after temporary workflow removal.
+M07 proves the first non-Go DoctorCode semantic adapter using Python standard-library ast. Source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passes a 6-case labeled corpus with 5 TP, 0 FP, and 0 FN plus exact-SHA public-repository validation for click, httpx, requests, and Flask on Linux, Windows, and macOS. Public repositories are not exhaustively labeled; the Flask _path_is_ancestor location is the only bounded positive anchor. DEADCODE remains lexical evidence only, .pyi semantic support is not claimed, and no Python finding authorizes source mutation.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c9a95f69
+Current source digest: f826d5350c901281feef1cf673d29bca0ce994a8c2d3a510a998ee4b78377762
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M06-SKILL-AUTHORITY | M06 begins from the latest adopted Skill_Workflow authority. | .workflow/SKILL_AUTHORITY.json pins 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f and the corresponding strict self-test file is vendored. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-BOUNDED-LABELS | M06 tracks explicit valid, invalid, and ambiguous labels against exact pinned public source snapshots. | internal/realworld/m06-labels.json contains 4 VALID_FINDING, 4 INVALID_FINDING, and 3 AMBIGUOUS labels across urfave/cli, rs/zerolog, fsnotify/fsnotify, and go-playground/validator. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-GATE-CAUGHT-FALSE-POSITIVES | The labeled gate must fail when a detector emits a finding explicitly labeled invalid. | Run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed on exactly four INVALID_FINDING anchors: urfave command_run.go:364, validator enum_enumer.go:25, validator_instance.go:174, and validator_instance.go:184. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-BINDING-IDENTITY | Duplicate-condition comparison distinguishes identifiers with different lexical bindings in separate if/else-if init statements. | internal/analyzers/golang/analyzer.go::canonicalCondition includes ast.Object declaration identity; TestLogicDistinguishesIfInitBindings and M06 urfave/validator guards pass on repaired source. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-GENERATED-DEADCODE | Generated function declarations are not treated as hand-maintained DEADCODE candidates, while generated files may still keep hand-written functions live through references. | generatedGoFile detection plus TestDeadCodeSkipsGeneratedFunctionCandidates and TestGeneratedFilesStillContributeReferences; validator _EnumNoOp invalid guard no longer emits. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-VALID-PRESERVATION | Repairing false positives must preserve bounded valid findings and conservative ambiguous findings. | Run 36283099819 passes all 4 VALID_FINDING anchors and all 4 INVALID_FINDING guards; post-repair discovery run 36283099825 retains zerolog/fsnotify DEADCODE, validator SIMPLIFY, and SUSPICIOUS BLOAT observations. Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict governance run 36283292157, core CI run 36283292113, and M06 labeled run 36283292198. | PASS |
-| M06-THREE-OS | Core regression and bounded labeled validation both pass on Linux, Windows, and macOS. | Synchronized candidate e747d40b693d6fc69346bb0133225022b868ab11 passed core CI run 36283292113 and M06 Labeled Real World Go run 36283292198 on Linux, Windows, and macOS; strict governance run 36283292157 also passed. | PASS |
+| M07-PYTHON-ADAPTER | DoctorCode exposes a deterministic Python semantic analyzer without an LLM/API or third-party Python parser dependency. | internal/analyzers/python/analyzer.go implements python/stdlib-ast-v1 and executes only the host Python standard-library ast parser; source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passed CI run 36284942936. | PASS |
+| M07-FIVE-CATEGORIES | Python begins with one conservative rule in each DoctorCode category and no automatic mutation. | PY-BLOAT-PASSTHROUGH-WRAPPER, PY-SEC-HARDCODED-CREDENTIAL, PY-SIMPLIFY-BOOL-RETURN, PY-LOGIC-DUPLICATE-IDENTITY-CONDITION, and PY-DEADCODE-PRIVATE-ZERO-REF are implemented; analyzer conversion always sets safe_autofix=false. | PASS |
+| M07-LABELED-CORPUS | A labeled Python regression corpus blocks both missing and unexpected findings. | internal/benchmark/testdata/m07-python.json: 6 cases, 5 TP, 0 FP, 0 FN in CI run 36284942936 on the exact candidate. | PASS |
+| M07-PARSE-FAIL-CLOSED | Applicable Python files that cannot be parsed must not be silently ignored. | raw parse errors are returned as blocking analysis errors; TestPythonParseFailureIsBlocking passes in core CI run 36284942936. | PASS |
+| M07-OPTIONAL-RUNTIME | Missing Python runtime during ordinary mixed-repository audit is unavailable capability rather than repository failure. | detector.ErrUnavailable plus engine skip semantics; Python benchmark/public workflows explicitly provision Python 3.13 so acceptance does not rely on an implicit host interpreter. | PASS |
+| M07-PUBLIC-PINS | Public Python validation uses exact commit SHAs with detached-checkout provenance verification before analysis. | internal/realworld/m07-python-sources.json and TestM07PinnedPythonRepositories; M07 Python Real World run 36284943019 PASS on all three operating systems. | PASS |
+| M07-FLASK-ANCHOR | The reviewed Flask zero-lexical-reference anchor remains detected without being promoted to safe deletion. | pallets/flask d73fa1cdcbd8b1465c151db8924ba58b1dd14e35 src/flask/cli.py:691 _path_is_ancestor; run 36284943019 PASS; finding confidence remains HIGH and safe_autofix=false. | PASS |
+| M07-THREE-OS | Core Python benchmark and exact-SHA public Python validation both pass on Linux, Windows, and macOS. | Core CI run 36284942936 and M07 Python Real World run 36284943019 at ba0bcd33d8db362275e59cd88d259902945baa02. | PASS |
 
 ## Test commands
 
@@ -25,19 +26,20 @@ Current source digest: 39a7288912332a8bb4914b1738c2c71ad9db684f3632b29b41d3f6e3c
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 
 ## Runtime checks
 
-- go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA public repository paths from .github/workflows/m06-labeled-real-world.yml
+- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA paths from .github/workflows/m07-python-real-world.yml
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M06-REALWORLD-LABELED
+Sequence session contract: M07-PYTHON-SEMANTIC
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

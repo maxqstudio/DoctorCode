@@ -161,3 +161,43 @@ Status: ACCEPTED
 Keep structurally redundant wrappers with plausible naming/build/API intent under AMBIGUOUS evidence and SUSPICIOUS confidence.
 
 Rationale: A one-call wrapper can be intentional abstraction; removing it requires semantic evidence beyond shape.
+
+## ADR-M07-001 — Use Python standard-library AST through the host runtime
+
+Status: ACCEPTED
+
+Implement the first Python semantic adapter by invoking Python's standard-library ast parser through an argv-only subprocess instead of adding a third-party parser or model dependency.
+
+Rationale: This keeps the Go core small, uses the language's own parser semantics, remains cross-platform when Python is available, and avoids parser-vendor/cgo weight.
+
+## ADR-M07-002 — Optional runtime is explicit capability
+
+Status: ACCEPTED
+
+Return detector.ErrUnavailable when Python source or a compatible Python interpreter is absent during normal audit, and have the engine skip that analyzer without failing unrelated languages.
+
+Rationale: Missing optional toolchains must not turn a mixed repository into an audit failure or create a false support claim.
+
+## ADR-M07-003 — Fail closed on Python parse incompleteness
+
+Status: ACCEPTED
+
+Once Python analysis is applicable, any source read or AST syntax failure blocks the analyzer instead of silently omitting that file.
+
+Rationale: Silently skipped source could make a zero-finding result look complete when it is not.
+
+## ADR-M07-004 — Narrow Python rules before recall expansion
+
+Status: ACCEPTED
+
+Start with one intentionally conservative rule per DoctorCode category; keep LOGIC limited to identity comparisons and DEADCODE limited to private undecorated hand-maintained module functions.
+
+Rationale: Python has dynamic imports, decorators, descriptors, reflection, and plugin conventions that make broad static claims unsafe without more evidence.
+
+## ADR-M07-005 — Separate public compatibility from labeled metrics
+
+Status: ACCEPTED
+
+Treat click/httpx/requests/Flask whole-repository execution as compatibility evidence and only the explicitly reviewed Flask location as a bounded positive label.
+
+Rationale: Zero findings in unlabeled repositories cannot establish precision, recall, or defect-free status.

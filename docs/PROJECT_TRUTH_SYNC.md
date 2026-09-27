@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | PASS | |
-| REFERENCE_SYNC | PASS | |
-| STRUCTURAL_SYNC | PASS | |
+| PROVENANCE_SYNC | NOT_PROVEN | |
+| REFERENCE_SYNC | NOT_PROVEN | |
+| STRUCTURAL_SYNC | NOT_PROVEN | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -59,6 +59,12 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M06-BINDING-REPAIR | M06 condition canonicalization distinguishes same-named identifiers when their parser-resolved lexical bindings differ. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::canonicalCondition | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
 | TRUTH-M06-GENERATED-DEADCODE-REPAIR | M06 excludes generated function declarations from DEADCODE candidates while still counting references originating in generated files. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::generatedGoFile; internal/analyzers/golang/analyzer.go::deadCodeFindings | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
 | TRUTH-M06-BOUNDED-LABEL-PASS | On repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3, all 4 VALID_FINDING anchors are present and all 4 INVALID_FINDING guards are absent across the M06 bounded public-source labels; 3 AMBIGUOUS observations remain non-blocking. | PROJECT_TRUTH_SYNC.md | internal/realworld/m06-labels.json; internal/realworld/labeled_test.go | internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
+| TRUTH-M07-PYTHON-SEMANTIC | M07 adds python/stdlib-ast-v1 as DoctorCode's first non-Go semantic analyzer with one conservative rule in each of the five DoctorCode categories. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go; internal/engine/engine.go | internal/analyzers/python/analyzer_test.go; internal/benchmark/testdata/m07-python.json | GitHub Actions CI run 36284942936 at ba0bcd33d8db362275e59cd88d259902945baa02 | PASS |
+| TRUTH-M07-CORPUS | The accepted-source M07 Python corpus contains 6 cases and reports 5 TP, 0 FP, and 0 FN, one true positive per current Python rule. | PROJECT_TRUTH_SYNC.md | internal/benchmark/testdata/m07-python.json; internal/benchmark/benchmark.go | internal/analyzers/python/analyzer_test.go | GitHub Actions CI run 36284942936 | PASS |
+| TRUTH-M07-PARSE-FAIL-CLOSED | Applicable Python syntax/read errors block semantic analysis instead of being silently skipped. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/analyzers/python/analyzer_test.go::TestPythonParseFailureIsBlocking | GitHub Actions CI run 36284942936 | PASS |
+| TRUTH-M07-OPTIONAL-RUNTIME | Ordinary audit skips Python semantic analysis when Python is unavailable, while M07 acceptance workflows provision Python 3.13 explicitly. | PROJECT_TRUTH_SYNC.md | internal/detector/detector.go; internal/engine/engine.go; internal/analyzers/python/analyzer.go; .github/workflows/ci.yml | internal/analyzers/python/analyzer_test.go | GitHub Actions CI run 36284942936 | PASS |
+| TRUTH-M07-PUBLIC-PYTHON | Exact-SHA click, httpx, requests, and Flask snapshots parse and analyze successfully on Linux, Windows, and macOS; Flask _path_is_ancestor at src/flask/cli.py:691 is the bounded positive anchor. | PROJECT_TRUTH_SYNC.md | internal/realworld/m07-python-sources.json; internal/realworld/python_m07_test.go; .github/workflows/m07-python-real-world.yml | internal/realworld/python_m07_test.go | GitHub Actions M07 Python Real World run 36284943019 at ba0bcd33d8db362275e59cd88d259902945baa02 | PASS |
+| TRUTH-M07-NO-AUTOFIX | All accepted Python findings remain evidence-only and safe_autofix=false. | PROJECT_TRUTH_SYNC.md | internal/analyzers/python/analyzer.go | internal/analyzers/python/analyzer_test.go; internal/realworld/python_m07_test.go | GitHub Actions CI run 36284942936; GitHub Actions M07 Python Real World run 36284943019 | PASS |
 
 ## Claim relations
 

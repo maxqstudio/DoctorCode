@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M07 Python semantic adapter candidate
+
+Type: development
+
+- Added python/stdlib-ast-v1 as the first non-Go DoctorCode semantic analyzer.
+- Added one conservative Python rule for BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE with safe_autofix=false.
+- Added optional analyzer-unavailable semantics so missing Python does not fail unrelated repository audits.
+- Made Python syntax/read errors fail closed instead of silently reducing coverage.
+- Added a six-case labeled Python benchmark with 5 TP, 0 FP, and 0 FN on the source candidate.
+- Added exact-SHA public validation for click, httpx, requests, and Flask across Linux, Windows, and macOS, including a bounded Flask DEADCODE anchor.
+
 ## 2026-09-27 — M06 accepted baseline
 
 Type: acceptance

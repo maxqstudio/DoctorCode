@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 65 files, 1 language categories.
+Observed source inventory: 75 files, 2 language categories.
 
 ## Major components
 
@@ -37,12 +37,14 @@ Observed source inventory: 65 files, 1 language categories.
 | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
-| Detector Engine | Execute registered deterministic language analyzers and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer |
+| Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| Precision Benchmark Harness | Evaluate baseline, adversarial, and repository-shaped labeled analyzer corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate | Go analyzer |
+| Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate | Go analyzer, Python analyzer |
 | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
+| Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parse behavior. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection | host Python 3.8+ standard library ast, detector unavailable contract |
+| Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 
 ## Main data flow
 
@@ -60,6 +62,12 @@ Observed source inventory: 65 files, 1 language categories.
 - Pinned Public Repository Validator -> GitHub Actions: Checkout provenance, parse/analyze success, known-live anchors, relative paths, and no-autofix invariants are blocking on all three operating systems.
 - M06 bounded labels -> Bounded Real-World Label Validator: Tracked labels declare exact source locations as VALID_FINDING, INVALID_FINDING, or AMBIGUOUS with written rationale.
 - Bounded Real-World Label Validator -> GitHub Actions: Exact-SHA source provenance plus valid/invalid label assertions are blocking on Linux, Windows, and macOS; ambiguous labels never authorize mutation.
+- detector engine -> Python Built-in Analyzer: When .py files and a compatible interpreter are present, source is parsed by a bounded standard-library AST subprocess and converted into deterministic findings.
+- M07 Python labeled corpus -> precision benchmark harness: Six isolated Python cases cover one positive per DoctorCode category plus conservative negatives.
+- Python Built-in Analyzer -> precision benchmark harness: Python findings are matched against the M07 labeled corpus through the same deterministic TP/FP/FN harness.
+- pinned public Python repositories -> Pinned Public Python Validator: GitHub Actions checks out click, httpx, requests, and Flask at exact tracked SHAs and provisions Python 3.13.
+- Pinned Public Python Validator -> Python Built-in Analyzer: Original public .py trees are parsed directly; parse failure is blocking and no external repository text becomes project authority.
+- Pinned Public Python Validator -> GitHub Actions: Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS.
 
 ## Main user workflows
 
@@ -86,6 +94,18 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 - ANALYZING_CASES -> MATCHING_LABELS : Match actual findings to expected rule/path/location labels.
 - MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
 - GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
+
+### FLOW-PYTHON-ANALYSIS — Python semantic analysis
+
+Analyze .py source deterministically with a bounded stdlib AST subprocess, preserve unavailable-runtime and parse-failure semantics, and return evidence-backed findings without mutation.
+
+Authority: internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json
+
+- APPLICABILITY_CHECK -> RUNTIME_CHECK : Detect at least one visible .py file; no Python files returns detector unavailable.
+- RUNTIME_CHECK -> AST_PARSE : Resolve python3, python, or py -3 and require Python 3.8+.
+- AST_PARSE -> RULE_EVALUATION : Walk visible .py files without following source symlinks; any syntax/read error is reported as blocking incomplete analysis.
+- RULE_EVALUATION -> FINDING_CONVERSION : Apply five narrow category rules and serialize redacted evidence as JSON.
+- FINDING_CONVERSION -> SORTED_OUTPUT : Go assigns stable finding IDs, forces safe_autofix=false, and detector engine performs stable priority sorting.
 
 ### FLOW-REALWORLD-LABELED — Bounded real-world label validation
 
@@ -122,9 +142,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M06_REALWORLD_LABELED
+Current phase: M07_PYTHON_SEMANTIC
 
-Current status: M06_ACCEPTED
+Current status: ACCEPTANCE_CANDIDATE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -160,6 +180,7 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+- FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
@@ -167,15 +188,16 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize accepted M06 Project Truth documentation.
-- Remove the temporary M06 discovery and doc-sync workflows.
-- Freeze M06 only after final exact-SHA strict governance, core CI, and labeled real-world validation all pass.
+- Synchronize M07 generated Project Truth documentation and sequence evidence.
+- Run strict Skill_Workflow validation against the synchronized M07 snapshot.
+- Promote M07 only if exact-SHA core CI, M07 public Python validation, and strict governance all pass.
 
 Blocked actions:
-- Publishing the bounded anchor pass as general real-world precision or recall.
-- Promoting DEADCODE HIGH to PROVEN_UNUSED from M06 evidence.
-- Converting AMBIGUOUS BLOAT findings into automatic removal.
-- Auto-deleting or auto-fixing findings.
+- Advertising the six-case benchmark as general real-world Python precision or recall.
+- Treating the Flask DEADCODE anchor as PROVEN_UNUSED or safe-delete authorization.
+- Claiming Python .pyi semantic coverage.
+- Claiming all Python 3.8 through 3.13 environments are cross-platform acceptance-tested.
+- Auto-deleting or auto-fixing Python findings.
 
 Known blockers:
 - None declared.
@@ -184,25 +206,27 @@ Known blockers:
 
 ### Proven
 
-- M05 accepted baseline is 0f7a1e3117375ad2b2413efc0e7221a614a397ec.
-- DoctorCode Skill_Workflow authority is synchronized to 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- Pre-repair M06 run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 emitted all four explicitly invalid real-world findings.
-- M06 repaired duplicate-condition comparison so same-named identifiers with different lexical bindings are not treated as equivalent.
-- M06 excludes generated function declarations from DEADCODE candidates while preserving references originating in generated files.
-- Synchronized M06 candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict Skill_Workflow governance run 36283292157.
-- The same candidate passed core CI run 36283292113 on ubuntu-latest, windows-latest, and macos-latest.
-- The same candidate passed M06 Labeled Real World Go run 36283292198 on ubuntu-latest, windows-latest, and macos-latest.
-- All 4 VALID_FINDING anchors remain present, all 4 INVALID_FINDING guards are absent, and 3 AMBIGUOUS observations remain non-blocking.
-- Post-repair discovery retains bounded zerolog/fsnotify DEADCODE, validator SIMPLIFY, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
+- M06 accepted baseline is e9c62226ffabefc9dd76f6b1dd4fbe992e8a9f1e.
+- DoctorCode remains pinned to Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
+- M07 adds python/stdlib-ast-v1, the first non-Go semantic analyzer, using the host Python standard-library ast module without third-party parser packages or LLM/API calls.
+- Normal audit treats a missing Python interpreter or a repository with no Python source as analyzer-unavailable instead of failing the whole repository.
+- Python syntax/read failures fail closed once Python analysis is applicable; TestPythonParseFailureIsBlocking proves a syntax error does not silently become zero findings.
+- M07 provides one deliberately narrow Python rule for each DoctorCode category: BLOAT, SECURITY, SIMPLIFY, LOGIC, and DEADCODE.
+- M07 labeled corpus contains 6 cases and reports 5 true positives, 0 false positives, and 0 false negatives on source candidate ba0bcd33d8db362275e59cd88d259902945baa02.
+- Source candidate ba0bcd33d8db362275e59cd88d259902945baa02 passed core CI run 36284942936 on ubuntu-latest, windows-latest, and macos-latest.
+- The same candidate passed M07 Python Real World run 36284943019 on ubuntu-latest, windows-latest, and macos-latest.
+- Exact-SHA snapshots of pallets/click, encode/httpx, psf/requests, and pallets/flask parse and analyze successfully under the M07 public-repository gate.
+- The bounded Flask anchor src/flask/cli.py:691 for _path_is_ancestor remains detected as PY-DEADCODE-PRIVATE-ZERO-REF.
 
 ### Not proven
 
-- M06 labels are bounded anchors and do not exhaustively label any of the four repositories.
-- M06 does not establish general Go ecosystem precision or recall.
-- VALID_FINDING DEADCODE anchors prove zero lexical references in pinned source snapshots, not safe deletion.
-- AMBIGUOUS BLOAT observations do not prove code should be removed.
-- The label set has not been independently double-reviewed by multiple human reviewers.
-- Semantic support for non-Go languages and automatic source mutation remain unsupported.
+- The six-case M07 corpus does not establish general Python ecosystem precision or recall.
+- The four pinned public repositories are not exhaustively labeled; only the Flask _path_is_ancestor location is an explicit positive anchor.
+- PY-DEADCODE-PRIVATE-ZERO-REF proves no conservative lexical Name/Attribute reference in the parsed visible tree, not safe deletion or absence of dynamic/import/plugin callers.
+- M07 semantic analysis covers .py files; .pyi recognition does not imply .pyi semantic-analysis support.
+- The implementation accepts a Python 3.8+ interpreter, but current cross-platform acceptance evidence is pinned to Python 3.13.
+- Python source that is invalid for the active interpreter blocks analysis rather than being silently skipped.
+- Automatic mutation remains unsupported and every Python finding keeps safe_autofix=false.
 
 ## Important limitations
 

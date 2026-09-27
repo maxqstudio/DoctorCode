@@ -94,6 +94,54 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-PYTHON-ANALYSIS — Python semantic analysis
+
+Purpose: Analyze .py source deterministically with a bounded stdlib AST subprocess, preserve unavailable-runtime and parse-failure semantics, and return evidence-backed findings without mutation.
+Critical: FALSE
+Entry condition: Repository contains at least one visible .py file; ordinary audit also requires an available Python 3.8+ interpreter, while acceptance workflows provision Python 3.13.
+Authority: internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json
+
+### States
+
+- APPLICABILITY_CHECK
+- RUNTIME_CHECK
+- AST_PARSE
+- RULE_EVALUATION
+- FINDING_CONVERSION
+- SORTED_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| APPLICABILITY_CHECK | RUNTIME_CHECK | Detect at least one visible .py file; no Python files returns detector unavailable. | internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json |  |
+| RUNTIME_CHECK | AST_PARSE | Resolve python3, python, or py -3 and require Python 3.8+. | internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json | spawn bounded interpreter subprocess |
+| AST_PARSE | RULE_EVALUATION | Walk visible .py files without following source symlinks; any syntax/read error is reported as blocking incomplete analysis. | internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json |  |
+| RULE_EVALUATION | FINDING_CONVERSION | Apply five narrow category rules and serialize redacted evidence as JSON. | internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json |  |
+| FINDING_CONVERSION | SORTED_OUTPUT | Go assigns stable finding IDs, forces safe_autofix=false, and detector engine performs stable priority sorting. | internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m07-python.json, and internal/realworld/m07-python-sources.json |  |
+
+### Invariants
+
+- No Python source is executed or imported by DoctorCode; only ast.parse is used.
+- The analyzer subprocess receives argv directly and does not invoke a shell.
+- Security literal values are never emitted; only byte length and SHA-256 prefix are retained.
+- Syntax/read failures are blocking rather than silently skipped.
+- DEADCODE excludes decorated, dunder, generated, and test-defined function candidates and never claims PROVEN_UNUSED.
+- LOGIC is limited to repeated Name is/is-not None/True/False identity conditions.
+- Every finding keeps safe_autofix=false.
+
+### Failure behavior
+
+- Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
+
+### Restart behavior
+
+- Analysis is stateless and can be rerun against the same repository state and interpreter.
+
+### Rollback behavior
+
+- The Python analyzer is read-only; rollback is source-control only and no analyzed repository content is mutated.
+
 ## FLOW-REALWORLD-LABELED — Bounded real-world label validation
 
 Purpose: Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.
