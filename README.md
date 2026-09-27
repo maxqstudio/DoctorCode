@@ -19,12 +19,12 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M06 bounded real-world labels are accepted on the development branch.** Current semantic coverage remains deliberately narrow; synthetic corpus metrics, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M07 Python semantic adapter is accepted on the development branch.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
 | Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
-| Python | Yes | Yes | Not yet |
+| Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; host Python required** |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
 | Java / Kotlin | Yes | Yes | Not yet |
@@ -133,6 +133,36 @@ After repair, all four valid anchors remain present and all four invalid guards 
 
 These labels are intentionally bounded to exact reviewed locations. **They are not exhaustive labels for the repositories and do not establish general real-world precision, recall, or safe deletion.**
 
+### M07 Python semantic adapter
+
+M07 adds DoctorCode's first non-Go semantic analyzer:
+
+```text
+python/stdlib-ast-v1
+```
+
+The Go core invokes the host Python standard-library `ast` parser through an argv-only subprocess. DoctorCode does **not** import or execute the analyzed repository, does not use an LLM/API for detection, and does not add a third-party Python parser dependency.
+
+During normal mixed-repository audit, missing Python or the absence of visible `.py` source makes the Python analyzer unavailable without failing unrelated language analysis. M07 acceptance explicitly provisions Python 3.13. The implementation accepts Python 3.8+, but M07 does not claim cross-version acceptance for every version in that range.
+
+Once Python analysis is applicable, source read or syntax failures **fail closed** instead of being silently skipped.
+
+| Category | M07 Python rule | Confidence boundary |
+|---|---|---|
+| DEADCODE | private, undecorated, hand-maintained module-level function with zero conservative lexical references | `HIGH`, never `PROVEN_UNUSED` |
+| LOGIC | repeated `Name is/is not None/True/False` identity condition in one if/elif chain | `HIGH` |
+| SIMPLIFY | opposite boolean-return branches | `PROVEN` for the narrow structural rewrite |
+| SECURITY | hardcoded literal assigned to a credential-like identifier | `SUSPICIOUS`; literal always redacted |
+| BLOAT | private one-call pass-through wrapper with one conservative lexical reference | `SUSPICIOUS` |
+
+The M07 labeled Python corpus contains **6 cases** and reports **5 TP, 0 FP, and 0 FN** on the accepted candidate: one true positive for each rule. These are corpus-scoped regression metrics only.
+
+A separate three-OS public-source gate checks exact-SHA snapshots of `pallets/click`, `encode/httpx`, `psf/requests`, and `pallets/flask`. The repositories must parse and analyze successfully, checkout provenance is verified, and Flask `src/flask/cli.py:691` `_path_is_ancestor` is tracked as one bounded `PY-DEADCODE-PRIVATE-ZERO-REF` anchor.
+
+That Flask anchor proves the narrow zero-lexical-reference observation only. It does **not** prove safe deletion. Dynamic imports, reflection, plugin registration, external callers, and other runtime behaviors remain outside M07's proof boundary.
+
+Python semantic analysis currently covers `.py` source. Recognition of `.pyi` files does **not** mean `.pyi` semantic-analysis support.
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -182,6 +212,9 @@ The byte cap is deliberate: exact token counts vary by model/tokenizer, while a 
 - Benchmark case roots must resolve inside the benchmark manifest directory.
 - Security findings never include the detected credential literal in evidence.
 - Security `next` packets omit source excerpts by default.
+- Python semantic analysis fails closed when an applicable `.py` file cannot be read or parsed.
+- Python DEADCODE is conservative lexical evidence only; dynamic imports, reflection, plugins, and external callers can exist outside the visible tree.
+- Python `.pyi` files may be recognized by the scanner but are not semantically analyzed in M07.
 
 ## Cross-platform acceptance
 
@@ -193,7 +226,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05 and M06 matrices run pinned public-repository compatibility validation and bounded real-world label validation on the same Linux, Windows, and macOS runner set.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, M04 repository-shaped, and M07 Python semantic benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05, M06, and M07 matrices run pinned Go compatibility, bounded Go real-world labels, and pinned Python public-source validation on the same Linux, Windows, and macOS runner set.
 
 ## Design principles
 
