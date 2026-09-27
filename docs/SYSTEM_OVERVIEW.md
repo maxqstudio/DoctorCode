@@ -266,10 +266,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run final exact-SHA acceptance on the M13_ACCEPTED tree after this governance finalization commit.
+- Run final exact-SHA acceptance on the finalized M13 branch tree with no temporary workflow present.
 - Open and merge the FINAL_ACCEPTED M13 pull request to main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before M14.
-- After M13_MAIN_ACCEPTED, proceed to the deterministic verification contract milestone under the Owner directive to continue until DoctorCode is complete.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting the deterministic verification milestone.
 
 Blocked actions:
 - Starting M14 before exact M13 main post-merge acceptance.
@@ -297,6 +296,7 @@ Known blockers:
 - Final synchronized M13 branch tree 80f735c7be3598dfdf34b6a040d3e49464298a42 passed Governance Bootstrap run 36326117052.
 - Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36326117037, M07 Python Real World run 36326116936, M06 Go labels run 36326116920, and Real World Go run 36326116988 all passed on Linux, Windows, and macOS at 80f735c7be3598dfdf34b6a040d3e49464298a42.
+- Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest, including Go and Python related-context E2E smokes.
 
 ### Not proven
 

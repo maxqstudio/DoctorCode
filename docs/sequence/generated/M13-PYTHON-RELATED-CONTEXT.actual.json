@@ -856,7 +856,7 @@
       "locator": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py::_helper"
     }
   ],
-  "observed_head": "ac4e9439adb674bc59d38cff3542b299b6c19df3",
+  "observed_head": "03075edb417cbc7c2a8c6c36ce7d792c45307cbc",
   "schema_version": 1,
   "source_digest": "fcd18e2993c394b1217c6cdab3455ef848b94651bc9982ae55c6eab48bd0df31"
 }

@@ -71,7 +71,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "At 80f735c7be3598dfdf34b6a040d3e49464298a42: Governance Bootstrap 36326117052, Core CI 36326116923, M10 Labeled Real World Python 36326117037, M07 Python Real World 36326116936, M06 Labeled Real World Go 36326116920, and Real World Go Validation 36326116988 all completed success; every matrix job passed on Linux, Windows, and macOS.",
+      "evidence": "Governance Bootstrap run 36326117052 at 80f735c7be3598dfdf34b6a040d3e49464298a42 completed success after generated M13 Project Truth and sequence synchronization; finalization is governance-only and will be revalidated on its exact SHA.",
       "id": "M13-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M13 sequence artifacts must pass strict governance on the final exact M13 branch SHA after temporary workflows are removed.",
       "status": "PASS"
