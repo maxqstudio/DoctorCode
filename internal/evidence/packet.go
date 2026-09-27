@@ -118,7 +118,7 @@ func sourceExcerpt(root string, finding model.Finding, radius int) (string, erro
 	for line := start; line <= end; line++ {
 		fmt.Fprintf(&out, "%d: %s\n", line, lines[line-1])
 	}
-	return strings.TrimSuffix(out.String(), "\n"), start, end, nil
+	return strings.TrimSuffix(out.String(), "\n"), nil
 }
 
 func resolveFindingPath(root, findingPath string) (string, error) {
@@ -233,5 +233,5 @@ func sourceExcerptAt(root, relPath string, line, radius int) (string, int, int, 
 	for current := start; current <= end; current++ {
 		fmt.Fprintf(&out, "%d: %s\n", current, lines[current-1])
 	}
-	return strings.TrimSuffix(out.String(), "\n"), nil
+	return strings.TrimSuffix(out.String(), "\n"), start, end, nil
 }
