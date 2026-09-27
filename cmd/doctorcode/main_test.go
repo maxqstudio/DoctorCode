@@ -99,3 +99,31 @@ func TestContextPipelineSelectsExactFindingWithinBudget(t *testing.T) {
 		t.Fatalf("context packet exceeds byte budget: %d", len(data)+1)
 	}
 }
+
+
+func TestParseVerificationArgs(t *testing.T) {
+	first, root, asJSON, err := parseVerificationArgs("contract", []string{"FINDING-1", "repo", "--json"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if first != "FINDING-1" || root != "repo" || !asJSON {
+		t.Fatalf("unexpected verification args: first=%q root=%q json=%t", first, root, asJSON)
+	}
+	if _, _, _, err := parseVerificationArgs("verify", []string{}); err == nil {
+		t.Fatal("verify must require contract path")
+	}
+	if _, _, _, err := parseVerificationArgs("verify", []string{"contract.json", "repo", "extra"}); err == nil {
+		t.Fatal("verify must reject extra positional arguments")
+	}
+}
+
+func TestReadVerificationContractRejectsUnknownFields(t *testing.T) {
+	path := filepath.Join(t.TempDir(), "contract.json")
+	content := `{"schema_version":1,"analyzers":["go/stdlib-ast-v1"],"target_id":"X","target_rule_id":"R","target_path":"sample.go","target_summary":"summary","target_severity":"LOW","target_baseline_count":1,"baseline_findings":[],"unexpected":true}`
+	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := readVerificationContract(path); err == nil {
+		t.Fatal("unknown contract fields must fail closed")
+	}
+}
