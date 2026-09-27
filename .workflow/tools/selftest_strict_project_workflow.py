@@ -780,6 +780,7 @@ notes:
         print("STRICT_VALIDATOR_CHAIN=PASS")
         print("VALIDATORS_READ_ONLY=PASS")
         print("FINAL_WORKTREE_CLEAN=PASS")
+        print("STRICT_SELFTEST=PASS")
 
     return 0
 
