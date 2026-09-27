@@ -17,6 +17,17 @@
       "expected": []
     },
     {
+      "name": "package-init-reexport-bloat",
+      "root": "m09-python/package-init-reexport-bloat",
+      "expected": [
+        {
+          "rule_id": "PY-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "pkg/core.py",
+          "summary_contains": "_wrapper"
+        }
+      ]
+    },
+    {
       "name": "relative-alias-live",
       "root": "m09-python/relative-alias-live",
       "expected": []
