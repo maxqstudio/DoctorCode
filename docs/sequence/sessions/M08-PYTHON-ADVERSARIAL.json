@@ -3,7 +3,7 @@
   "session_id": "M08-PYTHON-ADVERSARIAL",
   "phase": "M08_PYTHON_ADVERSARIAL",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e",

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-PYTHON-REPOSITORY-SHAPED",
+  "title": "Python repository-shaped regression validation",
+  "purpose": "Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.",
+  "authority": "internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go",
+  "entry_condition": "M08 is accepted on main and Python 3.13 is provisioned in CI.",
+  "source_owners": [
+    "internal/analyzers/python/analyzer.go",
+    "internal/benchmark/testdata/m09-python-repository-shaped.json",
+    ".github/workflows/ci.yml",
+    ".github/workflows/real-world-go.yml",
+    ".github/workflows/m06-labeled-real-world.yml",
+    ".github/workflows/m07-python-real-world.yml"
+  ],
+  "states": [
+    "MAIN_BASELINE",
+    "REPOSITORY_SHAPED_FAIL",
+    "TOPOLOGY_REPAIR",
+    "ALL_LANES_PASS",
+    "READY_FOR_PROMOTION"
+  ],
+  "transitions": [
+    {
+      "from": "MAIN_BASELINE",
+      "to": "REPOSITORY_SHAPED_FAIL",
+      "action": "Run the 14-case repository-shaped Python corpus and preserve exact FP/FN evidence.",
+      "side_effects": []
+    },
+    {
+      "from": "REPOSITORY_SHAPED_FAIL",
+      "to": "TOPOLOGY_REPAIR",
+      "action": "Repair only source-layout aliases, direct re-export forwarding, usage/liveness separation, and dotted-module isolation.",
+      "side_effects": []
+    },
+    {
+      "from": "TOPOLOGY_REPAIR",
+      "to": "ALL_LANES_PASS",
+      "action": "Require M07/M08/M09 plus all accepted public/labeled real-world matrices on Linux, Windows, and macOS.",
+      "side_effects": []
+    },
+    {
+      "from": "ALL_LANES_PASS",
+      "to": "READY_FOR_PROMOTION",
+      "action": "Synchronize strict governance and prepare immediate PR promotion to main.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "M07 and M08 accepted Python behavior must remain passing.",
+    "Import/export liveness evidence never becomes safe-delete proof.",
+    "One-use BLOAT evidence counts usage separately from declarative import/export liveness.",
+    "Unresolved attribute fallback cannot keep multiple same-named candidates alive.",
+    "Every accepted real-world matrix runs on both main and work/**."
+  ],
+  "tests": [
+    "internal/benchmark/testdata/m09-python-repository-shaped.json",
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/realworld/realworld_test.go",
+    "internal/realworld/labeled_test.go",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "sequence_session": "M09-PYTHON-REPOSITORY-SHAPED",
+  "critical": false,
+  "failure_behavior": [
+    "Any corpus FP/FN, prior-gate regression, real-world matrix failure, parse incompleteness, or strict governance drift blocks M09 promotion."
+  ],
+  "restart_behavior": [
+    "All fixture roots and exact public repository pins are deterministic and rerunnable."
+  ],
+  "rollback_behavior": [
+    "M09 topology repair can be reverted to main@29924f324db316a9a2985943c09d4711824a1220 without changing external source evidence."
+  ]
+}

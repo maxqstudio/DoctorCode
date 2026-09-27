@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
+Source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -14,7 +14,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/python/analyzer.go | Go | 567 | internal/analyzers/python | NO |
+| internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
 | internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
@@ -84,6 +84,39 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | Python | 4 | internal/benchmark/testdata/m08-python/generated-private-negative | NO |
 | internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | Python | 6 | internal/benchmark/testdata/m08-python/logic-int-identity-negative | NO |
 | internal/benchmark/testdata/m08-python/security-not-secret-placeholder/sample.py | Python | 1 | internal/benchmark/testdata/m08-python/security-not-secret-placeholder | NO |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py | Python | 2 | internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg | NO |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py | Python | 9 | internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg | NO |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py | Python | 2 | internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg | NO |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py | Python | 5 | internal/benchmark/testdata/m09-python/generated-reference-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/generated-reference-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/namespace-package-live/app.py | Python | 4 | internal/benchmark/testdata/m09-python/namespace-package-live | NO |
+| internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg | NO |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py | Python | 4 | internal/benchmark/testdata/m09-python/nested-dotted-module-live | NO |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py | Python | 2 | internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub | NO |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py | Python | 4 | internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation | NO |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py | Python | 2 | internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a | NO |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py | Python | 2 | internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py | Python | 4 | internal/benchmark/testdata/m09-python/package-init-reexport-bloat | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/__init__.py | Python | 3 | internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | Python | 5 | internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py | Python | 4 | internal/benchmark/testdata/m09-python/package-init-reexport-live | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/__init__.py | Python | 3 | internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py | Python | 2 | internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py | Python | 2 | internal/benchmark/testdata/m09-python/relative-alias-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py | Python | 4 | internal/benchmark/testdata/m09-python/relative-alias-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a | NO |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b | NO |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py | Python | 4 | internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b | NO |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py | Python | 4 | internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app | NO |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | Python | 5 | internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app | NO |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | Python | 5 | internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app | NO |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py | Python | 4 | internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app | NO |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app | NO |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py | Python | 4 | internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app | NO |
+| internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/test-reference-live/pkg | NO |
+| internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | Python | 4 | internal/benchmark/testdata/m09-python/test-reference-live/tests | YES |
+| internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
+| internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
 | internal/engine/engine.go | Go | 93 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 104 | internal/evidence | NO |

@@ -241,3 +241,43 @@ Status: ACCEPTED
 After a phase reaches FINAL_ACCEPTED on its work branch, merge it to main immediately. Required GitHub Actions must pass before merge, and main must rerun the same applicable acceptance lanes after the merge before becoming the next development base.
 
 Rationale: Keeping multiple accepted phases only on work branches made main stale and weakened public release authority. Main should always represent the latest accepted baseline.
+
+## ADR-M09-001 — Recognize conventional src-layout module aliases
+
+Status: ACCEPTED
+
+For Python files under a leading src directory, index both filesystem-derived src.package.module and conventional package.module aliases.
+
+Rationale: Absolute imports in src-layout projects refer to the installed package name rather than the repository-relative src prefix; missing that alias produced false DEADCODE and missed BLOAT findings.
+
+## ADR-M09-002 — Propagate direct from-import re-exports
+
+Status: ACCEPTED
+
+Propagate direct module-level from-import symbol forwarding to a bounded fixed point so package facades resolve back to original candidates.
+
+Rationale: Package __init__.py facades are common Python repository structure; treating them as unrelated modules produced false DEADCODE and lost one-use wrapper evidence.
+
+## ADR-M09-003 — Separate usage from liveness evidence
+
+Status: ACCEPTED
+
+Track executable/usage references separately from declarative import/export liveness evidence.
+
+Rationale: Imports and __all__ should conservatively prevent a zero-reference DEADCODE claim but must not inflate the BLOAT rule's exactly-one-usage condition.
+
+## ADR-M09-004 — Resolve dotted attributes exactly before fallback
+
+Status: ACCEPTED
+
+Resolve dotted attributes through explicit import roots and only use unresolved name fallback when exactly one candidate with that private name exists.
+
+Rationale: Global fallback by attribute name could keep unrelated same-named functions alive and hide real dead code.
+
+## ADR-M09-005 — Run all accepted real-world lanes on every phase
+
+Status: ACCEPTED
+
+Trigger accepted Go public compatibility, bounded Go labels, and Python public-source workflows on main and work/**.
+
+Rationale: Each phase promotion should preserve previously accepted real-world evidence, not only synthetic/core gates for the currently edited language.

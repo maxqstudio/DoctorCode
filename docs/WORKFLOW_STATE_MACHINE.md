@@ -185,6 +185,50 @@ Authority: internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m0
 
 - The Python analyzer is read-only; rollback is source-control only and no analyzed repository content is mutated.
 
+## FLOW-PYTHON-REPOSITORY-SHAPED — Python repository-shaped regression validation
+
+Purpose: Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.
+Critical: FALSE
+Entry condition: M08 is accepted on main and Python 3.13 is provisioned in CI.
+Authority: internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go
+
+### States
+
+- MAIN_BASELINE
+- REPOSITORY_SHAPED_FAIL
+- TOPOLOGY_REPAIR
+- ALL_LANES_PASS
+- READY_FOR_PROMOTION
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| MAIN_BASELINE | REPOSITORY_SHAPED_FAIL | Run the 14-case repository-shaped Python corpus and preserve exact FP/FN evidence. | internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go |  |
+| REPOSITORY_SHAPED_FAIL | TOPOLOGY_REPAIR | Repair only source-layout aliases, direct re-export forwarding, usage/liveness separation, and dotted-module isolation. | internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go |  |
+| TOPOLOGY_REPAIR | ALL_LANES_PASS | Require M07/M08/M09 plus all accepted public/labeled real-world matrices on Linux, Windows, and macOS. | internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go |  |
+| ALL_LANES_PASS | READY_FOR_PROMOTION | Synchronize strict governance and prepare immediate PR promotion to main. | internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go |  |
+
+### Invariants
+
+- M07 and M08 accepted Python behavior must remain passing.
+- Import/export liveness evidence never becomes safe-delete proof.
+- One-use BLOAT evidence counts usage separately from declarative import/export liveness.
+- Unresolved attribute fallback cannot keep multiple same-named candidates alive.
+- Every accepted real-world matrix runs on both main and work/**.
+
+### Failure behavior
+
+- Any corpus FP/FN, prior-gate regression, real-world matrix failure, parse incompleteness, or strict governance drift blocks M09 promotion.
+
+### Restart behavior
+
+- All fixture roots and exact public repository pins are deterministic and rerunnable.
+
+### Rollback behavior
+
+- M09 topology repair can be reverted to main@29924f324db316a9a2985943c09d4711824a1220 without changing external source evidence.
+
 ## FLOW-REALWORLD-LABELED — Bounded real-world label validation
 
 Purpose: Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.

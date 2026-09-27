@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "session_id": "M09-PYTHON-REPOSITORY-SHAPED",
+  "phase": "M09_PYTHON_REPOSITORY_SHAPED",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "ACCEPTED",
+  "implementation_base_sha": "29924f324db316a9a2985943c09d4711824a1220",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M09-PYTHON-REPOSITORY-SHAPED.actual.json",
+    "diagram": "docs/sequence/generated/M09-PYTHON-REPOSITORY-SHAPED.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/benchmark/testdata/m09-python-repository-shaped.json",
+    "internal/analyzers/python/analyzer_test.go",
+    "internal/realworld/realworld_test.go",
+    "internal/realworld/labeled_test.go",
+    "internal/realworld/python_m07_test.go"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}

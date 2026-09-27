@@ -3,7 +3,7 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e
+Source digest: 1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a
 Status: CURRENT
 
 | File | Symbol | Kind | Lines@SHA | Responsibility | Reads/Writes | Called By | Tests |
@@ -53,6 +53,39 @@ Status: CURRENT
 | internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | use | function | 4-5 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | _generated_helper | function | 3-4 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | classify | function | 1-6 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py | run | function | 8-9 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py | generated_entry | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/namespace-package-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | target | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | target | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | _stale | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | _live | function | 4-5 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | test_helper | function | 3-4 | Observed Python symbol | | | |
+| internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
 
 ## Coverage
 

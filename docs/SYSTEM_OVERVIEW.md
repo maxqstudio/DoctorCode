@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 90 files, 2 language categories.
+Observed source inventory: 123 files, 2 language categories.
 
 ## Major components
 
@@ -40,10 +40,10 @@ Observed source inventory: 90 files, 2 language categories.
 | Detector Engine | Execute registered deterministic language analyzers, skip explicitly unavailable optional analyzers, and provide stable finding ordering. | finding aggregation, priority ordering | Go analyzer, Python analyzer |
 | Go Built-in Analyzer | Provide deliberately narrow high-signal Go rules with regression, adversarial, repository-shaped, and bounded real-world label evidence. | Go AST rules, conservative package-function reference counting, binding-aware pure-condition canonicalization, generated-file-aware Go dead-code evidence boundaries | Go parser/AST standard library |
 | Evidence Reducer | Turn the highest-priority finding into a tokenizer-independent bounded byte packet for small LLMs. | source excerpt bounds, security excerpt suppression, byte budget | detector engine |
-| Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate | Go analyzer, Python analyzer |
+| Precision Benchmark Harness | Evaluate labeled Go and Python corpora, count TP/FP/FN, compute corpus-scoped precision/recall, and block regressions at declared thresholds. | benchmark manifest validation, case-root containment, label matching, TP/FP/FN accounting, baseline regression gate, adversarial regression gate, repository-shaped regression gate, M07 Python regression gate, M08 Python adversarial gate, M09 Python repository-shaped gate | Go analyzer, Python analyzer |
 | Pinned Public Repository Validator | Run the Go analyzer against exact-SHA public repository snapshots and enforce selected compatibility and safety assertions without converting unlabeled results into precision claims. | source provenance manifest, exact checkout SHA validation, selected known-live negative assertions, real-world finding safety boundary | Go analyzer, GitHub Actions |
 | Bounded Real-World Label Validator | Evaluate explicitly reviewed valid, invalid, and ambiguous finding anchors against exact-SHA public Go source without pretending the repositories are exhaustively labeled. | M06 label manifest, valid-finding anchors, false-positive guards, ambiguous non-blocking observations | Go analyzer, Pinned Public Repository Validator, GitHub Actions |
-| Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative module-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, module-aware private-function reference evidence, recognized dynamic/export reference guards | host Python 3.8+ standard library ast, detector unavailable contract |
+| Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution | host Python 3.8+ standard library ast, detector unavailable contract |
 | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 
 ## Main data flow
@@ -69,6 +69,7 @@ Observed source inventory: 90 files, 2 language categories.
 - Pinned Public Python Validator -> Python Built-in Analyzer: Original public .py trees are parsed directly; parse failure is blocking and no external repository text becomes project authority.
 - Pinned Public Python Validator -> GitHub Actions: Exact SHA, parse/analyze success, safe finding boundaries, and the bounded Flask anchor are blocking on Linux, Windows, and macOS.
 - M08 Python adversarial corpus -> precision benchmark harness: Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior.
+- M09 Python repository-shaped corpus -> precision benchmark harness: Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation.
 
 ## Main user workflows
 
@@ -119,6 +120,17 @@ Authority: internal/analyzers/python/analyzer.go, internal/benchmark/testdata/m0
 - RULE_EVALUATION -> FINDING_CONVERSION : Apply five narrow category rules and serialize redacted evidence as JSON.
 - FINDING_CONVERSION -> SORTED_OUTPUT : Go assigns stable finding IDs, forces safe_autofix=false, and detector engine performs stable priority sorting.
 
+### FLOW-PYTHON-REPOSITORY-SHAPED — Python repository-shaped regression validation
+
+Challenge Python private-function reference evidence with realistic package/import topology before expanding language coverage.
+
+Authority: internal/benchmark/testdata/m09-python-repository-shaped.json and internal/analyzers/python/analyzer.go
+
+- MAIN_BASELINE -> REPOSITORY_SHAPED_FAIL : Run the 14-case repository-shaped Python corpus and preserve exact FP/FN evidence.
+- REPOSITORY_SHAPED_FAIL -> TOPOLOGY_REPAIR : Repair only source-layout aliases, direct re-export forwarding, usage/liveness separation, and dotted-module isolation.
+- TOPOLOGY_REPAIR -> ALL_LANES_PASS : Require M07/M08/M09 plus all accepted public/labeled real-world matrices on Linux, Windows, and macOS.
+- ALL_LANES_PASS -> READY_FOR_PROMOTION : Synchronize strict governance and prepare immediate PR promotion to main.
+
 ### FLOW-REALWORLD-LABELED — Bounded real-world label validation
 
 Use exact pinned public Go source to catch real detector false positives and preserve verified findings without converting a bounded label set into whole-repository precision claims.
@@ -154,9 +166,9 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 ## Lifecycle and state
 
-Current phase: M08_PYTHON_ADVERSARIAL
+Current phase: M09_PYTHON_REPOSITORY_SHAPED
 
-Current status: M08_ACCEPTED
+Current status: M09_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -194,6 +206,7 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
+- FLOW-PYTHON-REPOSITORY-SHAPED: Any corpus FP/FN, prior-gate regression, real-world matrix failure, parse incompleteness, or strict governance drift blocks M09 promotion.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
@@ -201,15 +214,16 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize accepted M08 Project Truth documentation.
-- Remove temporary M08 doc-sync workflow and update README to M08-current.
-- Freeze M08 only after final exact-SHA strict governance, core CI, and pinned public Python validation all pass without a bot mutator.
-- After M08 freeze, evaluate M09 repository-shaped Python interactions before adding another language.
+- Synchronize accepted M09 Project Truth documentation.
+- Update README to M09-current and remove the temporary M09 doc-sync workflow.
+- Run final exact-SHA governance plus all core and accepted real-world lanes after cleanup.
+- Open a PR to main immediately after FINAL_ACCEPTED branch evidence passes.
+- After merge, rerun all accepted lanes on the exact main merge SHA before starting M10.
 
 Blocked actions:
-- Publishing M08 corpus metrics as real-world precision or recall.
-- Treating zero-reference Python findings as safe-delete proof.
-- Claiming arbitrary dynamic Python reference resolution.
+- Publishing M09 fixture metrics as real-world Python precision or recall.
+- Treating liveness evidence as proof that a function is behaviorally required.
+- Treating zero conservative references as safe-delete proof.
 - Auto-deleting or auto-fixing Python findings.
 
 Known blockers:
@@ -219,24 +233,26 @@ Known blockers:
 
 ### Proven
 
-- M07 accepted baseline is fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e.
+- M08 is merged and post-merge accepted on main at 29924f324db316a9a2985943c09d4711824a1220.
 - DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- Initial M08 candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 false positives and 2 false negatives while M07 stayed passing.
-- M08 repaired Python identity semantics, candidate/module-aware private-function references, recognized __all__/import/module-attribute/getattr/globals references, and not_secret placeholder filtering.
-- Exact synchronized M08 candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict Skill_Workflow governance run 36287085335.
-- The same candidate passed core CI run 36287085344 on ubuntu-latest, windows-latest, and macos-latest.
-- The same candidate passed pinned public Python validation run 36287085354 on ubuntu-latest, windows-latest, and macos-latest.
-- The M08 10-case adversarial corpus reports 2 TP, 0 FP, and 0 FN.
-- The accepted M07 six-case Python corpus remains 5 TP, 0 FP, and 0 FN.
-- Pinned click/httpx/requests/Flask validation remains passing after M08 reference-semantics repair.
+- Final pre-repair M09 candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 true positives, 5 false positives, and 3 false negatives.
+- M09 repaired conventional src-layout aliases, direct module-level re-export propagation, usage/liveness separation, and exact dotted imported-module resolution.
+- The repaired 14-case M09 corpus reports 5 true positives, 0 false positives, and 0 false negatives.
+- Exact synchronized validation commit d4c8639617f0edec703dffe549a075a5e6626ff7 passed strict Skill_Workflow governance run 36301912060.
+- The same commit passed core CI run 36301912063 on ubuntu-latest, windows-latest, and macos-latest.
+- The same commit passed Real World Go Validation run 36301912067 on all three operating systems.
+- The same commit passed M06 Labeled Real World Go run 36301912070 on all three operating systems.
+- The same commit passed M07 Python Real World run 36301912054 on all three operating systems.
+- Accepted real-world regression workflows now trigger on main and work/** so every phase revalidates prior public/labeled evidence.
 
 ### Not proven
 
-- M08 corpus metrics are not general Python ecosystem precision or recall.
-- Recognized dynamic/export references cover only explicit bounded syntax patterns and do not resolve arbitrary reflection, eval/exec, plugin loading, or external callers.
+- M09 corpus metrics are not general Python ecosystem precision or recall.
+- The src-layout alias is limited to one conventional leading src directory and does not infer arbitrary packaging roots or sys.path manipulation.
+- Re-export propagation handles direct module-level from-import edges and does not resolve arbitrary assignments, star-import semantics, import hooks, or runtime mutation.
+- Dotted module resolution depends on explicit import roots and is not a whole-program import graph.
 - Zero conservative references remain insufficient for PROVEN_UNUSED or safe deletion.
-- Public Python snapshots remain incompletely labeled beyond tracked bounded anchors.
-- Python .pyi semantic analysis and automatic mutation remain unsupported.
+- Python .pyi semantic analysis and automatic source mutation remain unsupported.
 
 ## Important limitations
 

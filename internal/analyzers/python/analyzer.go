@@ -243,7 +243,7 @@ candidate_by_key = {}
 candidates_by_name = {}
 candidates_by_module_name = {}
 
-def module_name(rel):
+def primary_module_name(rel):
     value = rel[:-3] if rel.endswith(".py") else rel
     if value == "__init__":
         return ""
@@ -252,13 +252,20 @@ def module_name(rel):
         value = value[:-len(suffix)]
     return value.replace("/", ".").strip(".")
 
-modules_by_rel = {rel: module_name(rel) for _, rel, _, _, _ in files}
+def module_names(rel):
+    primary = primary_module_name(rel)
+    names = {primary}
+    if primary.startswith("src.") and len(primary) > len("src."):
+        names.add(primary[len("src."):])
+    return tuple(sorted(names))
+
+primary_module_by_rel = {rel: primary_module_name(rel) for _, rel, _, _, _ in files}
+module_names_by_rel = {rel: module_names(rel) for _, rel, _, _, _ in files}
 candidates = []
 
 for path, rel, source, tree, generated in files:
     if is_test_path(rel):
         continue
-    module = modules_by_rel[rel]
     for node in tree.body:
         if not isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
             continue
@@ -273,14 +280,17 @@ for path, rel, source, tree, generated in files:
         candidate_by_key[key] = node
         candidates.append((rel, node, key))
         candidates_by_name.setdefault(name, []).append(key)
-        candidates_by_module_name.setdefault((module, name), []).append(key)
+        for module in module_names_by_rel[rel]:
+            candidates_by_module_name.setdefault((module, name), []).append(key)
 
-reference_counts = {key: 0 for key in candidate_by_key}
+usage_counts = {key: 0 for key in candidate_by_key}
+live_keys = set()
+forwarded_symbols = {}
 
 def resolve_from_module(rel, node):
     if node.level == 0:
         return node.module or ""
-    current = modules_by_rel.get(rel, "")
+    current = primary_module_by_rel.get(rel, "")
     package = current if rel.endswith("/__init__.py") or rel == "__init__.py" else current.rpartition(".")[0]
     parts = [part for part in package.split(".") if part]
     up = max(node.level - 1, 0)
@@ -291,18 +301,70 @@ def resolve_from_module(rel, node):
         base.extend(node.module.split("."))
     return ".".join(base)
 
-def increment(keys):
+def unique_keys(keys):
+    return list(dict.fromkeys(keys))
+
+def symbol_keys(module, name):
+    return unique_keys(
+        candidates_by_module_name.get((module, name), [])
+        + forwarded_symbols.get((module, name), [])
+    )
+
+# Propagate direct module-level re-exports to a small fixed point so
+# "from pkg import _helper" can resolve through pkg/__init__.py to pkg.core.
+for _ in range(len(files) + 1):
+    changed = False
+    for path, rel, source, tree, generated in files:
+        current_modules = module_names_by_rel[rel]
+        for node in tree.body:
+            if not isinstance(node, ast.ImportFrom):
+                continue
+            target_module = resolve_from_module(rel, node)
+            for alias in node.names:
+                if alias.name == "*":
+                    continue
+                keys = symbol_keys(target_module, alias.name)
+                if not keys:
+                    continue
+                local_name = alias.asname or alias.name
+                for current_module in current_modules:
+                    bucket = forwarded_symbols.setdefault((current_module, local_name), [])
+                    before = len(bucket)
+                    bucket[:] = unique_keys(bucket + keys)
+                    if len(bucket) != before:
+                        changed = True
+    if not changed:
+        break
+
+def increment_usage(keys):
     for key in set(keys):
-        if key in reference_counts:
-            reference_counts[key] += 1
+        if key in usage_counts:
+            usage_counts[key] += 1
+
+def mark_live(keys):
+    for key in set(keys):
+        if key in usage_counts:
+            live_keys.add(key)
 
 def local_candidate(rel, name):
     key = (rel, name)
-    return [key] if key in reference_counts else []
+    return [key] if key in usage_counts else []
+
+def attribute_parts(node):
+    parts = []
+    current = node
+    while isinstance(current, ast.Attribute):
+        parts.append(current.attr)
+        current = current.value
+    if not isinstance(current, ast.Name):
+        return None
+    parts.append(current.id)
+    parts.reverse()
+    return parts
 
 for path, rel, source, tree, generated in files:
     import_aliases = {}
-    module_aliases = {}
+    imported_modules = {}
 
     for node in ast.walk(tree):
         if isinstance(node, ast.ImportFrom):
@@ -311,29 +373,37 @@ for path, rel, source, tree, generated in files:
                 if alias.name == "*":
                     continue
                 local_name = alias.asname or alias.name
-                keys = candidates_by_module_name.get((target_module, alias.name), [])
+                keys = symbol_keys(target_module, alias.name)
                 if keys:
                     import_aliases.setdefault(local_name, []).extend(keys)
+                    mark_live(keys)
         elif isinstance(node, ast.Import):
             for alias in node.names:
-                local_name = alias.asname or alias.name.split(".")[0]
-                module_aliases[local_name] = alias.name
+                if alias.asname:
+                    imported_modules[alias.asname] = alias.name
+                else:
+                    root_name = alias.name.split(".")[0]
+                    imported_modules[root_name] = root_name
 
     for node in ast.walk(tree):
         if isinstance(node, ast.Name) and isinstance(node.ctx, ast.Load):
-            increment(local_candidate(rel, node.id))
-            increment(import_aliases.get(node.id, []))
+            increment_usage(local_candidate(rel, node.id))
+            increment_usage(import_aliases.get(node.id, []))
         elif isinstance(node, ast.Attribute):
             resolved = False
-            if isinstance(node.value, ast.Name):
-                imported_module = module_aliases.get(node.value.id)
-                if imported_module is not None:
-                    keys = candidates_by_module_name.get((imported_module, node.attr), [])
+            parts = attribute_parts(node)
+            if parts and len(parts) >= 2:
+                imported_root = imported_modules.get(parts[0])
+                if imported_root is not None:
+                    module = ".".join([imported_root] + parts[1:-1])
+                    keys = symbol_keys(module, parts[-1])
                     if keys:
-                        increment(keys)
+                        increment_usage(keys)
                         resolved = True
             if not resolved:
-                increment(candidates_by_name.get(node.attr, []))
+                keys = candidates_by_name.get(node.attr, [])
+                if len(keys) == 1:
+                    increment_usage(keys)
         elif isinstance(node, ast.Call):
             if (
                 isinstance(node.func, ast.Name)
@@ -344,7 +414,8 @@ for path, rel, source, tree, generated in files:
             ):
                 name = node.args[1].value
                 keys = local_candidate(rel, name)
-                increment(keys if keys else candidates_by_name.get(name, []))
+                fallback = candidates_by_name.get(name, [])
+                increment_usage(keys if keys else (fallback if len(fallback) == 1 else []))
         elif isinstance(node, ast.Subscript):
             if (
                 isinstance(node.value, ast.Call)
@@ -355,7 +426,7 @@ for path, rel, source, tree, generated in files:
                 and isinstance(node.slice, ast.Constant)
                 and isinstance(node.slice.value, str)
             ):
-                increment(local_candidate(rel, node.slice.value))
+                increment_usage(local_candidate(rel, node.slice.value))
 
     exported = set()
     for node in tree.body:
@@ -369,7 +440,11 @@ for path, rel, source, tree, generated in files:
                 if isinstance(child, ast.Constant) and isinstance(child.value, str):
                     exported.add(child.value)
     for name in exported:
-        increment(local_candidate(rel, name))
+        keys = local_candidate(rel, name)
+        if not keys:
+            for module in module_names_by_rel[rel]:
+                keys.extend(symbol_keys(module, name))
+        mark_live(keys)
 
 def emit(rule_id, category, severity, confidence, rel, node, summary, evidence):
     findings.append({
@@ -386,17 +461,17 @@ def emit(rule_id, category, severity, confidence, rel, node, summary, evidence):
     })
 
 for rel, node, key in candidates:
-    count = reference_counts.get(key, 0)
-    if count == 0:
+    count = usage_counts.get(key, 0)
+    if count == 0 and key not in live_keys:
         emit(
             "PY-DEADCODE-PRIVATE-ZERO-REF", "DEADCODE", "MEDIUM", "HIGH",
             rel, node,
-            "private module-level function %s has no lexical references in the visible Python tree" % node.name,
+            "private module-level function %s has no conservative references in the visible Python tree" % node.name,
             [
-                "0 conservative references found for this module/function candidate",
+                "0 conservative usage references and no recognized import/export liveness evidence",
                 "decorated, dunder, generated, and test-defined functions are excluded from candidates",
-                "__all__, recognized imports, module attributes, getattr string names, and globals string subscripts contribute conservative references",
-                "HIGH is below PROVEN_UNUSED because imports, reflection, plugins, and external callers may exist",
+                "recognized source-layout aliases, re-exports, imports, module attributes, getattr string names, globals string subscripts, and __all__ contribute conservative evidence",
+                "HIGH is below PROVEN_UNUSED because reflection, plugins, external callers, and unresolved dynamic behavior may exist",
             ],
         )
 
@@ -422,15 +497,16 @@ def forwarded_call(node):
     return True
 
 for rel, node, key in candidates:
-    if reference_counts.get(key, 0) == 1 and forwarded_call(node):
+    if usage_counts.get(key, 0) == 1 and forwarded_call(node):
         emit(
             "PY-BLOAT-PASSTHROUGH-WRAPPER", "BLOAT", "LOW", "SUSPICIOUS",
             rel, node,
-            "private one-call pass-through wrapper %s has one conservative reference" % node.name,
+            "private one-call pass-through wrapper %s has one conservative usage reference" % node.name,
             [
                 "body is a single return of another call",
                 "plain positional parameters are forwarded unchanged and in order",
-                "wrapper has exactly one module-aware conservative reference",
+                "wrapper has exactly one candidate/module-aware usage reference",
+                "import/export liveness evidence is tracked separately and does not inflate the one-use wrapper count",
                 "SUSPICIOUS only: naming, policy, instrumentation, or API intent may justify the wrapper",
             ],
         )

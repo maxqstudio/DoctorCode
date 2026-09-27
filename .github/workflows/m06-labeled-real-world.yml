@@ -3,7 +3,8 @@ name: M06 Labeled Real World Go
 on:
   push:
     branches:
-      - "work/m06-realworld-labeled"
+      - main
+      - "work/**"
   pull_request:
 
 permissions:

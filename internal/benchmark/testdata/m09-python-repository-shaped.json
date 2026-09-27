@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "language": "Python",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "src-layout-from-import-live",
+      "root": "m09-python/src-layout-from-import-live",
+      "expected": []
+    },
+    {
+      "name": "package-init-reexport-live",
+      "root": "m09-python/package-init-reexport-live",
+      "expected": []
+    },
+    {
+      "name": "package-init-reexport-bloat",
+      "root": "m09-python/package-init-reexport-bloat",
+      "expected": [
+        {
+          "rule_id": "PY-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "pkg/core.py",
+          "summary_contains": "_wrapper"
+        }
+      ]
+    },
+    {
+      "name": "relative-alias-live",
+      "root": "m09-python/relative-alias-live",
+      "expected": []
+    },
+    {
+      "name": "nested-dotted-module-live",
+      "root": "m09-python/nested-dotted-module-live",
+      "expected": []
+    },
+    {
+      "name": "same-name-nested-package-isolation",
+      "root": "m09-python/same-name-nested-package-isolation",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "pkg_a/helpers.py",
+          "summary_contains": "_helper"
+        }
+      ]
+    },
+    {
+      "name": "nested-dotted-same-name-isolation",
+      "root": "m09-python/nested-dotted-same-name-isolation",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "pkg_a/core.py",
+          "summary_contains": "_helper"
+        }
+      ]
+    },
+    {
+      "name": "test-reference-live",
+      "root": "m09-python/test-reference-live",
+      "expected": []
+    },
+    {
+      "name": "generated-reference-live",
+      "root": "m09-python/generated-reference-live",
+      "expected": []
+    },
+    {
+      "name": "namespace-package-live",
+      "root": "m09-python/namespace-package-live",
+      "expected": []
+    },
+    {
+      "name": "type-checking-reference-conservative",
+      "root": "m09-python/type-checking-reference-conservative",
+      "expected": []
+    },
+    {
+      "name": "conditional-import-conservative",
+      "root": "m09-python/conditional-import-conservative",
+      "expected": []
+    },
+    {
+      "name": "src-layout-dead-isolation",
+      "root": "m09-python/src-layout-dead-isolation",
+      "expected": [
+        {
+          "rule_id": "PY-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "src/app/helpers.py",
+          "summary_contains": "_stale"
+        }
+      ]
+    },
+    {
+      "name": "src-layout-bloat-live",
+      "root": "m09-python/src-layout-bloat-live",
+      "expected": [
+        {
+          "rule_id": "PY-BLOAT-PASSTHROUGH-WRAPPER",
+          "path": "src/app/wrappers.py",
+          "summary_contains": "_wrapper"
+        }
+      ]
+    }
+  ]
+}

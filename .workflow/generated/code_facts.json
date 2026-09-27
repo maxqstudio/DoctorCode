@@ -59,7 +59,7 @@
       "file": "internal/analyzers/python/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 567
+      "lines": 643
     },
     {
       "directory": "internal/analyzers/python",
@@ -545,6 +545,237 @@
       "lines": 1
     },
     {
+      "directory": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg",
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg",
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg",
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/namespace-package-live",
+      "file": "internal/benchmark/testdata/m09-python/namespace-package-live/app.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg",
+      "file": "internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/nested-dotted-module-live",
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub",
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation",
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a",
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b",
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/__init__.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-live",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/__init__.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a",
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b",
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b",
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app",
+      "file": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/test-reference-live/pkg",
+      "file": "internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/test-reference-live/tests",
+      "file": "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py",
+      "is_test": true,
+      "language": "Python",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg",
+      "file": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg",
+      "file": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 5
+    },
+    {
       "directory": "internal/detector",
       "file": "internal/detector/detector.go",
       "is_test": false,
@@ -734,6 +965,66 @@
     },
     {
       "caller": "internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py::use",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py::run",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py::generated_entry",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/namespace-package-live/app.py::run",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py::run",
+      "target_token": "pkg.sub.core._helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py::run",
+      "target_token": "pkg_b.core._helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py::run",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py::run",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py::run",
+      "target_token": "h"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py::run",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py::run",
+      "target_token": "_wrapper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py::_wrapper",
+      "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py::run",
+      "target_token": "_live"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py::run",
+      "target_token": "_helper"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py::test_helper",
       "target_token": "_helper"
     }
   ],
@@ -1098,20 +1389,285 @@
       "line_start": 1,
       "locator": "internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py::classify",
       "symbol": "classify"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py",
+      "kind": "function",
+      "line_end": 9,
+      "line_start": 8,
+      "locator": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py::generated_entry",
+      "symbol": "generated_entry"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/namespace-package-live/app.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/namespace-package-live/app.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py::_wrapper",
+      "symbol": "_wrapper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py::_stale",
+      "symbol": "_stale"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py",
+      "kind": "function",
+      "line_end": 5,
+      "line_start": 4,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py::_live",
+      "symbol": "_live"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py::run",
+      "symbol": "run"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py::_helper",
+      "symbol": "_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py",
+      "kind": "function",
+      "line_end": 4,
+      "line_start": 3,
+      "locator": "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py::test_helper",
+      "symbol": "test_helper"
+    },
+    {
+      "file": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py",
+      "kind": "function",
+      "line_end": 2,
+      "line_start": 1,
+      "locator": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py::_helper",
+      "symbol": "_helper"
     }
   ],
   "schema_version": 1,
-  "source_digest": "5fdc30071dbe78da763c9da8afab41140a657647e96bfbc00bd8420b10e0034e",
+  "source_digest": "1c1a94a01c98470713f76bd2215408fe51df8aca1ba334e1f295003781b0b92a",
   "source_summary": {
-    "files": 90,
+    "files": 123,
     "languages": {
       "Go": 68,
-      "Python": 22
+      "Python": 55
     },
-    "lines": 3797,
-    "test_files": 1
+    "lines": 3985,
+    "test_files": 2
   },
   "tests": [
-    "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py"
+    "internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py",
+    "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py"
   ]
 }
