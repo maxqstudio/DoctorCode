@@ -3,16 +3,18 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
+Source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 394 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 404 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 101 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/related.go | Go | 178 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
@@ -120,8 +122,8 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
 | internal/engine/engine.go | Go | 93 | internal/engine | NO |
-| internal/evidence/packet.go | Go | 144 | internal/evidence | NO |
-| internal/evidence/packet_test.go | Go | 107 | internal/evidence | NO |
+| internal/evidence/packet.go | Go | 237 | internal/evidence | NO |
+| internal/evidence/packet_test.go | Go | 197 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
 | internal/model/model.go | Go | 71 | internal/model | NO |

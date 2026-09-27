@@ -4,20 +4,21 @@
 
 ## Evidence boundary
 
-M11 Context Compiler Foundation is product-main accepted at 3ca18bdca11e436b3a2fa63491976041639eeee2 after strict governance and all accepted Linux, Windows, and macOS regression lanes passed. M11 provides exact current finding-ID packet retrieval and repository-contained excerpt reads only; it remains single-finding, byte-bounded, LLM-optional, non-mutating, and does not authorize safe deletion, auto-fix, stale-ID migration, or arbitrary multi-file dependency inference.
+M12 Go Related Context adds bounded production/test reference excerpts for findings enclosed by a top-level non-method Go function. Binding-aware same-file references, same-package cross-file references, shadowing exclusion, external-test-package exclusion, byte-budget truncation, and traversal-before-provider rejection are tested. Product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Python and non-Go findings retain M11 primary-source-only context.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
+Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M11-MAIN-BASELINE | M11 must branch from the exact final accepted M10 main authority and retain the pinned Skill_Workflow authority. | work/m11-context-compiler was created from main@0184e20a563b5f36b2a642fb3f5146c152893f6b; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
-| M11-RED-EVIDENCE | Context selection and filesystem boundary weaknesses must be demonstrated before repair. | Core CI run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63 failed because parseContextArgs/findFindingByID were absent and both traversal/symlink escape tests demonstrated escaped reads. | PASS |
-| M11-EXACT-FINDING-CONTEXT | doctorcode context must select one exact current audit finding by deterministic finding ID and build a bounded packet for that finding. | cmd/doctorcode/main_test.go covers exact selection and the audit-select-packet pipeline; Core CI run 36311250640 passed the finding-specific CLI smoke on all three operating systems. | PASS |
-| M11-FILESYSTEM-BOUNDARY | Evidence source excerpts must not read outside the resolved repository root through traversal or symlink escape. | internal/evidence/packet_test.go contains blocking traversal and symlink escape tests; sourceExcerpt resolves and checks the path before os.ReadFile. Core CI 36311250640 passed on Linux, Windows, and macOS. | PASS |
-| M11-REGRESSION-MATRIX | M11 must preserve all accepted detector and public-source regression lanes across Linux, Windows, and macOS. | At 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956: Core CI 36311250640, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed across all three operating systems. | PASS |
-| M11-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M11 sequence artifacts must pass strict governance on the final exact M11 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36311808969 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 completed success after generated M11 Project Truth and sequence synchronization; finalization changes governance state only and will be revalidated on its exact SHA. | PASS |
-| M11-MAIN-POST-MERGE | The exact M11 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before becoming the next development base. | main@3ca18bdca11e436b3a2fa63491976041639eeee2: Governance Bootstrap 36312084318, Core CI 36312084324, M10 Labeled Real World Python 36312084320, M07 Python Real World 36312084350, M06 Labeled Real World Go 36312084315, and Real World Go Validation 36312084307 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M12-MAIN-BASELINE | M12 must branch from the current governance-normalized M11 main and retain the pinned Skill_Workflow authority. | work/m12-go-related-context was created from main@2caa530a9e1f284a0446b7ead6d97218de996498; M11 product baseline remains 3ca18bdca11e436b3a2fa63491976041639eeee2; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
+| M12-RED-CONTRACT | The related-context packet contract must be demonstrated absent before implementation. | Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b failed because RelatedLocations, RelatedTotal, and RelatedExcerpts did not exist. | PASS |
+| M12-BINDING-PRECISION | Same-file Go references must preserve AST binding identity, local shadowing must not count, and same-package test references must be distinguished. | Core CI run 36322997947 exposed the reparse identity defect; internal/analyzers/golang/related_test.go now requires exactly one production reference and one test_reference while excluding the local shadow binding and external test package. | PASS |
+| M12-EARLY-FILESYSTEM-BOUNDARY | Repository containment must reject traversal before related discovery parses source outside the root. | Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 failed on an intentionally invalid ../outside.go parse; the repaired Build path validates the primary source before invoking related discovery, and product Core CI 36323276401 passes. | PASS |
+| M12-BOUNDED-PACKET-V2 | Packet schema v2 must add deterministic related_total/related_excerpts without exceeding max-bytes and must mark truncation when not all related context fits. | internal/evidence/packet_test.go covers two related excerpts, tight-budget truncation, accurate excerpt bounds, and existing security/path boundaries; Core CI 36323276401 passed on all three operating systems. | PASS |
+| M12-CLI-E2E | The public context command must return a bounded packet with both a production reference and a same-package test reference for a real audited Go finding. | Core CI run 36323276401 executes the finding-specific related-context smoke on Linux, Windows, and macOS and asserts schema_version=2, related_total=2, reference/test_reference order, exact finding ID, and byte budget. | PASS |
+| M12-REGRESSION-MATRIX | All previously accepted detector and public-source regression lanes must remain passing across Linux, Windows, and macOS. | At bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8: Core CI 36323276401, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 all completed success across all three operating systems. | PASS |
+| M12-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M12 sequence artifacts must pass strict governance on the final exact M12 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36323629497 at edc415a2935307490cf73ec12fed72ff9a0c042b completed success after generated M12 Project Truth and sequence synchronization; finalization is governance-only and will be revalidated on its exact SHA. | PASS |
 
 ## Test commands
 
@@ -28,15 +29,14 @@ Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce4
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
-- go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
-- Core CI finding-specific context smoke test
+- Core CI finding-specific related context smoke test
 
 ## Runtime checks
 
 - go test ./...
-- Core CI finding-specific context smoke: isolated Go fixture -> audit exact finding ID -> context same ID -> validate bounded JSON packet
+- Core CI related-context smoke: isolated Go simplify finding -> exact finding ID -> context packet -> production reference + test reference -> byte budget
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
@@ -47,7 +47,7 @@ Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce4
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M11-CONTEXT-COMPILER
+Sequence session contract: M12-GO-RELATED-CONTEXT
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

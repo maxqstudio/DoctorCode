@@ -181,6 +181,11 @@ func runNext(args []string) {
 		writeJSON(packet)
 		return
 	}
+	printEvidencePacket(packet)
+}
+
+
+func printEvidencePacket(packet evidence.Packet) {
 	fmt.Printf("%s %s %s %s:%d\n%s\n", packet.Finding.ID, packet.Finding.Category, packet.Finding.Confidence, packet.Finding.Path, packet.Finding.LineStart, packet.Finding.Summary)
 	for _, item := range packet.Finding.Evidence {
 		fmt.Printf("EVIDENCE %s\n", item)
@@ -188,11 +193,16 @@ func runNext(args []string) {
 	if packet.SourceExcerpt != "" {
 		fmt.Printf("SOURCE\n%s\n", packet.SourceExcerpt)
 	}
+	for _, item := range packet.RelatedExcerpts {
+		fmt.Printf("RELATED %s %s:%d-%d\n%s\n", item.Kind, item.Path, item.LineStart, item.LineEnd, item.Excerpt)
+	}
+	if packet.RelatedTotal > len(packet.RelatedExcerpts) {
+		fmt.Printf("RELATED OMITTED %d\n", packet.RelatedTotal-len(packet.RelatedExcerpts))
+	}
 	if packet.SensitiveExcerptOmitted {
 		fmt.Println("SOURCE OMITTED_SENSITIVE")
 	}
 }
-
 
 func runContext(args []string) {
 	findingID, root, asJSON, maxBytes, err := parseContextArgs(args)

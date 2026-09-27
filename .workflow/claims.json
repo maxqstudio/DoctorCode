@@ -927,6 +927,78 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "claim": "M12 derives related locations for findings enclosed by a top-level non-method Go function, preserving same-file AST object identity and admitting unresolved cross-file identifiers only from the same Go package.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M12-GO-RELATED",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"
+      ],
+      "source_owners": [
+        "internal/analyzers/golang/related.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/analyzers/golang/related_test.go"
+      ]
+    },
+    {
+      "claim": "M12 evidence packet schema version 2 can include bounded related production/test excerpts, reports related_total, caps emitted excerpts at eight, and preserves max-bytes with truncation signaling.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M12-PACKET-V2",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"
+      ],
+      "source_owners": [
+        "internal/evidence/packet.go",
+        "cmd/doctorcode/main.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/evidence/packet_test.go",
+        ".github/workflows/ci.yml"
+      ]
+    },
+    {
+      "claim": "M12 validates the selected source path against the repository boundary before invoking Go related discovery, so parent traversal is rejected before an outside Go file is parsed.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M12-BOUNDARY",
+      "runtime_evidence": [
+        "RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52",
+        "GREEN Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"
+      ],
+      "source_owners": [
+        "internal/evidence/packet.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/evidence/packet_test.go"
+      ]
+    },
+    {
+      "claim": "M12 related-context enrichment is Go-only; Python and other languages retain primary-source-only context until a separately accepted parity milestone.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M12-LANGUAGE-BOUNDARY",
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36323276401 at bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8"
+      ],
+      "source_owners": [
+        ".workflow/state.json",
+        "internal/evidence/packet.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/evidence/packet_test.go"
+      ]
     }
   ],
   "relations": [],

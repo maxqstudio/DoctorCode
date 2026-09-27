@@ -2,6 +2,31 @@
   "entries": [
     {
       "changes": [
+        "Accepted binding-aware Go related production/test reference context for eligible findings.",
+        "Accepted packet schema v2 with bounded related excerpts and related_total/truncation signaling.",
+        "Accepted early repository-boundary rejection before related discovery reads outside source.",
+        "Accepted three-OS end-to-end related-context CLI behavior while preserving all previous Go/Python regression lanes.",
+        "Kept M12 Go-only, non-transitive, non-mutating, and outside safe-delete or automatic-repair authority."
+      ],
+      "date": "2026-09-27",
+      "title": "M12 Go Related Context accepted baseline",
+      "type": "acceptance"
+    },
+    {
+      "changes": [
+        "Added binding-aware related-location discovery for top-level non-method Go functions.",
+        "Added packet schema v2 related_total and bounded related_excerpts with production/test kinds.",
+        "Preserved primary source priority and max-bytes while marking omitted related context as truncated.",
+        "Rejected parent traversal before Go related discovery can parse an outside file.",
+        "Added three-OS CLI smoke proving exact finding-ID related context with one production and one same-package test reference.",
+        "Corrected project technology truth to list both Go and Python."
+      ],
+      "date": "2026-09-27",
+      "title": "M12 Go Related Context candidate",
+      "type": "development"
+    },
+    {
+      "changes": [
         "Merged FINAL_ACCEPTED M11 through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.",
         "Passed strict Governance Bootstrap on the exact product main merge SHA.",
         "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",

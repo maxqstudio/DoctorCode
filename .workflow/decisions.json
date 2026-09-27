@@ -258,6 +258,27 @@
       "rationale": "Lexical filepath.Join alone allowed parent traversal and symlink targets outside the repository to expose unrelated local files through evidence packets.",
       "status": "ACCEPTED",
       "title": "Resolve evidence paths before repository containment checks"
+    },
+    {
+      "decision": "For M12, derive related context only when the selected finding is enclosed by a top-level non-method Go function.",
+      "id": "ADR-M12-001",
+      "rationale": "This yields useful caller/test context without inventing method resolution, whole-program graphs, or cross-language semantics.",
+      "status": "ACCEPTED",
+      "title": "Related context starts with enclosing top-level Go functions"
+    },
+    {
+      "decision": "Reuse the selected source AST so same-file references require exact ast.Object identity; accept nil-object references only from other files in the same Go package, and ignore external test packages.",
+      "id": "ADR-M12-002",
+      "rationale": "Reparsing the source broke object identity, while name-only matching would reintroduce shadowing false relations.",
+      "status": "ACCEPTED",
+      "title": "Preserve binding identity before lexical cross-file fallback"
+    },
+    {
+      "decision": "Keep the selected finding source as first-priority context, then append at most eight related excerpts in deterministic order while they fit max-bytes; report related_total and mark truncation when context is omitted.",
+      "id": "ADR-M12-003",
+      "rationale": "The selected defect evidence must never be displaced by optional related context, and bounded packets must remain useful to small local models.",
+      "status": "ACCEPTED",
+      "title": "Primary source outranks related excerpts under the packet budget"
     }
   ],
   "schema_version": 1

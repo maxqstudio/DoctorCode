@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m12-go-related-context
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 3ca18bdca11e436b3a2fa63491976041639eeee2
-Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
+Current source digest: cd02b1cd9cc68dff6bd60e85d19d5d87302c45c4932b45b73698a0c2dd547085
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -24,7 +24,7 @@ UI authority: see SOURCE_AUTHORITY_MAP.md
 Historical/reference authority: see SOURCE_AUTHORITY_MAP.md
 
 ## Technology
-Languages: Go
+Languages: Go, Python
 Frameworks:
 Persistence:
 External systems: GitHub Actions, host compilers and language runtimes

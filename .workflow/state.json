@@ -1,46 +1,43 @@
 {
   "blocked_actions": [
-    "Adding another semantic language without a declared milestone and evidence plan.",
-    "Expanding single-finding context into arbitrary whole-program context inference without explicit scope.",
-    "Treating a context packet as proof that code is safe to delete or auto-fix.",
-    "Starting MCP or Skill adapter product logic without an explicit milestone contract."
+    "Claiming Python related-context parity from M12.",
+    "Treating lexical related locations as a complete dependency graph.",
+    "Treating a related-context packet as proof that code is safe to delete or auto-fix.",
+    "Expanding into MCP or Skill adapters before context parity and verification contracts are explicitly scoped."
   ],
   "blockers": [],
   "last_accepted_branch": "main",
   "last_accepted_sha": "3ca18bdca11e436b3a2fa63491976041639eeee2",
   "next_authorized_actions": [
-    "Await an explicit Owner directive or repository governance update that defines the next milestone; no M12 scope is currently declared.",
-    "When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.",
-    "Preserve M11 product acceptance at 3ca18bdca11e436b3a2fa63491976041639eeee2 and its exact post-merge run evidence as immutable historical evidence."
+    "Run final exact-SHA acceptance on the finalized M12 branch tree with no temporary workflow present.",
+    "Open and merge the FINAL_ACCEPTED M12 pull request to main.",
+    "Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting the next product phase."
   ],
   "not_proven": [
-    "M11 context packets remain single-finding packets and do not compile transitive call graphs, related symbols, tests, or multi-file dependency context.",
-    "A finding ID is valid for the current audited source state and M11 does not migrate stale IDs across repository changes.",
-    "The byte budget is deterministic but is not an exact token count for an arbitrary model tokenizer.",
-    "M11 does not change detector precision claims, confidence levels, or safe_autofix=false semantics.",
-    "Path containment blocks ordinary traversal and resolved symlink escape at packet construction time; it is not a claim against every filesystem race on a hostile local host."
+    "M12 related discovery is intentionally limited to enclosing top-level non-method Go functions in the same directory and package.",
+    "Go methods, external test packages, Python findings, and other languages retain the M11 primary-source-only context behavior.",
+    "M12 does not construct a transitive call graph, import graph, whole-program dependency graph, or semantic slice.",
+    "Cross-file same-package references use conservative parser binding behavior rather than a full Go type checker.",
+    "At most eight related excerpts are emitted; related_total reports discovered locations even when the byte budget or cap omits excerpts.",
+    "The byte budget remains deterministic bytes, not exact tokenizer counts.",
+    "Context evidence remains review input and never proves safe deletion or authorizes automatic repair."
   ],
-  "phase": "M11_CONTEXT_COMPILER_FOUNDATION",
+  "phase": "M12_GO_RELATED_CONTEXT",
   "proven": [
-    "M10 final normalized authority is main@0184e20a563b5f36b2a642fb3f5146c152893f6b.",
+    "M11 is MAIN_ACCEPTED with product baseline main@3ca18bdca11e436b3a2fa63491976041639eeee2 and governance-normalized current main@2caa530a9e1f284a0446b7ead6d97218de996498.",
     "Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.",
-    "M11 RED run 36310954183 at 3cdda28d6377050287c72a62c7b6b9ccf0110f63 proved finding-specific context helpers were absent and evidence.Build accepted both parent traversal and a symlink resolving outside the repository root.",
-    "M11 adds doctorcode context <finding-id> [path] and reuses the deterministic byte-bounded evidence packet used by doctorcode next.",
-    "M11 evidence source reads resolve repository root and finding path symlinks and reject paths outside the resolved repository root.",
-    "Core CI run 36311250640 at 51e07c83cd3c7bf89f61b7125c9b9f5ced2ae956 passed on ubuntu-latest, windows-latest, and macos-latest, including the finding-specific context smoke test.",
-    "At the same M11 product candidate, M10 Python labels 36311250627, M07 Python Real World 36311250626, M06 Go labels 36311250646, and Real World Go 36311250636 passed on Linux, Windows, and macOS.",
-    "Final synchronized M11 branch candidate eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed Governance Bootstrap run 36311808969.",
-    "Core CI run 36311809127 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed on ubuntu-latest, windows-latest, and macos-latest.",
-    "M10 Python labels run 36311809029, M07 Python Real World run 36311808964, M06 Go labels run 36311809123, and Real World Go run 36311808976 all passed on Linux, Windows, and macOS at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0.",
-    "M11 Context Compiler Foundation merged through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.",
-    "Exact M11 product main Governance Bootstrap run 36312084318 completed success.",
-    "Exact M11 product main Core CI run 36312084324 completed success on ubuntu-latest, windows-latest, and macos-latest.",
-    "Exact M11 product main M10 Labeled Real World Python run 36312084320 completed success on all three operating systems.",
-    "Exact M11 product main M07 Python Real World run 36312084350 completed success on all three operating systems.",
-    "Exact M11 product main M06 Labeled Real World Go run 36312084315 completed success on all three operating systems.",
-    "Exact M11 product main Real World Go Validation run 36312084307 completed success on all three operating systems."
+    "M12 initial RED Core CI run 36322875238 at 4cb581f80d8c23bd1772c1bf8c2a542374c9357b proved RelatedLocations and packet related-context fields did not yet exist.",
+    "M12 first implementation Core CI run 36322997947 at b289f2457196e6060de66a8738fb9e11fc6c8373 exposed a same-file AST object-identity defect while test-file reference discovery already worked.",
+    "M12 boundary RED Core CI run 36323121339 at 5a1d826445a216c6d2aa3944de0193aa63b09b52 proved related discovery could parse an invalid parent-traversal Go file before repository-boundary rejection.",
+    "M12 reuses the selected source AST for binding-aware same-file function references and only accepts unresolved cross-file references from the same Go package; external test packages are not guessed.",
+    "Evidence packet schema v2 can include bounded Go production and same-package test related excerpts while preserving the caller byte budget and primary source priority.",
+    "M12 product candidate bc72ebde3cd604dd821e9d8bb7a6d2704b2bf0e8 passed Core CI run 36323276401 on Linux, Windows, and macOS, including the end-to-end related-context CLI smoke.",
+    "At the same product candidate, M10 Python labels 36323276431, M07 Python Real World 36323276428, M06 Go labels 36323276377, and Real World Go 36323276388 passed on all three operating systems.",
+    "Final synchronized M12 branch tree edc415a2935307490cf73ec12fed72ff9a0c042b passed Governance Bootstrap run 36323629497.",
+    "Core CI run 36323629517 at edc415a2935307490cf73ec12fed72ff9a0c042b passed on ubuntu-latest, windows-latest, and macos-latest.",
+    "M10 Python labels run 36323629491, M07 Python Real World run 36323629637, M06 Go labels run 36323629567, and Real World Go run 36323629559 all passed on Linux, Windows, and macOS at edc415a2935307490cf73ec12fed72ff9a0c042b."
   ],
   "schema_version": 1,
-  "status": "M11_MAIN_ACCEPTED",
-  "working_branch": "main"
+  "status": "M12_ACCEPTED",
+  "working_branch": "work/m12-go-related-context"
 }

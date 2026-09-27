@@ -1,15 +1,15 @@
 {
   "acceptance_report": "",
   "actual": {
-    "diagram": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.mmd",
+    "diagram": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.mmd",
     "entries": [],
-    "graph": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.json",
+    "graph": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.json",
     "source_digest": ""
   },
   "critical": false,
-  "implementation_base_sha": "0184e20a563b5f36b2a642fb3f5146c152893f6b",
+  "implementation_base_sha": "2caa530a9e1f284a0446b7ead6d97218de996498",
   "mode": "DURING",
-  "phase": "M11_CONTEXT_COMPILER_FOUNDATION",
+  "phase": "M12_GO_RELATED_CONTEXT",
   "plan": {
     "contract": "",
     "diagram": "",
@@ -23,12 +23,12 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "HISTORICAL",
-  "session_id": "M11-CONTEXT-COMPILER",
+  "scope": "CURRENT",
+  "session_id": "M12-GO-RELATED-CONTEXT",
   "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
-    "cmd/doctorcode/main_test.go",
+    "internal/analyzers/golang/related_test.go",
     "internal/evidence/packet_test.go",
     ".github/workflows/ci.yml"
   ]

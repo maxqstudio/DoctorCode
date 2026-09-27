@@ -139,6 +139,53 @@ Authority: cmd/doctorcode/main.go, internal/evidence/packet.go, cmd/doctorcode/m
 
 - M11 can be reverted without detector changes because context selection is a CLI/evidence-layer extension.
 
+## FLOW-GO-RELATED-CONTEXT — Bounded Go related context compilation
+
+Purpose: Enrich one exact current Go finding with deterministic same-package production/test references without exceeding the evidence packet byte budget.
+Critical: FALSE
+Entry condition: The selected current finding resolves to a repository-contained .go source path and is enclosed by a top-level non-method function.
+Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml
+
+### States
+
+- PRIMARY_PATH_VERIFIED
+- FUNCTION_IDENTIFIED
+- REFERENCES_CLASSIFIED
+- RELATED_EXCERPTS_BOUNDED
+- PACKET_REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| PRIMARY_PATH_VERIFIED | FUNCTION_IDENTIFIED | Parse the selected Go source once and identify the enclosing top-level non-method function. | internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| FUNCTION_IDENTIFIED | REFERENCES_CLASSIFIED | Reuse source AST object identity and inspect same-package Go files for production/test references while excluding local shadows and external test packages. | internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| REFERENCES_CLASSIFIED | RELATED_EXCERPTS_BOUNDED | Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes. | internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+| RELATED_EXCERPTS_BOUNDED | PACKET_REPORTED | Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state. | internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go, their tests, and .github/workflows/ci.yml |  |
+
+### Invariants
+
+- Primary selected source is repository-contained before related discovery runs.
+- Same-file references require selected ast.Object identity.
+- Cross-file references are limited to the same parsed Go package.
+- Local shadow identifiers and external test packages are excluded.
+- Primary source context has priority over optional related excerpts.
+- Packet encoded size never exceeds max-bytes.
+- Security findings continue to omit source and related excerpts.
+- M12 does not claim Python parity or transitive dependency completeness.
+
+### Failure behavior
+
+- Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
+
+### Restart behavior
+
+- The flow is stateless and deterministic for an unchanged repository source state.
+
+### Rollback behavior
+
+- M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics.
+
 ## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
