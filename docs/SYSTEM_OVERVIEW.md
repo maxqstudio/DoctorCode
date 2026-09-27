@@ -191,7 +191,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M11_CONTEXT_COMPILER_FOUNDATION
 
-Current status: M11_ACCEPTED
+Current status: M11_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -239,15 +239,15 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run final exact-SHA acceptance on the finalized M11 branch tree with no temporary workflow present.
-- Open and merge the FINAL_ACCEPTED M11 pull request to main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting another milestone.
+- Await an explicit Owner directive or repository governance update that defines the next milestone; no M12 scope is currently declared.
+- When the next milestone is defined, fetch the then-current DoctorCode main and latest Skill_Workflow main before branching.
+- Preserve M11 product acceptance at 3ca18bdca11e436b3a2fa63491976041639eeee2 and its exact post-merge run evidence as immutable historical evidence.
 
 Blocked actions:
-- Adding a third semantic language during M11.
-- Expanding M11 into arbitrary multi-file dependency or whole-program context inference.
+- Adding another semantic language without a declared milestone and evidence plan.
+- Expanding single-finding context into arbitrary whole-program context inference without explicit scope.
 - Treating a context packet as proof that code is safe to delete or auto-fix.
-- Starting MCP or Skill adapter product logic before the deterministic context core is accepted.
+- Starting MCP or Skill adapter product logic without an explicit milestone contract.
 
 Known blockers:
 - None declared.
@@ -266,6 +266,13 @@ Known blockers:
 - Final synchronized M11 branch candidate eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed Governance Bootstrap run 36311808969.
 - Core CI run 36311809127 at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36311809029, M07 Python Real World run 36311808964, M06 Go labels run 36311809123, and Real World Go run 36311808976 all passed on Linux, Windows, and macOS at eafcdad06b7466375e93328e2ebf0ec14a5aaeb0.
+- M11 Context Compiler Foundation merged through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.
+- Exact M11 product main Governance Bootstrap run 36312084318 completed success.
+- Exact M11 product main Core CI run 36312084324 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M11 product main M10 Labeled Real World Python run 36312084320 completed success on all three operating systems.
+- Exact M11 product main M07 Python Real World run 36312084350 completed success on all three operating systems.
+- Exact M11 product main M06 Labeled Real World Go run 36312084315 completed success on all three operating systems.
+- Exact M11 product main Real World Go Validation run 36312084307 completed success on all three operating systems.
 
 ### Not proven
 

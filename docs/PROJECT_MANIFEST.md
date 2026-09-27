@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m11-context-compiler
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 0184e20a563b5f36b2a642fb3f5146c152893f6b
+Last accepted SHA: 3ca18bdca11e436b3a2fa63491976041639eeee2
 Current source digest: 7b388b55760d58e22f49991281df7797909149a1512e10e7b70b59ce46e7a6b3
 
 ## Authorities

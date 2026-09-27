@@ -2,6 +2,17 @@
   "entries": [
     {
       "changes": [
+        "Merged FINAL_ACCEPTED M11 through PR #7 to main at 3ca18bdca11e436b3a2fa63491976041639eeee2.",
+        "Passed strict Governance Bootstrap on the exact product main merge SHA.",
+        "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
+        "Kept M11 constrained to exact single-finding context retrieval and repository-contained source excerpts."
+      ],
+      "date": "2026-09-27",
+      "title": "M11 main accepted baseline",
+      "type": "acceptance"
+    },
+    {
+      "changes": [
         "Accepted exact finding-ID context retrieval through the existing deterministic audit and bounded evidence packet path.",
         "Accepted repository-root containment for evidence source reads, including blocking parent-traversal and resolved symlink-escape tests.",
         "Accepted a three-OS end-to-end context smoke from isolated audit fixture to exact-ID context packet.",
