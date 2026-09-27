@@ -1,0 +1,65 @@
+name: M10 Project Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m10-python-labeled-real-world"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m10-python-labeled-real-world
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Generate M10 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.json
+          --output-mermaid docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.mmd
+      - name: Validate M10 sequence
+        run: >
+          python .workflow/tools/validate_sequence_contract.py
+          --root .
+          --session docs/sequence/sessions/M10-PYTHON-LABELED-REAL-WORLD.json
+      - name: Record sequence gate
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+          path = Path(".workflow/acceptance.json")
+          data = json.loads(path.read_text(encoding="utf-8"))
+          data["sequence_sync_status"] = "PASS"
+          data.setdefault("truth_gates", {})["SEQUENCE_SYNC"] = "PASS"
+          path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate generated governance before commit
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_cross_document_consistency.py --base 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce --require-base
+          python .workflow/tools/validate_project_truth.py
+      - name: Commit synchronized artifacts
+        shell: bash
+        run: |
+          if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
+            echo "No synchronization changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow/acceptance.json .workflow/generated docs
+          git commit -m "docs(m10): synchronize project truth"
+          git push origin HEAD:work/m10-python-labeled-real-world
