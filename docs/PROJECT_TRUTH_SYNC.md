@@ -13,12 +13,12 @@ HEAD is recorded externally after the commit exists.
 |---|---|---|
 | SOURCE_TESTS | PASS | |
 | RUNTIME_E2E | PASS | |
-| PROVENANCE_SYNC | NOT_PROVEN | |
-| REFERENCE_SYNC | NOT_PROVEN | |
-| STRUCTURAL_SYNC | NOT_PROVEN | |
+| PROVENANCE_SYNC | PASS | |
+| REFERENCE_SYNC | PASS | |
+| STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
+| CROSS_DOCUMENT_CONSISTENCY | PASS | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | NOT_PROVEN | |
+| PROJECT_STATE_SYNC | PASS | |
 
 ## Critical claim traceability
 
@@ -54,11 +54,11 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M05-PINNED-PUBLIC-SOURCES | M05 validates exact-SHA snapshots of spf13/cobra, charmbracelet/bubbles, go-chi/chi, and stretchr/testify on Linux, Windows, and macOS. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; .github/workflows/real-world-go.yml | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
 | TRUTH-M05-KNOWN-LIVE-NEGATIVES | Selected known-live unexported functions preExecHook, nextID, cW, and httpCode are not reported as DEADCODE on the pinned public snapshots. | PROJECT_TRUTH_SYNC.md | internal/realworld/sources.json; internal/realworld/realworld_test.go | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
 | TRUTH-M05-COMPATIBILITY-ONLY | M05 public-repository results are compatibility evidence only and are not used to claim real-world precision, recall, or absence of defects. | PROJECT_TRUTH_SYNC.md | internal/realworld/realworld_test.go; .workflow/acceptance.json | internal/realworld/realworld_test.go | GitHub Actions Real World Go Validation run 36279964402 at 193910d73723149e191eb9f7529d379db630a5a3 | PASS |
-| TRUTH-M06-SKILL-AUTHORITY | M06 uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PROJECT_TRUTH_SYNC.md | .workflow/SKILL_AUTHORITY.json; .workflow/tools/selftest_strict_project_workflow.py | .workflow/tools/selftest_strict_project_workflow.py | NOT_APPLICABLE | PASS |
+| TRUTH-M06-SKILL-AUTHORITY | M06 uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PROJECT_TRUTH_SYNC.md | .workflow/SKILL_AUTHORITY.json; .workflow/tools/selftest_strict_project_workflow.py | .workflow/tools/selftest_strict_project_workflow.py | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
 | TRUTH-M06-GATE-CAUGHT-FOUR-FP | The initial M06 bounded-label run exposed four real-world false positives before detector repair. | PROJECT_TRUTH_SYNC.md | internal/realworld/m06-labels.json; internal/realworld/labeled_test.go | internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 | PASS |
-| TRUTH-M06-BINDING-REPAIR | M06 condition canonicalization distinguishes same-named identifiers when their parser-resolved lexical bindings differ. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::canonicalCondition | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283099819 at e19ea958de42bbf2101ac5a958879d60c8909fa3 | PASS |
-| TRUTH-M06-GENERATED-DEADCODE-REPAIR | M06 excludes generated function declarations from DEADCODE candidates while still counting references originating in generated files. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::generatedGoFile; internal/analyzers/golang/analyzer.go::deadCodeFindings | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283099819 | PASS |
-| TRUTH-M06-BOUNDED-LABEL-PASS | On repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3, all 4 VALID_FINDING anchors are present and all 4 INVALID_FINDING guards are absent across the M06 bounded public-source labels; 3 AMBIGUOUS observations remain non-blocking. | PROJECT_TRUTH_SYNC.md | internal/realworld/m06-labels.json; internal/realworld/labeled_test.go | internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283099819 | PASS |
+| TRUTH-M06-BINDING-REPAIR | M06 condition canonicalization distinguishes same-named identifiers when their parser-resolved lexical bindings differ. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::canonicalCondition | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
+| TRUTH-M06-GENERATED-DEADCODE-REPAIR | M06 excludes generated function declarations from DEADCODE candidates while still counting references originating in generated files. | PROJECT_TRUTH_SYNC.md | internal/analyzers/golang/analyzer.go::generatedGoFile; internal/analyzers/golang/analyzer.go::deadCodeFindings | internal/analyzers/golang/analyzer_test.go; internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
+| TRUTH-M06-BOUNDED-LABEL-PASS | On repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3, all 4 VALID_FINDING anchors are present and all 4 INVALID_FINDING guards are absent across the M06 bounded public-source labels; 3 AMBIGUOUS observations remain non-blocking. | PROJECT_TRUTH_SYNC.md | internal/realworld/m06-labels.json; internal/realworld/labeled_test.go | internal/realworld/labeled_test.go | GitHub Actions M06 Labeled Real World Go run 36283292198 at e747d40b693d6fc69346bb0133225022b868ab11 | PASS |
 
 ## Claim relations
 

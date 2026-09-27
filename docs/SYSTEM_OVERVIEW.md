@@ -124,7 +124,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M06_REALWORLD_LABELED
 
-Current status: ACCEPTANCE_CANDIDATE
+Current status: M06_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -167,14 +167,14 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M06 generated Project Truth documentation.
-- Run strict Skill_Workflow validation against the synchronized M06 snapshot.
-- Promote M06 only if exact-SHA core CI, M06 labeled validation, and strict governance all pass.
+- Synchronize accepted M06 Project Truth documentation.
+- Remove the temporary M06 discovery and doc-sync workflows.
+- Freeze M06 only after final exact-SHA strict governance, core CI, and labeled real-world validation all pass.
 
 Blocked actions:
-- Publishing M06 anchor pass results as general real-world precision or recall.
-- Treating VALID_FINDING DEADCODE anchors as PROVEN_UNUSED or safe-delete authorization.
-- Converting AMBIGUOUS BLOAT observations into removal recommendations without additional evidence.
+- Publishing the bounded anchor pass as general real-world precision or recall.
+- Promoting DEADCODE HIGH to PROVEN_UNUSED from M06 evidence.
+- Converting AMBIGUOUS BLOAT findings into automatic removal.
 - Auto-deleting or auto-fixing findings.
 
 Known blockers:
@@ -186,20 +186,21 @@ Known blockers:
 
 - M05 accepted baseline is 0f7a1e3117375ad2b2413efc0e7221a614a397ec.
 - DoctorCode Skill_Workflow authority is synchronized to 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.
-- M06 discovery identified real findings on exact-SHA public Go repository snapshots and separated valid, invalid, and ambiguous labels.
-- Pre-repair candidate 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 failed M06 labeled run 36283027030 because all four INVALID_FINDING anchors were still emitted.
-- The four pre-repair false positives were one scoped err condition, two scoped ok conditions, and one generated compile-time assertion function.
-- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed core CI run 36283099829 on Linux, Windows, and macOS.
-- Repaired source e19ea958de42bbf2101ac5a958879d60c8909fa3 passed M06 Labeled Real World Go run 36283099819 on Linux, Windows, and macOS.
-- The M06 manifest contains 4 VALID_FINDING anchors, 4 INVALID_FINDING guards, and 3 AMBIGUOUS observations.
-- Post-repair discovery preserves the two real DEADCODE findings, two PROVEN SIMPLIFY findings, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
+- Pre-repair M06 run 36283027030 at 5614dc77194e17f8dcd159c9e9061bbc984b9ab6 emitted all four explicitly invalid real-world findings.
+- M06 repaired duplicate-condition comparison so same-named identifiers with different lexical bindings are not treated as equivalent.
+- M06 excludes generated function declarations from DEADCODE candidates while preserving references originating in generated files.
+- Synchronized M06 candidate e747d40b693d6fc69346bb0133225022b868ab11 passed strict Skill_Workflow governance run 36283292157.
+- The same candidate passed core CI run 36283292113 on ubuntu-latest, windows-latest, and macos-latest.
+- The same candidate passed M06 Labeled Real World Go run 36283292198 on ubuntu-latest, windows-latest, and macos-latest.
+- All 4 VALID_FINDING anchors remain present, all 4 INVALID_FINDING guards are absent, and 3 AMBIGUOUS observations remain non-blocking.
+- Post-repair discovery retains bounded zerolog/fsnotify DEADCODE, validator SIMPLIFY, and SUSPICIOUS BLOAT observations while removing the four labeled false positives.
 
 ### Not proven
 
-- M06 labels are bounded anchors rather than exhaustive labels for the four repositories.
-- M06 does not establish real-world precision or recall for the whole Go ecosystem.
-- VALID_FINDING DEADCODE labels prove zero lexical references in pinned snapshots, not safe deletion.
-- AMBIGUOUS BLOAT observations intentionally do not establish that the wrappers should be removed.
+- M06 labels are bounded anchors and do not exhaustively label any of the four repositories.
+- M06 does not establish general Go ecosystem precision or recall.
+- VALID_FINDING DEADCODE anchors prove zero lexical references in pinned source snapshots, not safe deletion.
+- AMBIGUOUS BLOAT observations do not prove code should be removed.
 - The label set has not been independently double-reviewed by multiple human reviewers.
 - Semantic support for non-Go languages and automatic source mutation remain unsupported.
 

@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M06 accepted baseline
+
+Type: acceptance
+
+- Accepted bounded real-world labels after the pre-repair gate exposed four false positives.
+- Accepted binding-aware duplicate-condition comparison for branch-local short declarations.
+- Accepted generated-function DEADCODE exclusion while retaining references from generated files.
+- Preserved all four valid bounded findings and kept three ambiguous BLOAT observations non-blocking.
+- Passed strict Skill_Workflow governance plus Linux, Windows, and macOS core/labeled validation on the synchronized candidate.
+
 ## 2026-09-27 — M06 bounded real-world labels candidate
 
 Type: development
