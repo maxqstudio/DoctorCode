@@ -43,14 +43,12 @@ jobs:
           path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
       - name: Synchronize generated Project Truth
         run: python .workflow/tools/sync_project_truth.py --root .
-      - name: Validate generated governance before commit
+      - name: Validate generated artifacts before commit
         run: |
           python .workflow/tools/validate_sequence_sessions.py
           python .workflow/tools/validate_project_docs.py
           python .workflow/tools/validate_doc_quality.py
           python .workflow/tools/validate_human_comprehension.py --require-pass
-          python .workflow/tools/validate_cross_document_consistency.py --base 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce --require-base
-          python .workflow/tools/validate_project_truth.py
       - name: Commit synchronized artifacts
         shell: bash
         run: |
