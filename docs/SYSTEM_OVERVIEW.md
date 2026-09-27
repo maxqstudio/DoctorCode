@@ -180,7 +180,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M10_PYTHON_LABELED_REAL_WORLD
 
-Current status: M10_ACCEPTED
+Current status: M10_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -227,17 +227,17 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Remove the temporary M10 label-discovery and Project Truth sync workflows in the synchronized finalization commit.
-- Run final exact-SHA Governance Bootstrap, core CI, M10 labeled Python, M07 Python public-source, M06 bounded Go labels, and Go public-source validation.
-- Open and merge the M10 pull request to main immediately after FINAL_ACCEPTED branch evidence passes.
-- Rerun all applicable acceptance lanes on the exact main merge SHA.
-- Synchronize main Project Truth to the exact accepted M10 main SHA before starting the next milestone.
+- Synchronize generated Project Truth to the exact accepted M10 main baseline without changing product source.
+- Run exact-SHA governance and all accepted regression lanes on the synchronized governance-only closure.
+- Merge the governance-only closure to main and revalidate main.
+- Before any new milestone, fetch latest Skill_Workflow main and compare it with the pinned DoctorCode authority.
+- Define the next milestone only from repository authority or an explicit new Owner directive; no M11 scope is currently declared in the repository.
 
 Blocked actions:
 - Publishing the six bounded M10 labels as exhaustive real-world Python precision or recall.
 - Treating zero conservative references as safe-delete proof.
 - Auto-deleting or auto-fixing Python findings.
-- Starting the next milestone before M10 is merged and post-merge accepted on main.
+- Inventing or starting an M11 scope before the M10 main truth-sync closure is merged and accepted.
 
 Known blockers:
 - None declared.
@@ -257,6 +257,13 @@ Known blockers:
 - M10 label run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with valid=2 invalid=4.
 - At the same M10 source candidate, core CI run 36303351679, M07 Python Real World run 36303351736, Real World Go run 36303351697, and M06 Labeled Real World Go run 36303351703 all passed across Linux, Windows, and macOS.
 - Temporary Project Truth sync run 36303858286 validated M10 sequence generation, generated documentation normalization, document quality, and human-comprehension structure before final cleanup.
+- M10 is merged to main at 36baeec0057089ffe50c9d3cc25d22d8524c882e through PR #4.
+- Exact post-merge main Governance Bootstrap run 36304216096 completed success.
+- Exact post-merge main core CI run 36304215983 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact post-merge main M10 Labeled Real World Python run 36304215942 completed success on all three operating systems.
+- Exact post-merge main M07 Python Real World run 36304216032 completed success on all three operating systems.
+- Exact post-merge main M06 Labeled Real World Go run 36304215964 completed success on all three operating systems.
+- Exact post-merge main Real World Go Validation run 36304215947 completed success on all three operating systems.
 
 ### Not proven
 

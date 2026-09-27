@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m10-python-labeled-real-world
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 575f9bcfe5c1119f0ea4382cdeec94ba345e59ce
+Last accepted SHA: 36baeec0057089ffe50c9d3cc25d22d8524c882e
 Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
 
 ## Authorities

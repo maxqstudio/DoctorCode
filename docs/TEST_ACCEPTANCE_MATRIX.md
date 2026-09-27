@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M10 uses six bounded exact-SHA Python labels across pinned Click and Flask snapshots: two VALID_FINDING Flask DEADCODE zero-reference anchors and four INVALID_FINDING test-tree guards. At source candidate fe0553a698ab7d7c689fb31a02b78b5d9ef11019, M10 run 36303351744 passed on Linux, Windows, and macOS with valid=2 invalid=4; core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, and M06 Labeled Real World Go 36303351703 also passed 3/3 OS. Governance run 36303351683 failed only because generated Project Truth was stale after adding M10 files and therefore does not count as final acceptance. Labels remain bounded and do not authorize automatic deletion.
+M10 is MAIN_ACCEPTED at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Post-merge Governance Bootstrap 36304216096 and all five three-OS product/real-world matrices (36304215983, 36304215942, 36304216032, 36304215964, 36304215947) completed success. M10 remains bounded to six exact-SHA Python labels—2 VALID_FINDING anchors and 4 INVALID_FINDING guards—and does not establish exhaustive precision/recall or safe deletion.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed75ded74f
@@ -17,6 +17,7 @@ Current source digest: 8e0188aa8c30442da834d81437a87347fda6b9b948e035e9e85cf0ed7
 | M10-TEST-TREE-NEGATIVE-GUARDS | The four labeled private helpers under pinned public test trees must not be emitted as production DEADCODE findings. | M10 run 36303351744 at fe0553a698ab7d7c689fb31a02b78b5d9ef11019 passed on ubuntu-latest, windows-latest, and macos-latest with all four INVALID_FINDING guards absent. | PASS |
 | M10-ALL-PRODUCT-LANES | Core and every previously accepted real-world regression lane must remain passing across Linux, Windows, and macOS. | At fe0553a698ab7d7c689fb31a02b78b5d9ef11019: core CI 36303351679, M07 Python Real World 36303351736, Real World Go 36303351697, M06 Labeled Real World Go 36303351703, and M10 Labeled Real World Python 36303351744 all completed success with 3/3 OS jobs. | PASS |
 | M10-STRICT-GOVERNANCE-FINAL | Generated Project Truth, sequence artifacts, and strict governance must pass on the final exact M10 branch SHA after temporary workflows are removed. | M10 Project Truth sync run 36303858286 successfully generated and validated the M10 sequence plus deterministic docs after M09 was frozen HISTORICAL. Temporary workflows are removed by the finalization sync; clean-tree Governance Bootstrap remains a blocking promotion check on the resulting exact SHA. | PASS |
+| M10-MAIN-POST-MERGE | The exact M10 main merge SHA must pass strict governance and every accepted cross-platform regression lane before it becomes the next development base. | main@36baeec0057089ffe50c9d3cc25d22d8524c882e: Governance Bootstrap 36304216096, core CI 36304215983, M10 Labeled Real World Python 36304215942, M07 Python Real World 36304216032, M06 Labeled Real World Go 36304215964, and Real World Go Validation 36304215947 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
 
 ## Test commands
 

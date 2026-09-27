@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M10 is MAIN_ACCEPTED at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Post-merge Governance Bootstrap 36304216096 and all five three-OS product/real-world matrices (36304215983, 36304215942, 36304216032, 36304215964, 36304215947) completed success. M10 remains bounded to six exact-SHA Python labels—2 VALID_FINDING anchors and 4 INVALID_FINDING guards—and does not establish exhaustive precision/recall or safe deletion.",
+  "evidence_boundary": "M10 is MAIN_ACCEPTED at 36baeec0057089ffe50c9d3cc25d22d8524c882e. Post-merge Governance Bootstrap 36304216096 and all five three-OS product/real-world matrices (36304215983, 36304215942, 36304216032, 36304215964, 36304215947) completed success. M10 remains bounded to six exact-SHA Python labels\u20142 VALID_FINDING anchors and 4 INVALID_FINDING guards\u2014and does not establish exhaustive precision/recall or safe deletion.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -53,9 +53,9 @@
       "status": "PASS"
     },
     {
+      "evidence": "main@36baeec0057089ffe50c9d3cc25d22d8524c882e: Governance Bootstrap 36304216096, core CI 36304215983, M10 Labeled Real World Python 36304215942, M07 Python Real World 36304216032, M06 Labeled Real World Go 36304215964, and Real World Go Validation 36304215947 all completed success; every matrix job passed on Linux, Windows, and macOS.",
       "id": "M10-MAIN-POST-MERGE",
       "requirement": "The exact M10 main merge SHA must pass strict governance and every accepted cross-platform regression lane before it becomes the next development base.",
-      "evidence": "main@36baeec0057089ffe50c9d3cc25d22d8524c882e: Governance Bootstrap 36304216096, core CI 36304215983, M10 Labeled Real World Python 36304215942, M07 Python Real World 36304216032, M06 Labeled Real World Go 36304215964, and Real World Go Validation 36304215947 all completed success; every matrix job passed on Linux, Windows, and macOS.",
       "status": "PASS"
     }
   ],
