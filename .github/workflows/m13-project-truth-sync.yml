@@ -392,16 +392,22 @@ jobs:
                   next_idx = readme.find("\n### ", idx + len(marker))
                   if next_idx < 0:
                       next_idx = len(readme)
-                  section = """
-### M13 bounded Python related context
-
-M13 extends the schema-v2 bounded related-context packet to eligible Python findings. A finding must be enclosed by a module-level function. DoctorCode can attach same-file unshadowed direct references plus recognized top-level from-import aliases and module import attributes, including conventional src-layout module aliases.
-
-Python lexical scopes are handled conservatively: local arguments, assignments, imports, nested definitions, comprehensions, and similar bindings can prevent a same-name load from being classified as related. If the selected module contains another module-level binding for the selected function name, M13 fails closed to no related locations because runtime identity is ambiguous.
-
-Dynamic imports, package-facade re-export chains, string reflection, monkey-patching, class/method dispatch, nested callable identity, and transitive dependency graphs remain outside M13's proof boundary. Context remains review evidence only; it never authorizes deletion or automatic repair.
-
-"""
+                  section = (
+                      "\n### M13 bounded Python related context\n\n"
+                      "M13 extends the schema-v2 bounded related-context packet to eligible Python findings. "
+                      "A finding must be enclosed by a module-level function. DoctorCode can attach same-file "
+                      "unshadowed direct references plus recognized top-level from-import aliases and module "
+                      "import attributes, including conventional src-layout module aliases.\n\n"
+                      "Python lexical scopes are handled conservatively: local arguments, assignments, imports, "
+                      "nested definitions, comprehensions, and similar bindings can prevent a same-name load from "
+                      "being classified as related. If the selected module contains another module-level binding "
+                      "for the selected function name, M13 fails closed to no related locations because runtime "
+                      "identity is ambiguous.\n\n"
+                      "Dynamic imports, package-facade re-export chains, string reflection, monkey-patching, "
+                      "class/method dispatch, nested callable identity, and transitive dependency graphs remain "
+                      "outside M13's proof boundary. Context remains review evidence only; it never authorizes "
+                      "deletion or automatic repair.\n\n"
+                  )
                   readme = readme[:next_idx] + section + readme[next_idx:]
           readme_path.write_text(readme, encoding="utf-8")
 
