@@ -40,6 +40,8 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
       - name: M07 Python semantic benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
+      - name: M08 Python adversarial benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI
