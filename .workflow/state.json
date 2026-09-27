@@ -1,40 +1,42 @@
 {
   "schema_version": 1,
-  "phase": "M08_PYTHON_ADVERSARIAL",
-  "status": "M08_ACCEPTED",
-  "working_branch": "work/m08-python-adversarial",
-  "last_accepted_sha": "fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e",
-  "last_accepted_branch": "work/m07-python-semantic",
+  "phase": "M09_PYTHON_REPOSITORY_SHAPED",
+  "status": "ACCEPTANCE_CANDIDATE",
+  "working_branch": "work/m09-python-repository-shaped",
+  "last_accepted_sha": "29924f324db316a9a2985943c09d4711824a1220",
+  "last_accepted_branch": "main",
   "proven": [
-    "M07 accepted baseline is fd8eead9b82e9f901ff460ef56c7c8ac6eb08c8e.",
+    "M08 is merged and post-merge accepted on main at 29924f324db316a9a2985943c09d4711824a1220.",
     "DoctorCode uses Skill_Workflow authority 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f.",
-    "Initial M08 candidate 9954ce27448099d219f3ab5d6dd057ec635bb6a8 failed CI run 36286720676 with 5 false positives and 2 false negatives while M07 stayed passing.",
-    "M08 repaired Python identity semantics, candidate/module-aware private-function references, recognized __all__/import/module-attribute/getattr/globals references, and not_secret placeholder filtering.",
-    "Exact synchronized M08 candidate f28f35d16bd8cb7a691827ecd10a353eba227258 passed strict Skill_Workflow governance run 36287085335.",
-    "The same candidate passed core CI run 36287085344 on ubuntu-latest, windows-latest, and macos-latest.",
-    "The same candidate passed pinned public Python validation run 36287085354 on ubuntu-latest, windows-latest, and macos-latest.",
-    "The M08 10-case adversarial corpus reports 2 TP, 0 FP, and 0 FN.",
-    "The accepted M07 six-case Python corpus remains 5 TP, 0 FP, and 0 FN.",
-    "Pinned click/httpx/requests/Flask validation remains passing after M08 reference-semantics repair."
+    "Initial 14-case M09 repository-shaped candidate d7d5377b42522a73e7b7d12fec50321f6e909121 failed CI run 36301435534 with 2 true positives, 5 false positives, and 3 false negatives while prior Python gates remained passing.",
+    "M09 adds conventional src-layout module aliases without changing the repository filesystem boundary.",
+    "M09 propagates direct module-level from-import re-exports to a bounded fixed point so package facades can resolve to original private-function candidates.",
+    "M09 separates executable/usage reference counts from import/export liveness evidence so DEADCODE remains conservative without inflating the one-use BLOAT rule.",
+    "M09 resolves dotted module attributes through explicit import roots and limits unresolved attribute fallback to unique candidate names.",
+    "Repaired source af95c1d040db6336c99d06d7a1d993386f11bce7 passes the M09 corpus with 5 true positives, 0 false positives, and 0 false negatives.",
+    "Candidate be60c639c9eab25f34c683fb93bcc7db77eb77fc passed core CI run 36301647674 on Linux, Windows, and macOS.",
+    "The same candidate passed Real World Go Validation run 36301647686, M06 Labeled Real World Go run 36301647705, and M07 Python Real World run 36301647658 on Linux, Windows, and macOS.",
+    "Accepted real-world regression workflows now run on main and every work/** phase branch."
   ],
   "not_proven": [
-    "M08 corpus metrics are not general Python ecosystem precision or recall.",
-    "Recognized dynamic/export references cover only explicit bounded syntax patterns and do not resolve arbitrary reflection, eval/exec, plugin loading, or external callers.",
+    "M09 corpus precision and recall are scoped to the tracked 14 repository-shaped fixtures and are not general Python ecosystem metrics.",
+    "The conventional src-layout alias recognizes one leading src component; arbitrary packaging roots and custom sys.path manipulation remain unresolved.",
+    "Re-export propagation covers direct module-level from-import relationships, not arbitrary assignment, import hooks, star-import inference, or runtime mutation.",
+    "Dotted module resolution depends on explicit import roots and does not build a whole-program Python import graph.",
     "Zero conservative references remain insufficient for PROVEN_UNUSED or safe deletion.",
-    "Public Python snapshots remain incompletely labeled beyond tracked bounded anchors.",
-    "Python .pyi semantic analysis and automatic mutation remain unsupported."
+    "Python .pyi semantic analysis and automatic source mutation remain unsupported."
   ],
   "blockers": [],
   "next_authorized_actions": [
-    "Synchronize accepted M08 Project Truth documentation.",
-    "Remove temporary M08 doc-sync workflow and update README to M08-current.",
-    "Freeze M08 only after final exact-SHA strict governance, core CI, and pinned public Python validation all pass without a bot mutator.",
-    "After M08 freeze, evaluate M09 repository-shaped Python interactions before adding another language."
+    "Synchronize M09 Project Truth and sequence documentation.",
+    "Run strict Skill_Workflow validation against the synchronized M09 snapshot.",
+    "Promote M09 only if exact-SHA governance, core CI, Go public compatibility, Go bounded labels, and Python public validation all pass on Linux, Windows, and macOS.",
+    "After FINAL_ACCEPTED, merge M09 to main immediately and rerun all accepted lanes on the main merge SHA."
   ],
   "blocked_actions": [
-    "Publishing M08 corpus metrics as real-world precision or recall.",
-    "Treating zero-reference Python findings as safe-delete proof.",
-    "Claiming arbitrary dynamic Python reference resolution.",
+    "Publishing M09 fixture metrics as real-world Python precision or recall.",
+    "Treating liveness evidence as proof that a function is behaviorally required.",
+    "Treating zero conservative references as safe-delete proof.",
     "Auto-deleting or auto-fixing Python findings."
   ]
 }

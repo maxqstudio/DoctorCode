@@ -3,6 +3,18 @@
   "entries": [
     {
       "date": "2026-09-27",
+      "title": "M09 Python repository-shaped candidate",
+      "type": "development",
+      "changes": [
+        "Added a 14-case Python repository-shaped corpus covering src layouts, package facades, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name isolation.",
+        "Captured a final pre-repair result of 2 TP, 5 FP, and 3 FN.",
+        "Added conventional src-layout aliases, direct module-level re-export propagation, separate usage/liveness evidence, and exact dotted imported-module resolution.",
+        "Reached 5 TP, 0 FP, and 0 FN on M09 while preserving accepted M07 and M08 gates.",
+        "Expanded all accepted real-world regression workflows to main and work/** and passed all three operating systems."
+      ]
+    },
+    {
+      "date": "2026-09-27",
       "title": "M08 accepted baseline",
       "type": "acceptance",
       "changes": [

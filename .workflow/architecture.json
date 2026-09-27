@@ -99,7 +99,8 @@
         "adversarial regression gate",
         "repository-shaped regression gate",
         "M07 Python regression gate",
-        "M08 Python adversarial gate"
+        "M08 Python adversarial gate",
+        "M09 Python repository-shaped gate"
       ],
       "depends_on": [
         "Go analyzer",
@@ -140,14 +141,17 @@
     {
       "id": "python_analyzer",
       "name": "Python Built-in Analyzer",
-      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative module-aware reference evidence.",
+      "purpose": "Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence.",
       "owns": [
         "Python AST subprocess adapter",
         "five conservative Python rules",
         "parse-error boundary",
         "optional-runtime detection",
-        "module-aware private-function reference evidence",
-        "recognized dynamic/export reference guards"
+        "candidate/module-aware private-function usage evidence",
+        "recognized dynamic/export liveness guards",
+        "conventional src-layout module aliases",
+        "direct module-level re-export propagation",
+        "dotted imported-module attribute resolution"
       ],
       "depends_on": [
         "host Python 3.8+ standard library ast",
@@ -276,6 +280,11 @@
       "from": "M08 Python adversarial corpus",
       "to": "precision benchmark harness",
       "meaning": "Ten Python edge cases challenge identity semantics, module-name collisions, dynamic/export references, placeholder security values, and generated source behavior."
+    },
+    {
+      "from": "M09 Python repository-shaped corpus",
+      "to": "precision benchmark harness",
+      "meaning": "Fourteen mini-repositories exercise src layouts, direct package re-exports, relative/alias/dotted imports, tests, generated references, namespace packages, TYPE_CHECKING, conditional imports, and same-name package isolation."
     }
   ],
   "external_boundaries": [

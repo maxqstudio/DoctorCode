@@ -640,6 +640,78 @@
         "GitHub Actions M07 Python Real World run 36287085354 at f28f35d16bd8cb7a691827ecd10a353eba227258"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M09-PRE-REPAIR-FAIL",
+      "claim": "The final pre-repair 14-case M09 corpus exposed 5 false positives and 3 false negatives while accepted M07/M08 gates remained passing.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36301435534 at d7d5377b42522a73e7b7d12fec50321f6e909121"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M09-TOPOLOGY-REPAIR",
+      "claim": "M09 Python reference evidence handles a conventional src layout, direct module-level re-exports, separated usage/liveness evidence, and exact dotted imported-module attributes.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/analyzers/python/analyzer.go"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36301647674 at be60c639c9eab25f34c683fb93bcc7db77eb77fc"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M09-CORPUS-PASS",
+      "claim": "The repaired 14-case M09 Python repository-shaped corpus reports 5 TP, 0 FP, and 0 FN.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "tests": [
+        "internal/benchmark/testdata/m09-python-repository-shaped.json"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions CI run 36301647674"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M09-ALL-REALWORLD-LANES",
+      "claim": "Accepted Go compatibility, bounded Go labels, and Python public-source regression workflows run on main and every work/** phase and passed M09 on Linux, Windows, and macOS.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        ".github/workflows/real-world-go.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml"
+      ],
+      "tests": [
+        "internal/realworld/realworld_test.go",
+        "internal/realworld/labeled_test.go",
+        "internal/realworld/python_m07_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions runs 36301647686, 36301647705, and 36301647658 at be60c639c9eab25f34c683fb93bcc7db77eb77fc"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": []
