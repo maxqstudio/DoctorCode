@@ -232,7 +232,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M14_DETERMINISTIC_VERIFICATION_CONTRACT
 
-Current status: M14_VALIDATING
+Current status: M14_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -283,9 +283,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Generate and validate the M14 CURRENT sequence plus deterministic Project Truth.
-- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M14 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
+- Run final exact-SHA acceptance on the finalized M14 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M14 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting adapter/release milestones.
 
 Blocked actions:
 - Executing arbitrary repository-provided verification commands as DoctorCode authority.
@@ -311,6 +311,9 @@ Known blockers:
 - M14 never executes repository-provided build, test, shell, hook, or verification command strings.
 - M14 product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI run 36328881587 on Linux, Windows, and macOS, including public CLI negative and positive verification paths.
 - At the same product candidate, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 passed on all three operating systems.
+- Final synchronized M14 branch tree 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed Governance Bootstrap run 36329506408.
+- Core CI run 36329506410 at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed on ubuntu-latest, windows-latest, and macos-latest, including deterministic verification negative and positive E2E paths.
+- M10 Python labels run 36329506427, M07 Python Real World run 36329506385, M06 Go labels run 36329506403, and Real World Go run 36329506404 all passed on Linux, Windows, and macOS at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70.
 
 ### Not proven
 

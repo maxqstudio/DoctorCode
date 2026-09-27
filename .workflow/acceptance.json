@@ -71,10 +71,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
+      "evidence": "At 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70: Governance Bootstrap 36329506408, Core CI 36329506410, M10 Labeled Real World Python 36329506427, M07 Python Real World 36329506385, M06 Labeled Real World Go 36329506403, and Real World Go Validation 36329506404 all completed success; every matrix job passed on Linux, Windows, and macOS. Finalization is governance-only and will be revalidated on its exact SHA.",
       "id": "M14-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M14 sequence artifacts must pass strict governance on the final exact M14 branch SHA after temporary workflows are removed.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -108,7 +108,7 @@
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
     "DOC_LAYOUT": "PASS",
     "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
@@ -116,7 +116,7 @@
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
     "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "PASS",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",
