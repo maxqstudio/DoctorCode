@@ -2,6 +2,18 @@
   "entries": [
     {
       "changes": [
+        "Accepted bounded Python production/test related context for eligible module-level function findings.",
+        "Accepted lexical-shadow exclusion and fail-closed selected-name module rebinding behavior.",
+        "Accepted schema-v2 Go/Python related-context parity under the same max-bytes and excerpt-cap contract.",
+        "Accepted Linux, Windows, and macOS public CLI E2E behavior while preserving all prior real-world regression lanes.",
+        "Kept dynamic Python resolution, transitive graphs, safe deletion, and automatic repair outside M13 authority."
+      ],
+      "date": "2026-09-27",
+      "title": "M13 Python Related Context accepted baseline",
+      "type": "acceptance"
+    },
+    {
+      "changes": [
         "Added bounded related-location discovery for findings enclosed by module-level Python functions.",
         "Added same-file direct, top-level from-import alias, and top-level module-attribute reference recognition with src-layout aliases.",
         "Excluded local lexical shadows and unrelated same-named functions from related context.",

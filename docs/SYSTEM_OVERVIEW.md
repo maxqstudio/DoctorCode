@@ -216,7 +216,7 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 Current phase: M13_PYTHON_RELATED_CONTEXT
 
-Current status: M13_VALIDATING
+Current status: M13_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -266,11 +266,13 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Generate and validate the M13 CURRENT sequence plus deterministic Project Truth.
-- Run final exact-SHA Governance Bootstrap, Core CI, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M13 to main immediately and rerun all applicable acceptance lanes on the exact main merge SHA.
+- Run final exact-SHA acceptance on the M13_ACCEPTED tree after this governance finalization commit.
+- Open and merge the FINAL_ACCEPTED M13 pull request to main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before M14.
+- After M13_MAIN_ACCEPTED, proceed to the deterministic verification contract milestone under the Owner directive to continue until DoctorCode is complete.
 
 Blocked actions:
+- Starting M14 before exact M13 main post-merge acceptance.
 - Claiming Python related context is a complete dynamic dependency graph.
 - Treating related context as proof that code is safe to delete or auto-fix.
 - Starting MCP or Skill adapters before deterministic verification contracts are accepted.
@@ -292,6 +294,9 @@ Known blockers:
 - M13 fails closed to empty related context when the selected module has another module-level binding for the selected function name.
 - M13 product candidate 40771744b74d91478c7eb60386d718ba4b170e91 passed Core CI run 36325714821 on Linux, Windows, and macOS, including the public audit -> exact finding ID -> Python context E2E smoke.
 - At the same M13 product candidate, M10 Python labels 36325714820, M07 Python Real World 36325714848, M06 Go labels 36325714812, and Real World Go 36325714823 passed on all three operating systems.
+- Final synchronized M13 branch tree 80f735c7be3598dfdf34b6a040d3e49464298a42 passed Governance Bootstrap run 36326117052.
+- Core CI run 36326116923 at 80f735c7be3598dfdf34b6a040d3e49464298a42 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36326117037, M07 Python Real World run 36326116936, M06 Go labels run 36326116920, and Real World Go run 36326116988 all passed on Linux, Windows, and macOS at 80f735c7be3598dfdf34b6a040d3e49464298a42.
 
 ### Not proven
 

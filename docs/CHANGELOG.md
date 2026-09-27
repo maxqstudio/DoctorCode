@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M13 Python Related Context accepted baseline
+
+Type: acceptance
+
+- Accepted bounded Python production/test related context for eligible module-level function findings.
+- Accepted lexical-shadow exclusion and fail-closed selected-name module rebinding behavior.
+- Accepted schema-v2 Go/Python related-context parity under the same max-bytes and excerpt-cap contract.
+- Accepted Linux, Windows, and macOS public CLI E2E behavior while preserving all prior real-world regression lanes.
+- Kept dynamic Python resolution, transitive graphs, safe deletion, and automatic repair outside M13 authority.
+
 ## 2026-09-27 — M13 Python Related Context candidate
 
 Type: development
