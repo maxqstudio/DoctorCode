@@ -125,12 +125,31 @@ func Verify(contract Contract, current model.AuditResult) (Result, error) {
 		baseline[key] = item
 	}
 
-	currentCounts := countFindingsOnPath(current.Findings, contract.TargetPath)
 	targetKey := semanticKey{
 		ruleID:  contract.TargetRuleID,
 		path:    contract.TargetPath,
 		summary: contract.TargetSummary,
 	}
+	targetBaseline, ok := baseline[targetKey]
+	if !ok {
+		return Result{}, errors.New("verification contract baseline does not contain target semantic key")
+	}
+	if targetBaseline.Count != contract.TargetBaselineCount {
+		return Result{}, fmt.Errorf(
+			"verification contract target baseline mismatch: metadata=%d baseline=%d",
+			contract.TargetBaselineCount,
+			targetBaseline.Count,
+		)
+	}
+	if targetBaseline.Severity != contract.TargetSeverity {
+		return Result{}, fmt.Errorf(
+			"verification contract target severity mismatch: metadata=%s baseline=%s",
+			contract.TargetSeverity,
+			targetBaseline.Severity,
+		)
+	}
+
+	currentCounts := countFindingsOnPath(current.Findings, contract.TargetPath)
 	targetCurrent := 0
 	if item, ok := currentCounts[targetKey]; ok {
 		targetCurrent = item.Count
