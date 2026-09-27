@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - "work/m07-python-semantic"
+      - "work/m08-python-adversarial"
   pull_request:
 
 permissions:
