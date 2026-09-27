@@ -306,15 +306,6 @@ jobs:
               "acceptance_report": ""
           })
 
-          gov_path = Path(".github/workflows/governance-bootstrap.yml")
-          gov = gov_path.read_text(encoding="utf-8")
-          gov = re.sub(
-              r"--base\s+[0-9a-f]{40}\s+--require-base",
-              "--base 0184e20a563b5f36b2a642fb3f5146c152893f6b --require-base",
-              gov,
-              count=1,
-          )
-          gov_path.write_text(gov, encoding="utf-8")
 
       - name: Remove temporary workflow from final tree
         run: git rm .github/workflows/m11-project-truth-sync.yml
