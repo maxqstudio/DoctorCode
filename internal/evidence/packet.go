@@ -8,16 +8,27 @@ import (
 	"path/filepath"
 	"strings"
 
+	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
 
+type RelatedExcerpt struct {
+	Path      string `json:"path"`
+	LineStart int    `json:"line_start"`
+	LineEnd   int    `json:"line_end"`
+	Kind      string `json:"kind"`
+	Excerpt   string `json:"excerpt"`
+}
+
 type Packet struct {
-	SchemaVersion           int           `json:"schema_version"`
-	Finding                 model.Finding `json:"finding"`
-	SourceExcerpt           string        `json:"source_excerpt,omitempty"`
-	SensitiveExcerptOmitted bool          `json:"sensitive_excerpt_omitted,omitempty"`
-	BudgetBytes             int           `json:"budget_bytes"`
-	Truncated               bool          `json:"truncated"`
+	SchemaVersion           int              `json:"schema_version"`
+	Finding                 model.Finding    `json:"finding"`
+	SourceExcerpt           string           `json:"source_excerpt,omitempty"`
+	RelatedTotal            int              `json:"related_total,omitempty"`
+	RelatedExcerpts         []RelatedExcerpt `json:"related_excerpts,omitempty"`
+	SensitiveExcerptOmitted bool             `json:"sensitive_excerpt_omitted,omitempty"`
+	BudgetBytes             int              `json:"budget_bytes"`
+	Truncated               bool             `json:"truncated"`
 }
 
 func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
@@ -26,7 +37,7 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 	}
 
 	packet := Packet{
-		SchemaVersion: 1,
+		SchemaVersion: 2,
 		Finding:       finding,
 		BudgetBytes:   maxBytes,
 	}
@@ -34,6 +45,11 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 	if finding.Category == model.CategorySecurity {
 		packet.SensitiveExcerptOmitted = true
 		return fit(packet, maxBytes)
+	}
+
+	related, err := goanalysis.RelatedLocations(root, finding)
+	if err != nil {
+		return Packet{}, fmt.Errorf("find related context: %w", err)
 	}
 
 	for _, radius := range []int{3, 1, 0} {
@@ -44,7 +60,7 @@ func Build(root string, finding model.Finding, maxBytes int) (Packet, error) {
 		packet.SourceExcerpt = excerpt
 		packet.Truncated = radius < 3
 		if encodedSize(packet) <= maxBytes {
-			return packet, nil
+			return appendRelated(root, packet, related, maxBytes)
 		}
 	}
 
@@ -141,4 +157,85 @@ func resolveFindingPath(root, findingPath string) (string, error) {
 		return "", fmt.Errorf("finding path escapes repository root: %s", findingPath)
 	}
 	return candidateResolved, nil
+}
+
+
+const maxRelatedExcerpts = 8
+
+func appendRelated(root string, packet Packet, locations []goanalysis.RelatedLocation, maxBytes int) (Packet, error) {
+	packet.RelatedTotal = len(locations)
+	if len(locations) == 0 {
+		return packet, nil
+	}
+
+	limit := len(locations)
+	if limit > maxRelatedExcerpts {
+		limit = maxRelatedExcerpts
+		packet.Truncated = true
+	}
+
+	for i := 0; i < limit; i++ {
+		location := locations[i]
+		added := false
+		for _, radius := range []int{1, 0} {
+			excerpt, err := sourceExcerptAt(root, location.Path, location.Line, radius)
+			if err != nil {
+				return Packet{}, err
+			}
+			item := RelatedExcerpt{
+				Path:      location.Path,
+				LineStart: location.Line - radius,
+				LineEnd:   location.Line + radius,
+				Kind:      location.Kind,
+				Excerpt:   excerpt,
+			}
+			if item.LineStart < 1 {
+				item.LineStart = 1
+			}
+			candidate := packet
+			candidate.RelatedExcerpts = append(append([]RelatedExcerpt(nil), packet.RelatedExcerpts...), item)
+			if encodedSize(candidate) <= maxBytes {
+				packet = candidate
+				added = true
+				break
+			}
+		}
+		if !added {
+			packet.Truncated = true
+			break
+		}
+	}
+	if len(packet.RelatedExcerpts) < len(locations) {
+		packet.Truncated = true
+	}
+	return fit(packet, maxBytes)
+}
+
+func sourceExcerptAt(root, relPath string, line, radius int) (string, error) {
+	path, err := resolveFindingPath(root, relPath)
+	if err != nil {
+		return "", err
+	}
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	lines := strings.Split(strings.ReplaceAll(string(data), "\r\n", "\n"), "\n")
+	if line < 1 || line > len(lines) {
+		return "", fmt.Errorf("related context line %d outside %s", line, relPath)
+	}
+	start := line - radius
+	if start < 1 {
+		start = 1
+	}
+	end := line + radius
+	if end > len(lines) {
+		end = len(lines)
+	}
+
+	var out strings.Builder
+	for current := start; current <= end; current++ {
+		fmt.Fprintf(&out, "%d: %s\n", current, lines[current-1])
+	}
+	return strings.TrimSuffix(out.String(), "\n"), nil
 }
