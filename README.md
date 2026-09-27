@@ -19,11 +19,11 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M05 pinned public-repository validation is accepted on the development branch.** Current semantic coverage remains deliberately narrow; labeled corpus metrics and unlabeled public-repository compatibility evidence are kept separate.
+**M06 bounded real-world labels are accepted on the development branch.** Current semantic coverage remains deliberately narrow; synthetic corpus metrics, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
-| Go | Yes | Yes | **Yes — narrow rules, three labeled regression gates + pinned public-repository validation** |
+| Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
 | Python | Yes | Yes | Not yet |
 | JavaScript / TypeScript | Yes | Yes | Not yet |
 | Rust | Yes | Yes | Not yet |
@@ -42,8 +42,8 @@ The LLM is not the source of truth.
 
 | Category | M01 rule | Confidence boundary |
 |---|---|---|
-| DEADCODE | unexported package-level function with zero lexical references | `HIGH`, never `PROVEN_UNUSED` |
-| LOGIC | repeated side-effect-free condition in one if/else-if chain | `HIGH` |
+| DEADCODE | unexported hand-maintained package-level function with zero lexical references | `HIGH`, never `PROVEN_UNUSED`; generated declarations excluded |
+| LOGIC | repeated side-effect-free condition in one if/else-if chain with binding-aware identifier comparison | `HIGH` |
 | SIMPLIFY | opposite boolean-return branches | `PROVEN` for that structural rewrite |
 | SECURITY | hardcoded literal assigned to a credential-like identifier | `SUSPICIOUS`, literal always redacted |
 | BLOAT | one-call unexported pass-through wrapper with one lexical reference | `SUSPICIOUS` |
@@ -107,6 +107,32 @@ On the accepted M05 snapshot, all four pinned repositories produced **0 findings
 
 External repository content is treated only as untrusted analysis input. Comments, documentation, or agent instructions inside analyzed repositories never become DoctorCode project authority.
 
+### M06 bounded real-world labels
+
+M06 adds a second real-world evidence lane using exact source locations from four pinned public repositories:
+
+- `urfave/cli`
+- `rs/zerolog`
+- `fsnotify/fsnotify`
+- `go-playground/validator`
+
+The tracked manifest contains **11 bounded labels**:
+
+- **4 VALID_FINDING** anchors that must remain detected;
+- **4 INVALID_FINDING** guards that must not be emitted;
+- **3 AMBIGUOUS** BLOAT observations that remain non-blocking.
+
+The pre-repair gate failed because all four invalid findings were still emitted. Three were LOGIC false positives caused by comparing conventional names such as `err` and `ok` without distinguishing their branch-local short-declaration bindings. The fourth was DEADCODE on a generated `_EnumNoOp` compile-time assertion function.
+
+M06 repairs those two roots:
+
+1. pure-condition canonicalization includes parser-resolved declaration identity for local identifiers;
+2. generated Go function declarations are excluded from DEADCODE candidates, while references originating in generated files still keep hand-written functions live.
+
+After repair, all four valid anchors remain present and all four invalid guards are absent on Linux, Windows, and macOS. The three ambiguous wrappers remain `SUSPICIOUS` and never authorize autofix.
+
+These labels are intentionally bounded to exact reviewed locations. **They are not exhaustive labels for the repositories and do not establish general real-world precision, recall, or safe deletion.**
+
 ## Quick start
 
 Requires Go 1.24+ to build from source.
@@ -167,7 +193,7 @@ Blocking runners:
 - `windows-latest`
 - `macos-latest`
 
-Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. A separate M05 matrix runs pinned public-repository validation on the same Linux, Windows, and macOS runner set.
+Core CI runs unit/corpus tests, the M02 baseline, M03 adversarial, and M04 repository-shaped benchmark gates, `go vet`, CLI build, scan, toolchain detection, audit smoke, and bounded-packet smoke. Separate M05 and M06 matrices run pinned public-repository compatibility validation and bounded real-world label validation on the same Linux, Windows, and macOS runner set.
 
 ## Design principles
 
