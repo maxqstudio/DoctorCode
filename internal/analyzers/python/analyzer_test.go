@@ -117,6 +117,21 @@ def same(value):
 	}
 }
 
+
+func TestPythonParseFailureIsBlocking(t *testing.T) {
+	root := t.TempDir()
+	if err := os.WriteFile(filepath.Join(root, "broken.py"), []byte("def broken(:\n    pass\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	_, err := New().Analyze(context.Background(), root)
+	if errors.Is(err, detector.ErrUnavailable) {
+		t.Skip(err)
+	}
+	if err == nil || !strings.Contains(err.Error(), "python parse incomplete: broken.py:1") {
+		t.Fatalf("syntax error must fail closed with relative evidence, got %v", err)
+	}
+}
+
 func hasRule(findings []model.Finding, rule string) bool {
 	for _, finding := range findings {
 		if finding.RuleID == rule {

@@ -42,6 +42,17 @@ type rawFinding struct {
 	Verification []string         `json:"verification"`
 }
 
+type rawParseError struct {
+	Path    string `json:"path"`
+	Line    int    `json:"line"`
+	Message string `json:"message"`
+}
+
+type rawResult struct {
+	Findings    []rawFinding    `json:"findings"`
+	ParseErrors []rawParseError `json:"parse_errors"`
+}
+
 type pythonCommand struct {
 	path   string
 	prefix []string
@@ -79,15 +90,19 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 		return nil, fmt.Errorf("python ast analyzer failed: %s", message)
 	}
 
-	var raw []rawFinding
+	var raw rawResult
 	decoder := json.NewDecoder(&stdout)
 	decoder.DisallowUnknownFields()
 	if err := decoder.Decode(&raw); err != nil {
 		return nil, fmt.Errorf("decode python analyzer output: %w", err)
 	}
+	if len(raw.ParseErrors) > 0 {
+		first := raw.ParseErrors[0]
+		return nil, fmt.Errorf("python parse incomplete: %s:%d: %s", first.Path, first.Line, first.Message)
+	}
 
-	findings := make([]model.Finding, 0, len(raw))
-	for _, item := range raw {
+	findings := make([]model.Finding, 0, len(raw.Findings))
+	for _, item := range raw.Findings {
 		key := fmt.Sprintf("%s|%s|%d|%s", item.RuleID, item.Path, item.LineStart, item.Summary)
 		digest := sha256.Sum256([]byte(key))
 		findings = append(findings, model.Finding{
@@ -178,6 +193,7 @@ import sys
 ROOT = os.path.abspath(sys.argv[1])
 IGNORED = {".git", ".hg", ".svn", ".idea", ".vscode", "node_modules", "vendor", "dist", "build", "target", ".venv", "venv", "__pycache__", "testdata"}
 findings = []
+parse_errors = []
 files = []
 
 def relpath(path):
@@ -207,7 +223,19 @@ for dirpath, dirnames, filenames in os.walk(ROOT, followlinks=False):
             with open(path, "r", encoding="utf-8-sig") as handle:
                 source = handle.read()
             tree = ast.parse(source, filename=path)
-        except (OSError, UnicodeError, SyntaxError):
+        except SyntaxError as exc:
+            parse_errors.append({
+                "path": relpath(path),
+                "line": int(exc.lineno or 0),
+                "message": str(exc.msg),
+            })
+            continue
+        except (OSError, UnicodeError) as exc:
+            parse_errors.append({
+                "path": relpath(path),
+                "line": 0,
+                "message": type(exc).__name__,
+            })
             continue
         files.append((path, relpath(path), source, tree, generated_source(source)))
 
@@ -426,5 +454,6 @@ for path, rel, source, tree, generated in files:
             )
 
 findings.sort(key=lambda item: (item["rule_id"], item["path"], item["line_start"], item["summary"]))
-json.dump(findings, sys.stdout, separators=(",", ":"))
+parse_errors.sort(key=lambda item: (item["path"], item["line"], item["message"]))
+json.dump({"findings": findings, "parse_errors": parse_errors}, sys.stdout, separators=(",", ":"))
 `
