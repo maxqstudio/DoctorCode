@@ -3,7 +3,8 @@ name: Real World Go Validation
 on:
   push:
     branches:
-      - "work/m05-public-repo-validation"
+      - main
+      - "work/**"
   pull_request:
 
 permissions:
