@@ -3,7 +3,7 @@
   "session_id": "M09-PYTHON-REPOSITORY-SHAPED",
   "phase": "M09_PYTHON_REPOSITORY_SHAPED",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "29924f324db316a9a2985943c09d4711824a1220",
