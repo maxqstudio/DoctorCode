@@ -263,7 +263,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M16_THIN_MCP_ADAPTER
 
-Current status: M16_HARDENING_VALIDATING
+Current status: M16_HARDENING_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -319,10 +319,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M16 hardening Project Truth and rerun strict governance on the exact branch tree.
 - Merge FINAL_ACCEPTED M16 hardening amendment to protected main through pull request.
-- Rerun all applicable acceptance lanes on the exact hardening main merge SHA.
-- Only after the hardening amendment is MAIN_ACCEPTED, synchronize the existing M17 branch to the new main baseline and continue release/install hardening.
+- Rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact hardening main merge SHA.
+- After M16 hardening is MAIN_ACCEPTED, synchronize the existing M17 release/install branch to the new main baseline and continue M17.
 
 Blocked actions:
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
@@ -359,6 +358,9 @@ Known blockers:
 - M16 contract-size RED run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on Linux, Windows, and macOS because a schema-valid verification contract larger than 1 MiB was accepted by MCP transport.
 - M16 hardening candidate c71ad68ce32da1f871d0d4cfa46600e3abc60282 applies only the verification-contract size bound, its regression test, and dependency-lock cleanliness gate on top of governance-normalized M16 main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
 - At c71ad68ce32da1f871d0d4cfa46600e3abc60282, M16 Thin MCP 36381377804, Core CI 36381377801, M10 Python labels 36381377776, M07 Python Real World 36381377772, M06 Go labels 36381377869, and Real World Go 36381377773 all passed on Linux, Windows, and macOS.
+- Final M16 hardening amendment tree e1fa130310528ce9a5c735373a8c61ad5a6cf1e3 passed Governance Bootstrap run 36381732998.
+- At e1fa130310528ce9a5c735373a8c61ad5a6cf1e3, Core CI 36381733023 and M16 Thin MCP 36381732965 passed on ubuntu-latest, windows-latest, and macos-latest.
+- At the same final hardening tree, M10 Python labels 36381733022, M07 Python Real World 36381732962, M06 Go labels 36381733004, and Real World Go 36381733011 passed on all three operating systems.
 
 ### Not proven
 
