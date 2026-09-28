@@ -248,7 +248,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M15_THIN_SKILL_ADAPTER
 
-Current status: M15_ACCEPTED
+Current status: M15_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -300,16 +300,16 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Run final exact-SHA acceptance on the finalized M15 branch tree with no temporary workflow present.
-- Open and merge the FINAL_ACCEPTED M15 pull request through protected main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA.
-- After M15_MAIN_ACCEPTED, proceed to the next adapter/release milestone declared by governance.
+- Proceed to M16 Thin MCP Adapter under the Owner directive to continue until DoctorCode is complete.
+- Branch M16 only from the governance-normalized M15 main after exact closure acceptance.
+- Keep MCP transport thin: expose DoctorCode CLI/core capabilities without duplicating detector, context, or verification algorithms.
+- Preserve M15 product acceptance at b0677e43c3c5634dbdd856821c44fce7003c896d and its exact post-merge evidence as immutable historical evidence.
 
 Blocked actions:
-- Duplicating detector, related-context, or verification algorithms inside the skill.
-- Treating skill prose as stronger authority than DoctorCode CLI output.
+- Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
+- Granting MCP tools automatic mutation or safe-delete authority.
 - Executing arbitrary repository-provided commands as DoctorCode verification authority.
-- Adding MCP transport behavior inside the M15 Skill adapter.
+- Starting release/install packaging before the thin MCP transport contract is accepted.
 
 Known blockers:
 - None declared.
@@ -330,6 +330,13 @@ Known blockers:
 - Final synchronized M15 branch tree b32938e13c1de97138edd09b0374bceb51d60b01 passed Governance Bootstrap run 36368457969.
 - Core CI run 36368457929 at b32938e13c1de97138edd09b0374bceb51d60b01 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36368457958, M07 Python Real World run 36368457921, M06 Go labels run 36368457994, and Real World Go run 36368457915 all passed on Linux, Windows, and macOS at b32938e13c1de97138edd09b0374bceb51d60b01.
+- M15 Thin Skill Adapter merged through PR #16 to protected main at b0677e43c3c5634dbdd856821c44fce7003c896d.
+- Exact M15 main Governance Bootstrap run 36369855788 completed success.
+- Exact M15 main Core CI run 36369855714 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M15 main M10 Python labels run 36369855718 completed success on all three operating systems.
+- Exact M15 main M07 Python Real World run 36369855832 completed success on all three operating systems.
+- Exact M15 main M06 Go labels run 36369855815 completed success on all three operating systems.
+- Exact M15 main Real World Go Validation run 36369855765 completed success on all three operating systems.
 
 ### Not proven
 

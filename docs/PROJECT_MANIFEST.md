@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m15-thin-skill-adapter
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
+Last accepted SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
 Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 ## Authorities
