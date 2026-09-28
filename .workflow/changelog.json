@@ -1,6 +1,18 @@
 {
   "entries": [
     {
+      "date": "2026-09-28",
+      "title": "M16 Thin MCP Adapter candidate",
+      "type": "development",
+      "changes": [
+        "Added transport-neutral shared application facade for audit, context, contract, and verify.",
+        "Added isolated Go MCP module pinned to modelcontextprotocol/go-sdk v1.7.0 with committed go.sum.",
+        "Added exactly four read-only bounded MCP tools using one startup-bound repository root.",
+        "Added local stdio doctorcode-mcp entrypoint and three-OS MCP test/vet/build gate.",
+        "Kept mutation, safe-delete, arbitrary repository command execution, remote transports, and release packaging outside M16."
+      ]
+    },
+    {
       "changes": [
         "Merged FINAL_ACCEPTED M15 Thin Skill Adapter through PR #16 to protected main at b0677e43c3c5634dbdd856821c44fce7003c896d.",
         "Passed strict Governance Bootstrap on the exact main merge SHA.",
