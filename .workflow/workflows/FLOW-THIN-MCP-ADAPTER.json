@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-THIN-MCP-ADAPTER",
+  "title": "Bounded read-only MCP dispatch",
+  "purpose": "Expose accepted DoctorCode audit/context/contract/verify capabilities to an MCP client without expanding repository or mutation authority.",
+  "critical": false,
+  "entry_condition": "doctorcode-mcp starts with a valid repository directory and an MCP client connects over stdio.",
+  "authority": "mcp/server.go plus internal/application/application.go and existing DoctorCode core",
+  "states": [
+    "ROOT_BOUND",
+    "SERVER_READY",
+    "TOOL_REQUEST_VALIDATED",
+    "CORE_DISPATCHED",
+    "STRUCTURED_RESULT_RETURNED"
+  ],
+  "transitions": [
+    {
+      "from": "ROOT_BOUND",
+      "to": "SERVER_READY",
+      "action": "Register exactly four read-only tools on the MCP server.",
+      "side_effects": []
+    },
+    {
+      "from": "SERVER_READY",
+      "to": "TOOL_REQUEST_VALIDATED",
+      "action": "Validate typed bounded input that cannot select repository root/path or arbitrary command execution.",
+      "side_effects": []
+    },
+    {
+      "from": "TOOL_REQUEST_VALIDATED",
+      "to": "CORE_DISPATCHED",
+      "action": "Delegate to shared application Audit, Context, Contract, or Verify.",
+      "side_effects": []
+    },
+    {
+      "from": "CORE_DISPATCHED",
+      "to": "STRUCTURED_RESULT_RETURNED",
+      "action": "Return structured output; deterministic verify failure is marked as MCP tool error while preserving the result.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "Exactly four MCP tools are registered.",
+    "All MCP tools are read-only.",
+    "Repository scope is resolved once at server startup.",
+    "No tool input exposes root, path, command, or shell authority.",
+    "MCP does not duplicate detector, context, or verification algorithms.",
+    "MCP does not mutate source or execute repository-provided commands.",
+    "MCP context remains byte bounded and DoctorCode proof boundaries remain unchanged."
+  ],
+  "failure_behavior": [
+    "Invalid startup root fails server creation.",
+    "Invalid tool input is returned as MCP tool error.",
+    "Unknown/stale finding or invalid contract fails closed through the shared application/core.",
+    "Deterministic verification failure is visible as IsError=true with structured result evidence."
+  ],
+  "restart_behavior": [
+    "Restart doctorcode-mcp with the intended repository root; no MCP state is persisted by DoctorCode."
+  ],
+  "rollback_behavior": [
+    "Removing the MCP module leaves CLI and Skill operation intact because semantic authority remains in the shared core."
+  ],
+  "source_owners": [
+    "mcp/server.go",
+    "mcp/cmd/doctorcode-mcp/main.go",
+    "internal/application/application.go"
+  ],
+  "tests": [
+    "mcp/server_test.go",
+    "internal/application/application_test.go",
+    ".github/workflows/m16-mcp.yml"
+  ],
+  "sequence_session": "M16-THIN-MCP-ADAPTER"
+}
