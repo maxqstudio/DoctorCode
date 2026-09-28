@@ -65,10 +65,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN for the M16 hardening amendment until generated Project Truth is synchronized and strict governance passes on its exact final branch SHA.",
+      "evidence": "Governance Bootstrap run 36381732998 at exact final hardening amendment tree e1fa130310528ce9a5c735373a8c61ad5a6cf1e3 completed success with no temporary synchronization workflow in the tree.",
       "id": "M16-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     },
     {
       "evidence": "main@2e76c9e635a8a68507fea9d44438f74e96d8e754: Governance 36374601756 PASS; Core 36374601764 3/3 PASS; M16 MCP 36374601767 3/3 PASS; M10 36374601762 3/3 PASS; M07 36374601774 3/3 PASS; M06 36374601733 3/3 PASS; Real World Go 36374601755 3/3 PASS.",
@@ -120,7 +120,7 @@
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
     "DOC_LAYOUT": "PASS",
     "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
@@ -128,7 +128,7 @@
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
     "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "PASS",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",

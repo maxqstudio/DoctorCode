@@ -2,6 +2,17 @@
   "entries": [
     {
       "date": "2026-09-28",
+      "title": "M16 MCP hardening amendment accepted",
+      "type": "acceptance",
+      "changes": [
+        "Accepted the 1 MiB encoded verification-contract transport bound for doctorcode_verify.",
+        "Accepted the dependency-lock cleanliness gate after go mod tidy.",
+        "Revalidated strict governance, Core CI, M16 MCP, M10, M07, M06, and Real World Go across Linux, Windows, and macOS from governance-normalized M16 main.",
+        "Kept M17 blocked until this hardening amendment is merged and accepted on protected main."
+      ]
+    },
+    {
+      "date": "2026-09-28",
       "title": "M16 MCP hardening amendment",
       "type": "development",
       "changes": [
