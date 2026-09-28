@@ -1399,6 +1399,64 @@
         "GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M17-SIX-TARGET",
+      "claim": "M17 constructs exactly six release targets covering linux, darwin, and windows on amd64 and arm64, with doctorcode and doctorcode-mcp in every archive.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "scripts/build_release.py",
+        "scripts/verify_release.py"
+      ],
+      "tests": [
+        ".github/workflows/m17-release.yml"
+      ],
+      "runtime_evidence": [
+        "M17 release build stage at current candidate"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M17-INTEGRITY",
+      "claim": "M17 binds release archives and manifest with SHA-256 checksums and both installers verify the native archive before extraction.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "scripts/verify_release.py",
+        "scripts/install.sh",
+        "scripts/install.ps1"
+      ],
+      "tests": [
+        ".github/workflows/m17-release.yml"
+      ],
+      "runtime_evidence": [
+        "Ubuntu and Windows install smoke; macOS repair awaiting current candidate completion"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M17-BUILD-METADATA",
+      "claim": "M17 injects version, exact commit, and build date into both shipped binaries and native install smoke checks those values against the release manifest.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/buildinfo/buildinfo.go",
+        "cmd/doctorcode/main.go",
+        "mcp/cmd/doctorcode-mcp/main.go",
+        "scripts/smoke_release.py"
+      ],
+      "tests": [
+        "internal/buildinfo/buildinfo_test.go",
+        ".github/workflows/m17-release.yml"
+      ],
+      "runtime_evidence": [
+        "M17 install smoke jobs"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": [],

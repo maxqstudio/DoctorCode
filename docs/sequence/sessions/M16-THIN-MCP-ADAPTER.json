@@ -3,7 +3,7 @@
   "session_id": "M16-THIN-MCP-ADAPTER",
   "phase": "M16_THIN_MCP_ADAPTER",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
   "status": "ACCEPTED",
   "implementation_base_sha": "3a809c178e69ca2c2f2cff83d0d0800637b37d02",
