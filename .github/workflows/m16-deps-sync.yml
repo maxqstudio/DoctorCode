@@ -1,0 +1,44 @@
+name: M16 Dependency Lock Sync
+
+on:
+  push:
+    branches:
+      - "work/m16-thin-mcp-adapter"
+
+permissions:
+  contents: write
+
+jobs:
+  lock:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m16-thin-mcp-adapter
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.x"
+          cache: false
+      - name: Resolve exact MCP module graph
+        working-directory: mcp
+        run: go mod tidy
+      - name: Verify MCP module
+        working-directory: mcp
+        run: |
+          go test ./...
+          go vet ./...
+          go build -trimpath ./cmd/doctorcode-mcp
+      - name: Commit dependency lock
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mcp/go.mod mcp/go.sum
+          if git diff --cached --quiet; then
+            echo "M16_DEP_LOCK=UNCHANGED"
+            exit 0
+          fi
+          git commit -m "build(m16): lock MCP module dependencies"
+          git push origin HEAD:work/m16-thin-mcp-adapter
