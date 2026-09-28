@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m17-release-install-hardening
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -43,6 +43,10 @@ External systems: GitHub Actions, host compilers and language runtimes, local MC
 | doctorcode verify | cmd/doctorcode/main.go | Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints. |
 | DoctorCode agent skill | skills/doctorcode/SKILL.md | Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic. |
 | doctorcode-mcp | mcp/cmd/doctorcode-mcp/main.go | Run the thin local stdio MCP adapter bound to one repository root. |
+| release builder | scripts/build_release.py | Build deterministic six-target DoctorCode release archives. |
+| release verifier | scripts/verify_release.py | Verify manifest, checksum, target, and archive contracts. |
+| Unix installer | scripts/install.sh | Install a checksum-verified native Unix release archive. |
+| Windows installer | scripts/install.ps1 | Install a checksum-verified native Windows release archive. |
 
 ## Critical directories
 

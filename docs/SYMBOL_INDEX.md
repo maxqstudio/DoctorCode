@@ -3,7 +3,7 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 Status: CURRENT
 
 | File | Symbol | Kind | Lines@SHA | Responsibility | Reads/Writes | Called By | Tests |
@@ -86,6 +86,24 @@ Status: CURRENT
 | internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | test_helper | function | 3-4 | Observed Python symbol | | | |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
+| scripts/build_release.py | parse_args | function | 33-39 | Observed Python symbol | | | |
+| scripts/build_release.py | validate_metadata | function | 42-57 | Observed Python symbol | | | |
+| scripts/build_release.py | sha256 | function | 60-65 | Observed Python symbol | | | |
+| scripts/build_release.py | build_binary | function | 68-86 | Observed Python symbol | | | |
+| scripts/build_release.py | populate_package | function | 89-111 | Observed Python symbol | | | |
+| scripts/build_release.py | iter_archive_paths | function | 114-116 | Observed Python symbol | | | |
+| scripts/build_release.py | write_tar_gz | function | 119-139 | Observed Python symbol | | | |
+| scripts/build_release.py | write_zip | function | 142-157 | Observed Python symbol | | | |
+| scripts/build_release.py | main | function | 160-213 | Observed Python symbol | | | |
+| scripts/smoke_release.py | parse_args | function | 11-15 | Observed Python symbol | | | |
+| scripts/smoke_release.py | target | function | 18-36 | Observed Python symbol | | | |
+| scripts/smoke_release.py | version_json | function | 39-46 | Observed Python symbol | | | |
+| scripts/smoke_release.py | main | function | 49-70 | Observed Python symbol | | | |
+| scripts/verify_release.py | parse_args | function | 21-27 | Observed Python symbol | | | |
+| scripts/verify_release.py | sha256 | function | 30-35 | Observed Python symbol | | | |
+| scripts/verify_release.py | archive_names | function | 38-45 | Observed Python symbol | | | |
+| scripts/verify_release.py | validate_archive | function | 48-66 | Observed Python symbol | | | |
+| scripts/verify_release.py | main | function | 69-125 | Observed Python symbol | | | |
 
 ## Coverage
 

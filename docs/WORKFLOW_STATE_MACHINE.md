@@ -555,6 +555,51 @@ Authority: internal/realworld/sources.json, internal/realworld/realworld_test.go
 
 - External repositories are checked out read-only for analysis and DoctorCode does not mutate them.
 
+## FLOW-RELEASE-INSTALL — Release build and install
+
+Purpose: Build, verify, install-smoke, and eventually publish immutable DoctorCode release artifacts without widening product authority.
+Critical: FALSE
+Entry condition: An exact M17 source candidate is ready for release artifact validation.
+Authority: scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml
+
+### States
+
+- SOURCE_BOUND
+- ARTIFACTS_BUILT
+- ARTIFACTS_VERIFIED
+- NATIVE_INSTALL_VERIFIED
+- PUBLICATION_ELIGIBLE
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| SOURCE_BOUND | ARTIFACTS_BUILT | Cross-compile doctorcode and doctorcode-mcp for six declared targets with injected build metadata. | scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml | Create dist release archives and metadata. |
+| ARTIFACTS_BUILT | ARTIFACTS_VERIFIED | Verify exact target set, archive members, sizes, SHA-256, manifest, and checksums. | scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml |  |
+| ARTIFACTS_VERIFIED | NATIVE_INSTALL_VERIFIED | Install the native archive on Linux, Windows, and macOS and execute both binaries to compare build metadata with the manifest. | scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml | Write binaries only to the explicit CI install directory. |
+| NATIVE_INSTALL_VERIFIED | PUBLICATION_ELIGIBLE | Permit v* tag publication only after the install-smoke dependency succeeds. | scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml | A tag-triggered accepted run may publish GitHub Release assets. |
+
+### Invariants
+
+- Every archive contains both public binaries plus README, LICENSE, and skills/doctorcode/SKILL.md.
+- Exactly six linux/darwin/windows amd64/arm64 targets exist.
+- Installers verify SHA-256 before extraction.
+- Default installers do not modify PATH automatically.
+- Public publication is blocked before M17_MAIN_ACCEPTED.
+- Release packaging does not widen analyzer, verification, Skill, or MCP authority.
+
+### Failure behavior
+
+- Any build, manifest, checksum, archive-content, install, or binary-metadata mismatch fails the release gate.
+
+### Restart behavior
+
+- Release construction is deterministic for the same source, metadata, Go toolchain, and packaging inputs and can be rerun from a clean dist directory.
+
+### Rollback behavior
+
+- No public release is created on development branch failure; revert the M17 branch change or repair and rerun acceptance.
+
 ## FLOW-SCAN — Repository inventory scan
 
 Purpose: Produce deterministic repository inventory without whole-repository LLM context.

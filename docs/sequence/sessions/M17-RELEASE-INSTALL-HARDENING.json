@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "session_id": "M16-THIN-MCP-ADAPTER",
-  "phase": "M16_THIN_MCP_ADAPTER",
+  "session_id": "M17-RELEASE-INSTALL-HARDENING",
+  "phase": "M17_RELEASE_INSTALL_HARDENING",
   "mode": "DURING",
-  "scope": "HISTORICAL",
+  "scope": "CURRENT",
   "critical": false,
   "status": "ACCEPTED",
-  "implementation_base_sha": "3a809c178e69ca2c2f2cff83d0d0800637b37d02",
+  "implementation_base_sha": "48b6d930b5231a9f808e74a7c58ebbd76174fabd",
   "plan": {
     "required": false,
     "contract": "",
@@ -16,16 +16,15 @@
     "diagram": ""
   },
   "actual": {
-    "graph": "docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.json",
-    "diagram": "docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.mmd",
+    "graph": "docs/sequence/generated/M17-RELEASE-INSTALL-HARDENING.actual.json",
+    "diagram": "docs/sequence/generated/M17-RELEASE-INSTALL-HARDENING.actual.mmd",
     "source_digest": "",
     "entries": []
   },
   "test_traceability_required": true,
   "tests": [
-    "mcp/server_test.go",
-    "internal/application/application_test.go",
-    ".github/workflows/m16-mcp.yml"
+    "internal/buildinfo/buildinfo_test.go",
+    ".github/workflows/m17-release.yml"
   ],
   "runtime_trace": {
     "required": false,

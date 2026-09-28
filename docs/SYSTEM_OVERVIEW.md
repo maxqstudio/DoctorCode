@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 137 files, 2 language categories.
+Observed source inventory: 144 files, 4 language categories.
 
 ## Major components
 
@@ -49,6 +49,7 @@ Observed source inventory: 137 files, 2 language categories.
 | Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
 | Shared Application Facade | Expose audit, bounded context, pre-repair contract, and deterministic verify as one transport-neutral application surface. | Audit, Context, Contract, Verify orchestration | detector engine, evidence reducer, Deterministic Verification Contract |
 | Thin MCP Adapter | Expose the shared DoctorCode application facade as four read-only bounded MCP tools over local stdio. | startup root binding, MCP tool schemas, stdio server entrypoint, MCP result/error translation | Shared Application Facade, modelcontextprotocol/go-sdk |
+| Release and Install Pipeline | Build deterministic cross-platform DoctorCode/DoctorCode-MCP archives, bind release metadata and SHA-256 integrity, verify package contents, and support checksum-verifying installation. | six-target release construction, release manifest and checksums, artifact content verification, Unix and PowerShell installers, native installed-artifact smoke | CLI, Thin MCP Adapter, DoctorCode Agent Skill, GitHub Actions |
 
 ## Main data flow
 
@@ -83,6 +84,8 @@ Observed source inventory: 137 files, 2 language categories.
 - Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
 - MCP client -> Thin MCP Adapter: A client invokes one of four bounded read-only DoctorCode tools; repository scope is fixed when the server starts.
 - Thin MCP Adapter -> Shared Application Facade: The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI.
+- accepted source -> Release and Install Pipeline: Exact accepted source plus version/commit/build-date metadata is cross-compiled into target archives.
+- Release and Install Pipeline -> end user: Checksummed archives and installers deliver doctorcode, doctorcode-mcp, license, README, and Agent Skill without changing core authority.
 
 ## Main user workflows
 
@@ -225,6 +228,17 @@ Authority: internal/realworld/sources.json, internal/realworld/realworld_test.go
 - ANALYZING -> ASSERTING_BOUNDARIES : Check selected known-live DEADCODE negatives plus path/category/confidence/no-autofix invariants.
 - ASSERTING_BOUNDARIES -> REPORTED : Emit per-repository compatibility telemetry and test verdict.
 
+### FLOW-RELEASE-INSTALL — Release build and install
+
+Build, verify, install-smoke, and eventually publish immutable DoctorCode release artifacts without widening product authority.
+
+Authority: scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml
+
+- SOURCE_BOUND -> ARTIFACTS_BUILT : Cross-compile doctorcode and doctorcode-mcp for six declared targets with injected build metadata.
+- ARTIFACTS_BUILT -> ARTIFACTS_VERIFIED : Verify exact target set, archive members, sizes, SHA-256, manifest, and checksums.
+- ARTIFACTS_VERIFIED -> NATIVE_INSTALL_VERIFIED : Install the native archive on Linux, Windows, and macOS and execute both binaries to compare build metadata with the manifest.
+- NATIVE_INSTALL_VERIFIED -> PUBLICATION_ELIGIBLE : Permit v* tag publication only after the install-smoke dependency succeeds.
+
 ### FLOW-SCAN — Repository inventory scan
 
 Produce deterministic repository inventory without whole-repository LLM context.
@@ -261,9 +275,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M16_THIN_MCP_ADAPTER
+Current phase: M17_RELEASE_INSTALL_HARDENING
 
-Current status: M16_MAIN_ACCEPTED
+Current status: M17_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -309,6 +323,7 @@ compiler does not infer them from implementation names.
 - FLOW-PYTHON-REPOSITORY-SHAPED: Any corpus FP/FN, prior-gate regression, real-world matrix failure, parse incompleteness, or strict governance drift blocks M09 promotion.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
+- FLOW-RELEASE-INSTALL: Any build, manifest, checksum, archive-content, install, or binary-metadata mismatch fails the release gate.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
 - FLOW-THIN-MCP-ADAPTER: Invalid startup root fails server creation.
 - FLOW-THIN-MCP-ADAPTER: Invalid tool input is returned as MCP tool error.
@@ -319,17 +334,16 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Proceed to M17 Release and Install Hardening under the Owner directive to continue until DoctorCode is complete.
-- Branch M17 only from the governance-normalized M16 main after exact closure acceptance.
-- Package doctorcode and doctorcode-mcp for Linux, Windows, and macOS with deterministic version metadata, checksums, install documentation, and artifact smoke verification.
-- Preserve M16 product acceptance at 2e76c9e635a8a68507fea9d44438f74e96d8e754 and exact post-merge evidence as immutable historical evidence.
+- Run final exact-SHA acceptance on the finalized M17 branch tree after the M17_ACCEPTED ledger and generated Project Truth are synchronized.
+- Merge FINAL_ACCEPTED M17 to protected main through pull request and rerun all permanent acceptance lanes on the exact main merge SHA.
+- After M17_MAIN_ACCEPTED only, publish immutable v0.1.0 release assets from that exact accepted main SHA and verify the GitHub Release readback.
 
 Blocked actions:
-- Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
-- Adding MCP mutation, safe-delete, or automatic-repair tools.
-- Adding arbitrary repository command execution to MCP verification authority.
-- Claiming remote/network MCP support from the local stdio acceptance evidence.
-- Publishing a public release tag before M17 release artifacts and install smoke tests are FINAL_ACCEPTED.
+- Publishing or moving a public release tag before M17_MAIN_ACCEPTED.
+- Claiming arm64 native execution where only cross-build/archive verification exists.
+- Claiming SHA-256 checksums are cryptographic code signing.
+- Adding automatic PATH mutation or privileged installation as part of the default installer.
+- Widening detector, context, verification, Skill, or MCP authority during release packaging.
 
 Known blockers:
 - None declared.
@@ -338,32 +352,28 @@ Known blockers:
 
 ### Proven
 
-- M15 is MAIN_ACCEPTED with product baseline main@b0677e43c3c5634dbdd856821c44fce7003c896d and governance-normalized main@3a809c178e69ca2c2f2cff83d0d0800637b37d02.
+- M16 is MAIN_ACCEPTED with product baseline main@2e76c9e635a8a68507fea9d44438f74e96d8e754 and governance-normalized main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
 - Skill_Workflow authority remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.
-- M16 keeps one shared application facade in internal/application/application.go; CLI audit/context/contract/verify and MCP dispatch both call that facade instead of duplicating analyzer, evidence, or verification algorithms.
-- M16 RED dedicated MCP run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on Linux, Windows, and macOS because NewServer did not yet exist and the RED test still contained two stale unused context variables.
-- M16 product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP run 36371973207 on Linux, Windows, and macOS: MCP tests, go vet, and stdio server build all passed.
-- At the same product candidate, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 passed on all three operating systems.
-- The MCP server exposes exactly doctorcode_audit, doctorcode_context, doctorcode_contract, and doctorcode_verify; all are read-only and use the startup-bound repository root.
-- MCP input schemas do not expose root, path, command, or shell transport authority.
-- doctorcode_verify represents deterministic domain verification failure as MCP IsError=true while retaining the structured verification result.
-- M16 dependency lock job 36372306971 generated and verified committed mcp/go.mod plus mcp/go.sum using Go 1.25 and modelcontextprotocol/go-sdk v1.7.0.
-- Final M16 branch tree 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed Governance Bootstrap run 36373403943.
-- Core CI run 36373404275 and M16 Thin MCP run 36373404050 at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed on ubuntu-latest, windows-latest, and macos-latest.
-- M10 Python labels run 36373403993, M07 Python Real World run 36373404028, M06 Go labels run 36373404043, and Real World Go run 36373404035 all passed on Linux, Windows, and macOS at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5.
-- M16 Thin MCP Adapter merged through PR #18 to protected main at 2e76c9e635a8a68507fea9d44438f74e96d8e754.
-- Exact M16 main Governance Bootstrap run 36374601756 completed success.
-- Exact M16 main Core CI run 36374601764 and M16 Thin MCP run 36374601767 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M16 main M10 Python labels run 36374601762, M07 Python Real World run 36374601774, M06 Go labels run 36374601733, and Real World Go run 36374601755 completed success on all three operating systems.
+- M17 branches from protected main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
+- M17 RED run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed at Build deterministic release bundle because scripts/build_release.py did not yet exist.
+- Pre-fix M17 run 36378036522 built and verified all six release archives plus release-manifest.json/checksums.txt successfully; Ubuntu and Windows installed and executed their native artifacts successfully.
+- The same pre-fix run exposed macOS Bash 3.2 incompatibility in scripts/install.sh at ${actual,,}; the installer was repaired to portable tr-based case normalization.
+- Current candidate 1b50d046158d2c89ffffcec68bb665e098006620 builds deterministic version metadata into both doctorcode and doctorcode-mcp and packages Linux, macOS, and Windows for amd64 and arm64.
+- Release archives contain exactly both binaries, README.md, LICENSE, and skills/doctorcode/SKILL.md; verifier rejects unsafe archive paths and validates size plus SHA-256.
+- Both Unix and PowerShell installers verify the selected native archive against checksums.txt before extraction and do not mutate PATH automatically.
+- Permanent workflows now cancel obsolete runs per workflow/ref so acceptance evidence converges on the newest candidate instead of consuming runners for superseded commits.
+- Final synchronized M17 candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5 passed Governance Bootstrap run 36379047101.
+- Core CI run 36379047022 and M16 Thin MCP run 36379047051 at a6beafebe53f4b98a926c95b4e69033beb40bcf5 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36379047057, M07 Python Real World run 36379047133, M06 Go labels run 36379047144, and Real World Go run 36379047115 all passed on Linux, Windows, and macOS at a6beafebe53f4b98a926c95b4e69033beb40bcf5.
+- M17 Release and Install run 36379047097 at a6beafebe53f4b98a926c95b4e69033beb40bcf5 built and verified all six archives and successfully installed/executed native artifacts on Ubuntu, Windows, and macOS.
+- The repaired macOS installer path is proven by m17-install-macos-latest success at exact final candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5; the pre-fix ${actual,,} failure remains retained as RED evidence.
 
 ### Not proven
 
-- M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
-- M16 does not install or package DoctorCode or doctorcode-mcp binaries; release/install packaging remains the next milestone.
-- M16 does not grant MCP tools source mutation, safe-delete, or automatic-repair authority.
-- M16 does not execute repository-provided test, build, shell, hook, or verification commands.
-- The opaque verification-contract transport does not enlarge M14 proof boundaries or cryptographically authenticate contracts.
-- The MCP adapter depends on the pinned Go MCP SDK version recorded by the nested module lock.
+- arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
+- SHA-256 checksums provide release-channel integrity verification but are not a code-signing or hardware-backed provenance claim.
+- A public v0.1.0 tag and GitHub Release have not been published; publication is blocked until M17 is MAIN_ACCEPTED.
+- M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
 
 ## Important limitations
 

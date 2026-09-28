@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/maxqstudio/DoctorCode/internal/application"
+	"github.com/maxqstudio/DoctorCode/internal/buildinfo"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 	"github.com/maxqstudio/DoctorCode/internal/verification"
@@ -54,7 +55,7 @@ func NewServer(root string) (*mcp.Server, error) {
 	}
 
 	server := mcp.NewServer(
-		&mcp.Implementation{Name: "doctorcode-mcp", Version: "0.1.0-dev"},
+		&mcp.Implementation{Name: "doctorcode-mcp", Version: buildinfo.Current().Version},
 		nil,
 	)
 

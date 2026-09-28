@@ -3,13 +3,13 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 537 | cmd/doctorcode | NO |
-| cmd/doctorcode/main_test.go | Go | 129 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 556 | cmd/doctorcode | NO |
+| cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
@@ -124,6 +124,8 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | Python | 4 | internal/benchmark/testdata/m09-python/test-reference-live/tests | YES |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
+| internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
+| internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
 | internal/engine/engine.go | Go | 93 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 272 | internal/evidence | NO |
@@ -142,8 +144,13 @@ Generated/refreshed: current compiler run
 | internal/toolchain/toolchain_test.go | Go | 16 | internal/toolchain | NO |
 | internal/verification/verification.go | Go | 297 | internal/verification | NO |
 | internal/verification/verification_test.go | Go | 113 | internal/verification | NO |
-| mcp/cmd/doctorcode-mcp/main.go | Go | 34 | mcp/cmd/doctorcode-mcp | NO |
-| mcp/server.go | Go | 223 | mcp | NO |
+| mcp/cmd/doctorcode-mcp/main.go | Go | 54 | mcp/cmd/doctorcode-mcp | NO |
+| mcp/server.go | Go | 224 | mcp | NO |
 | mcp/server_test.go | Go | 208 | mcp | NO |
+| scripts/build_release.py | Python | 217 | scripts | NO |
+| scripts/install.ps1 | PowerShell | 84 | scripts | NO |
+| scripts/install.sh | Shell | 117 | scripts | NO |
+| scripts/smoke_release.py | Python | 74 | scripts | NO |
+| scripts/verify_release.py | Python | 129 | scripts | NO |
 
 Machine-derived facts do not invent semantic ownership.

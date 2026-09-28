@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M16 Thin MCP Adapter is accepted on protected `main` at `2e76c9e635a8a68507fea9d44438f74e96d8e754`. M17 Release and Install Hardening is the next authorized milestone.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
+**M17 Release and Install Hardening is accepted on the development branch pending final exact-SHA promotion checks. Public v0.1.0 publication remains blocked until M17 is MAIN_ACCEPTED.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
@@ -366,3 +366,14 @@ DoctorCode includes an isolated `mcp/` Go module and a local stdio entrypoint at
 CLI and MCP share `internal/application` for audit, context, contract, and verify. The MCP layer contains transport validation and result translation only; detector, evidence, and verification algorithms remain in the existing core. Deterministic verification failures are returned as MCP tool errors while retaining structured verification evidence.
 
 M16 proves the local stdio transport on Linux, Windows, and macOS. Remote/network transports, authentication, source mutation, safe deletion, arbitrary repository commands, and release/install packaging are not claimed by this milestone.
+
+
+### M17 release and install hardening
+
+M17 packages `doctorcode` and `doctorcode-mcp` together for Linux, macOS, and Windows on amd64 and arm64. Every archive also carries the public README, LICENSE, and `skills/doctorcode/SKILL.md`. `release-manifest.json` records the version, exact source commit, build date, target, archive size, and SHA-256; `checksums.txt` binds the downloadable archives and manifest.
+
+Unix installation uses `scripts/install.sh --version <version>`; Windows installation uses `scripts/install.ps1 -Version <version>`. Both verify the selected native archive against the published SHA-256 checksum before extraction. They install to a user directory by default and do not modify PATH automatically.
+
+Release checksums are an integrity contract for assets obtained from the DoctorCode GitHub release channel. They are not a code-signing claim. Cross-built arm64 archives are package-verified; native execution is claimed only where the acceptance runner executes that architecture.
+
+The first public release target is `v0.1.0`, but it is not published until M17 is MAIN_ACCEPTED on protected `main`.

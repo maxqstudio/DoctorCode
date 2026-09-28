@@ -17,14 +17,14 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 537
+      "lines": 556
     },
     {
       "directory": "cmd/doctorcode",
       "file": "cmd/doctorcode/main_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 129
+      "lines": 142
     },
     {
       "directory": "internal/analyzers/golang",
@@ -825,6 +825,20 @@
       "lines": 5
     },
     {
+      "directory": "internal/buildinfo",
+      "file": "internal/buildinfo/buildinfo.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 31
+    },
+    {
+      "directory": "internal/buildinfo",
+      "file": "internal/buildinfo/buildinfo_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 31
+    },
+    {
       "directory": "internal/detector",
       "file": "internal/detector/detector.go",
       "is_test": false,
@@ -955,14 +969,14 @@
       "file": "mcp/cmd/doctorcode-mcp/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 34
+      "lines": 54
     },
     {
       "directory": "mcp",
       "file": "mcp/server.go",
       "is_test": false,
       "language": "Go",
-      "lines": 223
+      "lines": 224
     },
     {
       "directory": "mcp",
@@ -970,6 +984,41 @@
       "is_test": false,
       "language": "Go",
       "lines": 208
+    },
+    {
+      "directory": "scripts",
+      "file": "scripts/build_release.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 217
+    },
+    {
+      "directory": "scripts",
+      "file": "scripts/install.ps1",
+      "is_test": false,
+      "language": "PowerShell",
+      "lines": 84
+    },
+    {
+      "directory": "scripts",
+      "file": "scripts/install.sh",
+      "is_test": false,
+      "language": "Shell",
+      "lines": 117
+    },
+    {
+      "directory": "scripts",
+      "file": "scripts/smoke_release.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 74
+    },
+    {
+      "directory": "scripts",
+      "file": "scripts/verify_release.py",
+      "is_test": false,
+      "language": "Python",
+      "lines": 129
     }
   ],
   "python_calls": [
@@ -1124,6 +1173,762 @@
     {
       "caller": "internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py::test_helper",
       "target_token": "_helper"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "argparse.ArgumentParser"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/build_release.py::parse_args",
+      "target_token": "parser.parse_args"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "VERSION_RE.fullmatch"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "COMMIT_RE.fullmatch"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "dt.datetime.fromisoformat"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "build_date.replace"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "parsed.astimezone"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "int"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "parsed.timestamp"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "max"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "hashlib.sha256"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "path.open"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "iter"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "handle.read"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "digest.update"
+    },
+    {
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "digest.hexdigest"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "os.environ.copy"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "env.update"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "subprocess.run"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "str"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "package_dir.mkdir"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "join"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "build_binary"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "build_binary"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "shutil.copyfile"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "shutil.copyfile"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "skill_dir.mkdir"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "shutil.copyfile"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "chmod"
+    },
+    {
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "chmod"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "package_dir.rglob"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "as_posix"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "item.relative_to"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "archive.open"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "gzip.GzipFile"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tarfile.open"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "iter_archive_paths"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "as_posix"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.relative_to"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tarfile.TarInfo"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tar.addfile"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.read_bytes"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tar.addfile"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "io.BytesIO"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zipfile.ZipFile"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "iter_archive_paths"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "as_posix"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "path.relative_to"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zipfile.ZipInfo"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zf.writestr"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zf.writestr"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "path.read_bytes"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "parse_args"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "validate_metadata"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "resolve"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "resolve"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "output.exists"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "shutil.rmtree"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "output.mkdir"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "tempfile.TemporaryDirectory"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "populate_package"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "write_zip"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "write_tar_gz"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "artifacts.append"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "archive.stat"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "manifest_path.write_text"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "json.dumps"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "checksum_entries.append"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "checksum_entries.sort"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "write_text"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "join"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "print"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/smoke_release.py::parse_args",
+      "target_token": "argparse.ArgumentParser"
+    },
+    {
+      "caller": "scripts/smoke_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/smoke_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/smoke_release.py::parse_args",
+      "target_token": "parser.parse_args"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "lower"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "platform.system"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "lower"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "platform.machine"
+    },
+    {
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "subprocess.run"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "str"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "json.loads"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "parse_args"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "json.loads"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "read_text"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "target"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "any"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "version_json"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "version_json"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "print"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "argparse.ArgumentParser"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.parse_args"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "hashlib.sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "path.open"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "iter"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "handle.read"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "digest.update"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "digest.hexdigest"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "zipfile.ZipFile"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "handle.infolist"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "item.is_dir"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "tarfile.open"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "handle.getmembers"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "item.isfile"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "RuntimeError"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "archive_names"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "PurePosixPath"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "pure.is_absolute"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "RuntimeError"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "set"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "RuntimeError"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "parse_args"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "json.loads"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest_path.read_text"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "set"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "isinstance"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "seen_targets.add"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "path.is_file"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "path.stat"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "validate_archive"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "splitlines"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "checksums_path.read_text"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "raw.strip"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "raw.split"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "name.strip"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "print"
     }
   ],
   "python_routes": [],
@@ -1751,17 +2556,163 @@
       "line_start": 1,
       "locator": "internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py::_helper",
       "symbol": "_helper"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 39,
+      "line_start": 33,
+      "locator": "scripts/build_release.py::parse_args",
+      "symbol": "parse_args"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 57,
+      "line_start": 42,
+      "locator": "scripts/build_release.py::validate_metadata",
+      "symbol": "validate_metadata"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 65,
+      "line_start": 60,
+      "locator": "scripts/build_release.py::sha256",
+      "symbol": "sha256"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 86,
+      "line_start": 68,
+      "locator": "scripts/build_release.py::build_binary",
+      "symbol": "build_binary"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 111,
+      "line_start": 89,
+      "locator": "scripts/build_release.py::populate_package",
+      "symbol": "populate_package"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 116,
+      "line_start": 114,
+      "locator": "scripts/build_release.py::iter_archive_paths",
+      "symbol": "iter_archive_paths"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 139,
+      "line_start": 119,
+      "locator": "scripts/build_release.py::write_tar_gz",
+      "symbol": "write_tar_gz"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 157,
+      "line_start": 142,
+      "locator": "scripts/build_release.py::write_zip",
+      "symbol": "write_zip"
+    },
+    {
+      "file": "scripts/build_release.py",
+      "kind": "function",
+      "line_end": 213,
+      "line_start": 160,
+      "locator": "scripts/build_release.py::main",
+      "symbol": "main"
+    },
+    {
+      "file": "scripts/smoke_release.py",
+      "kind": "function",
+      "line_end": 15,
+      "line_start": 11,
+      "locator": "scripts/smoke_release.py::parse_args",
+      "symbol": "parse_args"
+    },
+    {
+      "file": "scripts/smoke_release.py",
+      "kind": "function",
+      "line_end": 36,
+      "line_start": 18,
+      "locator": "scripts/smoke_release.py::target",
+      "symbol": "target"
+    },
+    {
+      "file": "scripts/smoke_release.py",
+      "kind": "function",
+      "line_end": 46,
+      "line_start": 39,
+      "locator": "scripts/smoke_release.py::version_json",
+      "symbol": "version_json"
+    },
+    {
+      "file": "scripts/smoke_release.py",
+      "kind": "function",
+      "line_end": 70,
+      "line_start": 49,
+      "locator": "scripts/smoke_release.py::main",
+      "symbol": "main"
+    },
+    {
+      "file": "scripts/verify_release.py",
+      "kind": "function",
+      "line_end": 27,
+      "line_start": 21,
+      "locator": "scripts/verify_release.py::parse_args",
+      "symbol": "parse_args"
+    },
+    {
+      "file": "scripts/verify_release.py",
+      "kind": "function",
+      "line_end": 35,
+      "line_start": 30,
+      "locator": "scripts/verify_release.py::sha256",
+      "symbol": "sha256"
+    },
+    {
+      "file": "scripts/verify_release.py",
+      "kind": "function",
+      "line_end": 45,
+      "line_start": 38,
+      "locator": "scripts/verify_release.py::archive_names",
+      "symbol": "archive_names"
+    },
+    {
+      "file": "scripts/verify_release.py",
+      "kind": "function",
+      "line_end": 66,
+      "line_start": 48,
+      "locator": "scripts/verify_release.py::validate_archive",
+      "symbol": "validate_archive"
+    },
+    {
+      "file": "scripts/verify_release.py",
+      "kind": "function",
+      "line_end": 125,
+      "line_start": 69,
+      "locator": "scripts/verify_release.py::main",
+      "symbol": "main"
     }
   ],
   "schema_version": 1,
-  "source_digest": "64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9",
+  "source_digest": "e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095",
   "source_summary": {
-    "files": 137,
+    "files": 144,
     "languages": {
-      "Go": 82,
-      "Python": 55
+      "Go": 84,
+      "PowerShell": 1,
+      "Python": 58,
+      "Shell": 1
     },
-    "lines": 6584,
+    "lines": 7320,
     "test_files": 2
   },
   "tests": [

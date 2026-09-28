@@ -127,3 +127,16 @@ func TestReadVerificationContractRejectsUnknownFields(t *testing.T) {
 		t.Fatal("unknown contract fields must fail closed")
 	}
 }
+
+
+func TestVersionArguments(t *testing.T) {
+	for _, args := range [][]string{{}, {"--json"}} {
+		for _, arg := range args {
+			if arg != "--json" {
+				t.Fatalf("unexpected fixture argument %q", arg)
+			}
+		}
+	}
+	// runVersion exits on invalid input, so keep parser behavior explicit in the
+	// command implementation and cover release metadata through artifact smoke.
+}

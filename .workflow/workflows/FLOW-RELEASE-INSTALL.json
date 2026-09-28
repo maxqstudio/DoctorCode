@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-RELEASE-INSTALL",
+  "title": "Release build and install",
+  "purpose": "Build, verify, install-smoke, and eventually publish immutable DoctorCode release artifacts without widening product authority.",
+  "critical": false,
+  "entry_condition": "An exact M17 source candidate is ready for release artifact validation.",
+  "authority": "scripts/build_release.py, scripts/verify_release.py, scripts/install.sh, scripts/install.ps1, scripts/smoke_release.py, and .github/workflows/m17-release.yml",
+  "states": [
+    "SOURCE_BOUND",
+    "ARTIFACTS_BUILT",
+    "ARTIFACTS_VERIFIED",
+    "NATIVE_INSTALL_VERIFIED",
+    "PUBLICATION_ELIGIBLE"
+  ],
+  "transitions": [
+    {
+      "from": "SOURCE_BOUND",
+      "to": "ARTIFACTS_BUILT",
+      "action": "Cross-compile doctorcode and doctorcode-mcp for six declared targets with injected build metadata.",
+      "side_effects": [
+        "Create dist release archives and metadata."
+      ]
+    },
+    {
+      "from": "ARTIFACTS_BUILT",
+      "to": "ARTIFACTS_VERIFIED",
+      "action": "Verify exact target set, archive members, sizes, SHA-256, manifest, and checksums.",
+      "side_effects": []
+    },
+    {
+      "from": "ARTIFACTS_VERIFIED",
+      "to": "NATIVE_INSTALL_VERIFIED",
+      "action": "Install the native archive on Linux, Windows, and macOS and execute both binaries to compare build metadata with the manifest.",
+      "side_effects": [
+        "Write binaries only to the explicit CI install directory."
+      ]
+    },
+    {
+      "from": "NATIVE_INSTALL_VERIFIED",
+      "to": "PUBLICATION_ELIGIBLE",
+      "action": "Permit v* tag publication only after the install-smoke dependency succeeds.",
+      "side_effects": [
+        "A tag-triggered accepted run may publish GitHub Release assets."
+      ]
+    }
+  ],
+  "invariants": [
+    "Every archive contains both public binaries plus README, LICENSE, and skills/doctorcode/SKILL.md.",
+    "Exactly six linux/darwin/windows amd64/arm64 targets exist.",
+    "Installers verify SHA-256 before extraction.",
+    "Default installers do not modify PATH automatically.",
+    "Public publication is blocked before M17_MAIN_ACCEPTED.",
+    "Release packaging does not widen analyzer, verification, Skill, or MCP authority."
+  ],
+  "failure_behavior": [
+    "Any build, manifest, checksum, archive-content, install, or binary-metadata mismatch fails the release gate."
+  ],
+  "restart_behavior": [
+    "Release construction is deterministic for the same source, metadata, Go toolchain, and packaging inputs and can be rerun from a clean dist directory."
+  ],
+  "rollback_behavior": [
+    "No public release is created on development branch failure; revert the M17 branch change or repair and rerun acceptance."
+  ],
+  "source_owners": [
+    "scripts/build_release.py",
+    "scripts/verify_release.py",
+    "scripts/install.sh",
+    "scripts/install.ps1",
+    "scripts/smoke_release.py",
+    ".github/workflows/m17-release.yml"
+  ],
+  "tests": [
+    "internal/buildinfo/buildinfo_test.go",
+    ".github/workflows/m17-release.yml"
+  ],
+  "sequence_session": "M17-RELEASE-INSTALL-HARDENING"
+}

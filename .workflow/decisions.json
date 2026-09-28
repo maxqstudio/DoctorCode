@@ -384,6 +384,62 @@
       "status": "ACCEPTED",
       "decision": "Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.",
       "rationale": "The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned."
+    },
+    {
+      "id": "ADR-M17-001",
+      "date": "2026-09-28",
+      "title": "Package both public binaries together per target",
+      "context": "DoctorCode now has a CLI and a thin local stdio MCP server that must remain version-aligned.",
+      "decision": "Every release target archive contains doctorcode and doctorcode-mcp plus README, LICENSE, and the DoctorCode Agent Skill.",
+      "reason": "One target archive prevents version skew between the CLI and MCP adapter and keeps public installation simple.",
+      "alternatives": [
+        "Separate CLI/MCP releases",
+        "Source-only install"
+      ],
+      "impact": "Six archives cover linux/darwin/windows on amd64/arm64.",
+      "authority": "M17 release contract"
+    },
+    {
+      "id": "ADR-M17-002",
+      "date": "2026-09-28",
+      "title": "Verify SHA-256 before extraction",
+      "context": "Public installers must reject corrupted or mismatched archives without requiring privileged tooling.",
+      "decision": "Publish checksums.txt and require Unix/PowerShell installers to verify the selected archive before extraction.",
+      "reason": "This provides deterministic release-channel integrity with standard platform tooling while avoiding stronger signing claims.",
+      "alternatives": [
+        "No integrity check",
+        "Platform-specific package-manager signing"
+      ],
+      "impact": "Checksum failure is fail-closed; code signing remains not proven.",
+      "authority": "M17 release contract"
+    },
+    {
+      "id": "ADR-M17-003",
+      "date": "2026-09-28",
+      "title": "Do not mutate PATH automatically",
+      "context": "Installers should remain unprivileged and predictable.",
+      "decision": "Install both binaries to an explicit/default user directory and report PATH guidance instead of editing shell profiles or system PATH.",
+      "reason": "Avoid hidden persistent mutation and platform-specific privilege behavior.",
+      "alternatives": [
+        "Automatic PATH mutation",
+        "System-wide privileged install"
+      ],
+      "impact": "Users may need to add the installation directory to PATH manually.",
+      "authority": "M17 release contract"
+    },
+    {
+      "id": "ADR-M17-004",
+      "date": "2026-09-28",
+      "title": "Gate public release publication behind accepted artifacts",
+      "context": "A public tag/release must not precede artifact and install acceptance.",
+      "decision": "The permanent release workflow only publishes on v* tags after release build and native install-smoke jobs succeed; Owner workflow will create v0.1.0 only after M17_MAIN_ACCEPTED.",
+      "reason": "Keeps public release authority downstream of deterministic acceptance.",
+      "alternatives": [
+        "Publish from every main build",
+        "Manual unverified asset upload"
+      ],
+      "impact": "No public M17 release exists before main acceptance.",
+      "authority": "M17 release contract"
     }
   ],
   "schema_version": 1

@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 
 ## Components
 
@@ -24,6 +24,7 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 | skill_adapter | Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
 | application_facade | Shared Application Facade | Expose audit, bounded context, pre-repair contract, and deterministic verify as one transport-neutral application surface. | Audit, Context, Contract, Verify orchestration | detector engine, evidence reducer, Deterministic Verification Contract |
 | mcp_adapter | Thin MCP Adapter | Expose the shared DoctorCode application facade as four read-only bounded MCP tools over local stdio. | startup root binding, MCP tool schemas, stdio server entrypoint, MCP result/error translation | Shared Application Facade, modelcontextprotocol/go-sdk |
+| release_pipeline | Release and Install Pipeline | Build deterministic cross-platform DoctorCode/DoctorCode-MCP archives, bind release metadata and SHA-256 integrity, verify package contents, and support checksum-verifying installation. | six-target release construction, release manifest and checksums, artifact content verification, Unix and PowerShell installers, native installed-artifact smoke | CLI, Thin MCP Adapter, DoctorCode Agent Skill, GitHub Actions |
 
 ## Data flow
 
@@ -58,6 +59,8 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 - Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
 - MCP client -> Thin MCP Adapter: A client invokes one of four bounded read-only DoctorCode tools; repository scope is fixed when the server starts.
 - Thin MCP Adapter -> Shared Application Facade: The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI.
+- accepted source -> Release and Install Pipeline: Exact accepted source plus version/commit/build-date metadata is cross-compiled into target archives.
+- Release and Install Pipeline -> end user: Checksummed archives and installers deliver doctorcode, doctorcode-mcp, license, README, and Agent Skill without changing core authority.
 
 ## External boundaries
 
@@ -74,12 +77,13 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 - Verification execution boundary: M14 never executes repository-provided test, build, shell, hook, or Finding.Verification command strings. Verification authority is a fresh DoctorCode deterministic audit plus the frozen contract only.
 - Skill adapter authority boundary: Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results.
 - MCP transport boundary: M16 proves local stdio transport only. Tool schemas cannot select repository root/path or execute arbitrary commands; all four tools are read-only and preserve underlying DoctorCode proof boundaries.
+- Release integrity boundary: Installers verify SHA-256 from the published checksums file before extraction. This is integrity relative to the release channel, not code-signing or hardware-backed provenance.
 
 ## Observed implementation inventory
 
-Source files: 137
-Source lines: 6584
-Languages: Go=82, Python=55
+Source files: 144
+Source lines: 7320
+Languages: Go=84, PowerShell=1, Python=58, Shell=1
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.

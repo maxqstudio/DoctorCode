@@ -156,6 +156,22 @@
         "tool input schemas expose no root/path/command/shell authority",
         "verification domain failure is IsError=true with structured result retained"
       ]
+    },
+    {
+      "name": "M17 release manifest",
+      "source_of_truth": "scripts/build_release.py",
+      "mutability": "immutable artifact snapshot for one build",
+      "legal_writes": [
+        "M17 release builder"
+      ],
+      "retention": "workflow artifact and published GitHub Release",
+      "invariants": [
+        "schema_version is 1",
+        "product is DoctorCode",
+        "version, commit, and build_date match binary build metadata",
+        "exactly six unique os/arch artifacts are present",
+        "every artifact records filename, format, size, and SHA-256"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -240,6 +256,18 @@
       "command": "cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp",
       "purpose": "Validate the isolated MCP adapter module and stdio entrypoint.",
       "expected": "exit code 0 on Linux, Windows, and macOS"
+    },
+    {
+      "name": "build release bundle",
+      "command": "python scripts/build_release.py --version <version> --commit <sha> --date <date> --output dist",
+      "purpose": "Cross-compile and package the six DoctorCode release targets.",
+      "expected": "M17_RELEASE_BUILD=PASS"
+    },
+    {
+      "name": "verify release bundle",
+      "command": "python scripts/verify_release.py dist --version <version> --commit <sha> --date <date>",
+      "purpose": "Fail closed on manifest, checksum, target, or archive-content drift.",
+      "expected": "M17_RELEASE_VERIFY=PASS"
     }
   ]
 }

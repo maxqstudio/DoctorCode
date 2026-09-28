@@ -56,6 +56,26 @@
       "name": "doctorcode-mcp",
       "path": "mcp/cmd/doctorcode-mcp/main.go",
       "purpose": "Run the thin local stdio MCP adapter bound to one repository root."
+    },
+    {
+      "name": "release builder",
+      "path": "scripts/build_release.py",
+      "purpose": "Build deterministic six-target DoctorCode release archives."
+    },
+    {
+      "name": "release verifier",
+      "path": "scripts/verify_release.py",
+      "purpose": "Verify manifest, checksum, target, and archive contracts."
+    },
+    {
+      "name": "Unix installer",
+      "path": "scripts/install.sh",
+      "purpose": "Install a checksum-verified native Unix release archive."
+    },
+    {
+      "name": "Windows installer",
+      "path": "scripts/install.ps1",
+      "purpose": "Install a checksum-verified native Windows release archive."
     }
   ],
   "project": {

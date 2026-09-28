@@ -236,6 +236,24 @@
         "Shared Application Facade",
         "modelcontextprotocol/go-sdk"
       ]
+    },
+    {
+      "id": "release_pipeline",
+      "name": "Release and Install Pipeline",
+      "purpose": "Build deterministic cross-platform DoctorCode/DoctorCode-MCP archives, bind release metadata and SHA-256 integrity, verify package contents, and support checksum-verifying installation.",
+      "owns": [
+        "six-target release construction",
+        "release manifest and checksums",
+        "artifact content verification",
+        "Unix and PowerShell installers",
+        "native installed-artifact smoke"
+      ],
+      "depends_on": [
+        "CLI",
+        "Thin MCP Adapter",
+        "DoctorCode Agent Skill",
+        "GitHub Actions"
+      ]
     }
   ],
   "data_flows": [
@@ -393,6 +411,16 @@
       "from": "Thin MCP Adapter",
       "to": "Shared Application Facade",
       "meaning": "The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI."
+    },
+    {
+      "from": "accepted source",
+      "to": "Release and Install Pipeline",
+      "meaning": "Exact accepted source plus version/commit/build-date metadata is cross-compiled into target archives."
+    },
+    {
+      "from": "Release and Install Pipeline",
+      "to": "end user",
+      "meaning": "Checksummed archives and installers deliver doctorcode, doctorcode-mcp, license, README, and Agent Skill without changing core authority."
     }
   ],
   "external_boundaries": [
@@ -447,6 +475,10 @@
     {
       "name": "MCP transport boundary",
       "contract": "M16 proves local stdio transport only. Tool schemas cannot select repository root/path or execute arbitrary commands; all four tools are read-only and preserve underlying DoctorCode proof boundaries."
+    },
+    {
+      "name": "Release integrity boundary",
+      "contract": "Installers verify SHA-256 from the published checksums file before extraction. This is integrity relative to the release channel, not code-signing or hardware-backed provenance."
     }
   ],
   "schema_version": 1

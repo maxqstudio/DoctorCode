@@ -14,6 +14,7 @@ import (
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/application"
 	"github.com/maxqstudio/DoctorCode/internal/benchmark"
+	"github.com/maxqstudio/DoctorCode/internal/buildinfo"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/engine"
 	"github.com/maxqstudio/DoctorCode/internal/evidence"
@@ -23,7 +24,6 @@ import (
 	"github.com/maxqstudio/DoctorCode/internal/verification"
 )
 
-const version = "0.1.0-dev"
 
 func main() {
 	if len(os.Args) < 2 {
@@ -49,7 +49,7 @@ func main() {
 	case "benchmark":
 		runBenchmark(os.Args[2:])
 	case "version", "--version", "-v":
-		fmt.Println(version)
+		runVersion(os.Args[2:])
 	case "help", "--help", "-h":
 		usage()
 	default:
@@ -57,6 +57,25 @@ func main() {
 		usage()
 		os.Exit(2)
 	}
+}
+
+
+func runVersion(args []string) {
+	asJSON := false
+	for _, arg := range args {
+		switch arg {
+		case "--json":
+			asJSON = true
+		default:
+			die(fmt.Errorf("version accepts only --json, got %s", arg))
+		}
+	}
+	info := buildinfo.Current()
+	if asJSON {
+		writeJSON(info)
+		return
+	}
+	fmt.Printf("doctorcode %s commit=%s built=%s\n", info.Version, info.Commit, info.BuildDate)
 }
 
 func runScan(args []string) {
@@ -510,7 +529,7 @@ Usage:
   doctorcode contract <finding-id> [path] [--json]
   doctorcode verify <contract.json> [path] [--json]
   doctorcode benchmark <manifest.json> [--analyzer=go|python] [--json]
-  doctorcode version
+  doctorcode version [--json]
 
 M01 detector foundation:
   Go has intentionally narrow built-in rules for BLOAT, SECURITY, SIMPLIFY,
