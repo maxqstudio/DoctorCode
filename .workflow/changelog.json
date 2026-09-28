@@ -1,6 +1,16 @@
 {
   "entries": [
     {
+      "date": "2026-09-28",
+      "title": "Skill Workflow authority 1f9b48b sync",
+      "type": "governance",
+      "changes": [
+        "Advanced pinned Skill_Workflow authority to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
+        "Vendored byte-exact deterministic-LF sync_project_truth.py and matching STRICT selftest.",
+        "Requires cross-platform proof that acceptance.json contains no CRLF and ends with LF before M15 begins."
+      ]
+    },
+    {
       "changes": [
         "Merged FINAL_ACCEPTED M14 through PR #13 to main at 6952187538ffa4a6f3f149db440d1f6f6960ba61.",
         "Passed strict Governance Bootstrap on the exact product main merge SHA.",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
   "repository": "maxqstudio/Skill_Workflow",
-  "ref": "9e22feddb8f94e8c0f1af6a33e14b64de5068f8f",
-  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; M07 retains this authority for strict governance and generated Project Truth synchronization."
+  "ref": "1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720",
+  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; this authority includes deterministic LF Project Truth synchronization for acceptance.json."
 }
