@@ -2,6 +2,14 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M17 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M17 Release and Install Hardening through PR #20 to protected main at cd05f064e1bb1054271e7028941c1fbb80ea32aa.
+- Passed Governance Bootstrap, Core CI, M16 MCP, M17 release/install, and every accepted real-world lane on the exact protected-main merge SHA.
+- Authorized immutable v0.1.0 publication from exact product main cd05f064e1bb1054271e7028941c1fbb80ea32aa.
+
 ## 2026-09-28 — M17 Release and Install accepted baseline
 
 Type: acceptance
