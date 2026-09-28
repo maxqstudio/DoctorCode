@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M16 Thin MCP Adapter accepted baseline
+
+Type: acceptance
+
+- Accepted exactly four read-only local stdio MCP tools for audit, bounded context, pre-repair contract, and deterministic verify.
+- Accepted one startup-bound repository root with no root/path/command/shell authority in MCP tool inputs.
+- Accepted shared internal/application authority so CLI and MCP do not duplicate detector, context, or verification algorithms.
+- Accepted pinned MCP Go module dependency lock and Linux/Windows/macOS test, vet, and build evidence.
+- Kept remote transports, mutation, safe deletion, repository command execution, and release/install packaging outside M16.
+
 ## 2026-09-28 — M16 Thin MCP Adapter candidate
 
 Type: development

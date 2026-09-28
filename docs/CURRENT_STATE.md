@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M16_THIN_MCP_ADAPTER
-Status: M16_VALIDATING
+Status: M16_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -47,6 +47,9 @@ SEQUENCE_SYNC: PASS
 - MCP input schemas do not expose root, path, command, or shell transport authority.
 - doctorcode_verify represents deterministic domain verification failure as MCP IsError=true while retaining the structured verification result.
 - M16 dependency lock job 36372306971 generated and verified committed mcp/go.mod plus mcp/go.sum using Go 1.25 and modelcontextprotocol/go-sdk v1.7.0.
+- Final M16 branch tree 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed Governance Bootstrap run 36373403943.
+- Core CI run 36373404275 and M16 Thin MCP run 36373404050 at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36373403993, M07 Python Real World run 36373404028, M06 Go labels run 36373404043, and Real World Go run 36373404035 all passed on Linux, Windows, and macOS at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5.
 
 ## Not proven
 - M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
@@ -63,14 +66,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Generate and validate M16 CURRENT sequence plus deterministic Project Truth.
-- Run final exact-SHA Governance Bootstrap, Core CI, M16 Thin MCP, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M16 to protected main through pull request and rerun all applicable acceptance lanes on the exact merge SHA.
-- After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening.
+- Synchronize and validate final M16 Project Truth on the exact accepted branch tree.
+- Merge FINAL_ACCEPTED M16 to protected main through pull request and rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact merge SHA.
+- After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening under the Owner directive to continue until DoctorCode is complete.
 
 ## Explicitly blocked
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
 - Adding MCP mutation, safe-delete, or automatic-repair tools.
 - Adding arbitrary repository command execution to MCP verification authority.
 - Claiming remote/network MCP support from the local stdio acceptance evidence.
-- Starting final release/install packaging before M16 is MAIN_ACCEPTED.
+- Starting release/install packaging before M16 is MAIN_ACCEPTED on protected main.
