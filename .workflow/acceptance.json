@@ -71,10 +71,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN after M16 contract-size hardening until generated Project Truth is synchronized and the final exact branch SHA passes Governance Bootstrap.",
+      "evidence": "Governance Bootstrap run 36380582912 at synchronized hardened M16 tree 992486154ebb329c59eb94b3e7f70b4f0802df2f completed success after Project Truth regeneration and temporary synchronization workflow removal.",
       "id": "M16-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -108,7 +108,7 @@
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
+    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
     "DOC_LAYOUT": "PASS",
     "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
@@ -116,7 +116,7 @@
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
     "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "PASS",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",
