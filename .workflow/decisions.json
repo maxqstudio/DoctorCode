@@ -356,6 +356,34 @@
       "rationale": "DoctorCode analyzes arbitrary repositories as untrusted input and must not turn repository-provided command strings into execution authority.",
       "status": "ACCEPTED",
       "title": "Keep repository execution outside DoctorCode skill authority"
+    },
+    {
+      "id": "ADR-M16-001",
+      "title": "Share application authority between CLI and MCP",
+      "status": "ACCEPTED",
+      "decision": "Expose Audit, Context, Contract, and Verify through internal/application and make CLI plus MCP call that facade.",
+      "rationale": "A transport adapter must not become a second implementation of DoctorCode semantics."
+    },
+    {
+      "id": "ADR-M16-002",
+      "title": "Bind repository root at MCP startup",
+      "status": "ACCEPTED",
+      "decision": "Resolve and validate one repository root in NewServer and omit root/path selection from MCP tool schemas.",
+      "rationale": "Binding transport scope at startup prevents per-call filesystem authority expansion."
+    },
+    {
+      "id": "ADR-M16-003",
+      "title": "Keep the MCP surface read-only and bounded",
+      "status": "ACCEPTED",
+      "decision": "Expose only audit, context, contract, and verify; cap finding/context sizes and add no mutation or arbitrary command tool.",
+      "rationale": "MCP is a transport over accepted deterministic capabilities, not a new repair executor."
+    },
+    {
+      "id": "ADR-M16-004",
+      "title": "Use isolated pinned Go MCP module",
+      "status": "ACCEPTED",
+      "decision": "Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.",
+      "rationale": "The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned."
     }
   ],
   "schema_version": 1
