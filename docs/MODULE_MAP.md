@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Source digest: 27aabb5fd5178244944ab20c1273634a7f540cecdedcbf112761e806edd64b83
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -143,7 +143,7 @@ Generated/refreshed: current compiler run
 | internal/verification/verification.go | Go | 297 | internal/verification | NO |
 | internal/verification/verification_test.go | Go | 113 | internal/verification | NO |
 | mcp/cmd/doctorcode-mcp/main.go | Go | 34 | mcp/cmd/doctorcode-mcp | NO |
-| mcp/server.go | Go | 223 | mcp | NO |
-| mcp/server_test.go | Go | 208 | mcp | NO |
+| mcp/server.go | Go | 230 | mcp | NO |
+| mcp/server_test.go | Go | 226 | mcp | NO |
 
 Machine-derived facts do not invent semantic ownership.

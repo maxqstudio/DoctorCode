@@ -65,9 +65,9 @@
       "status": "PASS"
     },
     {
+      "evidence": "RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three operating systems; GREEN M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed after the transport bound was added.",
       "id": "M16-CONTRACT-PAYLOAD-BOUND",
       "requirement": "MCP verify must fail closed when the encoded verification contract exceeds 1 MiB, matching the CLI contract-file bound.",
-      "evidence": "RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three operating systems; GREEN M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed after the transport bound was added.",
       "status": "PASS"
     },
     {
@@ -115,7 +115,7 @@
     "DOC_TEST_TRACEABILITY": "PASS",
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
-    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "PROJECT_DOCS_SYNC": "PASS",
     "PROJECT_STATE_SYNC": "NOT_PROVEN",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",

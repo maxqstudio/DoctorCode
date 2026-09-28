@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. Product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP plus all accepted Linux, Windows, and macOS regression lanes. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.
+M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. MCP verification-contract payloads are capped at 1 MiB, matching the CLI contract-file bound, and the dedicated MCP workflow requires go mod tidy to leave the committed dependency lock unchanged. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: 27aabb5fd5178244944ab20c1273634a7f540cecdedcbf112761e806edd64b83
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -17,9 +17,10 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 | M16-BOUNDED-TOOL-SURFACE | MCP must expose only audit, context, contract, and verify with no root/path/command/shell input authority. | mcp/server_test.go enumerates the server tool list and rejects forbidden transport-authority keys in every inferred input schema; dedicated M16 run 36371973207 passes on Linux, Windows, and macOS. | PASS |
 | M16-BOUND-STARTUP-ROOT | All MCP operations must use one validated startup-bound repository root and invalid startup roots must fail closed. | mcp/server.go::NewServer resolves and validates the startup directory once; TestNewServerRejectsInvalidRoot plus the repair-workflow test pass in dedicated M16 run 36371973207. | PASS |
 | M16-READ-ONLY-VERIFY-SEMANTICS | MCP tools must remain read-only and verification domain failure must be surfaced as a tool error without discarding structured result evidence. | All four tools declare ReadOnlyHint=true; doctorcode_verify sets IsError=true only for a deterministic failed verification result and retains structured output; TestMCPVerifyMarksDomainFailureAsToolError passes. | PASS |
-| M16-DEPENDENCY-LOCK | The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums. | mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully. | PASS |
-| M16-REGRESSION-MATRIX | M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS. | At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems. | PASS |
-| M16-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36373403943 at final branch SHA 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 completed success after generated M16 Project Truth and sequence synchronization; all temporary synchronization workflows were absent from that exact tree. | PASS |
+| M16-DEPENDENCY-LOCK | The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums. | mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; hardened M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 requires go mod tidy to leave mcp/go.mod and mcp/go.sum unchanged on Linux, Windows, and macOS before test/vet/build. | PASS |
+| M16-REGRESSION-MATRIX | M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS. | At hardened candidate 49224469153a2a681acfb698e9ca1704f29c99d5: M16 Thin MCP 36380093409, Core CI 36380093401, M10 Python labels 36380093395, M07 Python Real World 36380093392, M06 Go labels 36380093377, and Real World Go 36380093380 all passed on Linux, Windows, and macOS. | PASS |
+| M16-CONTRACT-PAYLOAD-BOUND | MCP verify must fail closed when the encoded verification contract exceeds 1 MiB, matching the CLI contract-file bound. | RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three operating systems; GREEN M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed after the transport bound was added. | PASS |
+| M16-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed. | NOT_PROVEN after M16 contract-size hardening until generated Project Truth is synchronized and the final exact branch SHA passes Governance Bootstrap. | NOT_PROVEN |
 
 ## Test commands
 
@@ -33,7 +34,7 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
 - go test ./internal/skilladapter -v
-- cd mcp && go mod tidy && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
+- cd mcp && go mod tidy && git diff --exit-code -- go.mod go.sum && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
 
 ## Runtime checks
 
@@ -45,7 +46,7 @@ Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b
 - go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
 - go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
 - DoctorCode skill contract validation
-- cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
+- cd mcp && go mod tidy && git diff --exit-code -- go.mod go.sum && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
 
 ## Sequence contract evidence
 

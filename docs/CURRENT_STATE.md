@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M16_THIN_MCP_ADAPTER
-Status: M16_ACCEPTED
+Status: M16_VALIDATING
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -16,7 +16,7 @@ Branch: work/m16-thin-mcp-adapter
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
 Current candidate SHA: external final acceptance evidence
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: 27aabb5fd5178244944ab20c1273634a7f540cecdedcbf112761e806edd64b83
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -50,6 +50,10 @@ SEQUENCE_SYNC: PASS
 - Final M16 branch tree 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed Governance Bootstrap run 36373403943.
 - Core CI run 36373404275 and M16 Thin MCP run 36373404050 at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36373403993, M07 Python Real World run 36373404028, M06 Go labels run 36373404043, and Real World Go run 36373404035 all passed on Linux, Windows, and macOS at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5.
+- M16 contract-size RED run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on Linux, Windows, and macOS because a schema-valid verification contract larger than 1 MiB was accepted by MCP transport.
+- M16 hardened candidate 49224469153a2a681acfb698e9ca1704f29c99d5 rejects encoded MCP verification contracts larger than 1 MiB, matching the existing CLI contract-file bound.
+- M16 Thin MCP run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed on Linux, Windows, and macOS, including dependency-lock cleanliness, tests, vet, and stdio server build.
+- At the same hardened candidate, Core CI 36380093401, M10 Python labels 36380093395, M07 Python Real World 36380093392, M06 Go labels 36380093377, and Real World Go 36380093380 passed on all three operating systems.
 
 ## Not proven
 - M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
@@ -66,8 +70,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize and validate final M16 Project Truth on the exact accepted branch tree.
-- Merge FINAL_ACCEPTED M16 to protected main through pull request and rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact merge SHA.
+- Synchronize and validate final hardened M16 Project Truth on the exact branch tree.
+- Run final exact-SHA Governance Bootstrap, Core CI, M16 Thin MCP, and every previously accepted real-world lane.
+- After FINAL_ACCEPTED, merge M16 to protected main through pull request and rerun all applicable acceptance lanes on the exact merge SHA.
 - After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening under the Owner directive to continue until DoctorCode is complete.
 
 ## Explicitly blocked

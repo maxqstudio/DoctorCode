@@ -18,7 +18,7 @@ HEAD is recorded externally after the commit exists.
 | STRUCTURAL_SYNC | PASS | |
 | SEMANTIC_SYNC | PASS | |
 | BEHAVIORAL_SYNC | PASS | |
-| CROSS_DOCUMENT_CONSISTENCY | PASS | |
+| CROSS_DOCUMENT_CONSISTENCY | NOT_PROVEN | |
 | HUMAN_COMPREHENSION | PASS | |
 | SEQUENCE_SYNC | PASS | |
 | DOC_LAYOUT | PASS | |
@@ -28,7 +28,7 @@ HEAD is recorded externally after the commit exists.
 | DOC_SOURCE_TRACEABILITY | PASS | |
 | DOC_TEST_TRACEABILITY | PASS | |
 | TEST_RUNTIME_TRACEABILITY | PASS | |
-| PROJECT_STATE_SYNC | PASS | |
+| PROJECT_STATE_SYNC | NOT_PROVEN | |
 
 ## Critical claim traceability
 
@@ -105,6 +105,7 @@ HEAD is recorded externally after the commit exists.
 | TRUTH-M16-MCP-SURFACE | M16 exposes exactly four read-only MCP tools over stdio: doctorcode_audit, doctorcode_context, doctorcode_contract, and doctorcode_verify. | PROJECT_TRUTH_SYNC.md | mcp/server.go; mcp/cmd/doctorcode-mcp/main.go | mcp/server_test.go; .github/workflows/m16-mcp.yml | GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa | PASS |
 | TRUTH-M16-BOUND-ROOT | M16 binds a validated repository directory at MCP server startup and exposes no root/path/command/shell authority in MCP tool input schemas. | PROJECT_TRUTH_SYNC.md | mcp/server.go | mcp/server_test.go | GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa | PASS |
 | TRUTH-M16-VERIFY-ERROR | M16 reports deterministic verification domain failure as MCP tool error while retaining the structured verification result; it does not add mutation authority. | PROJECT_TRUTH_SYNC.md | mcp/server.go; internal/verification/verification.go | mcp/server_test.go | GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa | PASS |
+| TRUTH-M16-CONTRACT-BOUND | M16 doctorcode_verify rejects encoded verification-contract payloads larger than 1 MiB and the MCP CI gate requires the committed dependency lock to remain unchanged after go mod tidy. | PROJECT_TRUTH_SYNC.md | mcp/server.go; .github/workflows/m16-mcp.yml | mcp/server_test.go; .github/workflows/m16-mcp.yml | RED GitHub Actions M16 Thin MCP run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012; GREEN GitHub Actions M16 Thin MCP run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 | PASS |
 
 ## Claim relations
 

@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M16 MCP payload and lock hardening
+
+Type: development
+
+- Added a 1 MiB encoded verification-contract limit to doctorcode_verify, matching the existing CLI contract-file bound.
+- Captured a three-OS RED run proving a schema-valid oversized contract was previously accepted.
+- Added a three-OS dependency-lock cleanliness gate after go mod tidy.
+- Preserved Core CI, M10, M07, M06, and Real World Go acceptance across Linux, Windows, and macOS.
+
 ## 2026-09-28 — M16 Thin MCP Adapter accepted baseline
 
 Type: acceptance
