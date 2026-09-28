@@ -22,7 +22,7 @@ func TestDoctorCodeSkillContract(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read DoctorCode skill: %v", err)
 	}
-	content := string(data)
+	content := strings.ReplaceAll(string(data), "\r\n", "\n")
 
 	required := []string{
 		"---\nname: doctorcode\n",
@@ -53,7 +53,7 @@ func TestDoctorCodeSkillDoesNotDuplicateProductLogic(t *testing.T) {
 	if err != nil {
 		t.Fatalf("read DoctorCode skill: %v", err)
 	}
-	content := strings.ToLower(string(data))
+	content := strings.ToLower(strings.ReplaceAll(string(data), "\r\n", "\n"))
 
 	forbidden := []string{
 		"implement your own detector",
