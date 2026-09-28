@@ -441,3 +441,35 @@ Status: ACCEPTED
 Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.
 
 Rationale: The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned.
+
+## ADR-M17-001 — Package both public binaries together per target
+
+Status: ACCEPTED
+
+Every release target archive contains doctorcode and doctorcode-mcp plus README, LICENSE, and the DoctorCode Agent Skill.
+
+Rationale:
+
+## ADR-M17-002 — Verify SHA-256 before extraction
+
+Status: ACCEPTED
+
+Publish checksums.txt and require Unix/PowerShell installers to verify the selected archive before extraction.
+
+Rationale:
+
+## ADR-M17-003 — Do not mutate PATH automatically
+
+Status: ACCEPTED
+
+Install both binaries to an explicit/default user directory and report PATH guidance instead of editing shell profiles or system PATH.
+
+Rationale:
+
+## ADR-M17-004 — Gate public release publication behind accepted artifacts
+
+Status: ACCEPTED
+
+The permanent release workflow only publishes on v* tags after release build and native install-smoke jobs succeed; Owner workflow will create v0.1.0 only after M17_MAIN_ACCEPTED.
+
+Rationale:

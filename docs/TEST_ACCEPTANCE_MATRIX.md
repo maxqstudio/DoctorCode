@@ -4,54 +4,47 @@
 
 ## Evidence boundary
 
-M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. Product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP plus all accepted Linux, Windows, and macOS regression lanes. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.
+M17 Release and Install Hardening packages the accepted DoctorCode CLI and local stdio MCP server as deterministic versioned archives for linux/darwin/windows on amd64/arm64. Archives contain both binaries plus README, LICENSE, and the DoctorCode Agent Skill; release-manifest.json and checksums.txt bind target, size, SHA-256, version, commit, and build date. Installers verify the native archive before extraction and do not modify PATH automatically. Public tag/release publication remains blocked until M17 is MAIN_ACCEPTED. M17 does not enlarge analyzer, verification, Skill, or MCP proof boundaries.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M16-MAIN-BASELINE | M16 must branch from the governance-normalized M15 main and retain current Skill_Workflow authority. | work/m16-thin-mcp-adapter starts from main@3a809c178e69ca2c2f2cff83d0d0800637b37d02; M15 product baseline remains b0677e43c3c5634dbdd856821c44fce7003c896d; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
-| M16-RED-MCP-SERVER | The thin MCP server contract must be demonstrated absent before implementation. | Dedicated M16 run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on all three operating systems because NewServer was undefined; the RED test also exposed two stale unused ctx declarations that were repaired without weakening the contract. | PASS |
-| M16-SHARED-APPLICATION-AUTHORITY | CLI and MCP repair workflow operations must share one application facade rather than duplicating detector/context/verifier logic. | internal/application/application.go owns Audit, Context, Contract, Verify; cmd/doctorcode and mcp/server.go call those entrypoints; internal/application/application_test.go validates the end-to-end repair workflow. | PASS |
-| M16-BOUNDED-TOOL-SURFACE | MCP must expose only audit, context, contract, and verify with no root/path/command/shell input authority. | mcp/server_test.go enumerates the server tool list and rejects forbidden transport-authority keys in every inferred input schema; dedicated M16 run 36371973207 passes on Linux, Windows, and macOS. | PASS |
-| M16-BOUND-STARTUP-ROOT | All MCP operations must use one validated startup-bound repository root and invalid startup roots must fail closed. | mcp/server.go::NewServer resolves and validates the startup directory once; TestNewServerRejectsInvalidRoot plus the repair-workflow test pass in dedicated M16 run 36371973207. | PASS |
-| M16-READ-ONLY-VERIFY-SEMANTICS | MCP tools must remain read-only and verification domain failure must be surfaced as a tool error without discarding structured result evidence. | All four tools declare ReadOnlyHint=true; doctorcode_verify sets IsError=true only for a deterministic failed verification result and retains structured output; TestMCPVerifyMarksDomainFailureAsToolError passes. | PASS |
-| M16-DEPENDENCY-LOCK | The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums. | mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully. | PASS |
-| M16-REGRESSION-MATRIX | M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS. | At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems. | PASS |
-| M16-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed. | Governance Bootstrap run 36373403943 at final branch SHA 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 completed success after generated M16 Project Truth and sequence synchronization; all temporary synchronization workflows were absent from that exact tree. | PASS |
-| M16-MAIN-POST-MERGE | M16 product main must pass strict governance, Core CI, dedicated MCP, and every accepted real-world lane on the exact merge SHA. | main@2e76c9e635a8a68507fea9d44438f74e96d8e754: Governance 36374601756 PASS; Core 36374601764 3/3 PASS; M16 MCP 36374601767 3/3 PASS; M10 36374601762 3/3 PASS; M07 36374601774 3/3 PASS; M06 36374601733 3/3 PASS; Real World Go 36374601755 3/3 PASS. | PASS |
+| M17-MAIN-BASELINE | M17 must branch from governance-normalized M16 main and retain current Skill_Workflow authority. | work/m17-release-install-hardening starts from main@48b6d930b5231a9f808e74a7c58ebbd76174fabd; M16 product baseline remains 2e76c9e635a8a68507fea9d44438f74e96d8e754; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
+| M17-RED-RELEASE | The release artifact contract must be demonstrated absent before implementation. | M17 run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed because scripts/build_release.py did not exist. | PASS |
+| M17-VERSION-METADATA | Both shipped binaries must expose injected version, exact commit, and build-date metadata in machine-readable JSON. | internal/buildinfo plus CLI/MCP version commands are linked through -X release ldflags; native artifact smoke compares both binaries to release-manifest.json. | PASS |
+| M17-SIX-TARGET-BUNDLE | Release construction must produce exactly linux/darwin/windows for amd64/arm64, each containing both binaries and public runtime documentation/Skill. | scripts/build_release.py defines exactly six targets and scripts/verify_release.py rejects missing/duplicate targets or archive content drift; build stage passed in run 36378036522 and current candidate build stage. | PASS |
+| M17-ARCHIVE-CHECKSUM | Every archive and the release manifest must be SHA-256 bound, size-checked, path-safe, and independently verified before artifact publication. | scripts/verify_release.py validates manifest identity/metadata, exact target set, archive member paths/content, sizes, SHA-256, and checksums.txt; build verification passed. | PASS |
+| M17-INSTALL-CHECKSUM | Unix and Windows installers must verify the selected native archive against checksums.txt before extraction and installation. | scripts/install.sh and scripts/install.ps1 perform SHA-256 verification before tar/Expand-Archive; Ubuntu and Windows smoke passed in M17 runs. | PASS |
+| M17-MACOS-PORTABILITY-RED | macOS installer portability defect must be captured and repaired without weakening checksum verification. | Pre-fix run 36378036522 failed on macOS with '${actual,,}: bad substitution'; current installer uses POSIX-portable tr while retaining exact hash comparison. | PASS |
+| M17-INSTALL-SMOKE | Installed native artifacts must execute on Linux, Windows, and macOS and report metadata exactly matching the release manifest. | Ubuntu and Windows are proven on current/pre-fix runs; macOS exact current candidate remains NOT_PROVEN until queued runner completes. | NOT_PROVEN |
+| M17-PUBLISH-GATE | Public release publication must occur only on v* tags and only after build plus native install-smoke jobs succeed. | .github/workflows/m17-release.yml scopes publish-release to refs/tags/v*, depends on install-smoke, and uses --verify-tag; no public M17 tag/release has been created yet. | PASS |
+| M17-REGRESSION-MATRIX | Core, M16 MCP, and all accepted Go/Python real-world lanes must remain passing across Linux, Windows, and macOS. | NOT_PROVEN until exact final candidate matrix completes. | NOT_PROVEN |
+| M17-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M17 sequence artifacts must pass strict governance on the final exact M17 branch SHA. | NOT_PROVEN until synchronized final candidate is checked. | NOT_PROVEN |
 
 ## Test commands
 
 - go test ./...
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m03-adversarial.json --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m04-repository-shaped.json --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json
-- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
-- go test ./internal/skilladapter -v
-- cd mcp && go mod tidy && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
+- cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
+- M17 Release and Install workflow build-release plus three native install-smoke jobs
+- Core CI and all accepted real-world regression workflows
 
 ## Runtime checks
 
 - go test ./...
-- go run ./cmd/doctorcode audit . --json --max-findings=10
-- go run ./cmd/doctorcode next . --json --max-bytes=4096
-- go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
-- go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths
-- go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
-- go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
-- DoctorCode skill contract validation
 - cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
+- python scripts/build_release.py --version <version> --commit <sha> --date <date> --output dist
+- python scripts/verify_release.py dist --version <version> --commit <sha> --date <date>
+- scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py
+- existing pinned Go/Python real-world validation lanes
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M16-THIN-MCP-ADAPTER
+Sequence session contract: M17-RELEASE-INSTALL-HARDENING
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

@@ -17,69 +17,69 @@
   "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "work/m17-release-install-hardening starts from main@48b6d930b5231a9f808e74a7c58ebbd76174fabd; M16 product baseline remains 2e76c9e635a8a68507fea9d44438f74e96d8e754; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
       "id": "M17-MAIN-BASELINE",
       "requirement": "M17 must branch from governance-normalized M16 main and retain current Skill_Workflow authority.",
-      "evidence": "work/m17-release-install-hardening starts from main@48b6d930b5231a9f808e74a7c58ebbd76174fabd; M16 product baseline remains 2e76c9e635a8a68507fea9d44438f74e96d8e754; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
       "status": "PASS"
     },
     {
+      "evidence": "M17 run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed because scripts/build_release.py did not exist.",
       "id": "M17-RED-RELEASE",
       "requirement": "The release artifact contract must be demonstrated absent before implementation.",
-      "evidence": "M17 run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed because scripts/build_release.py did not exist.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/buildinfo plus CLI/MCP version commands are linked through -X release ldflags; native artifact smoke compares both binaries to release-manifest.json.",
       "id": "M17-VERSION-METADATA",
       "requirement": "Both shipped binaries must expose injected version, exact commit, and build-date metadata in machine-readable JSON.",
-      "evidence": "internal/buildinfo plus CLI/MCP version commands are linked through -X release ldflags; native artifact smoke compares both binaries to release-manifest.json.",
       "status": "PASS"
     },
     {
+      "evidence": "scripts/build_release.py defines exactly six targets and scripts/verify_release.py rejects missing/duplicate targets or archive content drift; build stage passed in run 36378036522 and current candidate build stage.",
       "id": "M17-SIX-TARGET-BUNDLE",
       "requirement": "Release construction must produce exactly linux/darwin/windows for amd64/arm64, each containing both binaries and public runtime documentation/Skill.",
-      "evidence": "scripts/build_release.py defines exactly six targets and scripts/verify_release.py rejects missing/duplicate targets or archive content drift; build stage passed in run 36378036522 and current candidate build stage.",
       "status": "PASS"
     },
     {
+      "evidence": "scripts/verify_release.py validates manifest identity/metadata, exact target set, archive member paths/content, sizes, SHA-256, and checksums.txt; build verification passed.",
       "id": "M17-ARCHIVE-CHECKSUM",
       "requirement": "Every archive and the release manifest must be SHA-256 bound, size-checked, path-safe, and independently verified before artifact publication.",
-      "evidence": "scripts/verify_release.py validates manifest identity/metadata, exact target set, archive member paths/content, sizes, SHA-256, and checksums.txt; build verification passed.",
       "status": "PASS"
     },
     {
+      "evidence": "scripts/install.sh and scripts/install.ps1 perform SHA-256 verification before tar/Expand-Archive; Ubuntu and Windows smoke passed in M17 runs.",
       "id": "M17-INSTALL-CHECKSUM",
       "requirement": "Unix and Windows installers must verify the selected native archive against checksums.txt before extraction and installation.",
-      "evidence": "scripts/install.sh and scripts/install.ps1 perform SHA-256 verification before tar/Expand-Archive; Ubuntu and Windows smoke passed in M17 runs.",
       "status": "PASS"
     },
     {
+      "evidence": "Pre-fix run 36378036522 failed on macOS with '${actual,,}: bad substitution'; current installer uses POSIX-portable tr while retaining exact hash comparison.",
       "id": "M17-MACOS-PORTABILITY-RED",
       "requirement": "macOS installer portability defect must be captured and repaired without weakening checksum verification.",
-      "evidence": "Pre-fix run 36378036522 failed on macOS with '${actual,,}: bad substitution'; current installer uses POSIX-portable tr while retaining exact hash comparison.",
       "status": "PASS"
     },
     {
+      "evidence": "Ubuntu and Windows are proven on current/pre-fix runs; macOS exact current candidate remains NOT_PROVEN until queued runner completes.",
       "id": "M17-INSTALL-SMOKE",
       "requirement": "Installed native artifacts must execute on Linux, Windows, and macOS and report metadata exactly matching the release manifest.",
-      "evidence": "Ubuntu and Windows are proven on current/pre-fix runs; macOS exact current candidate remains NOT_PROVEN until queued runner completes.",
       "status": "NOT_PROVEN"
     },
     {
+      "evidence": ".github/workflows/m17-release.yml scopes publish-release to refs/tags/v*, depends on install-smoke, and uses --verify-tag; no public M17 tag/release has been created yet.",
       "id": "M17-PUBLISH-GATE",
       "requirement": "Public release publication must occur only on v* tags and only after build plus native install-smoke jobs succeed.",
-      "evidence": ".github/workflows/m17-release.yml scopes publish-release to refs/tags/v*, depends on install-smoke, and uses --verify-tag; no public M17 tag/release has been created yet.",
       "status": "PASS"
     },
     {
+      "evidence": "NOT_PROVEN until exact final candidate matrix completes.",
       "id": "M17-REGRESSION-MATRIX",
       "requirement": "Core, M16 MCP, and all accepted Go/Python real-world lanes must remain passing across Linux, Windows, and macOS.",
-      "evidence": "NOT_PROVEN until exact final candidate matrix completes.",
       "status": "NOT_PROVEN"
     },
     {
+      "evidence": "NOT_PROVEN until synchronized final candidate is checked.",
       "id": "M17-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M17 sequence artifacts must pass strict governance on the final exact M17 branch SHA.",
-      "evidence": "NOT_PROVEN until synchronized final candidate is checked.",
       "status": "NOT_PROVEN"
     }
   ],

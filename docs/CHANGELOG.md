@@ -2,6 +2,17 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M17 Release and Install candidate
+
+Type: development
+
+- Added deterministic build metadata shared by doctorcode and doctorcode-mcp.
+- Added six-target release archive builder and strict manifest/checksum/archive verifier.
+- Added checksum-verifying Bash and PowerShell installers that do not mutate PATH automatically.
+- Added native installed-artifact metadata smoke across Linux, Windows, and macOS.
+- Captured and repaired a macOS Bash 3.2 lowercase-expansion incompatibility without weakening SHA-256 checks.
+- Added workflow concurrency so superseded branch runs are cancelled instead of consuming acceptance runners.
+
 ## 2026-09-28 — M16 main accepted baseline
 
 Type: acceptance
