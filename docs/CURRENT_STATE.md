@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M17_RELEASE_INSTALL_HARDENING
-Status: M17_VALIDATING
+Status: M17_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -47,9 +47,13 @@ SEQUENCE_SYNC: PASS
 - Release archives contain exactly both binaries, README.md, LICENSE, and skills/doctorcode/SKILL.md; verifier rejects unsafe archive paths and validates size plus SHA-256.
 - Both Unix and PowerShell installers verify the selected native archive against checksums.txt before extraction and do not mutate PATH automatically.
 - Permanent workflows now cancel obsolete runs per workflow/ref so acceptance evidence converges on the newest candidate instead of consuming runners for superseded commits.
+- Final synchronized M17 candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5 passed Governance Bootstrap run 36379047101.
+- Core CI run 36379047022 and M16 Thin MCP run 36379047051 at a6beafebe53f4b98a926c95b4e69033beb40bcf5 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36379047057, M07 Python Real World run 36379047133, M06 Go labels run 36379047144, and Real World Go run 36379047115 all passed on Linux, Windows, and macOS at a6beafebe53f4b98a926c95b4e69033beb40bcf5.
+- M17 Release and Install run 36379047097 at a6beafebe53f4b98a926c95b4e69033beb40bcf5 built and verified all six archives and successfully installed/executed native artifacts on Ubuntu, Windows, and macOS.
+- The repaired macOS installer path is proven by m17-install-macos-latest success at exact final candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5; the pre-fix ${actual,,} failure remains retained as RED evidence.
 
 ## Not proven
-- The exact current M17 candidate is not FINAL_ACCEPTED until macOS install smoke and every regression lane complete successfully on the same final SHA.
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
 - SHA-256 checksums provide release-channel integrity verification but are not a code-signing or hardware-backed provenance claim.
 - A public v0.1.0 tag and GitHub Release have not been published; publication is blocked until M17 is MAIN_ACCEPTED.
@@ -62,10 +66,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Complete exact-SHA M17 release/install and regression acceptance across Linux, Windows, and macOS.
-- Generate and validate M17 CURRENT sequence plus deterministic Project Truth.
-- After FINAL_ACCEPTED, merge M17 to protected main through pull request and rerun all applicable acceptance lanes on the exact main merge SHA.
-- Only after M17_MAIN_ACCEPTED, publish immutable v0.1.0 artifacts from that exact accepted main SHA.
+- Run final exact-SHA acceptance on the finalized M17 branch tree after the M17_ACCEPTED ledger and generated Project Truth are synchronized.
+- Merge FINAL_ACCEPTED M17 to protected main through pull request and rerun all permanent acceptance lanes on the exact main merge SHA.
+- After M17_MAIN_ACCEPTED only, publish immutable v0.1.0 release assets from that exact accepted main SHA and verify the GitHub Release readback.
 
 ## Explicitly blocked
 - Publishing or moving a public release tag before M17_MAIN_ACCEPTED.

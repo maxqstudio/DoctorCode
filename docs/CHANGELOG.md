@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M17 Release and Install accepted baseline
+
+Type: acceptance
+
+- Accepted deterministic six-target release archives for Linux, macOS, and Windows on amd64 and arm64.
+- Accepted shared version/commit/build-date metadata for doctorcode and doctorcode-mcp.
+- Accepted manifest, archive-content, size, and SHA-256 verification plus checksum-verifying Unix/PowerShell installers.
+- Accepted installed-artifact execution on Linux, Windows, and macOS, including the repaired macOS Bash 3.2 path.
+- Kept public v0.1.0 publication blocked until exact M17 main acceptance.
+
 ## 2026-09-28 — M17 Release and Install candidate
 
 Type: development
