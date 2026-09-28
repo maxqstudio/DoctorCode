@@ -3,9 +3,9 @@
   "defects": [
     {
       "id": "KNOWN-M00-001",
-      "status": "OPEN",
-      "summary": "Semantic defect detectors are not implemented in M00.",
-      "evidence": "No detector packages or accuracy corpus are accepted yet."
+      "status": "FIXED/ACCEPTED",
+      "summary": "Semantic defect detectors were not implemented in M00; Go and Python semantic analyzers are now accepted.",
+      "evidence": "Historical M00 gap closed by accepted Go milestones M01-M06 and Python milestones M07-M10; current engine registers both analyzers and current-main acceptance remains authoritative."
     },
     {
       "id": "KNOWN-M00-002",
