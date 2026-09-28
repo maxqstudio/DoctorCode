@@ -3,18 +3,18 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
+Authority verified at SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
 Governance profile: strict
 
 ## Current phase
 Phase: M14_DETERMINISTIC_VERIFICATION_CONTRACT
-Status: M14_ACCEPTED
+Status: M14_MAIN_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m14-deterministic-verification
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
+Last accepted SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
 Current candidate SHA: external final acceptance evidence
 Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 
@@ -51,6 +51,14 @@ SEQUENCE_SYNC: PASS
 - Final synchronized M14 branch tree 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed Governance Bootstrap run 36329506408.
 - Core CI run 36329506410 at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed on ubuntu-latest, windows-latest, and macos-latest, including deterministic verification negative and positive E2E paths.
 - M10 Python labels run 36329506427, M07 Python Real World run 36329506385, M06 Go labels run 36329506403, and Real World Go run 36329506404 all passed on Linux, Windows, and macOS at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70.
+- M14 Deterministic Verification Contract merged through PR #13 to main at 6952187538ffa4a6f3f149db440d1f6f6960ba61.
+- Exact M14 product main Governance Bootstrap run 36329987778 completed success.
+- Exact M14 product main Core CI run 36329987823 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M14 product main M10 Labeled Real World Python run 36329987784 completed success on all three operating systems.
+- Exact M14 product main M07 Python Real World run 36329987819 completed success on all three operating systems.
+- Exact M14 product main M06 Labeled Real World Go run 36329987822 completed success on all three operating systems.
+- Exact M14 product main Real World Go Validation run 36329987965 completed success on all three operating systems.
+- GitHub main branch protection is ACTIVE through repository ruleset 24089721 ('protection'): default branch deletion and non-fast-forward updates are blocked, pull requests are required, review threads must be resolved, and no bypass actor is configured.
 
 ## Not proven
 - M14 semantic identity is rule_id + path + summary + occurrence count; it does not prove exact AST-node identity across arbitrary rewrites.
@@ -69,12 +77,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Run final exact-SHA acceptance on the finalized M14 branch tree with no temporary workflow present.
-- Open and merge the FINAL_ACCEPTED M14 pull request to main.
-- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA before starting adapter/release milestones.
+- Proceed to M15 Thin Skill Adapter under the Owner directive to continue until DoctorCode is complete.
+- Branch M15 only from the governance-normalized M14 main after exact closure acceptance.
+- Keep the Skill adapter thin: all detection, context, and verification authority remains in the DoctorCode CLI/core.
+- Preserve M14 product acceptance at 6952187538ffa4a6f3f149db440d1f6f6960ba61 and its exact post-merge evidence as immutable historical evidence.
 
 ## Explicitly blocked
-- Executing arbitrary repository-provided verification commands as DoctorCode authority.
-- Treating M14 PASS as proof of unrelated runtime or business behavior.
-- Treating verification as safe-delete or automatic-repair authority.
-- Starting MCP or Skill adapters before M14 is MAIN_ACCEPTED.
+- Duplicating DoctorCode detector, context, or verification logic inside a Skill adapter.
+- Executing arbitrary repository-provided commands as DoctorCode authority.
+- Treating M14 verification as safe-delete or automatic-repair authority.
+- Claiming required status-check contexts are enforced by the GitHub ruleset while its required-status-check list remains empty.

@@ -1236,6 +1236,34 @@
         "cmd/doctorcode/main_test.go",
         "internal/verification/verification_test.go"
       ]
+    },
+    {
+      "claim": "M14 Deterministic Verification Contract is merged and post-merge accepted on main at 6952187538ffa4a6f3f149db440d1f6f6960ba61 after strict governance and every accepted Linux, Windows, and macOS regression lane completed successfully.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M14-MAIN-ACCEPTED",
+      "runtime_evidence": [
+        "GitHub Actions Governance Bootstrap run 36329987778 at 6952187538ffa4a6f3f149db440d1f6f6960ba61",
+        "GitHub Actions Core CI run 36329987823 at 6952187538ffa4a6f3f149db440d1f6f6960ba61",
+        "GitHub Actions M10 Labeled Real World Python run 36329987784 at 6952187538ffa4a6f3f149db440d1f6f6960ba61",
+        "GitHub Actions M07 Python Real World run 36329987819 at 6952187538ffa4a6f3f149db440d1f6f6960ba61",
+        "GitHub Actions M06 Labeled Real World Go run 36329987822 at 6952187538ffa4a6f3f149db440d1f6f6960ba61",
+        "GitHub Actions Real World Go Validation run 36329987965 at 6952187538ffa4a6f3f149db440d1f6f6960ba61"
+      ],
+      "source_owners": [
+        ".workflow/state.json",
+        ".workflow/acceptance.json"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/governance-bootstrap.yml",
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
     }
   ],
   "relations": [],
