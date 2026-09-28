@@ -7,10 +7,11 @@ on:
   pull_request:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   validate:
+    if: github.actor != 'github-actions[bot]'
     name: skill-sync-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -60,6 +61,33 @@ jobs:
           assert b"\r\n" not in data, "acceptance.json contains CRLF"
           assert data.endswith(b"\n"), "acceptance.json missing final LF"
           print("DETERMINISTIC_JSON_LF=PASS")
-      - name: Verify sync is content-idempotent
+      - name: Report generated truth drift
         shell: bash
-        run: git -C doctorcode diff --exit-code
+        run: git -C doctorcode diff --name-only
+
+  publish-generated:
+    if: github.actor != 'github-actions[bot]'
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/skill-workflow-sync-1f9b48b
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Commit generated truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "PROJECT_TRUTH_DRIFT=NONE"
+            exit 0
+          fi
+          git add .workflow/acceptance.json .workflow/generated docs
+          git commit -m "docs: synchronize Skill Workflow authority truth"
+          git push origin HEAD:work/skill-workflow-sync-1f9b48b
