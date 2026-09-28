@@ -140,6 +140,22 @@
         "the Flask _path_is_ancestor anchor proves only the bounded reported condition",
         "all public Python findings must remain repository-relative and safe_autofix=false"
       ]
+    },
+    {
+      "name": "M16 MCP Tool Surface V1",
+      "source_of_truth": "mcp/server.go::NewServer",
+      "mutability": "runtime transport surface",
+      "legal_writes": [
+        "MCP server registration at startup"
+      ],
+      "retention": "process lifetime",
+      "invariants": [
+        "exactly four tools: doctorcode_audit, doctorcode_context, doctorcode_contract, doctorcode_verify",
+        "all tools are read-only",
+        "repository root is bound at server startup",
+        "tool input schemas expose no root/path/command/shell authority",
+        "verification domain failure is IsError=true with structured result retained"
+      ]
     }
   ],
   "ui_surfaces": [],
@@ -218,6 +234,12 @@
       "name": "Accepted real-world regression matrices",
       "command": "GitHub Actions workflows Real World Go Validation, M06 Labeled Real World Go, and M07 Python Real World on main and work/**",
       "expected": "each workflow passes its Linux, Windows, and macOS matrix for every phase branch and main promotion"
+    },
+    {
+      "name": "M16 thin MCP module",
+      "command": "cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp",
+      "purpose": "Validate the isolated MCP adapter module and stdio entrypoint.",
+      "expected": "exit code 0 on Linux, Windows, and macOS"
     }
   ]
 }
