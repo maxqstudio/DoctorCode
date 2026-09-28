@@ -21,8 +21,12 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          existing="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG_NAME" --jq '.object.sha' 2>/dev/null || true)"
-          if [ -n "$existing" ]; then
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG_NAME" > existing.json 2>/dev/null; then
+            existing="$(python - <<'PY'
+          import json
+          print(json.load(open("existing.json", encoding="utf-8"))["object"]["sha"])
+          PY
+            )"
             if [ "$existing" != "$TARGET_SHA" ]; then
               echo "TAG_TARGET_MISMATCH existing=$existing expected=$TARGET_SHA" >&2
               exit 1
