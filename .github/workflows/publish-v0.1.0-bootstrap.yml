@@ -1,0 +1,43 @@
+name: Publish v0.1.0 Tag Bootstrap
+
+on:
+  push:
+    branches:
+      - "work/publish-v0.1.0"
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create immutable v0.1.0 tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TARGET_SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
+          TAG_NAME: v0.1.0
+        shell: bash
+        run: |
+          set -euo pipefail
+          existing="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG_NAME" --jq '.object.sha' 2>/dev/null || true)"
+          if [ -n "$existing" ]; then
+            if [ "$existing" != "$TARGET_SHA" ]; then
+              echo "TAG_TARGET_MISMATCH existing=$existing expected=$TARGET_SHA" >&2
+              exit 1
+            fi
+            echo "TAG_ALREADY_CORRECT=PASS"
+            exit 0
+          fi
+
+          gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs"             -f ref="refs/tags/$TAG_NAME"             -f sha="$TARGET_SHA" > created.json
+
+          actual="$(python - <<'PY'
+          import json
+          print(json.load(open("created.json", encoding="utf-8"))["object"]["sha"])
+          PY
+          )"
+          test "$actual" = "$TARGET_SHA"
+          echo "TAG_CREATED=PASS"
+          echo "TAG_TARGET=$actual"
