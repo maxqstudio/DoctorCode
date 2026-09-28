@@ -38,10 +38,10 @@ def sha256(path: Path) -> str:
 def archive_names(path: Path, archive_format: str) -> list[str]:
     if archive_format == "zip":
         with zipfile.ZipFile(path) as handle:
-            return handle.namelist()
+            return [item.filename for item in handle.infolist() if not item.is_dir()]
     if archive_format == "tar.gz":
         with tarfile.open(path, "r:gz") as handle:
-            return handle.getnames()
+            return [item.name for item in handle.getmembers() if item.isfile()]
     raise RuntimeError(f"unsupported archive format: {archive_format}")
 
 
@@ -61,7 +61,7 @@ def validate_archive(path: Path, item: dict, version: str) -> None:
         f"{root}/LICENSE",
         f"{root}/skills/doctorcode/SKILL.md",
     }
-    files = {name.rstrip("/") for name in names if not name.endswith("/")}
+    files = set(names)
     if files != required:
         raise RuntimeError(f"archive content mismatch for {path.name}: got={sorted(files)} want={sorted(required)}")
 
