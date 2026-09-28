@@ -51,6 +51,15 @@ jobs:
           python .workflow/tools/validate_cross_document_consistency.py --base 6952187538ffa4a6f3f149db440d1f6f6960ba61 --require-base
           python .workflow/tools/validate_project_truth.py
 
-      - name: Push synchronized M14 main truth
+      - name: Prepare connector-safe non-workflow commit
+        shell: bash
+        run: |
+          git reset --soft "$GITHUB_SHA"
+          git restore --source="$GITHUB_SHA" --staged --worktree .github/workflows/governance-bootstrap.yml
+          git restore --source="$GITHUB_SHA" --staged --worktree .github/workflows/m14-main-truth-sync.yml
+          git add -A
+          git commit -m "docs(m14): synchronize accepted main truth"
+
+      - name: Push synchronized non-workflow truth
         shell: bash
         run: git push origin HEAD:work/m14-main-truth-sync
