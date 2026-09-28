@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M15 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M15 Thin Skill Adapter through PR #16 to protected main at b0677e43c3c5634dbdd856821c44fce7003c896d.
+- Passed strict Governance Bootstrap on the exact main merge SHA.
+- Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Authorized M16 Thin MCP Adapter while retaining DoctorCode CLI/core as the only detector, context, and verification authority.
+
 ## 2026-09-28 — M15 Thin Skill Adapter accepted baseline
 
 Type: acceptance

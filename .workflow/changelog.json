@@ -2,6 +2,17 @@
   "entries": [
     {
       "changes": [
+        "Merged FINAL_ACCEPTED M15 Thin Skill Adapter through PR #16 to protected main at b0677e43c3c5634dbdd856821c44fce7003c896d.",
+        "Passed strict Governance Bootstrap on the exact main merge SHA.",
+        "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
+        "Authorized M16 Thin MCP Adapter while retaining DoctorCode CLI/core as the only detector, context, and verification authority."
+      ],
+      "date": "2026-09-28",
+      "title": "M15 main accepted baseline",
+      "type": "acceptance"
+    },
+    {
+      "changes": [
         "Accepted the self-contained DoctorCode Agent Skill as an orchestration-only adapter.",
         "Accepted pre-repair contract capture and post-repair deterministic verification as mandatory skill workflow order.",
         "Accepted cross-platform skill contract validation including Windows CRLF checkout behavior.",
