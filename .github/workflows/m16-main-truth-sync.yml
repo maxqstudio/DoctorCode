@@ -1,0 +1,43 @@
+name: M16 Main Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m16-main-truth-sync"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m16-main-truth-sync
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate synchronized M16 main truth
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_project_truth.py
+      - name: Commit synchronized non-workflow truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow/acceptance.json .workflow/generated docs
+          if git diff --cached --quiet; then
+            echo "PROJECT_TRUTH_DRIFT=NONE"
+            exit 0
+          fi
+          git commit -m "docs(m16): synchronize accepted main truth"
+          git push origin HEAD:work/m16-main-truth-sync
