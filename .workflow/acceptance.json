@@ -101,7 +101,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Release 398260613 is public/non-prerelease and contains six platform archives plus checksums.txt and release-manifest.json. Artifact 10971548461 checksums.txt SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace matches the release asset digest; all listed archive/manfiest hashes match GitHub asset digests.",
+      "evidence": "GitHub Release 398260613 is public/non-prerelease and contains six platform archives plus checksums.txt and release-manifest.json. Artifact 10971548461 checksums.txt SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace matches the release asset digest; all listed archive/manifest hashes match GitHub asset digests.",
       "id": "M17-PUBLIC-RELEASE-READBACK",
       "requirement": "Final closure must read back the public release, asset set, and checksums and prove they correspond to the published deterministic bundle.",
       "status": "PASS"
