@@ -302,7 +302,7 @@ Known blockers:
 ### Proven
 
 - M13 is MAIN_ACCEPTED with product baseline main@3fccbd4398f2a12bd5214be9ed23ee18f46c679c and governance-normalized starting main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a.
-- Skill_Workflow main remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f, matching DoctorCode's pinned authority.
+- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720; DoctorCode vendors its deterministic LF Project Truth sync and matching STRICT selftest.
 - M14 initial RED Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify did not yet exist.
 - M14 contract-integrity RED Core CI run 36328795881 at 4f145e7900a305dec4a2d277aa6dbd517fba66c0 proved a tampered target_baseline_count could otherwise be accepted.
 - M14 verification contracts match targets by stable semantic key rule_id + path + summary and baseline occurrence count instead of exact line-bound finding ID.

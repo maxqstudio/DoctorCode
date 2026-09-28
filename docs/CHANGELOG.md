@@ -2,6 +2,14 @@
 
 # CHANGELOG
 
+## 2026-09-28 — Skill Workflow authority 1f9b48b sync
+
+Type: governance
+
+- Advanced pinned Skill_Workflow authority to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.
+- Vendored byte-exact deterministic-LF sync_project_truth.py and matching STRICT selftest.
+- Requires cross-platform proof that acceptance.json contains no CRLF and ends with LF before M15 begins.
+
 ## 2026-09-27 — M14 main accepted baseline
 
 Type: acceptance
