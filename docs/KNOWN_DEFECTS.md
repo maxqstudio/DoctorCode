@@ -4,7 +4,7 @@
 
 | ID | Status | Summary | Evidence |
 |---|---|---|---|
-| KNOWN-M00-001 | OPEN | Semantic defect detectors are not implemented in M00. | No detector packages or accuracy corpus are accepted yet. |
+| KNOWN-M00-001 | FIXED/ACCEPTED | Semantic defect detectors were not implemented in M00; Go and Python semantic analyzers are now accepted. | Historical M00 gap closed by accepted Go milestones M01-M06 and Python milestones M07-M10; current engine registers both analyzers and current-main acceptance remains authoritative. |
 | KNOWN-M00-002 | OPEN | Current vendored Skill_Workflow sequence extractor does not resolve Go function call graphs. | Governance run 36254412921 failed ENTRY_NOT_RESOLVED for cmd/doctorcode/main.go::main; M00 uses non-critical structural sequence evidence instead of fabricating Go edges. |
 
 Use explicit OPEN, FIXED/ACCEPTED, HISTORICAL, or NOT_PROVEN semantics.

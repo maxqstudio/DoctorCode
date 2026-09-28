@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**DoctorCode v0.1.0 is publicly released from accepted product SHA `cd05f064e1bb1054271e7028941c1fbb80ea32aa`.** The immutable tag, deterministic bundle, native Ubuntu/Windows/macOS install-smoke, public release assets, and checksums have been verified. Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries. Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
+**DoctorCode v0.1.0 is publicly released from accepted product SHA `cd05f064e1bb1054271e7028941c1fbb80ea32aa`.** The immutable tag, deterministic bundle, native Ubuntu/Windows/macOS install-smoke, public release assets, and checksums have been verified. Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
