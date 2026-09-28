@@ -19,8 +19,9 @@ import (
 const (
 	defaultMaxFindings = 100
 	maxMaxFindings     = 1000
-	defaultMaxBytes    = 4096
-	maxMaxBytes        = 64 * 1024
+	defaultMaxBytes              = 4096
+	maxMaxBytes                  = 64 * 1024
+	maxVerificationContractBytes = 1 << 20
 )
 
 type auditInput struct {
@@ -212,6 +213,12 @@ func decodeContract(value map[string]any) (verification.Contract, error) {
 	data, err := json.Marshal(value)
 	if err != nil {
 		return verification.Contract{}, fmt.Errorf("encode verification contract: %w", err)
+	}
+	if len(data) > maxVerificationContractBytes {
+		return verification.Contract{}, fmt.Errorf(
+			"verification contract exceeds %d bytes",
+			maxVerificationContractBytes,
+		)
 	}
 	decoder := json.NewDecoder(strings.NewReader(string(data)))
 	decoder.DisallowUnknownFields()
