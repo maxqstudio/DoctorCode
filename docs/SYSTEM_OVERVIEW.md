@@ -263,7 +263,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M16_THIN_MCP_ADAPTER
 
-Current status: M16_ACCEPTED
+Current status: M16_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -319,16 +319,17 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize and validate final M16 Project Truth on the exact accepted branch tree.
-- Merge FINAL_ACCEPTED M16 to protected main through pull request and rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact merge SHA.
-- After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening under the Owner directive to continue until DoctorCode is complete.
+- Proceed to M17 Release and Install Hardening under the Owner directive to continue until DoctorCode is complete.
+- Branch M17 only from the governance-normalized M16 main after exact closure acceptance.
+- Package doctorcode and doctorcode-mcp for Linux, Windows, and macOS with deterministic version metadata, checksums, install documentation, and artifact smoke verification.
+- Preserve M16 product acceptance at 2e76c9e635a8a68507fea9d44438f74e96d8e754 and exact post-merge evidence as immutable historical evidence.
 
 Blocked actions:
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
 - Adding MCP mutation, safe-delete, or automatic-repair tools.
 - Adding arbitrary repository command execution to MCP verification authority.
 - Claiming remote/network MCP support from the local stdio acceptance evidence.
-- Starting release/install packaging before M16 is MAIN_ACCEPTED on protected main.
+- Publishing a public release tag before M17 release artifacts and install smoke tests are FINAL_ACCEPTED.
 
 Known blockers:
 - None declared.
@@ -350,6 +351,10 @@ Known blockers:
 - Final M16 branch tree 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed Governance Bootstrap run 36373403943.
 - Core CI run 36373404275 and M16 Thin MCP run 36373404050 at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36373403993, M07 Python Real World run 36373404028, M06 Go labels run 36373404043, and Real World Go run 36373404035 all passed on Linux, Windows, and macOS at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5.
+- M16 Thin MCP Adapter merged through PR #18 to protected main at 2e76c9e635a8a68507fea9d44438f74e96d8e754.
+- Exact M16 main Governance Bootstrap run 36374601756 completed success.
+- Exact M16 main Core CI run 36374601764 and M16 Thin MCP run 36374601767 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M16 main M10 Python labels run 36374601762, M07 Python Real World run 36374601774, M06 Go labels run 36374601733, and Real World Go run 36374601755 completed success on all three operating systems.
 
 ### Not proven
 

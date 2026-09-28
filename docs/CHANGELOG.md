@@ -2,6 +2,14 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M16 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M16 Thin MCP Adapter through PR #18 to protected main at 2e76c9e635a8a68507fea9d44438f74e96d8e754.
+- Passed strict Governance Bootstrap, Core CI, dedicated M16 MCP, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Authorized M17 Release and Install Hardening while keeping MCP transport read-only and local-stdio scoped.
+
 ## 2026-09-28 — M16 Thin MCP Adapter accepted baseline
 
 Type: acceptance
