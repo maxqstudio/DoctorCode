@@ -1,0 +1,49 @@
+name: M16 Acceptance Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m16-thin-mcp-adapter"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m16-thin-mcp-adapter
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Regenerate M16 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.json
+          --output-mermaid docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.mmd
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate synchronized M16 truth
+        run: |
+          python .workflow/tools/validate_sequence_contract.py --root . --session docs/sequence/sessions/M16-THIN-MCP-ADAPTER.json
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+      - name: Commit synchronized non-workflow truth
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow/acceptance.json .workflow/generated docs
+          if git diff --cached --quiet; then
+            echo "PROJECT_TRUTH_DRIFT=NONE"
+            exit 0
+          fi
+          git commit -m "docs(m16): synchronize accepted thin MCP truth"
+          git push origin HEAD:work/m16-thin-mcp-adapter
