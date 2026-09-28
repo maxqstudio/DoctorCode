@@ -215,7 +215,7 @@ jobs:
               "phase":"M15_THIN_SKILL_ADAPTER",
               "mode":"DURING",
               "scope":"CURRENT",
-              "critical":false,
+              "critical":False,
               "status":"IN_PROGRESS",
               "implementation_base_sha":BASE_MAIN,
               "plan":{"required":False,"contract":"","frozen":False,"frozen_commit":"","sha256":"","diagram":""},
