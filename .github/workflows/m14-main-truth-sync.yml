@@ -32,8 +32,18 @@ jobs:
       - name: Synchronize generated Project Truth
         run: python .workflow/tools/sync_project_truth.py --root .
 
-      - name: Validate M14 main closure
+      - name: Commit synchronized M14 main truth locally
+        shell: bash
         run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m14): synchronize accepted main truth"
+
+      - name: Validate clean M14 main closure
+        run: |
+          git diff --exit-code
+          git diff --cached --exit-code
           python .workflow/tools/validate_sequence_sessions.py
           python .workflow/tools/validate_project_docs.py
           python .workflow/tools/validate_doc_quality.py
@@ -41,11 +51,6 @@ jobs:
           python .workflow/tools/validate_cross_document_consistency.py --base 6952187538ffa4a6f3f149db440d1f6f6960ba61 --require-base
           python .workflow/tools/validate_project_truth.py
 
-      - name: Commit synchronized M14 main truth
+      - name: Push synchronized M14 main truth
         shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "docs(m14): synchronize accepted main truth"
-          git push origin HEAD:work/m14-main-truth-sync
+        run: git push origin HEAD:work/m14-main-truth-sync
