@@ -154,7 +154,9 @@
         "all tools are read-only",
         "repository root is bound at server startup",
         "tool input schemas expose no root/path/command/shell authority",
-        "verification domain failure is IsError=true with structured result retained"
+        "verification domain failure is IsError=true with structured result retained",
+        "doctorcode_verify rejects encoded verification-contract payloads larger than 1 MiB",
+        "go mod tidy must leave committed mcp/go.mod and mcp/go.sum unchanged"
       ]
     }
   ],
