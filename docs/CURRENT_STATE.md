@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M15_THIN_SKILL_ADAPTER
-Status: M15_VALIDATING
+Status: M15_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -46,6 +46,9 @@ SEQUENCE_SYNC: PASS
 - At the same product candidate, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 passed on all three operating systems.
 - The DoctorCode skill is self-contained at skills/doctorcode/SKILL.md, stays under 500 lines, and orchestrates existing CLI commands instead of owning detector, context, or verification logic.
 - The skill requires audit -> context -> pre-repair contract -> bounded repair -> verify and preserves safe_autofix=false plus static-evidence limitations.
+- Final synchronized M15 branch tree b32938e13c1de97138edd09b0374bceb51d60b01 passed Governance Bootstrap run 36368457969.
+- Core CI run 36368457929 at b32938e13c1de97138edd09b0374bceb51d60b01 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36368457958, M07 Python Real World run 36368457921, M06 Go labels run 36368457994, and Real World Go run 36368457915 all passed on Linux, Windows, and macOS at b32938e13c1de97138edd09b0374bceb51d60b01.
 
 ## Not proven
 - M15 does not prove that every third-party agent runtime implements the Agent Skills convention identically.
@@ -61,9 +64,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Generate and validate M15 Project Truth plus CURRENT sequence evidence.
-- Run final exact-SHA Governance Bootstrap, Core CI, and every accepted real-world lane after the temporary sync workflow is removed.
-- After FINAL_ACCEPTED, merge M15 through the protected-main pull-request path and rerun exact-main acceptance.
+- Run final exact-SHA acceptance on the finalized M15 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M15 pull request through protected main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA.
 - After M15_MAIN_ACCEPTED, proceed to the next adapter/release milestone declared by governance.
 
 ## Explicitly blocked

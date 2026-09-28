@@ -25,7 +25,7 @@
   "schema_version": 1,
   "scope": "CURRENT",
   "session_id": "M15-THIN-SKILL-ADAPTER",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
     "internal/skilladapter/skill_test.go",
