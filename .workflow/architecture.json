@@ -193,6 +193,17 @@
         "verification PASS/FAIL result"
       ],
       "purpose": "Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands."
+    },
+    {
+      "depends_on": [
+        "CLI"
+      ],
+      "id": "skill_adapter",
+      "name": "Thin Agent Skill Adapter",
+      "owns": [
+        "skills/doctorcode/SKILL.md orchestration contract"
+      ],
+      "purpose": "Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core."
     }
   ],
   "data_flows": [
@@ -330,6 +341,16 @@
       "from": "Deterministic Verification Contract",
       "meaning": "Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.",
       "to": "human or AI coding agent"
+    },
+    {
+      "from": "coding agent",
+      "meaning": "The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence.",
+      "to": "Thin Agent Skill Adapter"
+    },
+    {
+      "from": "Thin Agent Skill Adapter",
+      "meaning": "The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.",
+      "to": "CLI"
     }
   ],
   "external_boundaries": [
@@ -376,6 +397,10 @@
     {
       "contract": "M14 never executes repository-provided test, build, shell, hook, or Finding.Verification command strings. Verification authority is a fresh DoctorCode deterministic audit plus the frozen contract only.",
       "name": "Verification execution boundary"
+    },
+    {
+      "contract": "Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results.",
+      "name": "Skill adapter authority boundary"
     }
   ],
   "schema_version": 1

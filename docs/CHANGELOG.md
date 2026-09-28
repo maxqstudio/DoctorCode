@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M15 Thin Skill Adapter candidate
+
+Type: development
+
+- Added self-contained skills/doctorcode/SKILL.md with Agent Skills frontmatter and bounded DoctorCode workflow.
+- Kept detector, context, verification, mutation, and repository-command execution authority out of the adapter.
+- Added cross-platform contract tests and repaired Windows CRLF sensitivity in the test itself.
+- Preserved every accepted Linux, Windows, and macOS regression lane.
+
 ## 2026-09-28 — Skill Workflow authority 1f9b48b sync
 
 Type: governance

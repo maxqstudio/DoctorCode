@@ -46,6 +46,11 @@
       "name": "doctorcode verify",
       "path": "cmd/doctorcode/main.go",
       "purpose": "Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints."
+    },
+    {
+      "name": "DoctorCode agent skill",
+      "path": "skills/doctorcode/SKILL.md",
+      "purpose": "Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic."
     }
   ],
   "project": {

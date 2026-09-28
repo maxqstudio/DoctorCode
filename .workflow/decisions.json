@@ -335,6 +335,27 @@
       "rationale": "Analyzed repositories are untrusted input and command execution would cross the established read-only analysis boundary.",
       "status": "ACCEPTED",
       "title": "Never execute repository verification commands"
+    },
+    {
+      "decision": "M15 ships one self-contained SKILL.md that sequences existing DoctorCode CLI operations and carries no detector, context, or verifier implementation.",
+      "id": "ADR-M15-001",
+      "rationale": "A second implementation in prose or scripts would drift from deterministic core authority and make agent behavior model-dependent.",
+      "status": "ACCEPTED",
+      "title": "Keep the Agent Skill orchestration-only"
+    },
+    {
+      "decision": "The skill requires doctorcode contract before any repair edit and doctorcode verify after the edit.",
+      "id": "ADR-M15-002",
+      "rationale": "M14 verification needs a genuine pre-repair baseline; creating the contract after mutation destroys that evidence.",
+      "status": "ACCEPTED",
+      "title": "Freeze verification before repair in the skill workflow"
+    },
+    {
+      "decision": "Project tests and runtime checks may be run only under project-specific trust/governance and remain separate evidence from DoctorCode verification.",
+      "id": "ADR-M15-003",
+      "rationale": "DoctorCode analyzes arbitrary repositories as untrusted input and must not turn repository-provided command strings into execution authority.",
+      "status": "ACCEPTED",
+      "title": "Keep repository execution outside DoctorCode skill authority"
     }
   ],
   "schema_version": 1

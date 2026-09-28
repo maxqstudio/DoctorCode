@@ -1,0 +1,86 @@
+{
+  "authority": "skills/doctorcode/SKILL.md plus DoctorCode CLI/core",
+  "critical": false,
+  "entry_condition": "An agent or human chooses to use DoctorCode for diagnosis or repair evidence.",
+  "failure_behavior": [
+    "Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around."
+  ],
+  "flow_id": "FLOW-THIN-SKILL-ADAPTER",
+  "invariants": [
+    "The skill never creates findings independently of the CLI.",
+    "The verification contract is captured before repair.",
+    "safe_autofix=false never becomes mutation authority.",
+    "Zero conservative references never prove safe deletion.",
+    "Repository-provided commands are not DoctorCode verification authority.",
+    "DoctorCode verification PASS is narrower than runtime correctness."
+  ],
+  "purpose": "Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.",
+  "restart_behavior": [
+    "Re-audit current source, select the current finding, and capture a fresh contract before a new repair attempt."
+  ],
+  "rollback_behavior": [
+    "Removing the skill returns DoctorCode to direct CLI usage without changing core behavior."
+  ],
+  "schema_version": 1,
+  "sequence_session": "M15-THIN-SKILL-ADAPTER",
+  "source_owners": [
+    "skills/doctorcode/SKILL.md",
+    "cmd/doctorcode/main.go"
+  ],
+  "states": [
+    "AUDITED",
+    "FINDING_SELECTED",
+    "CONTEXT_BOUNDED",
+    "CONTRACT_FROZEN",
+    "REPAIR_APPLIED",
+    "VERIFIED",
+    "EVIDENCE_REPORTED"
+  ],
+  "tests": [
+    "internal/skilladapter/skill_test.go",
+    ".github/workflows/ci.yml"
+  ],
+  "title": "Agent-guided DoctorCode repair lifecycle",
+  "transitions": [
+    {
+      "action": "Select one exact current deterministic finding.",
+      "from": "AUDITED",
+      "side_effects": [],
+      "to": "FINDING_SELECTED"
+    },
+    {
+      "action": "Request a bounded context packet for the exact finding ID.",
+      "from": "FINDING_SELECTED",
+      "side_effects": [],
+      "to": "CONTEXT_BOUNDED"
+    },
+    {
+      "action": "Capture the verification contract before source mutation.",
+      "from": "CONTEXT_BOUNDED",
+      "side_effects": [
+        "writes caller-selected contract file"
+      ],
+      "to": "CONTRACT_FROZEN"
+    },
+    {
+      "action": "Apply the smallest evidence-supported source repair under project authority.",
+      "from": "CONTRACT_FROZEN",
+      "side_effects": [
+        "source mutation is performed by the human or agent, not DoctorCode"
+      ],
+      "to": "REPAIR_APPLIED"
+    },
+    {
+      "action": "Run DoctorCode verify against the frozen contract.",
+      "from": "REPAIR_APPLIED",
+      "side_effects": [],
+      "to": "VERIFIED"
+    },
+    {
+      "action": "Report DoctorCode evidence separately from project-specific runtime or test evidence.",
+      "from": "VERIFIED",
+      "side_effects": [],
+      "to": "EVIDENCE_REPORTED"
+    }
+  ]
+}

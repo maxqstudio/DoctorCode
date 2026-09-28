@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 ## Flow inventory
 
@@ -22,6 +22,7 @@ Source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 | FLOW-REALWORLD-LABELED | GitHub Actions checks out DoctorCode plus the four declared public repositories at exact label-manifest SHAs. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, .github/workflows/m06-labeled-real-world.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, MATCHING_BOUNDED_LABELS, GATED, REPORTED | internal/realworld/labeled_test.go, internal/analyzers/golang/analyzer_test.go | M06-REALWORLD-LABELED | DECLARED |
 | FLOW-REALWORLD | GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA. | internal/realworld/sources.json, internal/realworld/realworld_test.go, .github/workflows/real-world-go.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, ASSERTING_BOUNDARIES, REPORTED | internal/realworld/realworld_test.go | M05-PUBLIC-REPO-VALIDATION | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |
+| FLOW-THIN-SKILL-ADAPTER | An agent or human chooses to use DoctorCode for diagnosis or repair evidence. | skills/doctorcode/SKILL.md, cmd/doctorcode/main.go | FINDING_SELECTED, CONTEXT_BOUNDED, CONTRACT_FROZEN, REPAIR_APPLIED, VERIFIED, EVIDENCE_REPORTED | internal/skilladapter/skill_test.go, .github/workflows/ci.yml | M15-THIN-SKILL-ADAPTER | DECLARED |
 
 ## Observed Python HTTP routes
 

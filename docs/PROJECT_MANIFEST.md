@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m15-thin-skill-adapter
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
-Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -41,6 +41,7 @@ External systems: GitHub Actions, host compilers and language runtimes
 | doctorcode benchmark | cmd/doctorcode/main.go | Evaluate labeled analyzer corpora and enforce deterministic TP/FP/FN regression gates. |
 | doctorcode contract | cmd/doctorcode/main.go | Freeze one exact current finding into a deterministic pre-repair verification baseline. |
 | doctorcode verify | cmd/doctorcode/main.go | Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints. |
+| DoctorCode agent skill | skills/doctorcode/SKILL.md | Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic. |
 
 ## Critical directories
 

@@ -4,24 +4,21 @@
 
 ## Evidence boundary
 
-M14 Deterministic Verification Contract is product-main accepted at 6952187538ffa4a6f3f149db440d1f6f6960ba61 after strict governance and every accepted Linux, Windows, and macOS regression lane passed. M14 freezes a pre-repair semantic finding baseline and re-audits after repair without executing repository-provided commands. It requires target occurrence reduction, stable analyzer identities, contract self-consistency, and no new same-or-higher-severity target-path regression. Full runtime correctness, safe deletion, automatic repair, cryptographic contract authentication, and repository required-status-check context administration remains outside the M14 product proof boundary.
+M15 Thin Skill Adapter adds one self-contained Agent Skills artifact at skills/doctorcode/SKILL.md. It is orchestration-only: audit, bounded context, pre-repair contract capture, minimal repair guidance, and deterministic verify remain implemented exclusively by the DoctorCode CLI/core. The skill does not execute repository-provided commands, add mutation authority, prove safe deletion, package the binary, or provide MCP transport. Product candidate 4e67e558baa7353725052fc0cd9a62e65e99b426 preserves every accepted cross-platform lane.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M14-MAIN-BASELINE | M14 must branch from governance-normalized M13 main after M13_MAIN_ACCEPTED and retain the pinned Skill_Workflow authority. | work/m14-deterministic-verification starts from main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a; M13 product baseline remains 3fccbd4398f2a12bd5214be9ed23ee18f46c679c; Skill_Workflow remains 9e22feddb8f94e8c0f1af6a33e14b64de5068f8f. | PASS |
-| M14-RED-CONTRACT | The verification contract API must be demonstrated absent before implementation. | Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify were undefined. | PASS |
-| M14-STABLE-TARGET | Verification must not false-PASS merely because a finding line number changes. | internal/verification/verification_test.go freezes rule_id + path + summary occurrence count; a semantically identical remaining finding at a shifted line preserves current count until an occurrence is actually removed. | PASS |
-| M14-REGRESSION-BLOCK | A repair that resolves the target but introduces a new same-or-higher-severity finding on the target path must fail verification. | Core CI run 36328881587 executes the public CLI negative path with a new hardcoded-credential finding and asserts passed=false before the clean repair passes. | PASS |
-| M14-ANALYZER-DRIFT | A verification contract must fail closed if the analyzer identity set differs between baseline and verification. | internal/verification/verification_test.go TestVerifyFailsClosedWhenAnalyzerSetChanges passes in Core CI 36328881587. | PASS |
-| M14-CONTRACT-INTEGRITY | Target metadata must agree with the stored baseline semantic key count and severity, and unknown JSON fields must be rejected. | RED Core CI 36328795881 exposed the count mismatch; repaired candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 validates target count and severity while cmd tests reject unknown contract fields. | PASS |
-| M14-NO-ARBITRARY-EXECUTION | DoctorCode verification must re-audit deterministically and must not execute repository-provided verification, test, build, or shell command strings. | cmd/doctorcode runVerify loads a strict contract then calls engine.Default().Audit and internal/verification.Verify only; no Finding.Verification string or repository command is dispatched. | PASS |
-| M14-CLI-E2E | The public contract and verify workflow must demonstrate both blocking failure and clean success on Linux, Windows, and macOS. | Core CI run 36328881587 at 776bb6467fcc55f4c7192ef06aa07c5469102520 passes the deterministic verification contract smoke on all three operating systems. | PASS |
-| M14-REGRESSION-MATRIX | All previously accepted detector and public-source lanes must remain passing across Linux, Windows, and macOS. | At 776bb6467fcc55f4c7192ef06aa07c5469102520: Core CI 36328881587, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 all passed across all three operating systems. | PASS |
-| M14-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M14 sequence artifacts must pass strict governance on the final exact M14 branch SHA after temporary workflows are removed. | At 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70: Governance Bootstrap 36329506408, Core CI 36329506410, M10 Labeled Real World Python 36329506427, M07 Python Real World 36329506385, M06 Labeled Real World Go 36329506403, and Real World Go Validation 36329506404 all completed success; every matrix job passed on Linux, Windows, and macOS. Finalization is governance-only and will be revalidated on its exact SHA. | PASS |
-| M14-MAIN-POST-MERGE | The exact M14 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before M15 may branch. | main@6952187538ffa4a6f3f149db440d1f6f6960ba61: Governance Bootstrap 36329987778, Core CI 36329987823, M10 Labeled Real World Python 36329987784, M07 Python Real World 36329987819, M06 Labeled Real World Go 36329987822, and Real World Go Validation 36329987965 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M15-MAIN-BASELINE | M15 must branch from the post-authority-sync protected main and retain current Skill_Workflow authority. | work/m15-thin-skill-adapter starts from main@86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198; Skill_Workflow is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
+| M15-RED-SKILL | The skill artifact contract must be demonstrated absent before implementation. | Core CI 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not exist. | PASS |
+| M15-THIN-AUTHORITY | The Skill adapter must orchestrate DoctorCode CLI commands and must not contain a second detector/context/verifier implementation. | skills/doctorcode/SKILL.md contains workflow prose only; internal/skilladapter/skill_test.go enforces required CLI surfaces and bounded-authority language. | PASS |
+| M15-PRE-REPAIR-CONTRACT | The skill must require contract capture before editing and verify after editing. | skills/doctorcode/SKILL.md explicitly sequences audit -> context -> contract before editing -> minimal repair -> verify and explains why post-edit contract creation is invalid evidence. | PASS |
+| M15-SAFETY-BOUNDARY | The skill must preserve safe_autofix=false, zero-reference uncertainty, and no repository-command execution as DoctorCode authority. | SKILL.md Authority Boundaries, Failure Handling, Red Flags, and Verification Checklist preserve all three boundaries. | PASS |
+| M15-CROSS-PLATFORM-SKILL-CONTRACT | Skill validation must pass on Linux, Windows, and macOS including CRLF checkout behavior. | Initial Core CI 36367916668 exposed Windows CRLF sensitivity; product candidate Core CI 36368008963 passes after newline-portable validation without changing skill semantics. | PASS |
+| M15-REGRESSION-MATRIX | All previously accepted detector, context, verification, and public-source lanes must remain passing across Linux, Windows, and macOS. | At 4e67e558baa7353725052fc0cd9a62e65e99b426: Core CI 36368008963, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 all pass on three operating systems. | PASS |
+| M15-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M15 sequence artifacts must pass strict governance on the final exact branch SHA after temporary workflows are removed. | NOT_PROVEN until synchronized final candidate is checked. | NOT_PROVEN |
 
 ## Test commands
 
@@ -37,6 +34,7 @@ Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407
 - Core CI Go related-context smoke test
 - Core CI Python related-context smoke test
 - Core CI deterministic verification contract smoke test
+- go test ./internal/skilladapter -v
 
 ## Runtime checks
 
@@ -48,11 +46,12 @@ Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407
 - go test ./internal/realworld -run TestM06LabeledRealWorld -v with exact-SHA bounded Go label paths
 - go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
 - go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
+- DoctorCode skill contract validation
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M14-DETERMINISTIC-VERIFICATION
+Sequence session contract: M15-THIN-SKILL-ADAPTER
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

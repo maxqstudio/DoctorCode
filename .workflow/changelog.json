@@ -1,14 +1,25 @@
 {
   "entries": [
     {
+      "changes": [
+        "Added self-contained skills/doctorcode/SKILL.md with Agent Skills frontmatter and bounded DoctorCode workflow.",
+        "Kept detector, context, verification, mutation, and repository-command execution authority out of the adapter.",
+        "Added cross-platform contract tests and repaired Windows CRLF sensitivity in the test itself.",
+        "Preserved every accepted Linux, Windows, and macOS regression lane."
+      ],
       "date": "2026-09-28",
-      "title": "Skill Workflow authority 1f9b48b sync",
-      "type": "governance",
+      "title": "M15 Thin Skill Adapter candidate",
+      "type": "development"
+    },
+    {
       "changes": [
         "Advanced pinned Skill_Workflow authority to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
         "Vendored byte-exact deterministic-LF sync_project_truth.py and matching STRICT selftest.",
         "Requires cross-platform proof that acceptance.json contains no CRLF and ends with LF before M15 begins."
-      ]
+      ],
+      "date": "2026-09-28",
+      "title": "Skill Workflow authority 1f9b48b sync",
+      "type": "governance"
     },
     {
       "changes": [

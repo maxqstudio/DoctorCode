@@ -1,0 +1,34 @@
+{
+  "acceptance_report": "",
+  "actual": {
+    "diagram": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.mmd",
+    "entries": [],
+    "graph": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.json",
+    "source_digest": ""
+  },
+  "critical": false,
+  "implementation_base_sha": "86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198",
+  "mode": "DURING",
+  "phase": "M15_THIN_SKILL_ADAPTER",
+  "plan": {
+    "contract": "",
+    "diagram": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "required": false,
+    "sha256": ""
+  },
+  "runtime_trace": {
+    "graph": "",
+    "required": false
+  },
+  "schema_version": 1,
+  "scope": "CURRENT",
+  "session_id": "M15-THIN-SKILL-ADAPTER",
+  "status": "IN_PROGRESS",
+  "test_traceability_required": true,
+  "tests": [
+    "internal/skilladapter/skill_test.go",
+    ".github/workflows/ci.yml"
+  ]
+}

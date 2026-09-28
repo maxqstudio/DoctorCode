@@ -354,3 +354,8 @@ M14 adds a two-step repair-verification workflow. Before editing code, save a co
 Finding IDs contain line numbers, so M14 does not use disappearance of the old ID as proof. The frozen semantic target is rule_id + path + summary plus its baseline occurrence count. Verification also blocks newly increased finding counts on the target path when their severity is equal to or higher than the original target. Analyzer-set drift and inconsistent contract metadata fail closed.
 
 DoctorCode does not run repository tests, builds, shell commands, hooks, or advisory Finding.Verification strings during M14 verification. PASS means only that the declared deterministic analyzer contract passed; it is not proof of full runtime behavior, safe deletion, or automatic repair safety.
+
+### M15 thin Agent Skill adapter
+
+DoctorCode ships a self-contained agent skill at `skills/doctorcode/SKILL.md`. The skill is orchestration-only: it guides agents through `audit -> context -> contract -> repair -> verify` while the CLI/core remains the sole detector, evidence, and verification authority. It preserves `safe_autofix=false`, zero-reference uncertainty, and the rule that repository-provided commands are not DoctorCode verification authority.
+

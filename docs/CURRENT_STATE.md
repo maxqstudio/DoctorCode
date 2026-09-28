@@ -7,16 +7,16 @@ Authority verified at SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
 Governance profile: strict
 
 ## Current phase
-Phase: M14_DETERMINISTIC_VERIFICATION_CONTRACT
-Status: M14_MAIN_ACCEPTED
+Phase: M15_THIN_SKILL_ADAPTER
+Status: M15_VALIDATING
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m15-thin-skill-adapter
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
 Current candidate SHA: external final acceptance evidence
-Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -33,42 +33,26 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M14-DETERMINISTIC-VERIFICATION
+Current sequence session: M15-THIN-SKILL-ADAPTER
 SEQUENCE_SYNC: PASS
 
 ## Proven
-- M13 is MAIN_ACCEPTED with product baseline main@3fccbd4398f2a12bd5214be9ed23ee18f46c679c and governance-normalized starting main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a.
-- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720; DoctorCode vendors its deterministic LF Project Truth sync and matching STRICT selftest.
-- M14 initial RED Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify did not yet exist.
-- M14 contract-integrity RED Core CI run 36328795881 at 4f145e7900a305dec4a2d277aa6dbd517fba66c0 proved a tampered target_baseline_count could otherwise be accepted.
-- M14 verification contracts match targets by stable semantic key rule_id + path + summary and baseline occurrence count instead of exact line-bound finding ID.
-- M14 verification fails closed when the active analyzer set differs from the contract baseline.
-- M14 verification blocks target resolution when a new finding with severity equal to or higher than the target appears on the target path.
-- M14 contract metadata is checked against its baseline target semantic key for count and severity consistency.
-- M14 never executes repository-provided build, test, shell, hook, or verification command strings.
-- M14 product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI run 36328881587 on Linux, Windows, and macOS, including public CLI negative and positive verification paths.
-- At the same product candidate, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 passed on all three operating systems.
-- Final synchronized M14 branch tree 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed Governance Bootstrap run 36329506408.
-- Core CI run 36329506410 at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed on ubuntu-latest, windows-latest, and macos-latest, including deterministic verification negative and positive E2E paths.
-- M10 Python labels run 36329506427, M07 Python Real World run 36329506385, M06 Go labels run 36329506403, and Real World Go run 36329506404 all passed on Linux, Windows, and macOS at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70.
-- M14 Deterministic Verification Contract merged through PR #13 to main at 6952187538ffa4a6f3f149db440d1f6f6960ba61.
-- Exact M14 product main Governance Bootstrap run 36329987778 completed success.
-- Exact M14 product main Core CI run 36329987823 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M14 product main M10 Labeled Real World Python run 36329987784 completed success on all three operating systems.
-- Exact M14 product main M07 Python Real World run 36329987819 completed success on all three operating systems.
-- Exact M14 product main M06 Labeled Real World Go run 36329987822 completed success on all three operating systems.
-- Exact M14 product main Real World Go Validation run 36329987965 completed success on all three operating systems.
-- GitHub main branch protection is ACTIVE through repository ruleset 24089721 ('protection'): default branch deletion and non-fast-forward updates are blocked, pull requests are required, review threads must be resolved, and no bypass actor is configured.
+- M14 is MAIN_ACCEPTED with product baseline main@6952187538ffa4a6f3f149db440d1f6f6960ba61 and governance-normalized main@4ab4190f98bcc823f4869d777ad8ba66e701c3cd.
+- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720 and DoctorCode vendors its deterministic-LF Project Truth sync plus matching STRICT selftest.
+- M15 branches from protected main@86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198 after the Skill_Workflow authority prerequisite merged and its post-merge acceptance passed.
+- M15 RED Core CI run 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not yet exist.
+- M15 first implementation Core CI run 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc exposed a Windows-only CRLF-sensitive skill contract test while Ubuntu and macOS passed.
+- M15 portable product candidate 4e67e558baa7353725052fc0cd9a62e65e99b426 passed Core CI 36368008963 on Linux, Windows, and macOS after newline-normalizing only the acceptance test.
+- At the same product candidate, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 passed on all three operating systems.
+- The DoctorCode skill is self-contained at skills/doctorcode/SKILL.md, stays under 500 lines, and orchestrates existing CLI commands instead of owning detector, context, or verification logic.
+- The skill requires audit -> context -> pre-repair contract -> bounded repair -> verify and preserves safe_autofix=false plus static-evidence limitations.
 
 ## Not proven
-- M14 semantic identity is rule_id + path + summary + occurrence count; it does not prove exact AST-node identity across arbitrary rewrites.
-- M14 regression comparison is intentionally scoped to the selected finding path, not the entire repository or related-context files.
-- New findings below the target severity do not block M14 PASS, although they remain visible in a normal audit.
-- M14 contract JSON is strict and self-consistent but is not cryptographically signed or authenticated against a malicious editor.
-- M14 analyzer-set equality detects missing or added analyzer identities, but it does not cryptographically attest analyzer implementation bytes.
-- M14 PASS proves the declared analyzer finding count decreased without same-or-higher-severity target-file regression; it does not prove full behavioral correctness.
-- M14 does not execute repository tests, build scripts, package hooks, shell commands, or Finding.Verification strings.
-- M14 does not authorize safe deletion, automatic repair, or mutation.
+- M15 does not prove that every third-party agent runtime implements the Agent Skills convention identically.
+- M15 does not install DoctorCode binaries or manage PATH; release/install packaging remains a later milestone.
+- M15 does not add an MCP server or transport.
+- M15 does not execute project tests or runtime checks as DoctorCode authority.
+- The skill cannot enlarge the proof boundaries of the underlying CLI/core.
 
 ## Known blockers
 - None declared.
@@ -77,13 +61,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Proceed to M15 Thin Skill Adapter under the Owner directive to continue until DoctorCode is complete.
-- Branch M15 only from the governance-normalized M14 main after exact closure acceptance.
-- Keep the Skill adapter thin: all detection, context, and verification authority remains in the DoctorCode CLI/core.
-- Preserve M14 product acceptance at 6952187538ffa4a6f3f149db440d1f6f6960ba61 and its exact post-merge evidence as immutable historical evidence.
+- Generate and validate M15 Project Truth plus CURRENT sequence evidence.
+- Run final exact-SHA Governance Bootstrap, Core CI, and every accepted real-world lane after the temporary sync workflow is removed.
+- After FINAL_ACCEPTED, merge M15 through the protected-main pull-request path and rerun exact-main acceptance.
+- After M15_MAIN_ACCEPTED, proceed to the next adapter/release milestone declared by governance.
 
 ## Explicitly blocked
-- Duplicating DoctorCode detector, context, or verification logic inside a Skill adapter.
-- Executing arbitrary repository-provided commands as DoctorCode authority.
-- Treating M14 verification as safe-delete or automatic-repair authority.
-- Claiming required status-check contexts are enforced by the GitHub ruleset while its required-status-check list remains empty.
+- Duplicating detector, related-context, or verification algorithms inside the skill.
+- Treating skill prose as stronger authority than DoctorCode CLI output.
+- Executing arbitrary repository-provided commands as DoctorCode verification authority.
+- Adding MCP transport behavior inside the M15 Skill adapter.

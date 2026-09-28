@@ -1264,6 +1264,67 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "claim": "M15 provides a self-contained DoctorCode Agent Skill whose only product behavior is orchestration of existing CLI authority.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M15-THIN-SKILL",
+      "runtime_evidence": [
+        "GitHub Actions Core CI 36368008963 at 4e67e558baa7353725052fc0cd9a62e65e99b426"
+      ],
+      "source_owners": [
+        "skills/doctorcode/SKILL.md"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/skilladapter/skill_test.go"
+      ]
+    },
+    {
+      "claim": "The M15 skill contract is newline-portable and passes the DoctorCode core test matrix on Linux, Windows, and macOS without changing adapter semantics per platform.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M15-CROSS-PLATFORM",
+      "runtime_evidence": [
+        "RED GitHub Actions Core CI 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc",
+        "GREEN GitHub Actions Core CI 36368008963 at 4e67e558baa7353725052fc0cd9a62e65e99b426"
+      ],
+      "source_owners": [
+        "skills/doctorcode/SKILL.md",
+        "internal/skilladapter/skill_test.go"
+      ],
+      "status": "PASS",
+      "tests": [
+        "internal/skilladapter/skill_test.go"
+      ]
+    },
+    {
+      "claim": "The M15 product candidate preserves all previously accepted Go/Python detector, context, verification, labeled, and public-source lanes on Linux, Windows, and macOS.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "id": "TRUTH-M15-REGRESSION-MATRIX",
+      "runtime_evidence": [
+        "Core CI 36368008963 at 4e67e558baa7353725052fc0cd9a62e65e99b426",
+        "M10 Python labels 36368009004 at 4e67e558baa7353725052fc0cd9a62e65e99b426",
+        "M07 Python Real World 36368009093 at 4e67e558baa7353725052fc0cd9a62e65e99b426",
+        "M06 Go labels 36368009024 at 4e67e558baa7353725052fc0cd9a62e65e99b426",
+        "Real World Go 36368009068 at 4e67e558baa7353725052fc0cd9a62e65e99b426"
+      ],
+      "source_owners": [
+        ".github/workflows/ci.yml"
+      ],
+      "status": "PASS",
+      "tests": [
+        ".github/workflows/ci.yml",
+        ".github/workflows/m10-python-labeled-real-world.yml",
+        ".github/workflows/m07-python-real-world.yml",
+        ".github/workflows/m06-labeled-real-world.yml",
+        ".github/workflows/real-world-go.yml"
+      ]
     }
   ],
   "relations": [],

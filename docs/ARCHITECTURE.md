@@ -2,7 +2,7 @@
 
 # ARCHITECTURE
 
-Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 
 ## Components
 
@@ -21,6 +21,7 @@ Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407
 | python_analyzer | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution, bounded scope-aware related-reference discovery for module-level functions | host Python 3.8+ standard library ast, detector unavailable contract |
 | python_realworld_validation | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 | verification_contract | Deterministic Verification Contract | Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands. | semantic target occurrence baseline, analyzer-set compatibility check, target-path regression delta, verification PASS/FAIL result | detector engine |
+| skill_adapter | Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
 
 ## Data flow
 
@@ -51,6 +52,8 @@ Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407
 - detector engine -> Deterministic Verification Contract: Before repair, doctorcode contract freezes analyzer identities plus target-path semantic finding counts for one exact selected finding.
 - repaired repository -> detector engine: doctorcode verify performs a fresh deterministic audit of the current repository state without executing repository-provided commands.
 - Deterministic Verification Contract -> human or AI coding agent: Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.
+- coding agent -> Thin Agent Skill Adapter: The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence.
+- Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
 
 ## External boundaries
 
@@ -65,12 +68,13 @@ Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407
 - Go related-context boundary: M12 follows only enclosing top-level non-method functions and references in the same directory/package. Local shadow bindings and external test packages are excluded; no full type-checker or transitive graph is claimed.
 - Python related-context boundary: M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed.
 - Verification execution boundary: M14 never executes repository-provided test, build, shell, hook, or Finding.Verification command strings. Verification authority is a fresh DoctorCode deterministic audit plus the frozen contract only.
+- Skill adapter authority boundary: Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results.
 
 ## Observed implementation inventory
 
-Source files: 131
-Source lines: 5930
-Languages: Go=76, Python=55
+Source files: 132
+Source lines: 5999
+Languages: Go=77, Python=55
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.
