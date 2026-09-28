@@ -206,3 +206,13 @@ func decodeStructured(t *testing.T, value any, target any) {
 		t.Fatal(err)
 	}
 }
+
+
+func TestDecodeContractRejectsOversizedPayload(t *testing.T) {
+	oversized := map[string]any{
+		"padding": strings.Repeat("x", (1<<20)+1024),
+	}
+	if _, err := decodeContract(oversized); err == nil {
+		t.Fatal("oversized verification contract must fail closed")
+	}
+}
