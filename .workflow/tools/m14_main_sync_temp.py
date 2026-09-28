@@ -29,12 +29,16 @@ for item in [
     if item not in state["proven"]:
         state["proven"].append(item)
 protection_note = (
-    "GitHub main branch protection/ruleset is still NOT_CONFIGURED: rulesets read back empty and "
-    "Main Protection Bootstrap run 36327851808 failed with HTTP 403 Resource not accessible by integration "
-    "because the available token lacks Administration: write."
+    "GitHub main branch protection is ACTIVE through repository ruleset 24089721 ('protection'): "
+    "default branch deletion and non-fast-forward updates are blocked, pull requests are required, "
+    "review threads must be resolved, and no bypass actor is configured."
 )
-if protection_note not in state["not_proven"]:
-    state["not_proven"].append(protection_note)
+if protection_note not in state["proven"]:
+    state["proven"].append(protection_note)
+state["not_proven"] = [
+    item for item in state["not_proven"]
+    if "branch protection" not in item.lower() and "ruleset" not in item.lower()
+]
 state["next_authorized_actions"] = [
     "Proceed to M15 Thin Skill Adapter under the Owner directive to continue until DoctorCode is complete.",
     "Branch M15 only from the governance-normalized M14 main after exact closure acceptance.",
@@ -45,7 +49,7 @@ state["blocked_actions"] = [
     "Duplicating DoctorCode detector, context, or verification logic inside a Skill adapter.",
     "Executing arbitrary repository-provided commands as DoctorCode authority.",
     "Treating M14 verification as safe-delete or automatic-repair authority.",
-    "Claiming main branch protection is configured until a ruleset/protection readback proves it."
+    "Claiming required status-check contexts are enforced by the GitHub ruleset while its required-status-check list remains empty."
 ]
 save(".workflow/state.json", state)
 
@@ -57,7 +61,7 @@ acceptance["evidence_boundary"] = (
     "repository-provided commands. It requires target occurrence reduction, stable analyzer identities, "
     "contract self-consistency, and no new same-or-higher-severity target-path regression. Full runtime "
     "correctness, safe deletion, automatic repair, cryptographic contract authentication, and repository "
-    "branch-protection administration remain outside the M14 product proof boundary."
+    "required-status-check context administration remains outside the M14 product proof boundary."
 )
 if not any(x.get("id") == "M14-MAIN-POST-MERGE" for x in acceptance["requirements"]):
     acceptance["requirements"].append({
@@ -111,7 +115,7 @@ if not any(x.get("title") == "M14 main accepted baseline" for x in changelog["en
             "Passed strict Governance Bootstrap on the exact product main merge SHA.",
             "Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.",
             "Authorized M15 Thin Skill Adapter while retaining DoctorCode CLI/core as the only product logic authority.",
-            "Recorded main branch protection as still not configured because available automation lacks Administration: write."
+            "Recorded active main branch protection from ruleset 24089721; deletion/non-fast-forward are blocked and pull requests are required."
         ]
     })
 save(".workflow/changelog.json", changelog)
