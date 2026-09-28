@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-27 — M14 main accepted baseline
+
+Type: acceptance
+
+- Merged FINAL_ACCEPTED M14 through PR #13 to main at 6952187538ffa4a6f3f149db440d1f6f6960ba61.
+- Passed strict Governance Bootstrap on the exact product main merge SHA.
+- Passed Core CI, bounded Python labels, pinned Python public-source validation, bounded Go labels, and pinned Go public-source validation on Linux, Windows, and macOS.
+- Authorized M15 Thin Skill Adapter while retaining DoctorCode CLI/core as the only product logic authority.
+- Recorded active main branch protection from ruleset 24089721; deletion/non-fast-forward are blocked and pull requests are required.
+
 ## 2026-09-27 — M14 Deterministic Verification Contract accepted baseline
 
 Type: acceptance

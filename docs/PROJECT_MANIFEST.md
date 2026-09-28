@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m14-deterministic-verification
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 3fccbd4398f2a12bd5214be9ed23ee18f46c679c
+Last accepted SHA: 6952187538ffa4a6f3f149db440d1f6f6960ba61
 Current source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
 
 ## Authorities

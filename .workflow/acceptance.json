@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M14 Deterministic Verification Contract freezes one pre-repair finding baseline and verifies the post-repair deterministic audit without executing target-repository commands. The stable target key is rule_id + path + summary with occurrence-count reduction, analyzer-set drift fails closed, and new same-or-higher-severity findings on the target path block PASS. Product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI and every accepted real-world lane across Linux, Windows, and macOS. Cryptographic contract authentication, arbitrary runtime behavior, repository test execution, safe deletion, and automatic repair remain outside M14 authority.",
+  "evidence_boundary": "M14 Deterministic Verification Contract is product-main accepted at 6952187538ffa4a6f3f149db440d1f6f6960ba61 after strict governance and every accepted Linux, Windows, and macOS regression lane passed. M14 freezes a pre-repair semantic finding baseline and re-audits after repair without executing repository-provided commands. It requires target occurrence reduction, stable analyzer identities, contract self-consistency, and no new same-or-higher-severity target-path regression. Full runtime correctness, safe deletion, automatic repair, cryptographic contract authentication, and repository required-status-check context administration remains outside the M14 product proof boundary.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -74,6 +74,12 @@
       "evidence": "At 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70: Governance Bootstrap 36329506408, Core CI 36329506410, M10 Labeled Real World Python 36329506427, M07 Python Real World 36329506385, M06 Labeled Real World Go 36329506403, and Real World Go Validation 36329506404 all completed success; every matrix job passed on Linux, Windows, and macOS. Finalization is governance-only and will be revalidated on its exact SHA.",
       "id": "M14-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M14 sequence artifacts must pass strict governance on the final exact M14 branch SHA after temporary workflows are removed.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "main@6952187538ffa4a6f3f149db440d1f6f6960ba61: Governance Bootstrap 36329987778, Core CI 36329987823, M10 Labeled Real World Python 36329987784, M07 Python Real World 36329987819, M06 Labeled Real World Go 36329987822, and Real World Go Validation 36329987965 all completed success; every matrix job passed on Linux, Windows, and macOS.",
+      "id": "M14-MAIN-POST-MERGE",
+      "requirement": "The exact M14 product main merge SHA must pass strict governance and every accepted cross-platform regression lane before M15 may branch.",
       "status": "PASS"
     }
   ],
