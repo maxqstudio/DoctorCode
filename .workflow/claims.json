@@ -1325,6 +1325,80 @@
         ".github/workflows/m06-labeled-real-world.yml",
         ".github/workflows/real-world-go.yml"
       ]
+    },
+    {
+      "id": "TRUTH-M16-SHARED-APPLICATION",
+      "claim": "M16 routes both CLI and MCP audit/context/contract/verify operations through one shared application facade without duplicating core detector, evidence, or verification algorithms.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "internal/application/application.go",
+        "cmd/doctorcode/main.go",
+        "mcp/server.go"
+      ],
+      "tests": [
+        "internal/application/application_test.go",
+        "mcp/server_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions Core CI run 36371973167 and M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M16-MCP-SURFACE",
+      "claim": "M16 exposes exactly four read-only MCP tools over stdio: doctorcode_audit, doctorcode_context, doctorcode_contract, and doctorcode_verify.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "mcp/server.go",
+        "mcp/cmd/doctorcode-mcp/main.go"
+      ],
+      "tests": [
+        "mcp/server_test.go",
+        ".github/workflows/m16-mcp.yml"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M16-BOUND-ROOT",
+      "claim": "M16 binds a validated repository directory at MCP server startup and exposes no root/path/command/shell authority in MCP tool input schemas.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "mcp/server.go"
+      ],
+      "tests": [
+        "mcp/server_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M16-VERIFY-ERROR",
+      "claim": "M16 reports deterministic verification domain failure as MCP tool error while retaining the structured verification result; it does not add mutation authority.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "mcp/server.go",
+        "internal/verification/verification.go"
+      ],
+      "tests": [
+        "mcp/server_test.go"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": [],
