@@ -65,10 +65,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
+      "evidence": "Governance Bootstrap run 36373403943 at final branch SHA 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 completed success after generated M16 Project Truth and sequence synchronization; all temporary synchronization workflows were absent from that exact tree.",
       "id": "M16-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
