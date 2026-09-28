@@ -77,15 +77,15 @@
       "status": "PASS"
     },
     {
+      "evidence": "RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three OSes; fresh-main hardening candidate c71ad68ce32da1f871d0d4cfa46600e3abc60282 passed M16 Thin MCP run 36381377804 on all three OSes.",
       "id": "M16-HARDENING-CONTRACT-PAYLOAD",
       "requirement": "doctorcode_verify must fail closed for encoded verification contracts larger than 1 MiB, matching the CLI contract-file limit.",
-      "evidence": "RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three OSes; fresh-main hardening candidate c71ad68ce32da1f871d0d4cfa46600e3abc60282 passed M16 Thin MCP run 36381377804 on all three OSes.",
       "status": "PASS"
     },
     {
+      "evidence": "M16 Thin MCP run 36381377804 at c71ad68ce32da1f871d0d4cfa46600e3abc60282 passed the go mod tidy plus git diff --exit-code lock gate on Linux, Windows, and macOS.",
       "id": "M16-HARDENING-DEPENDENCY-LOCK",
       "requirement": "MCP dependency resolution must leave committed go.mod and go.sum unchanged before test, vet, and build.",
-      "evidence": "M16 Thin MCP run 36381377804 at c71ad68ce32da1f871d0d4cfa46600e3abc60282 passed the go mod tidy plus git diff --exit-code lock gate on Linux, Windows, and macOS.",
       "status": "PASS"
     }
   ],
@@ -127,7 +127,7 @@
     "DOC_TEST_TRACEABILITY": "PASS",
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
-    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "PROJECT_DOCS_SYNC": "PASS",
     "PROJECT_STATE_SYNC": "NOT_PROVEN",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",

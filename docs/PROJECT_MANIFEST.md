@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m16-mcp-hardening
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: 27aabb5fd5178244944ab20c1273634a7f540cecdedcbf112761e806edd64b83
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

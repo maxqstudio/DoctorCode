@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M16 MCP hardening amendment
+
+Type: development
+
+- Bounded encoded doctorcode_verify contracts to 1 MiB, matching the CLI contract-file limit.
+- Added a schema-valid oversized-contract regression test with three-OS RED evidence.
+- Required go mod tidy to leave mcp/go.mod and mcp/go.sum unchanged before MCP test/vet/build.
+- Revalidated Core, M10, M07, M06, Real World Go, and M16 MCP on Linux, Windows, and macOS from governance-normalized M16 main.
+
 ## 2026-09-28 — M16 main accepted baseline
 
 Type: acceptance

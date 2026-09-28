@@ -8,15 +8,15 @@ Governance profile: strict
 
 ## Current phase
 Phase: M16_THIN_MCP_ADAPTER
-Status: M16_MAIN_ACCEPTED
+Status: M16_HARDENING_VALIDATING
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m16-mcp-hardening
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
 Current candidate SHA: external final acceptance evidence
-Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
+Current source digest: 27aabb5fd5178244944ab20c1273634a7f540cecdedcbf112761e806edd64b83
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -54,6 +54,9 @@ SEQUENCE_SYNC: PASS
 - Exact M16 main Governance Bootstrap run 36374601756 completed success.
 - Exact M16 main Core CI run 36374601764 and M16 Thin MCP run 36374601767 completed success on ubuntu-latest, windows-latest, and macos-latest.
 - Exact M16 main M10 Python labels run 36374601762, M07 Python Real World run 36374601774, M06 Go labels run 36374601733, and Real World Go run 36374601755 completed success on all three operating systems.
+- M16 contract-size RED run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on Linux, Windows, and macOS because a schema-valid verification contract larger than 1 MiB was accepted by MCP transport.
+- M16 hardening candidate c71ad68ce32da1f871d0d4cfa46600e3abc60282 applies only the verification-contract size bound, its regression test, and dependency-lock cleanliness gate on top of governance-normalized M16 main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
+- At c71ad68ce32da1f871d0d4cfa46600e3abc60282, M16 Thin MCP 36381377804, Core CI 36381377801, M10 Python labels 36381377776, M07 Python Real World 36381377772, M06 Go labels 36381377869, and Real World Go 36381377773 all passed on Linux, Windows, and macOS.
 
 ## Not proven
 - M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
@@ -70,10 +73,10 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Proceed to M17 Release and Install Hardening under the Owner directive to continue until DoctorCode is complete.
-- Branch M17 only from the governance-normalized M16 main after exact closure acceptance.
-- Package doctorcode and doctorcode-mcp for Linux, Windows, and macOS with deterministic version metadata, checksums, install documentation, and artifact smoke verification.
-- Preserve M16 product acceptance at 2e76c9e635a8a68507fea9d44438f74e96d8e754 and exact post-merge evidence as immutable historical evidence.
+- Synchronize M16 hardening Project Truth and rerun strict governance on the exact branch tree.
+- Merge FINAL_ACCEPTED M16 hardening amendment to protected main through pull request.
+- Rerun all applicable acceptance lanes on the exact hardening main merge SHA.
+- Only after the hardening amendment is MAIN_ACCEPTED, synchronize the existing M17 branch to the new main baseline and continue release/install hardening.
 
 ## Explicitly blocked
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
@@ -81,3 +84,4 @@ See KNOWN_DEFECTS.md.
 - Adding arbitrary repository command execution to MCP verification authority.
 - Claiming remote/network MCP support from the local stdio acceptance evidence.
 - Publishing a public release tag before M17 release artifacts and install smoke tests are FINAL_ACCEPTED.
+- Do not continue M17 release/install implementation from the pre-hardening M16 baseline.
