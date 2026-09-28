@@ -2,6 +2,25 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M15 Thin Skill Adapter accepted baseline
+
+Type: acceptance
+
+- Accepted the self-contained DoctorCode Agent Skill as an orchestration-only adapter.
+- Accepted pre-repair contract capture and post-repair deterministic verification as mandatory skill workflow order.
+- Accepted cross-platform skill contract validation including Windows CRLF checkout behavior.
+- Preserved every previously accepted Linux, Windows, and macOS product/regression lane.
+- Kept binary installation, MCP transport, safe deletion, and automatic mutation outside M15 authority.
+
+## 2026-09-28 — M15 Thin Skill Adapter candidate
+
+Type: development
+
+- Added self-contained skills/doctorcode/SKILL.md with Agent Skills frontmatter and bounded DoctorCode workflow.
+- Kept detector, context, verification, mutation, and repository-command execution authority out of the adapter.
+- Added cross-platform contract tests and repaired Windows CRLF sensitivity in the test itself.
+- Preserved every accepted Linux, Windows, and macOS regression lane.
+
 ## 2026-09-28 — Skill Workflow authority 1f9b48b sync
 
 Type: governance

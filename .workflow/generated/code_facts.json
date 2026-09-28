@@ -902,6 +902,13 @@
       "lines": 27
     },
     {
+      "directory": "internal/skilladapter",
+      "file": "internal/skilladapter/skill_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 69
+    },
+    {
       "directory": "internal/toolchain",
       "file": "internal/toolchain/toolchain.go",
       "is_test": false,
@@ -1712,14 +1719,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2",
+  "source_digest": "ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d",
   "source_summary": {
-    "files": 131,
+    "files": 132,
     "languages": {
-      "Go": 76,
+      "Go": 77,
       "Python": 55
     },
-    "lines": 5930,
+    "lines": 5999,
     "test_files": 2
   },
   "tests": [

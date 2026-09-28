@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 131 files, 2 language categories.
+Observed source inventory: 132 files, 2 language categories.
 
 ## Major components
 
@@ -46,6 +46,7 @@ Observed source inventory: 131 files, 2 language categories.
 | Python Built-in Analyzer | Provide deliberately narrow Python 3 semantic rules using the host standard-library ast parser with fail-closed parsing and conservative repository-aware reference evidence. | Python AST subprocess adapter, five conservative Python rules, parse-error boundary, optional-runtime detection, candidate/module-aware private-function usage evidence, recognized dynamic/export liveness guards, conventional src-layout module aliases, direct module-level re-export propagation, dotted imported-module attribute resolution, bounded scope-aware related-reference discovery for module-level functions | host Python 3.8+ standard library ast, detector unavailable contract |
 | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 | Deterministic Verification Contract | Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands. | semantic target occurrence baseline, analyzer-set compatibility check, target-path regression delta, verification PASS/FAIL result | detector engine |
+| Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
 
 ## Main data flow
 
@@ -76,6 +77,8 @@ Observed source inventory: 131 files, 2 language categories.
 - detector engine -> Deterministic Verification Contract: Before repair, doctorcode contract freezes analyzer identities plus target-path semantic finding counts for one exact selected finding.
 - repaired repository -> detector engine: doctorcode verify performs a fresh deterministic audit of the current repository state without executing repository-provided commands.
 - Deterministic Verification Contract -> human or AI coding agent: Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.
+- coding agent -> Thin Agent Skill Adapter: The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence.
+- Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
 
 ## Main user workflows
 
@@ -228,11 +231,24 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 - WALKING -> CLASSIFYING : Classify recognized source files.
 - CLASSIFYING -> REPORTED : Sort language names and emit text or JSON.
 
+### FLOW-THIN-SKILL-ADAPTER — Agent-guided DoctorCode repair lifecycle
+
+Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.
+
+Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
+
+- AUDITED -> FINDING_SELECTED : Select one exact current deterministic finding.
+- FINDING_SELECTED -> CONTEXT_BOUNDED : Request a bounded context packet for the exact finding ID.
+- CONTEXT_BOUNDED -> CONTRACT_FROZEN : Capture the verification contract before source mutation.
+- CONTRACT_FROZEN -> REPAIR_APPLIED : Apply the smallest evidence-supported source repair under project authority.
+- REPAIR_APPLIED -> VERIFIED : Run DoctorCode verify against the frozen contract.
+- VERIFIED -> EVIDENCE_REPORTED : Report DoctorCode evidence separately from project-specific runtime or test evidence.
+
 ## Lifecycle and state
 
-Current phase: M14_DETERMINISTIC_VERIFICATION_CONTRACT
+Current phase: M15_THIN_SKILL_ADAPTER
 
-Current status: M14_MAIN_ACCEPTED
+Current status: M15_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -279,20 +295,21 @@ compiler does not infer them from implementation names.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
+- FLOW-THIN-SKILL-ADAPTER: Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around.
 
 ## Current project state
 
 Next authorized actions:
-- Proceed to M15 Thin Skill Adapter under the Owner directive to continue until DoctorCode is complete.
-- Branch M15 only from the governance-normalized M14 main after exact closure acceptance.
-- Keep the Skill adapter thin: all detection, context, and verification authority remains in the DoctorCode CLI/core.
-- Preserve M14 product acceptance at 6952187538ffa4a6f3f149db440d1f6f6960ba61 and its exact post-merge evidence as immutable historical evidence.
+- Run final exact-SHA acceptance on the finalized M15 branch tree with no temporary workflow present.
+- Open and merge the FINAL_ACCEPTED M15 pull request through protected main.
+- Rerun Governance Bootstrap, Core CI, and every accepted real-world lane on the exact main merge SHA.
+- After M15_MAIN_ACCEPTED, proceed to the next adapter/release milestone declared by governance.
 
 Blocked actions:
-- Duplicating DoctorCode detector, context, or verification logic inside a Skill adapter.
-- Executing arbitrary repository-provided commands as DoctorCode authority.
-- Treating M14 verification as safe-delete or automatic-repair authority.
-- Claiming required status-check contexts are enforced by the GitHub ruleset while its required-status-check list remains empty.
+- Duplicating detector, related-context, or verification algorithms inside the skill.
+- Treating skill prose as stronger authority than DoctorCode CLI output.
+- Executing arbitrary repository-provided commands as DoctorCode verification authority.
+- Adding MCP transport behavior inside the M15 Skill adapter.
 
 Known blockers:
 - None declared.
@@ -301,39 +318,26 @@ Known blockers:
 
 ### Proven
 
-- M13 is MAIN_ACCEPTED with product baseline main@3fccbd4398f2a12bd5214be9ed23ee18f46c679c and governance-normalized starting main@79ff0ac95b3274e67b70f5dc2cda79360ed2d00a.
-- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720; DoctorCode vendors its deterministic LF Project Truth sync and matching STRICT selftest.
-- M14 initial RED Core CI run 36328542441 at d189c1496a2bc1ef016ca47f1f7e4d204397150c failed because BuildContract and Verify did not yet exist.
-- M14 contract-integrity RED Core CI run 36328795881 at 4f145e7900a305dec4a2d277aa6dbd517fba66c0 proved a tampered target_baseline_count could otherwise be accepted.
-- M14 verification contracts match targets by stable semantic key rule_id + path + summary and baseline occurrence count instead of exact line-bound finding ID.
-- M14 verification fails closed when the active analyzer set differs from the contract baseline.
-- M14 verification blocks target resolution when a new finding with severity equal to or higher than the target appears on the target path.
-- M14 contract metadata is checked against its baseline target semantic key for count and severity consistency.
-- M14 never executes repository-provided build, test, shell, hook, or verification command strings.
-- M14 product candidate 776bb6467fcc55f4c7192ef06aa07c5469102520 passed Core CI run 36328881587 on Linux, Windows, and macOS, including public CLI negative and positive verification paths.
-- At the same product candidate, M10 Python labels 36328881697, M07 Python Real World 36328881562, M06 Go labels 36328881607, and Real World Go 36328881558 passed on all three operating systems.
-- Final synchronized M14 branch tree 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed Governance Bootstrap run 36329506408.
-- Core CI run 36329506410 at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70 passed on ubuntu-latest, windows-latest, and macos-latest, including deterministic verification negative and positive E2E paths.
-- M10 Python labels run 36329506427, M07 Python Real World run 36329506385, M06 Go labels run 36329506403, and Real World Go run 36329506404 all passed on Linux, Windows, and macOS at 1c05cc6c5d7d5095fc29ce2bd7a56fdf92dc4b70.
-- M14 Deterministic Verification Contract merged through PR #13 to main at 6952187538ffa4a6f3f149db440d1f6f6960ba61.
-- Exact M14 product main Governance Bootstrap run 36329987778 completed success.
-- Exact M14 product main Core CI run 36329987823 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M14 product main M10 Labeled Real World Python run 36329987784 completed success on all three operating systems.
-- Exact M14 product main M07 Python Real World run 36329987819 completed success on all three operating systems.
-- Exact M14 product main M06 Labeled Real World Go run 36329987822 completed success on all three operating systems.
-- Exact M14 product main Real World Go Validation run 36329987965 completed success on all three operating systems.
-- GitHub main branch protection is ACTIVE through repository ruleset 24089721 ('protection'): default branch deletion and non-fast-forward updates are blocked, pull requests are required, review threads must be resolved, and no bypass actor is configured.
+- M14 is MAIN_ACCEPTED with product baseline main@6952187538ffa4a6f3f149db440d1f6f6960ba61 and governance-normalized main@4ab4190f98bcc823f4869d777ad8ba66e701c3cd.
+- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720 and DoctorCode vendors its deterministic-LF Project Truth sync plus matching STRICT selftest.
+- M15 branches from protected main@86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198 after the Skill_Workflow authority prerequisite merged and its post-merge acceptance passed.
+- M15 RED Core CI run 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not yet exist.
+- M15 first implementation Core CI run 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc exposed a Windows-only CRLF-sensitive skill contract test while Ubuntu and macOS passed.
+- M15 portable product candidate 4e67e558baa7353725052fc0cd9a62e65e99b426 passed Core CI 36368008963 on Linux, Windows, and macOS after newline-normalizing only the acceptance test.
+- At the same product candidate, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 passed on all three operating systems.
+- The DoctorCode skill is self-contained at skills/doctorcode/SKILL.md, stays under 500 lines, and orchestrates existing CLI commands instead of owning detector, context, or verification logic.
+- The skill requires audit -> context -> pre-repair contract -> bounded repair -> verify and preserves safe_autofix=false plus static-evidence limitations.
+- Final synchronized M15 branch tree b32938e13c1de97138edd09b0374bceb51d60b01 passed Governance Bootstrap run 36368457969.
+- Core CI run 36368457929 at b32938e13c1de97138edd09b0374bceb51d60b01 passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36368457958, M07 Python Real World run 36368457921, M06 Go labels run 36368457994, and Real World Go run 36368457915 all passed on Linux, Windows, and macOS at b32938e13c1de97138edd09b0374bceb51d60b01.
 
 ### Not proven
 
-- M14 semantic identity is rule_id + path + summary + occurrence count; it does not prove exact AST-node identity across arbitrary rewrites.
-- M14 regression comparison is intentionally scoped to the selected finding path, not the entire repository or related-context files.
-- New findings below the target severity do not block M14 PASS, although they remain visible in a normal audit.
-- M14 contract JSON is strict and self-consistent but is not cryptographically signed or authenticated against a malicious editor.
-- M14 analyzer-set equality detects missing or added analyzer identities, but it does not cryptographically attest analyzer implementation bytes.
-- M14 PASS proves the declared analyzer finding count decreased without same-or-higher-severity target-file regression; it does not prove full behavioral correctness.
-- M14 does not execute repository tests, build scripts, package hooks, shell commands, or Finding.Verification strings.
-- M14 does not authorize safe deletion, automatic repair, or mutation.
+- M15 does not prove that every third-party agent runtime implements the Agent Skills convention identically.
+- M15 does not install DoctorCode binaries or manage PATH; release/install packaging remains a later milestone.
+- M15 does not add an MCP server or transport.
+- M15 does not execute project tests or runtime checks as DoctorCode authority.
+- The skill cannot enlarge the proof boundaries of the underlying CLI/core.
 
 ## Important limitations
 

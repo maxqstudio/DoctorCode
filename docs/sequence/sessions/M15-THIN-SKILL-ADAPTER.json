@@ -1,15 +1,15 @@
 {
   "acceptance_report": "",
   "actual": {
-    "diagram": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.mmd",
+    "diagram": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.mmd",
     "entries": [],
-    "graph": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.json",
+    "graph": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.json",
     "source_digest": ""
   },
   "critical": false,
-  "implementation_base_sha": "79ff0ac95b3274e67b70f5dc2cda79360ed2d00a",
+  "implementation_base_sha": "86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198",
   "mode": "DURING",
-  "phase": "M14_DETERMINISTIC_VERIFICATION_CONTRACT",
+  "phase": "M15_THIN_SKILL_ADAPTER",
   "plan": {
     "contract": "",
     "diagram": "",
@@ -23,13 +23,12 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "HISTORICAL",
-  "session_id": "M14-DETERMINISTIC-VERIFICATION",
+  "scope": "CURRENT",
+  "session_id": "M15-THIN-SKILL-ADAPTER",
   "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
-    "internal/verification/verification_test.go",
-    "cmd/doctorcode/main_test.go",
+    "internal/skilladapter/skill_test.go",
     ".github/workflows/ci.yml"
   ]
 }

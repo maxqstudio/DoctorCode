@@ -592,3 +592,52 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 ### Rollback behavior
 
 - No persistent repository mutation occurs during scan.
+
+## FLOW-THIN-SKILL-ADAPTER — Agent-guided DoctorCode repair lifecycle
+
+Purpose: Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.
+Critical: FALSE
+Entry condition: An agent or human chooses to use DoctorCode for diagnosis or repair evidence.
+Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
+
+### States
+
+- AUDITED
+- FINDING_SELECTED
+- CONTEXT_BOUNDED
+- CONTRACT_FROZEN
+- REPAIR_APPLIED
+- VERIFIED
+- EVIDENCE_REPORTED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| AUDITED | FINDING_SELECTED | Select one exact current deterministic finding. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core |  |
+| FINDING_SELECTED | CONTEXT_BOUNDED | Request a bounded context packet for the exact finding ID. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core |  |
+| CONTEXT_BOUNDED | CONTRACT_FROZEN | Capture the verification contract before source mutation. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core | writes caller-selected contract file |
+| CONTRACT_FROZEN | REPAIR_APPLIED | Apply the smallest evidence-supported source repair under project authority. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core | source mutation is performed by the human or agent, not DoctorCode |
+| REPAIR_APPLIED | VERIFIED | Run DoctorCode verify against the frozen contract. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core |  |
+| VERIFIED | EVIDENCE_REPORTED | Report DoctorCode evidence separately from project-specific runtime or test evidence. | skills/doctorcode/SKILL.md plus DoctorCode CLI/core |  |
+
+### Invariants
+
+- The skill never creates findings independently of the CLI.
+- The verification contract is captured before repair.
+- safe_autofix=false never becomes mutation authority.
+- Zero conservative references never prove safe deletion.
+- Repository-provided commands are not DoctorCode verification authority.
+- DoctorCode verification PASS is narrower than runtime correctness.
+
+### Failure behavior
+
+- Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around.
+
+### Restart behavior
+
+- Re-audit current source, select the current finding, and capture a fresh contract before a new repair attempt.
+
+### Rollback behavior
+
+- Removing the skill returns DoctorCode to direct CLI usage without changing core behavior.

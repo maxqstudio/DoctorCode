@@ -385,3 +385,27 @@ Status: ACCEPTED
 M14 verification uses a fresh DoctorCode audit only; repository-provided tests, builds, shell commands, hooks, and Finding.Verification strings are never executed as verification authority.
 
 Rationale: Analyzed repositories are untrusted input and command execution would cross the established read-only analysis boundary.
+
+## ADR-M15-001 — Keep the Agent Skill orchestration-only
+
+Status: ACCEPTED
+
+M15 ships one self-contained SKILL.md that sequences existing DoctorCode CLI operations and carries no detector, context, or verifier implementation.
+
+Rationale: A second implementation in prose or scripts would drift from deterministic core authority and make agent behavior model-dependent.
+
+## ADR-M15-002 — Freeze verification before repair in the skill workflow
+
+Status: ACCEPTED
+
+The skill requires doctorcode contract before any repair edit and doctorcode verify after the edit.
+
+Rationale: M14 verification needs a genuine pre-repair baseline; creating the contract after mutation destroys that evidence.
+
+## ADR-M15-003 — Keep repository execution outside DoctorCode skill authority
+
+Status: ACCEPTED
+
+Project tests and runtime checks may be run only under project-specific trust/governance and remain separate evidence from DoctorCode verification.
+
+Rationale: DoctorCode analyzes arbitrary repositories as untrusted input and must not turn repository-provided command strings into execution authority.

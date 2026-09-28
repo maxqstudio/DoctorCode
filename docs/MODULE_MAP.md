@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 0d9b18dfdf12f32ed5d238669c84845d1b9d1a4a6c854c8f7ae855407c38e6f2
+Source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -135,6 +135,7 @@ Generated/refreshed: current compiler run
 | internal/realworld/realworld_test.go | Go | 128 | internal/realworld | NO |
 | internal/scanner/scanner.go | Go | 46 | internal/scanner | NO |
 | internal/scanner/scanner_test.go | Go | 27 | internal/scanner | NO |
+| internal/skilladapter/skill_test.go | Go | 69 | internal/skilladapter | NO |
 | internal/toolchain/toolchain.go | Go | 68 | internal/toolchain | NO |
 | internal/toolchain/toolchain_test.go | Go | 16 | internal/toolchain | NO |
 | internal/verification/verification.go | Go | 297 | internal/verification | NO |
