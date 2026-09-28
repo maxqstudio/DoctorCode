@@ -20,6 +20,8 @@ Type: acceptance
 - Accepted shared internal/application authority so CLI and MCP do not duplicate detector, context, or verification algorithms.
 - Accepted pinned MCP Go module dependency lock and Linux/Windows/macOS test, vet, and build evidence.
 - Kept remote transports, mutation, safe deletion, repository command execution, and release/install packaging outside M16.
+- Accepted a 1 MiB encoded verification-contract bound matching the CLI contract-file limit.
+- Accepted a clean dependency-lock gate requiring go mod tidy to leave mcp/go.mod and mcp/go.sum unchanged.
 
 ## 2026-09-28 — M16 Thin MCP Adapter candidate
 

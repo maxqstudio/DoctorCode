@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M16_THIN_MCP_ADAPTER
-Status: M16_VALIDATING
+Status: M16_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -54,6 +54,9 @@ SEQUENCE_SYNC: PASS
 - M16 hardened candidate 49224469153a2a681acfb698e9ca1704f29c99d5 rejects encoded MCP verification contracts larger than 1 MiB, matching the existing CLI contract-file bound.
 - M16 Thin MCP run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed on Linux, Windows, and macOS, including dependency-lock cleanliness, tests, vet, and stdio server build.
 - At the same hardened candidate, Core CI 36380093401, M10 Python labels 36380093395, M07 Python Real World 36380093392, M06 Go labels 36380093377, and Real World Go 36380093380 passed on all three operating systems.
+- Final hardened M16 branch tree 992486154ebb329c59eb94b3e7f70b4f0802df2f passed Governance Bootstrap run 36380582912.
+- Core CI run 36380582954 and M16 Thin MCP run 36380582916 at 992486154ebb329c59eb94b3e7f70b4f0802df2f passed on ubuntu-latest, windows-latest, and macos-latest.
+- M10 Python labels run 36380582917, M07 Python Real World run 36380582907, M06 Go labels run 36380582921, and Real World Go run 36380582948 all passed on Linux, Windows, and macOS at 992486154ebb329c59eb94b3e7f70b4f0802df2f.
 
 ## Not proven
 - M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
@@ -70,9 +73,8 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize and validate final hardened M16 Project Truth on the exact branch tree.
-- Run final exact-SHA Governance Bootstrap, Core CI, M16 Thin MCP, and every previously accepted real-world lane.
-- After FINAL_ACCEPTED, merge M16 to protected main through pull request and rerun all applicable acceptance lanes on the exact merge SHA.
+- Merge FINAL_ACCEPTED hardened M16 to protected main through pull request.
+- Rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact main merge SHA.
 - After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening under the Owner directive to continue until DoctorCode is complete.
 
 ## Explicitly blocked
