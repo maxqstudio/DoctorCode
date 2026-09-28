@@ -473,3 +473,11 @@ Status: ACCEPTED
 The permanent release workflow only publishes on v* tags after release build and native install-smoke jobs succeed; Owner workflow will create v0.1.0 only after M17_MAIN_ACCEPTED.
 
 Rationale:
+
+## ADR-M17-005 — Recover publication without moving the immutable tag when GitHub suppresses GITHUB_TOKEN recursion
+
+Status: ACCEPTED
+
+Keep v0.1.0 fixed at the accepted product SHA and use a one-shot recovery publisher that checks out that immutable tag and reruns the same deterministic build, verification, native install-smoke, and GitHub Release publication contract.
+
+Rationale: GitHub does not trigger new workflows from refs created by the repository GITHUB_TOKEN. Deleting or recreating v0.1.0 would violate the immutable-release contract, while a tag-pinned recovery publisher preserves source identity and all substantive release gates.

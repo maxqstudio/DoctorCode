@@ -89,21 +89,21 @@
       "status": "PASS"
     },
     {
+      "evidence": "refs/tags/v0.1.0 readback resolves to commit cd05f064e1bb1054271e7028941c1fbb80ea32aa; tag bootstrap run 36425956853 completed success.",
       "id": "M17-PUBLIC-TAG",
       "requirement": "Public v0.1.0 must be immutable and resolve exactly to the accepted M17 product-main SHA.",
-      "evidence": "refs/tags/v0.1.0 readback resolves to commit cd05f064e1bb1054271e7028941c1fbb80ea32aa; tag bootstrap run 36425956853 completed success.",
       "status": "PASS"
     },
     {
+      "evidence": "GitHub recursion suppression prevented a native tag-trigger run. Recovery run 36426199149 checked out v0.1.0, verified exact SHA, completed build-release, install-smoke on windows-latest/macos-latest/ubuntu-latest, and publish-release with success.",
       "id": "M17-PUBLICATION-RECOVERY",
       "requirement": "If GitHub suppresses recursive tag workflow events created by GITHUB_TOKEN, publication recovery must rebuild from the immutable tag, verify the same release contract, pass native install-smoke on all supported runner OSes, and publish only after those checks pass.",
-      "evidence": "GitHub recursion suppression prevented a native tag-trigger run. Recovery run 36426199149 checked out v0.1.0, verified exact SHA, completed build-release, install-smoke on windows-latest/macos-latest/ubuntu-latest, and publish-release with success.",
       "status": "PASS"
     },
     {
+      "evidence": "GitHub Release 398260613 is public/non-prerelease and contains six platform archives plus checksums.txt and release-manifest.json. Artifact 10971548461 checksums.txt SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace matches the release asset digest; all listed archive/manfiest hashes match GitHub asset digests.",
       "id": "M17-PUBLIC-RELEASE-READBACK",
       "requirement": "Final closure must read back the public release, asset set, and checksums and prove they correspond to the published deterministic bundle.",
-      "evidence": "GitHub Release 398260613 is public/non-prerelease and contains six platform archives plus checksums.txt and release-manifest.json. Artifact 10971548461 checksums.txt SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace matches the release asset digest; all listed archive/manfiest hashes match GitHub asset digests.",
       "status": "PASS"
     }
   ],
