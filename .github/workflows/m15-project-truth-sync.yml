@@ -203,7 +203,7 @@ jobs:
               ],
               "tests":["internal/skilladapter/skill_test.go",".github/workflows/ci.yml"],
               "sequence_session":"M15-THIN-SKILL-ADAPTER",
-              "critical":false,
+              "critical":False,
               "failure_behavior":["Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around."],
               "restart_behavior":["Re-audit current source, select the current finding, and capture a fresh contract before a new repair attempt."],
               "rollback_behavior":["Removing the skill returns DoctorCode to direct CLI usage without changing core behavior."]
