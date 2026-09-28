@@ -53,7 +53,6 @@ func TestMCPRepairWorkflowUsesBoundStartupRoot(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	ctx := context.Background()
 	session := connectTestClient(t, root)
 	defer session.Close()
 
@@ -120,7 +119,6 @@ func TestMCPVerifyMarksDomainFailureAsToolError(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	ctx := context.Background()
 	session := connectTestClient(t, root)
 	defer session.Close()
 
