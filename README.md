@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M12 Go Related Context is accepted on main at 368c7b05d08d95beb5164d437920bbdd83c39e32.** Go and Python semantic coverage remain deliberately narrow; synthetic corpus metrics, adversarial and repository-shaped regression evidence, unlabeled compatibility evidence, and bounded real-world labels are kept separate.
+**M16 Thin MCP Adapter is validating on `work/m16-thin-mcp-adapter` from governance-normalized M15 main.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
@@ -359,3 +359,10 @@ DoctorCode does not run repository tests, builds, shell commands, hooks, or advi
 
 DoctorCode ships a self-contained agent skill at `skills/doctorcode/SKILL.md`. The skill is orchestration-only: it guides agents through `audit -> context -> contract -> repair -> verify` while the CLI/core remains the sole detector, evidence, and verification authority. It preserves `safe_autofix=false`, zero-reference uncertainty, and the rule that repository-provided commands are not DoctorCode verification authority.
 
+### M16 thin MCP adapter
+
+DoctorCode includes an isolated `mcp/` Go module and a local stdio entrypoint at `mcp/cmd/doctorcode-mcp`. The server exposes exactly four read-only tools: `doctorcode_audit`, `doctorcode_context`, `doctorcode_contract`, and `doctorcode_verify`. The repository root is resolved once when the server starts; tool schemas cannot select a different root/path or request arbitrary command execution.
+
+CLI and MCP share `internal/application` for audit, context, contract, and verify. The MCP layer contains transport validation and result translation only; detector, evidence, and verification algorithms remain in the existing core. Deterministic verification failures are returned as MCP tool errors while retaining structured verification evidence.
+
+M16 proves the local stdio transport on Linux, Windows, and macOS. Remote/network transports, authentication, source mutation, safe deletion, arbitrary repository commands, and release/install packaging are not claimed by this milestone.

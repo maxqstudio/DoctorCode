@@ -3,12 +3,12 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
+Source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 552 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 537 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 129 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
@@ -21,6 +21,8 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
+| internal/application/application.go | Go | 64 | internal/application | NO |
+| internal/application/application_test.go | Go | 71 | internal/application | NO |
 | internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
 | internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
@@ -140,5 +142,8 @@ Generated/refreshed: current compiler run
 | internal/toolchain/toolchain_test.go | Go | 16 | internal/toolchain | NO |
 | internal/verification/verification.go | Go | 297 | internal/verification | NO |
 | internal/verification/verification_test.go | Go | 113 | internal/verification | NO |
+| mcp/cmd/doctorcode-mcp/main.go | Go | 34 | mcp/cmd/doctorcode-mcp | NO |
+| mcp/server.go | Go | 223 | mcp | NO |
+| mcp/server_test.go | Go | 208 | mcp | NO |
 
 Machine-derived facts do not invent semantic ownership.

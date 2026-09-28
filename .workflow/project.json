@@ -51,6 +51,11 @@
       "name": "DoctorCode agent skill",
       "path": "skills/doctorcode/SKILL.md",
       "purpose": "Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic."
+    },
+    {
+      "name": "doctorcode-mcp",
+      "path": "mcp/cmd/doctorcode-mcp/main.go",
+      "purpose": "Run the thin local stdio MCP adapter bound to one repository root."
     }
   ],
   "project": {
@@ -74,9 +79,12 @@
   "technology": {
     "external_systems": [
       "GitHub Actions",
-      "host compilers and language runtimes"
+      "host compilers and language runtimes",
+      "local MCP stdio clients"
     ],
-    "frameworks": [],
+    "frameworks": [
+      "Model Context Protocol Go SDK"
+    ],
     "languages": [
       "Go",
       "Python"

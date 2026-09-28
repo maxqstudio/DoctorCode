@@ -12,6 +12,7 @@ import (
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
+	"github.com/maxqstudio/DoctorCode/internal/application"
 	"github.com/maxqstudio/DoctorCode/internal/benchmark"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/engine"
@@ -113,7 +114,7 @@ func runAudit(args []string) {
 	if err != nil {
 		die(err)
 	}
-	result, err := engine.Default().Audit(context.Background(), root)
+	result, err := application.Audit(context.Background(), root)
 	if err != nil {
 		die(fmt.Errorf("audit failed: %w", err))
 	}
@@ -216,17 +217,9 @@ func runContext(args []string) {
 		die(err)
 	}
 
-	result, err := engine.Default().Audit(context.Background(), root)
+	packet, err := application.Context(context.Background(), root, findingID, maxBytes)
 	if err != nil {
-		die(fmt.Errorf("audit failed: %w", err))
-	}
-	finding, ok := findFindingByID(result.Findings, findingID)
-	if !ok {
-		die(fmt.Errorf("finding %q not found", findingID))
-	}
-	packet, err := evidence.Build(result.Root, finding, maxBytes)
-	if err != nil {
-		die(fmt.Errorf("build evidence packet: %w", err))
+		die(err)
 	}
 	if asJSON {
 		writeJSON(packet)
@@ -295,13 +288,9 @@ func runContract(args []string) {
 		die(err)
 	}
 
-	result, err := engine.Default().Audit(context.Background(), root)
+	contract, err := application.Contract(context.Background(), root, findingID)
 	if err != nil {
-		die(fmt.Errorf("audit failed: %w", err))
-	}
-	contract, err := verification.BuildContract(result, findingID)
-	if err != nil {
-		die(fmt.Errorf("build verification contract: %w", err))
+		die(err)
 	}
 
 	if asJSON {
@@ -326,13 +315,9 @@ func runVerify(args []string) {
 	if err != nil {
 		die(fmt.Errorf("read verification contract: %w", err))
 	}
-	current, err := engine.Default().Audit(context.Background(), root)
+	result, err := application.Verify(context.Background(), root, contract)
 	if err != nil {
-		die(fmt.Errorf("audit failed: %w", err))
-	}
-	result, err := verification.Verify(contract, current)
-	if err != nil {
-		die(fmt.Errorf("verify contract: %w", err))
+		die(err)
 	}
 
 	if asJSON {

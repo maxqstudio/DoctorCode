@@ -17,7 +17,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 552
+      "lines": 537
     },
     {
       "directory": "cmd/doctorcode",
@@ -102,6 +102,20 @@
       "is_test": false,
       "language": "Go",
       "lines": 74
+    },
+    {
+      "directory": "internal/application",
+      "file": "internal/application/application.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 64
+    },
+    {
+      "directory": "internal/application",
+      "file": "internal/application/application_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 71
     },
     {
       "directory": "internal/benchmark",
@@ -935,6 +949,27 @@
       "is_test": false,
       "language": "Go",
       "lines": 113
+    },
+    {
+      "directory": "mcp/cmd/doctorcode-mcp",
+      "file": "mcp/cmd/doctorcode-mcp/main.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 34
+    },
+    {
+      "directory": "mcp",
+      "file": "mcp/server.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 223
+    },
+    {
+      "directory": "mcp",
+      "file": "mcp/server_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 208
     }
   ],
   "python_calls": [
@@ -1719,14 +1754,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d",
+  "source_digest": "64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9",
   "source_summary": {
-    "files": 132,
+    "files": 137,
     "languages": {
-      "Go": 77,
+      "Go": 82,
       "Python": 55
     },
-    "lines": 5999,
+    "lines": 6584,
     "test_files": 2
   },
   "tests": [

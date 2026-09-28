@@ -2,13 +2,13 @@
 
 # ARCHITECTURE
 
-Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
+Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
 ## Components
 
 | ID | Component | Purpose | Owns | Depends On |
 |---|---|---|---|---|
-| cli | CLI | Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations. | command parsing, text and JSON rendering, verification contract serialization, verification result rendering | scanner, toolchain registry, detector engine, evidence reducer |
+| cli | CLI | Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations. | command parsing, text and JSON rendering, verification contract serialization, verification result rendering | scanner, toolchain registry, detector engine, evidence reducer, Shared Application Facade |
 | scanner | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | language_registry | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | toolchain_registry | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
@@ -22,6 +22,8 @@ Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912a
 | python_realworld_validation | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 | verification_contract | Deterministic Verification Contract | Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands. | semantic target occurrence baseline, analyzer-set compatibility check, target-path regression delta, verification PASS/FAIL result | detector engine |
 | skill_adapter | Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
+| application_facade | Shared Application Facade | Expose audit, bounded context, pre-repair contract, and deterministic verify as one transport-neutral application surface. | Audit, Context, Contract, Verify orchestration | detector engine, evidence reducer, Deterministic Verification Contract |
+| mcp_adapter | Thin MCP Adapter | Expose the shared DoctorCode application facade as four read-only bounded MCP tools over local stdio. | startup root binding, MCP tool schemas, stdio server entrypoint, MCP result/error translation | Shared Application Facade, modelcontextprotocol/go-sdk |
 
 ## Data flow
 
@@ -54,6 +56,8 @@ Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912a
 - Deterministic Verification Contract -> human or AI coding agent: Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.
 - coding agent -> Thin Agent Skill Adapter: The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence.
 - Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
+- MCP client -> Thin MCP Adapter: A client invokes one of four bounded read-only DoctorCode tools; repository scope is fixed when the server starts.
+- Thin MCP Adapter -> Shared Application Facade: The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI.
 
 ## External boundaries
 
@@ -69,12 +73,13 @@ Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912a
 - Python related-context boundary: M13 follows only module-level functions, same-file unshadowed direct references, and recognized top-level import forms. Dynamic imports, package-facade re-export chains, string reflection, runtime monkey-patching, and transitive graphs are not claimed; selected-name module rebinding fails closed.
 - Verification execution boundary: M14 never executes repository-provided test, build, shell, hook, or Finding.Verification command strings. Verification authority is a fresh DoctorCode deterministic audit plus the frozen contract only.
 - Skill adapter authority boundary: Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results.
+- MCP transport boundary: M16 proves local stdio transport only. Tool schemas cannot select repository root/path or execute arbitrary commands; all four tools are read-only and preserve underlying DoctorCode proof boundaries.
 
 ## Observed implementation inventory
 
-Source files: 132
-Source lines: 5999
-Languages: Go=77, Python=55
+Source files: 137
+Source lines: 6584
+Languages: Go=82, Python=55
 
 Structural facts come from the code extractor. Component meaning comes from
 .workflow/architecture.json.
