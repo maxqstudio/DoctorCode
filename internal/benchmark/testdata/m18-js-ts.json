@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "language": "JavaScript / TypeScript",
+  "thresholds": {
+    "min_precision": 1.0,
+    "min_recall": 1.0
+  },
+  "cases": [
+    {
+      "name": "javascript-all-positive",
+      "root": "m18-js-ts/javascript-all-positive",
+      "expected": [
+        {"rule_id":"JS-SIMPLIFY-BOOL-RETURN","path":"sample.js","line_start":1},
+        {"rule_id":"JS-SEC-HARDCODED-CREDENTIAL","path":"sample.js","line_start":9}
+      ]
+    },
+    {
+      "name": "typescript-all-positive",
+      "root": "m18-js-ts/typescript-all-positive",
+      "expected": [
+        {"rule_id":"JS-SIMPLIFY-BOOL-RETURN","path":"sample.ts","line_start":1},
+        {"rule_id":"JS-SEC-HARDCODED-CREDENTIAL","path":"sample.ts","line_start":9}
+      ]
+    },
+    {
+      "name": "conservative-negative",
+      "root": "m18-js-ts/conservative-negative",
+      "expected": []
+    }
+  ]
+}
