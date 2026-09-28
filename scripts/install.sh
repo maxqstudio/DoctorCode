@@ -90,7 +90,9 @@ else
   exit 1
 fi
 
-if [[ "${actual,,}" != "${expected,,}" ]]; then
+actual_lower="$(printf '%s' "$actual" | tr '[:upper:]' '[:lower:]')"
+expected_lower="$(printf '%s' "$expected" | tr '[:upper:]' '[:lower:]')"
+if [[ "$actual_lower" != "$expected_lower" ]]; then
   echo "SHA-256 mismatch for $filename" >&2
   exit 1
 fi
