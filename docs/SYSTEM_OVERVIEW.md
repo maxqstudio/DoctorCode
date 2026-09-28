@@ -27,13 +27,13 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 132 files, 2 language categories.
+Observed source inventory: 137 files, 2 language categories.
 
 ## Major components
 
 | Component | Purpose | Owns / Decides | Depends On |
 |---|---|---|---|
-| CLI | Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations. | command parsing, text and JSON rendering, verification contract serialization, verification result rendering | scanner, toolchain registry, detector engine, evidence reducer |
+| CLI | Human/agent interface for scan, toolchain, audit, bounded context, deterministic verification contract, verification result, and benchmark operations. | command parsing, text and JSON rendering, verification contract serialization, verification result rendering | scanner, toolchain registry, detector engine, evidence reducer, Shared Application Facade |
 | Repository Scanner | Walk repository content deterministically while excluding common generated/dependency directories. | file inventory, language counts | language registry |
 | Language Registry | Map source extensions to language identities without semantic-analysis claims. | language identity |  |
 | Toolchain Registry | Detect compilers/runtimes and project manifests conservatively. | host capability observation |  |
@@ -47,6 +47,8 @@ Observed source inventory: 132 files, 2 language categories.
 | Pinned Public Python Validator | Run the Python analyzer against exact-SHA public Python repositories and enforce provenance, parser completeness, finding safety boundaries, and bounded reviewed anchors. | M07 public source manifest, exact checkout SHA validation, Flask bounded positive anchor, public Python finding safety boundary | Python analyzer, GitHub Actions, Python 3.13 acceptance runtime |
 | Deterministic Verification Contract | Freeze one pre-repair analyzer finding baseline and verify post-repair analyzer-visible resolution without executing repository commands. | semantic target occurrence baseline, analyzer-set compatibility check, target-path regression delta, verification PASS/FAIL result | detector engine |
 | Thin Agent Skill Adapter | Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core. | skills/doctorcode/SKILL.md orchestration contract | CLI |
+| Shared Application Facade | Expose audit, bounded context, pre-repair contract, and deterministic verify as one transport-neutral application surface. | Audit, Context, Contract, Verify orchestration | detector engine, evidence reducer, Deterministic Verification Contract |
+| Thin MCP Adapter | Expose the shared DoctorCode application facade as four read-only bounded MCP tools over local stdio. | startup root binding, MCP tool schemas, stdio server entrypoint, MCP result/error translation | Shared Application Facade, modelcontextprotocol/go-sdk |
 
 ## Main data flow
 
@@ -79,6 +81,8 @@ Observed source inventory: 132 files, 2 language categories.
 - Deterministic Verification Contract -> human or AI coding agent: Verification reports PASS only when the semantic target occurrence count decreases and no same-or-higher-severity target-path regression is introduced.
 - coding agent -> Thin Agent Skill Adapter: The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence.
 - Thin Agent Skill Adapter -> CLI: The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.
+- MCP client -> Thin MCP Adapter: A client invokes one of four bounded read-only DoctorCode tools; repository scope is fixed when the server starts.
+- Thin MCP Adapter -> Shared Application Facade: The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI.
 
 ## Main user workflows
 
@@ -231,6 +235,17 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 - WALKING -> CLASSIFYING : Classify recognized source files.
 - CLASSIFYING -> REPORTED : Sort language names and emit text or JSON.
 
+### FLOW-THIN-MCP-ADAPTER — Bounded read-only MCP dispatch
+
+Expose accepted DoctorCode audit/context/contract/verify capabilities to an MCP client without expanding repository or mutation authority.
+
+Authority: mcp/server.go plus internal/application/application.go and existing DoctorCode core
+
+- ROOT_BOUND -> SERVER_READY : Register exactly four read-only tools on the MCP server.
+- SERVER_READY -> TOOL_REQUEST_VALIDATED : Validate typed bounded input that cannot select repository root/path or arbitrary command execution.
+- TOOL_REQUEST_VALIDATED -> CORE_DISPATCHED : Delegate to shared application Audit, Context, Contract, or Verify.
+- CORE_DISPATCHED -> STRUCTURED_RESULT_RETURNED : Return structured output; deterministic verify failure is marked as MCP tool error while preserving the result.
+
 ### FLOW-THIN-SKILL-ADAPTER — Agent-guided DoctorCode repair lifecycle
 
 Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.
@@ -246,9 +261,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M15_THIN_SKILL_ADAPTER
+Current phase: M16_THIN_MCP_ADAPTER
 
-Current status: M15_MAIN_ACCEPTED
+Current status: M16_VALIDATING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -295,21 +310,26 @@ compiler does not infer them from implementation names.
 - FLOW-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, unsafe ambiguous finding, or analyzer error fails the job.
 - FLOW-REALWORLD: A SHA mismatch, parse/analyze error, known-live DEADCODE false positive, escaped finding path, unknown enum, or safe_autofix=true fails the job.
 - FLOW-SCAN: Filesystem walk errors fail closed instead of claiming complete coverage.
+- FLOW-THIN-MCP-ADAPTER: Invalid startup root fails server creation.
+- FLOW-THIN-MCP-ADAPTER: Invalid tool input is returned as MCP tool error.
+- FLOW-THIN-MCP-ADAPTER: Unknown/stale finding or invalid contract fails closed through the shared application/core.
+- FLOW-THIN-MCP-ADAPTER: Deterministic verification failure is visible as IsError=true with structured result evidence.
 - FLOW-THIN-SKILL-ADAPTER: Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around.
 
 ## Current project state
 
 Next authorized actions:
-- Proceed to M16 Thin MCP Adapter under the Owner directive to continue until DoctorCode is complete.
-- Branch M16 only from the governance-normalized M15 main after exact closure acceptance.
-- Keep MCP transport thin: expose DoctorCode CLI/core capabilities without duplicating detector, context, or verification algorithms.
-- Preserve M15 product acceptance at b0677e43c3c5634dbdd856821c44fce7003c896d and its exact post-merge evidence as immutable historical evidence.
+- Generate and validate M16 CURRENT sequence plus deterministic Project Truth.
+- Run final exact-SHA Governance Bootstrap, Core CI, M16 Thin MCP, and every previously accepted real-world lane.
+- After FINAL_ACCEPTED, merge M16 to protected main through pull request and rerun all applicable acceptance lanes on the exact merge SHA.
+- After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening.
 
 Blocked actions:
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
-- Granting MCP tools automatic mutation or safe-delete authority.
-- Executing arbitrary repository-provided commands as DoctorCode verification authority.
-- Starting release/install packaging before the thin MCP transport contract is accepted.
+- Adding MCP mutation, safe-delete, or automatic-repair tools.
+- Adding arbitrary repository command execution to MCP verification authority.
+- Claiming remote/network MCP support from the local stdio acceptance evidence.
+- Starting final release/install packaging before M16 is MAIN_ACCEPTED.
 
 Known blockers:
 - None declared.
@@ -318,33 +338,25 @@ Known blockers:
 
 ### Proven
 
-- M14 is MAIN_ACCEPTED with product baseline main@6952187538ffa4a6f3f149db440d1f6f6960ba61 and governance-normalized main@4ab4190f98bcc823f4869d777ad8ba66e701c3cd.
-- Skill_Workflow authority is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720 and DoctorCode vendors its deterministic-LF Project Truth sync plus matching STRICT selftest.
-- M15 branches from protected main@86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198 after the Skill_Workflow authority prerequisite merged and its post-merge acceptance passed.
-- M15 RED Core CI run 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not yet exist.
-- M15 first implementation Core CI run 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc exposed a Windows-only CRLF-sensitive skill contract test while Ubuntu and macOS passed.
-- M15 portable product candidate 4e67e558baa7353725052fc0cd9a62e65e99b426 passed Core CI 36368008963 on Linux, Windows, and macOS after newline-normalizing only the acceptance test.
-- At the same product candidate, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 passed on all three operating systems.
-- The DoctorCode skill is self-contained at skills/doctorcode/SKILL.md, stays under 500 lines, and orchestrates existing CLI commands instead of owning detector, context, or verification logic.
-- The skill requires audit -> context -> pre-repair contract -> bounded repair -> verify and preserves safe_autofix=false plus static-evidence limitations.
-- Final synchronized M15 branch tree b32938e13c1de97138edd09b0374bceb51d60b01 passed Governance Bootstrap run 36368457969.
-- Core CI run 36368457929 at b32938e13c1de97138edd09b0374bceb51d60b01 passed on ubuntu-latest, windows-latest, and macos-latest.
-- M10 Python labels run 36368457958, M07 Python Real World run 36368457921, M06 Go labels run 36368457994, and Real World Go run 36368457915 all passed on Linux, Windows, and macOS at b32938e13c1de97138edd09b0374bceb51d60b01.
-- M15 Thin Skill Adapter merged through PR #16 to protected main at b0677e43c3c5634dbdd856821c44fce7003c896d.
-- Exact M15 main Governance Bootstrap run 36369855788 completed success.
-- Exact M15 main Core CI run 36369855714 completed success on ubuntu-latest, windows-latest, and macos-latest.
-- Exact M15 main M10 Python labels run 36369855718 completed success on all three operating systems.
-- Exact M15 main M07 Python Real World run 36369855832 completed success on all three operating systems.
-- Exact M15 main M06 Go labels run 36369855815 completed success on all three operating systems.
-- Exact M15 main Real World Go Validation run 36369855765 completed success on all three operating systems.
+- M15 is MAIN_ACCEPTED with product baseline main@b0677e43c3c5634dbdd856821c44fce7003c896d and governance-normalized main@3a809c178e69ca2c2f2cff83d0d0800637b37d02.
+- Skill_Workflow authority remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.
+- M16 keeps one shared application facade in internal/application/application.go; CLI audit/context/contract/verify and MCP dispatch both call that facade instead of duplicating analyzer, evidence, or verification algorithms.
+- M16 RED dedicated MCP run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on Linux, Windows, and macOS because NewServer did not yet exist and the RED test still contained two stale unused context variables.
+- M16 product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP run 36371973207 on Linux, Windows, and macOS: MCP tests, go vet, and stdio server build all passed.
+- At the same product candidate, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 passed on all three operating systems.
+- The MCP server exposes exactly doctorcode_audit, doctorcode_context, doctorcode_contract, and doctorcode_verify; all are read-only and use the startup-bound repository root.
+- MCP input schemas do not expose root, path, command, or shell transport authority.
+- doctorcode_verify represents deterministic domain verification failure as MCP IsError=true while retaining the structured verification result.
+- M16 dependency lock job 36372306971 generated and verified committed mcp/go.mod plus mcp/go.sum using Go 1.25 and modelcontextprotocol/go-sdk v1.7.0.
 
 ### Not proven
 
-- M15 does not prove that every third-party agent runtime implements the Agent Skills convention identically.
-- M15 does not install DoctorCode binaries or manage PATH; release/install packaging remains a later milestone.
-- M15 does not add an MCP server or transport.
-- M15 does not execute project tests or runtime checks as DoctorCode authority.
-- The skill cannot enlarge the proof boundaries of the underlying CLI/core.
+- M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
+- M16 does not install or package DoctorCode or doctorcode-mcp binaries; release/install packaging remains the next milestone.
+- M16 does not grant MCP tools source mutation, safe-delete, or automatic-repair authority.
+- M16 does not execute repository-provided test, build, shell, hook, or verification commands.
+- The opaque verification-contract transport does not enlarge M14 proof boundaries or cryptographically authenticate contracts.
+- The MCP adapter depends on the pinned Go MCP SDK version recorded by the nested module lock.
 
 ## Important limitations
 

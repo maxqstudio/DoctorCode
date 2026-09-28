@@ -593,6 +593,55 @@ Authority: cmd/doctorcode/main.go and internal/scanner/scanner.go
 
 - No persistent repository mutation occurs during scan.
 
+## FLOW-THIN-MCP-ADAPTER — Bounded read-only MCP dispatch
+
+Purpose: Expose accepted DoctorCode audit/context/contract/verify capabilities to an MCP client without expanding repository or mutation authority.
+Critical: FALSE
+Entry condition: doctorcode-mcp starts with a valid repository directory and an MCP client connects over stdio.
+Authority: mcp/server.go plus internal/application/application.go and existing DoctorCode core
+
+### States
+
+- ROOT_BOUND
+- SERVER_READY
+- TOOL_REQUEST_VALIDATED
+- CORE_DISPATCHED
+- STRUCTURED_RESULT_RETURNED
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| ROOT_BOUND | SERVER_READY | Register exactly four read-only tools on the MCP server. | mcp/server.go plus internal/application/application.go and existing DoctorCode core |  |
+| SERVER_READY | TOOL_REQUEST_VALIDATED | Validate typed bounded input that cannot select repository root/path or arbitrary command execution. | mcp/server.go plus internal/application/application.go and existing DoctorCode core |  |
+| TOOL_REQUEST_VALIDATED | CORE_DISPATCHED | Delegate to shared application Audit, Context, Contract, or Verify. | mcp/server.go plus internal/application/application.go and existing DoctorCode core |  |
+| CORE_DISPATCHED | STRUCTURED_RESULT_RETURNED | Return structured output; deterministic verify failure is marked as MCP tool error while preserving the result. | mcp/server.go plus internal/application/application.go and existing DoctorCode core |  |
+
+### Invariants
+
+- Exactly four MCP tools are registered.
+- All MCP tools are read-only.
+- Repository scope is resolved once at server startup.
+- No tool input exposes root, path, command, or shell authority.
+- MCP does not duplicate detector, context, or verification algorithms.
+- MCP does not mutate source or execute repository-provided commands.
+- MCP context remains byte bounded and DoctorCode proof boundaries remain unchanged.
+
+### Failure behavior
+
+- Invalid startup root fails server creation.
+- Invalid tool input is returned as MCP tool error.
+- Unknown/stale finding or invalid contract fails closed through the shared application/core.
+- Deterministic verification failure is visible as IsError=true with structured result evidence.
+
+### Restart behavior
+
+- Restart doctorcode-mcp with the intended repository root; no MCP state is persisted by DoctorCode.
+
+### Rollback behavior
+
+- Removing the MCP module leaves CLI and Skill operation intact because semantic authority remains in the shared core.
+
 ## FLOW-THIN-SKILL-ADAPTER — Agent-guided DoctorCode repair lifecycle
 
 Purpose: Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.

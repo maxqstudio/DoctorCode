@@ -17,3 +17,4 @@
 13. M08 Python adversarial benchmark — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m08-python-adversarial.json --analyzer=python --json — expected: passed=true; 10 cases; 2 TP, 0 FP, 0 FN; accepted M07 Python corpus remains passing
 14. M09 Python repository-shaped benchmark — go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json — expected: passed=true; 14 cases; 5 TP, 0 FP, 0 FN; accepted M07 and M08 gates remain passing
 15. Accepted real-world regression matrices — GitHub Actions workflows Real World Go Validation, M06 Labeled Real World Go, and M07 Python Real World on main and work/** — expected: each workflow passes its Linux, Windows, and macOS matrix for every phase branch and main promotion
+16. M16 thin MCP module — cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp — expected: exit code 0 on Linux, Windows, and macOS

@@ -409,3 +409,35 @@ Status: ACCEPTED
 Project tests and runtime checks may be run only under project-specific trust/governance and remain separate evidence from DoctorCode verification.
 
 Rationale: DoctorCode analyzes arbitrary repositories as untrusted input and must not turn repository-provided command strings into execution authority.
+
+## ADR-M16-001 — Share application authority between CLI and MCP
+
+Status: ACCEPTED
+
+Expose Audit, Context, Contract, and Verify through internal/application and make CLI plus MCP call that facade.
+
+Rationale: A transport adapter must not become a second implementation of DoctorCode semantics.
+
+## ADR-M16-002 — Bind repository root at MCP startup
+
+Status: ACCEPTED
+
+Resolve and validate one repository root in NewServer and omit root/path selection from MCP tool schemas.
+
+Rationale: Binding transport scope at startup prevents per-call filesystem authority expansion.
+
+## ADR-M16-003 — Keep the MCP surface read-only and bounded
+
+Status: ACCEPTED
+
+Expose only audit, context, contract, and verify; cap finding/context sizes and add no mutation or arbitrary command tool.
+
+Rationale: MCP is a transport over accepted deterministic capabilities, not a new repair executor.
+
+## ADR-M16-004 — Use isolated pinned Go MCP module
+
+Status: ACCEPTED
+
+Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.
+
+Rationale: The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned.

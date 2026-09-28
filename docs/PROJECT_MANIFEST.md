@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m16-thin-mcp-adapter
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
-Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
+Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -25,9 +25,9 @@ Historical/reference authority: see SOURCE_AUTHORITY_MAP.md
 
 ## Technology
 Languages: Go, Python
-Frameworks:
+Frameworks: Model Context Protocol Go SDK
 Persistence:
-External systems: GitHub Actions, host compilers and language runtimes
+External systems: GitHub Actions, host compilers and language runtimes, local MCP stdio clients
 
 ## Entry points
 
@@ -42,6 +42,7 @@ External systems: GitHub Actions, host compilers and language runtimes
 | doctorcode contract | cmd/doctorcode/main.go | Freeze one exact current finding into a deterministic pre-repair verification baseline. |
 | doctorcode verify | cmd/doctorcode/main.go | Re-audit a repaired repository and deterministically verify target resolution plus bounded target-path regression constraints. |
 | DoctorCode agent skill | skills/doctorcode/SKILL.md | Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic. |
+| doctorcode-mcp | mcp/cmd/doctorcode-mcp/main.go | Run the thin local stdio MCP adapter bound to one repository root. |
 
 ## Critical directories
 

@@ -17,57 +17,57 @@
   "human_comprehension_status": "PASS",
   "requirements": [
     {
+      "evidence": "work/m16-thin-mcp-adapter starts from main@3a809c178e69ca2c2f2cff83d0d0800637b37d02; M15 product baseline remains b0677e43c3c5634dbdd856821c44fce7003c896d; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
       "id": "M16-MAIN-BASELINE",
       "requirement": "M16 must branch from the governance-normalized M15 main and retain current Skill_Workflow authority.",
-      "evidence": "work/m16-thin-mcp-adapter starts from main@3a809c178e69ca2c2f2cff83d0d0800637b37d02; M15 product baseline remains b0677e43c3c5634dbdd856821c44fce7003c896d; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
       "status": "PASS"
     },
     {
+      "evidence": "Dedicated M16 run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on all three operating systems because NewServer was undefined; the RED test also exposed two stale unused ctx declarations that were repaired without weakening the contract.",
       "id": "M16-RED-MCP-SERVER",
       "requirement": "The thin MCP server contract must be demonstrated absent before implementation.",
-      "evidence": "Dedicated M16 run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on all three operating systems because NewServer was undefined; the RED test also exposed two stale unused ctx declarations that were repaired without weakening the contract.",
       "status": "PASS"
     },
     {
+      "evidence": "internal/application/application.go owns Audit, Context, Contract, Verify; cmd/doctorcode and mcp/server.go call those entrypoints; internal/application/application_test.go validates the end-to-end repair workflow.",
       "id": "M16-SHARED-APPLICATION-AUTHORITY",
       "requirement": "CLI and MCP repair workflow operations must share one application facade rather than duplicating detector/context/verifier logic.",
-      "evidence": "internal/application/application.go owns Audit, Context, Contract, Verify; cmd/doctorcode and mcp/server.go call those entrypoints; internal/application/application_test.go validates the end-to-end repair workflow.",
       "status": "PASS"
     },
     {
+      "evidence": "mcp/server_test.go enumerates the server tool list and rejects forbidden transport-authority keys in every inferred input schema; dedicated M16 run 36371973207 passes on Linux, Windows, and macOS.",
       "id": "M16-BOUNDED-TOOL-SURFACE",
       "requirement": "MCP must expose only audit, context, contract, and verify with no root/path/command/shell input authority.",
-      "evidence": "mcp/server_test.go enumerates the server tool list and rejects forbidden transport-authority keys in every inferred input schema; dedicated M16 run 36371973207 passes on Linux, Windows, and macOS.",
       "status": "PASS"
     },
     {
+      "evidence": "mcp/server.go::NewServer resolves and validates the startup directory once; TestNewServerRejectsInvalidRoot plus the repair-workflow test pass in dedicated M16 run 36371973207.",
       "id": "M16-BOUND-STARTUP-ROOT",
       "requirement": "All MCP operations must use one validated startup-bound repository root and invalid startup roots must fail closed.",
-      "evidence": "mcp/server.go::NewServer resolves and validates the startup directory once; TestNewServerRejectsInvalidRoot plus the repair-workflow test pass in dedicated M16 run 36371973207.",
       "status": "PASS"
     },
     {
+      "evidence": "All four tools declare ReadOnlyHint=true; doctorcode_verify sets IsError=true only for a deterministic failed verification result and retains structured output; TestMCPVerifyMarksDomainFailureAsToolError passes.",
       "id": "M16-READ-ONLY-VERIFY-SEMANTICS",
       "requirement": "MCP tools must remain read-only and verification domain failure must be surfaced as a tool error without discarding structured result evidence.",
-      "evidence": "All four tools declare ReadOnlyHint=true; doctorcode_verify sets IsError=true only for a deterministic failed verification result and retains structured output; TestMCPVerifyMarksDomainFailureAsToolError passes.",
       "status": "PASS"
     },
     {
+      "evidence": "mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully.",
       "id": "M16-DEPENDENCY-LOCK",
       "requirement": "The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums.",
-      "evidence": "mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully.",
       "status": "PASS"
     },
     {
+      "evidence": "At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems.",
       "id": "M16-REGRESSION-MATRIX",
       "requirement": "M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS.",
-      "evidence": "At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems.",
       "status": "PASS"
     },
     {
+      "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
       "id": "M16-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed.",
-      "evidence": "NOT_PROVEN until the synchronized final candidate is checked.",
       "status": "NOT_PROVEN"
     }
   ],

@@ -2,6 +2,16 @@
 
 # CHANGELOG
 
+## 2026-09-28 — M16 Thin MCP Adapter candidate
+
+Type: development
+
+- Added transport-neutral shared application facade for audit, context, contract, and verify.
+- Added isolated Go MCP module pinned to modelcontextprotocol/go-sdk v1.7.0 with committed go.sum.
+- Added exactly four read-only bounded MCP tools using one startup-bound repository root.
+- Added local stdio doctorcode-mcp entrypoint and three-OS MCP test/vet/build gate.
+- Kept mutation, safe-delete, arbitrary repository command execution, remote transports, and release packaging outside M16.
+
 ## 2026-09-28 — M15 main accepted baseline
 
 Type: acceptance

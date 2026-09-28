@@ -4,22 +4,22 @@
 
 ## Evidence boundary
 
-M15 Thin Skill Adapter adds one self-contained Agent Skills artifact at skills/doctorcode/SKILL.md. It is orchestration-only: audit, bounded context, pre-repair contract capture, minimal repair guidance, and deterministic verify remain implemented exclusively by the DoctorCode CLI/core. The skill does not execute repository-provided commands, add mutation authority, prove safe deletion, package the binary, or provide MCP transport. Product candidate 4e67e558baa7353725052fc0cd9a62e65e99b426 preserves every accepted cross-platform lane.
+M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. Product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP plus all accepted Linux, Windows, and macOS regression lanes. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.
 
 Final tested source: external final acceptance evidence.
-Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
+Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
-| M15-MAIN-BASELINE | M15 must branch from the post-authority-sync protected main and retain current Skill_Workflow authority. | work/m15-thin-skill-adapter starts from main@86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198; Skill_Workflow is pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
-| M15-RED-SKILL | The skill artifact contract must be demonstrated absent before implementation. | Core CI 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not exist. | PASS |
-| M15-THIN-AUTHORITY | The Skill adapter must orchestrate DoctorCode CLI commands and must not contain a second detector/context/verifier implementation. | skills/doctorcode/SKILL.md contains workflow prose only; internal/skilladapter/skill_test.go enforces required CLI surfaces and bounded-authority language. | PASS |
-| M15-PRE-REPAIR-CONTRACT | The skill must require contract capture before editing and verify after editing. | skills/doctorcode/SKILL.md explicitly sequences audit -> context -> contract before editing -> minimal repair -> verify and explains why post-edit contract creation is invalid evidence. | PASS |
-| M15-SAFETY-BOUNDARY | The skill must preserve safe_autofix=false, zero-reference uncertainty, and no repository-command execution as DoctorCode authority. | SKILL.md Authority Boundaries, Failure Handling, Red Flags, and Verification Checklist preserve all three boundaries. | PASS |
-| M15-CROSS-PLATFORM-SKILL-CONTRACT | Skill validation must pass on Linux, Windows, and macOS including CRLF checkout behavior. | Initial Core CI 36367916668 exposed Windows CRLF sensitivity; product candidate Core CI 36368008963 passes after newline-portable validation without changing skill semantics. | PASS |
-| M15-REGRESSION-MATRIX | All previously accepted detector, context, verification, and public-source lanes must remain passing across Linux, Windows, and macOS. | At 4e67e558baa7353725052fc0cd9a62e65e99b426: Core CI 36368008963, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 all pass on three operating systems. | PASS |
-| M15-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M15 sequence artifacts must pass strict governance on the final exact branch SHA after temporary workflows are removed. | At b32938e13c1de97138edd09b0374bceb51d60b01: Governance Bootstrap 36368457969, Core CI 36368457929, M10 Python labels 36368457958, M07 Python Real World 36368457921, M06 Go labels 36368457994, and Real World Go 36368457915 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
-| M15-MAIN-POST-MERGE | M15 must pass strict governance and every accepted product/regression lane on the exact protected-main merge SHA before M16 begins. | At main@b0677e43c3c5634dbdd856821c44fce7003c896d: Governance Bootstrap 36369855788, Core CI 36369855714, M10 Python labels 36369855718, M07 Python Real World 36369855832, M06 Go labels 36369855815, and Real World Go 36369855765 all completed success; every matrix job passed on Linux, Windows, and macOS. | PASS |
+| M16-MAIN-BASELINE | M16 must branch from the governance-normalized M15 main and retain current Skill_Workflow authority. | work/m16-thin-mcp-adapter starts from main@3a809c178e69ca2c2f2cff83d0d0800637b37d02; M15 product baseline remains b0677e43c3c5634dbdd856821c44fce7003c896d; Skill_Workflow remains 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
+| M16-RED-MCP-SERVER | The thin MCP server contract must be demonstrated absent before implementation. | Dedicated M16 run 36371079105 at 9529b06e9fe132a22d62abb859e70b7b33d4f133 failed on all three operating systems because NewServer was undefined; the RED test also exposed two stale unused ctx declarations that were repaired without weakening the contract. | PASS |
+| M16-SHARED-APPLICATION-AUTHORITY | CLI and MCP repair workflow operations must share one application facade rather than duplicating detector/context/verifier logic. | internal/application/application.go owns Audit, Context, Contract, Verify; cmd/doctorcode and mcp/server.go call those entrypoints; internal/application/application_test.go validates the end-to-end repair workflow. | PASS |
+| M16-BOUNDED-TOOL-SURFACE | MCP must expose only audit, context, contract, and verify with no root/path/command/shell input authority. | mcp/server_test.go enumerates the server tool list and rejects forbidden transport-authority keys in every inferred input schema; dedicated M16 run 36371973207 passes on Linux, Windows, and macOS. | PASS |
+| M16-BOUND-STARTUP-ROOT | All MCP operations must use one validated startup-bound repository root and invalid startup roots must fail closed. | mcp/server.go::NewServer resolves and validates the startup directory once; TestNewServerRejectsInvalidRoot plus the repair-workflow test pass in dedicated M16 run 36371973207. | PASS |
+| M16-READ-ONLY-VERIFY-SEMANTICS | MCP tools must remain read-only and verification domain failure must be surfaced as a tool error without discarding structured result evidence. | All four tools declare ReadOnlyHint=true; doctorcode_verify sets IsError=true only for a deterministic failed verification result and retains structured output; TestMCPVerifyMarksDomainFailureAsToolError passes. | PASS |
+| M16-DEPENDENCY-LOCK | The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums. | mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully. | PASS |
+| M16-REGRESSION-MATRIX | M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS. | At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems. | PASS |
+| M16-STRICT-GOVERNANCE-FINAL | Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed. | NOT_PROVEN until the synchronized final candidate is checked. | NOT_PROVEN |
 
 ## Test commands
 
@@ -32,15 +32,12 @@ Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912a
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
 - go vet ./...
 - go build -trimpath ./cmd/doctorcode
-- Core CI Go related-context smoke test
-- Core CI Python related-context smoke test
-- Core CI deterministic verification contract smoke test
 - go test ./internal/skilladapter -v
+- cd mcp && go mod tidy && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
 
 ## Runtime checks
 
 - go test ./...
-- Core CI M14 smoke: audit -> exact finding ID -> contract -> repair with new SECURITY regression -> verify FAIL -> clean repair -> verify PASS
 - go run ./cmd/doctorcode audit . --json --max-findings=10
 - go run ./cmd/doctorcode next . --json --max-bytes=4096
 - go test ./internal/realworld -run TestPinnedPublicRepositories -v with exact-SHA Go public paths
@@ -48,11 +45,12 @@ Current source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912a
 - go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths
 - go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths
 - DoctorCode skill contract validation
+- cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M15-THIN-SKILL-ADAPTER
+Sequence session contract: M16-THIN-MCP-ADAPTER
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

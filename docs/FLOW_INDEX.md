@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
+Source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
 ## Flow inventory
 
@@ -22,6 +22,7 @@ Source digest: ae40b2a7cd15ae3b9941e2cfd974b035d5d4c80ca49fa4fe2cfbb912abe5950d
 | FLOW-REALWORLD-LABELED | GitHub Actions checks out DoctorCode plus the four declared public repositories at exact label-manifest SHAs. | internal/realworld/m06-labels.json, internal/realworld/labeled_test.go, .github/workflows/m06-labeled-real-world.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, MATCHING_BOUNDED_LABELS, GATED, REPORTED | internal/realworld/labeled_test.go, internal/analyzers/golang/analyzer_test.go | M06-REALWORLD-LABELED | DECLARED |
 | FLOW-REALWORLD | GitHub Actions checks out DoctorCode and each declared public source at the exact manifest SHA. | internal/realworld/sources.json, internal/realworld/realworld_test.go, .github/workflows/real-world-go.yml, internal/analyzers/golang/analyzer.go | PIN_VERIFIED, ANALYZING, ASSERTING_BOUNDARIES, REPORTED | internal/realworld/realworld_test.go | M05-PUBLIC-REPO-VALIDATION | DECLARED |
 | FLOW-SCAN | doctorcode scan is invoked for an accessible path. | cmd/doctorcode/main.go, internal/scanner/scanner.go, internal/language/registry.go | WALKING, CLASSIFYING, REPORTED | internal/scanner/scanner_test.go, internal/language/registry_test.go | M00-BOOTSTRAP | DECLARED |
+| FLOW-THIN-MCP-ADAPTER | doctorcode-mcp starts with a valid repository directory and an MCP client connects over stdio. | mcp/server.go, mcp/cmd/doctorcode-mcp/main.go, internal/application/application.go | SERVER_READY, TOOL_REQUEST_VALIDATED, CORE_DISPATCHED, STRUCTURED_RESULT_RETURNED | mcp/server_test.go, internal/application/application_test.go, .github/workflows/m16-mcp.yml | M16-THIN-MCP-ADAPTER | DECLARED |
 | FLOW-THIN-SKILL-ADAPTER | An agent or human chooses to use DoctorCode for diagnosis or repair evidence. | skills/doctorcode/SKILL.md, cmd/doctorcode/main.go | FINDING_SELECTED, CONTEXT_BOUNDED, CONTRACT_FROZEN, REPAIR_APPLIED, VERIFIED, EVIDENCE_REPORTED | internal/skilladapter/skill_test.go, .github/workflows/ci.yml | M15-THIN-SKILL-ADAPTER | DECLARED |
 
 ## Observed Python HTTP routes
