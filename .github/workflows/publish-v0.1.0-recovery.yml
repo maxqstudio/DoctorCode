@@ -1,0 +1,137 @@
+name: Publish v0.1.0 Recovery
+
+on:
+  push:
+    branches:
+      - "work/publish-v0.1.0"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-v0.1.0-recovery
+  cancel-in-progress: false
+
+jobs:
+  build-release:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    outputs:
+      release_date: ${{ steps.meta.outputs.release_date }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v0.1.0
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.x"
+          cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Verify immutable tag target
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          expected="cd05f064e1bb1054271e7028941c1fbb80ea32aa"
+          test "$actual" = "$expected"
+          echo "TAG_TARGET_VERIFY=PASS"
+      - name: Resolve release metadata
+        id: meta
+        shell: bash
+        run: |
+          set -euo pipefail
+          build_date="$(git show -s --format=%cI HEAD)"
+          echo "release_date=$build_date" >> "$GITHUB_OUTPUT"
+          echo "RELEASE_DATE=$build_date" >> "$GITHUB_ENV"
+      - name: Build deterministic release bundle
+        shell: bash
+        run: >
+          python scripts/build_release.py
+          --version "0.1.0"
+          --commit "cd05f064e1bb1054271e7028941c1fbb80ea32aa"
+          --date "$RELEASE_DATE"
+          --output dist
+      - name: Verify release manifest and checksums
+        shell: bash
+        run: >
+          python scripts/verify_release.py dist
+          --version "0.1.0"
+          --commit "cd05f064e1bb1054271e7028941c1fbb80ea32aa"
+          --date "$RELEASE_DATE"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: doctorcode-v0.1.0-release-bundle
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
+
+  install-smoke:
+    needs: build-release
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: v0.1.0
+      - uses: actions/download-artifact@v4
+        with:
+          name: doctorcode-v0.1.0-release-bundle
+          path: dist
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install and smoke on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          ./scripts/install.ps1 -SourceDir dist -InstallDir "$env:RUNNER_TEMP/doctorcode-bin"
+          python scripts/smoke_release.py --manifest dist/release-manifest.json --bin-dir "$env:RUNNER_TEMP/doctorcode-bin"
+      - name: Install and smoke on Unix
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          bash ./scripts/install.sh --source-dir dist --install-dir "$RUNNER_TEMP/doctorcode-bin"
+          python scripts/smoke_release.py --manifest dist/release-manifest.json --bin-dir "$RUNNER_TEMP/doctorcode-bin"
+
+  publish-release:
+    needs:
+      - build-release
+      - install-smoke
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: doctorcode-v0.1.0-release-bundle
+          path: dist
+      - name: Verify release does not already exist
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view v0.1.0 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "RELEASE_ALREADY_EXISTS" >&2
+            exit 1
+          fi
+      - name: Publish immutable GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: >
+          gh release create "v0.1.0"
+          dist/*
+          --repo "$GITHUB_REPOSITORY"
+          --verify-tag
+          --generate-notes
+          --title "DoctorCode v0.1.0"
