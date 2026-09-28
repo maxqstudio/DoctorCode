@@ -59,10 +59,10 @@
       "status": "PASS"
     },
     {
-      "evidence": "Ubuntu and Windows are proven on current/pre-fix runs; macOS exact current candidate remains NOT_PROVEN until queued runner completes.",
+      "evidence": "M17 Release and Install run 36379047097 at a6beafebe53f4b98a926c95b4e69033beb40bcf5: m17-release-build, m17-install-ubuntu-latest, m17-install-windows-latest, and m17-install-macos-latest all completed success; installed binaries matched release-manifest.json metadata.",
       "id": "M17-INSTALL-SMOKE",
       "requirement": "Installed native artifacts must execute on Linux, Windows, and macOS and report metadata exactly matching the release manifest.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     },
     {
       "evidence": ".github/workflows/m17-release.yml scopes publish-release to refs/tags/v*, depends on install-smoke, and uses --verify-tag; no public M17 tag/release has been created yet.",
@@ -71,16 +71,16 @@
       "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN until exact final candidate matrix completes.",
+      "evidence": "At a6beafebe53f4b98a926c95b4e69033beb40bcf5: Core 36379047022, M16 MCP 36379047051, M10 36379047057, M07 36379047133, M06 36379047144, and Real World Go 36379047115 all passed across Linux, Windows, and macOS.",
       "id": "M17-REGRESSION-MATRIX",
       "requirement": "Core, M16 MCP, and all accepted Go/Python real-world lanes must remain passing across Linux, Windows, and macOS.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     },
     {
-      "evidence": "NOT_PROVEN until synchronized final candidate is checked.",
+      "evidence": "Governance Bootstrap run 36379047101 passed on synchronized candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5; the ledger-finalized tree will be regenerated and revalidated on its exact final SHA before promotion.",
       "id": "M17-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M17 sequence artifacts must pass strict governance on the final exact M17 branch SHA.",
-      "status": "NOT_PROVEN"
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

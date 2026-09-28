@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M17 Release and Install Hardening is validating on `work/m17-release-install-hardening` from protected main `48b6d930b5231a9f808e74a7c58ebbd76174fabd`. Public v0.1.0 publication remains blocked until M17 is MAIN_ACCEPTED.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
+**M17 Release and Install Hardening is accepted on the development branch pending final exact-SHA promotion checks. Public v0.1.0 publication remains blocked until M17 is MAIN_ACCEPTED.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
