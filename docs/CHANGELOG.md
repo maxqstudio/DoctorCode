@@ -2,6 +2,15 @@
 
 # CHANGELOG
 
+## 2026-09-28 — DoctorCode v0.1.0 public release complete
+
+Type: release
+
+- Published immutable v0.1.0 from accepted M17 product SHA cd05f064e1bb1054271e7028941c1fbb80ea32aa.
+- Recovered publication through exact-tag checkout after GitHub suppressed recursive tag workflow events created by GITHUB_TOKEN; the tag was not moved or recreated.
+- Rebuilt and verified all six release archives, passed native install-smoke on Ubuntu, Windows, and macOS, and published GitHub Release 398260613.
+- Read back the public asset set and matched checksums.txt plus all archive/manifest SHA-256 values against GitHub asset digests.
+
 ## 2026-09-28 — M17 main accepted baseline
 
 Type: acceptance

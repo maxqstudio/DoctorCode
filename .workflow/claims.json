@@ -1457,6 +1457,47 @@
         "M17 install smoke jobs"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M17-PUBLIC-RELEASE",
+      "claim": "DoctorCode v0.1.0 is publicly released from immutable tag v0.1.0 at accepted product SHA cd05f064e1bb1054271e7028941c1fbb80ea32aa after deterministic rebuild, verification, and native install-smoke on Ubuntu, Windows, and macOS.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        ".github/workflows/m17-release.yml",
+        "scripts/build_release.py",
+        "scripts/verify_release.py",
+        "scripts/install.sh",
+        "scripts/install.ps1"
+      ],
+      "tests": [
+        ".github/workflows/m17-release.yml"
+      ],
+      "runtime_evidence": [
+        "GitHub Actions publication recovery run 36426199149",
+        "GitHub Release 398260613"
+      ],
+      "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M17-PUBLIC-CHECKSUMS",
+      "claim": "The published v0.1.0 checksums and GitHub release asset digests agree for all six platform archives and release-manifest.json.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "scripts/build_release.py",
+        "scripts/verify_release.py"
+      ],
+      "tests": [
+        ".github/workflows/m17-release.yml"
+      ],
+      "runtime_evidence": [
+        "Workflow artifact 10971548461",
+        "GitHub Release 398260613"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": [],
