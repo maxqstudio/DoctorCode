@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m16-thin-mcp-adapter
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
+Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
 Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
 ## Authorities

@@ -19,7 +19,7 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**M16 Thin MCP Adapter is validating on `work/m16-thin-mcp-adapter` from governance-normalized M15 main.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
+**M16 Thin MCP Adapter is accepted on protected `main` at `2e76c9e635a8a68507fea9d44438f74e96d8e754`. M17 Release and Install Hardening is the next authorized milestone.** Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|

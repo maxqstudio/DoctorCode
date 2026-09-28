@@ -3,18 +3,18 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
+Authority verified at SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
 Governance profile: strict
 
 ## Current phase
 Phase: M16_THIN_MCP_ADAPTER
-Status: M16_ACCEPTED
+Status: M16_MAIN_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m16-thin-mcp-adapter
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: b0677e43c3c5634dbdd856821c44fce7003c896d
+Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
 Current candidate SHA: external final acceptance evidence
 Current source digest: 64eea2a5517653a86ff1a79e6199dde8b4b2dd55ed97110f65fd38f6b84bd1e9
 
@@ -50,6 +50,10 @@ SEQUENCE_SYNC: PASS
 - Final M16 branch tree 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed Governance Bootstrap run 36373403943.
 - Core CI run 36373404275 and M16 Thin MCP run 36373404050 at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 passed on ubuntu-latest, windows-latest, and macos-latest.
 - M10 Python labels run 36373403993, M07 Python Real World run 36373404028, M06 Go labels run 36373404043, and Real World Go run 36373404035 all passed on Linux, Windows, and macOS at 6cf2f839f17f0931bff26fb7be8f8ca21be678e5.
+- M16 Thin MCP Adapter merged through PR #18 to protected main at 2e76c9e635a8a68507fea9d44438f74e96d8e754.
+- Exact M16 main Governance Bootstrap run 36374601756 completed success.
+- Exact M16 main Core CI run 36374601764 and M16 Thin MCP run 36374601767 completed success on ubuntu-latest, windows-latest, and macos-latest.
+- Exact M16 main M10 Python labels run 36374601762, M07 Python Real World run 36374601774, M06 Go labels run 36374601733, and Real World Go run 36374601755 completed success on all three operating systems.
 
 ## Not proven
 - M16 proves the local stdio MCP transport only; HTTP, SSE, remote relay, authentication, and network deployment are outside this milestone.
@@ -66,13 +70,14 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize and validate final M16 Project Truth on the exact accepted branch tree.
-- Merge FINAL_ACCEPTED M16 to protected main through pull request and rerun Governance Bootstrap, Core CI, M16 Thin MCP, and every accepted real-world lane on the exact merge SHA.
-- After M16_MAIN_ACCEPTED, proceed to release/install packaging and public usability hardening under the Owner directive to continue until DoctorCode is complete.
+- Proceed to M17 Release and Install Hardening under the Owner directive to continue until DoctorCode is complete.
+- Branch M17 only from the governance-normalized M16 main after exact closure acceptance.
+- Package doctorcode and doctorcode-mcp for Linux, Windows, and macOS with deterministic version metadata, checksums, install documentation, and artifact smoke verification.
+- Preserve M16 product acceptance at 2e76c9e635a8a68507fea9d44438f74e96d8e754 and exact post-merge evidence as immutable historical evidence.
 
 ## Explicitly blocked
 - Duplicating DoctorCode detector, context, or verification logic inside the MCP adapter.
 - Adding MCP mutation, safe-delete, or automatic-repair tools.
 - Adding arbitrary repository command execution to MCP verification authority.
 - Claiming remote/network MCP support from the local stdio acceptance evidence.
-- Starting release/install packaging before M16 is MAIN_ACCEPTED on protected main.
+- Publishing a public release tag before M17 release artifacts and install smoke tests are FINAL_ACCEPTED.
