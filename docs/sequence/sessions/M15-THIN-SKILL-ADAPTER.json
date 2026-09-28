@@ -23,7 +23,7 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "session_id": "M15-THIN-SKILL-ADAPTER",
   "status": "ACCEPTED",
   "test_traceability_required": true,
