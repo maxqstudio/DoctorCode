@@ -1,0 +1,44 @@
+name: M16 Thin MCP
+
+on:
+  push:
+    branches:
+      - main
+      - "work/**"
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  mcp:
+    name: m16-mcp-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.25.x"
+          cache: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Resolve MCP module dependencies
+        working-directory: mcp
+        run: go mod tidy
+      - name: MCP tests
+        working-directory: mcp
+        run: go test ./...
+      - name: MCP vet
+        working-directory: mcp
+        run: go vet ./...
+      - name: Build stdio MCP server
+        working-directory: mcp
+        run: go build -trimpath ./cmd/doctorcode-mcp
