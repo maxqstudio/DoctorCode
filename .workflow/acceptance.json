@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. Product candidate 16e4d91afc8ee36a14f62c0889b048a4912401aa passed dedicated MCP plus all accepted Linux, Windows, and macOS regression lanes. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.",
+  "evidence_boundary": "M16 Thin MCP Adapter exposes exactly four read-only MCP tools over a local stdio server: audit, bounded context, pre-repair contract, and deterministic verify. The server binds one repository root at startup and does not expose root/path/command/shell authority in tool input schemas. CLI and MCP share internal/application; detector, evidence, and verification algorithms remain in the existing core. MCP verification-contract payloads are capped at 1 MiB, matching the CLI contract-file bound, and the dedicated MCP workflow requires go mod tidy to leave the committed dependency lock unchanged. Remote transports, mutation, safe deletion, repository command execution, and release/install packaging remain outside M16 authority.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -53,22 +53,28 @@
       "status": "PASS"
     },
     {
-      "evidence": "mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; dependency lock run 36372306971 generated committed mcp/go.sum and reran MCP test/vet/build successfully.",
+      "evidence": "mcp/go.mod pins github.com/modelcontextprotocol/go-sdk v1.7.0 and Go 1.25; hardened M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 requires go mod tidy to leave mcp/go.mod and mcp/go.sum unchanged on Linux, Windows, and macOS before test/vet/build.",
       "id": "M16-DEPENDENCY-LOCK",
       "requirement": "The isolated MCP Go module must pin the MCP SDK and record its resolved module checksums.",
       "status": "PASS"
     },
     {
-      "evidence": "At 16e4d91afc8ee36a14f62c0889b048a4912401aa: M16 Thin MCP 36371973207, Core CI 36371973167, M10 Python labels 36371973169, M07 Python Real World 36371973165, M06 Go labels 36371973190, and Real World Go 36371973186 all pass on all three operating systems.",
+      "evidence": "At hardened candidate 49224469153a2a681acfb698e9ca1704f29c99d5: M16 Thin MCP 36380093409, Core CI 36380093401, M10 Python labels 36380093395, M07 Python Real World 36380093392, M06 Go labels 36380093377, and Real World Go 36380093380 all passed on Linux, Windows, and macOS.",
       "id": "M16-REGRESSION-MATRIX",
       "requirement": "M16 and every previously accepted DoctorCode product/regression lane must pass across Linux, Windows, and macOS.",
       "status": "PASS"
     },
     {
-      "evidence": "Governance Bootstrap run 36373403943 at final branch SHA 6cf2f839f17f0931bff26fb7be8f8ca21be678e5 completed success after generated M16 Project Truth and sequence synchronization; all temporary synchronization workflows were absent from that exact tree.",
+      "id": "M16-CONTRACT-PAYLOAD-BOUND",
+      "requirement": "MCP verify must fail closed when the encoded verification contract exceeds 1 MiB, matching the CLI contract-file bound.",
+      "evidence": "RED M16 run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012 failed on all three operating systems; GREEN M16 run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5 passed after the transport bound was added.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "NOT_PROVEN after M16 contract-size hardening until generated Project Truth is synchronized and the final exact branch SHA passes Governance Bootstrap.",
       "id": "M16-STRICT-GOVERNANCE-FINAL",
       "requirement": "Generated Project Truth and M16 sequence artifacts must pass strict governance on the final exact M16 branch SHA after temporary workflows are removed.",
-      "status": "PASS"
+      "status": "NOT_PROVEN"
     }
   ],
   "runtime_checks": [
@@ -80,7 +86,7 @@
     "go test ./internal/realworld -run TestM07PinnedPythonRepositories -v with exact-SHA Python public paths",
     "go test ./internal/realworld -run TestM10LabeledPythonRealWorld -v with exact-SHA bounded Python label paths",
     "DoctorCode skill contract validation",
-    "cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp"
+    "cd mcp && go mod tidy && git diff --exit-code -- go.mod go.sum && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
@@ -98,19 +104,19 @@
     "go vet ./...",
     "go build -trimpath ./cmd/doctorcode",
     "go test ./internal/skilladapter -v",
-    "cd mcp && go mod tidy && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp"
+    "cd mcp && go mod tidy && git diff --exit-code -- go.mod go.sum && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp"
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
-    "CROSS_DOCUMENT_CONSISTENCY": "PASS",
+    "CROSS_DOCUMENT_CONSISTENCY": "NOT_PROVEN",
     "DOC_LAYOUT": "PASS",
     "DOC_READABILITY": "PASS",
     "DOC_SOURCE_TRACEABILITY": "PASS",
     "DOC_TEST_TRACEABILITY": "PASS",
     "HUMAN_COMPREHENSION": "PASS",
     "PROJECT_DOCS_NORMALIZED": "PASS",
-    "PROJECT_DOCS_SYNC": "PASS",
-    "PROJECT_STATE_SYNC": "PASS",
+    "PROJECT_DOCS_SYNC": "NOT_PROVEN",
+    "PROJECT_STATE_SYNC": "NOT_PROVEN",
     "PROVENANCE_SYNC": "PASS",
     "REFERENCE_SYNC": "PASS",
     "RUNTIME_E2E": "PASS",

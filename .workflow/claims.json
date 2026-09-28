@@ -1399,6 +1399,26 @@
         "GitHub Actions M16 Thin MCP run 36371973207 at 16e4d91afc8ee36a14f62c0889b048a4912401aa"
       ],
       "status": "PASS"
+    },
+    {
+      "id": "TRUTH-M16-CONTRACT-BOUND",
+      "claim": "M16 doctorcode_verify rejects encoded verification-contract payloads larger than 1 MiB and the MCP CI gate requires the committed dependency lock to remain unchanged after go mod tidy.",
+      "documents": [
+        "PROJECT_TRUTH_SYNC.md"
+      ],
+      "source_owners": [
+        "mcp/server.go",
+        ".github/workflows/m16-mcp.yml"
+      ],
+      "tests": [
+        "mcp/server_test.go",
+        ".github/workflows/m16-mcp.yml"
+      ],
+      "runtime_evidence": [
+        "RED GitHub Actions M16 Thin MCP run 36379992479 at 00b284de3dc562833bee9101b28d67adcad29012",
+        "GREEN GitHub Actions M16 Thin MCP run 36380093409 at 49224469153a2a681acfb698e9ca1704f29c99d5"
+      ],
+      "status": "PASS"
     }
   ],
   "relations": [],
