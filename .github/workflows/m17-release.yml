@@ -76,20 +76,21 @@ jobs:
         with:
           name: doctorcode-release-bundle
           path: dist
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
       - name: Install and smoke on Windows
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           ./scripts/install.ps1 -SourceDir dist -InstallDir "$env:RUNNER_TEMP/doctorcode-bin"
-          & "$env:RUNNER_TEMP/doctorcode-bin/doctorcode.exe" version --json
-          & "$env:RUNNER_TEMP/doctorcode-bin/doctorcode-mcp.exe" --version --json
+          python scripts/smoke_release.py --manifest dist/release-manifest.json --bin-dir "$env:RUNNER_TEMP/doctorcode-bin"
       - name: Install and smoke on Unix
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          ./scripts/install.sh --source-dir dist --install-dir "$RUNNER_TEMP/doctorcode-bin"
-          "$RUNNER_TEMP/doctorcode-bin/doctorcode" version --json
-          "$RUNNER_TEMP/doctorcode-bin/doctorcode-mcp" --version --json
+          bash ./scripts/install.sh --source-dir dist --install-dir "$RUNNER_TEMP/doctorcode-bin"
+          python scripts/smoke_release.py --manifest dist/release-manifest.json --bin-dir "$RUNNER_TEMP/doctorcode-bin"
 
   publish-release:
     name: m17-publish-release
