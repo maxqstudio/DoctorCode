@@ -33,6 +33,10 @@ jobs:
       - name: Resolve MCP module dependencies
         working-directory: mcp
         run: go mod tidy
+      - name: Verify MCP dependency lock is clean
+        working-directory: mcp
+        shell: bash
+        run: git diff --exit-code -- go.mod go.sum
       - name: MCP tests
         working-directory: mcp
         run: go test ./...
