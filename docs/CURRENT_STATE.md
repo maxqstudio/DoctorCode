@@ -3,18 +3,18 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
+Authority verified at SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Governance profile: strict
 
 ## Current phase
 Phase: M17_RELEASE_INSTALL_HARDENING
-Status: M17_ACCEPTED
+Status: M17_MAIN_ACCEPTED
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m17-release-install-hardening
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
+Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Current candidate SHA: external final acceptance evidence
 Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 
@@ -52,12 +52,16 @@ SEQUENCE_SYNC: PASS
 - M10 Python labels run 36379047057, M07 Python Real World run 36379047133, M06 Go labels run 36379047144, and Real World Go run 36379047115 all passed on Linux, Windows, and macOS at a6beafebe53f4b98a926c95b4e69033beb40bcf5.
 - M17 Release and Install run 36379047097 at a6beafebe53f4b98a926c95b4e69033beb40bcf5 built and verified all six archives and successfully installed/executed native artifacts on Ubuntu, Windows, and macOS.
 - The repaired macOS installer path is proven by m17-install-macos-latest success at exact final candidate a6beafebe53f4b98a926c95b4e69033beb40bcf5; the pre-fix ${actual,,} failure remains retained as RED evidence.
+- M17 Release and Install Hardening merged through PR #20 to protected main at cd05f064e1bb1054271e7028941c1fbb80ea32aa.
+- Exact M17 main Governance Bootstrap run 36421348926 completed success.
+- Exact M17 main Core CI run 36421349324, M16 Thin MCP run 36421349355, M10 Python labels run 36421348965, M07 Python Real World run 36421349273, M06 Go labels run 36421348961, and Real World Go run 36421349295 completed success across Linux, Windows, and macOS.
+- Exact M17 main Release and Install run 36421349348 completed success: deterministic release build plus Ubuntu, Windows, and macOS native install-smoke all passed; publish-release was correctly skipped because no tag existed.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
 - SHA-256 checksums provide release-channel integrity verification but are not a code-signing or hardware-backed provenance claim.
-- A public v0.1.0 tag and GitHub Release have not been published; publication is blocked until M17 is MAIN_ACCEPTED.
 - M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
+- Public v0.1.0 publication is authorized but not yet proven until the immutable tag and GitHub Release readback are verified.
 
 ## Known blockers
 - None declared.
@@ -66,13 +70,13 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Run final exact-SHA acceptance on the finalized M17 branch tree after the M17_ACCEPTED ledger and generated Project Truth are synchronized.
-- Merge FINAL_ACCEPTED M17 to protected main through pull request and rerun all permanent acceptance lanes on the exact main merge SHA.
-- After M17_MAIN_ACCEPTED only, publish immutable v0.1.0 release assets from that exact accepted main SHA and verify the GitHub Release readback.
+- Publish immutable v0.1.0 from exact accepted product main SHA cd05f064e1bb1054271e7028941c1fbb80ea32aa.
+- Require the tag-triggered M17 release workflow to rebuild, verify, install-smoke, and publish the release assets before declaring DoctorCode public release complete.
+- Read back the v0.1.0 tag target, GitHub Release asset set, and checksums before final product closure.
 
 ## Explicitly blocked
-- Publishing or moving a public release tag before M17_MAIN_ACCEPTED.
+- Moving or recreating v0.1.0 after publication.
 - Claiming arm64 native execution where only cross-build/archive verification exists.
 - Claiming SHA-256 checksums are cryptographic code signing.
 - Adding automatic PATH mutation or privileged installation as part of the default installer.
-- Widening detector, context, verification, Skill, or MCP authority during release packaging.
+- Widening detector, context, verification, Skill, or MCP authority during release publication.

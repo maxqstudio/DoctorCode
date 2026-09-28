@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m17-release-install-hardening
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 2e76c9e635a8a68507fea9d44438f74e96d8e754
+Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
 
 ## Authorities
