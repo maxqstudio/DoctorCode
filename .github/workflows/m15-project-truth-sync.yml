@@ -1,0 +1,289 @@
+name: M15 Project Truth Sync
+
+on:
+  push:
+    branches:
+      - "work/m15-thin-skill-adapter"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m15-thin-skill-adapter
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Apply M15 governance specs
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          BASE_MAIN = "86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198"
+          PRODUCT = "4e67e558baa7353725052fc0cd9a62e65e99b426"
+          SKILL_AUTH = "1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720"
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              p = Path(path)
+              p.parent.mkdir(parents=True, exist_ok=True)
+              p.write_bytes((json.dumps(data, indent=2, sort_keys=True) + "\n").encode("utf-8"))
+
+          state = load(".workflow/state.json")
+          state["phase"] = "M15_THIN_SKILL_ADAPTER"
+          state["status"] = "M15_VALIDATING"
+          state["working_branch"] = "work/m15-thin-skill-adapter"
+          state["blockers"] = []
+          state["proven"] = [
+              "M14 is MAIN_ACCEPTED with product baseline main@6952187538ffa4a6f3f149db440d1f6f6960ba61 and governance-normalized main@4ab4190f98bcc823f4869d777ad8ba66e701c3cd.",
+              "Skill_Workflow authority is pinned to " + SKILL_AUTH + " and DoctorCode vendors its deterministic-LF Project Truth sync plus matching STRICT selftest.",
+              "M15 branches from protected main@" + BASE_MAIN + " after the Skill_Workflow authority prerequisite merged and its post-merge acceptance passed.",
+              "M15 RED Core CI run 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not yet exist.",
+              "M15 first implementation Core CI run 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc exposed a Windows-only CRLF-sensitive skill contract test while Ubuntu and macOS passed.",
+              "M15 portable product candidate " + PRODUCT + " passed Core CI 36368008963 on Linux, Windows, and macOS after newline-normalizing only the acceptance test.",
+              "At the same product candidate, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 passed on all three operating systems.",
+              "The DoctorCode skill is self-contained at skills/doctorcode/SKILL.md, stays under 500 lines, and orchestrates existing CLI commands instead of owning detector, context, or verification logic.",
+              "The skill requires audit -> context -> pre-repair contract -> bounded repair -> verify and preserves safe_autofix=false plus static-evidence limitations."
+          ]
+          state["not_proven"] = [
+              "M15 does not prove that every third-party agent runtime implements the Agent Skills convention identically.",
+              "M15 does not install DoctorCode binaries or manage PATH; release/install packaging remains a later milestone.",
+              "M15 does not add an MCP server or transport.",
+              "M15 does not execute project tests or runtime checks as DoctorCode authority.",
+              "The skill cannot enlarge the proof boundaries of the underlying CLI/core."
+          ]
+          state["next_authorized_actions"] = [
+              "Generate and validate M15 Project Truth plus CURRENT sequence evidence.",
+              "Run final exact-SHA Governance Bootstrap, Core CI, and every accepted real-world lane after the temporary sync workflow is removed.",
+              "After FINAL_ACCEPTED, merge M15 through the protected-main pull-request path and rerun exact-main acceptance.",
+              "After M15_MAIN_ACCEPTED, proceed to the next adapter/release milestone declared by governance."
+          ]
+          state["blocked_actions"] = [
+              "Duplicating detector, related-context, or verification algorithms inside the skill.",
+              "Treating skill prose as stronger authority than DoctorCode CLI output.",
+              "Executing arbitrary repository-provided commands as DoctorCode verification authority.",
+              "Adding MCP transport behavior inside the M15 Skill adapter."
+          ]
+          save(".workflow/state.json", state)
+
+          acceptance = load(".workflow/acceptance.json")
+          acceptance["evidence_boundary"] = (
+              "M15 Thin Skill Adapter adds one self-contained Agent Skills artifact at skills/doctorcode/SKILL.md. "
+              "It is orchestration-only: audit, bounded context, pre-repair contract capture, minimal repair guidance, "
+              "and deterministic verify remain implemented exclusively by the DoctorCode CLI/core. The skill does not "
+              "execute repository-provided commands, add mutation authority, prove safe deletion, package the binary, "
+              "or provide MCP transport. Product candidate " + PRODUCT + " preserves every accepted cross-platform lane."
+          )
+          acceptance["sequence_mode"] = "DURING"
+          acceptance["sequence_session"] = "M15-THIN-SKILL-ADAPTER"
+          acceptance["sequence_sync_status"] = "PASS"
+          acceptance["requirements"] = [
+              {"id":"M15-MAIN-BASELINE","requirement":"M15 must branch from the post-authority-sync protected main and retain current Skill_Workflow authority.","evidence":"work/m15-thin-skill-adapter starts from main@" + BASE_MAIN + "; Skill_Workflow is pinned to " + SKILL_AUTH + ".","status":"PASS"},
+              {"id":"M15-RED-SKILL","requirement":"The skill artifact contract must be demonstrated absent before implementation.","evidence":"Core CI 36367800524 at f5ea8aaaaed002f6b1400590cb7f012da46e3d83 failed because skills/doctorcode/SKILL.md did not exist.","status":"PASS"},
+              {"id":"M15-THIN-AUTHORITY","requirement":"The Skill adapter must orchestrate DoctorCode CLI commands and must not contain a second detector/context/verifier implementation.","evidence":"skills/doctorcode/SKILL.md contains workflow prose only; internal/skilladapter/skill_test.go enforces required CLI surfaces and bounded-authority language.","status":"PASS"},
+              {"id":"M15-PRE-REPAIR-CONTRACT","requirement":"The skill must require contract capture before editing and verify after editing.","evidence":"skills/doctorcode/SKILL.md explicitly sequences audit -> context -> contract before editing -> minimal repair -> verify and explains why post-edit contract creation is invalid evidence.","status":"PASS"},
+              {"id":"M15-SAFETY-BOUNDARY","requirement":"The skill must preserve safe_autofix=false, zero-reference uncertainty, and no repository-command execution as DoctorCode authority.","evidence":"SKILL.md Authority Boundaries, Failure Handling, Red Flags, and Verification Checklist preserve all three boundaries.","status":"PASS"},
+              {"id":"M15-CROSS-PLATFORM-SKILL-CONTRACT","requirement":"Skill validation must pass on Linux, Windows, and macOS including CRLF checkout behavior.","evidence":"Initial Core CI 36367916668 exposed Windows CRLF sensitivity; product candidate Core CI 36368008963 passes after newline-portable validation without changing skill semantics.","status":"PASS"},
+              {"id":"M15-REGRESSION-MATRIX","requirement":"All previously accepted detector, context, verification, and public-source lanes must remain passing across Linux, Windows, and macOS.","evidence":"At " + PRODUCT + ": Core CI 36368008963, M10 Python labels 36368009004, M07 Python Real World 36368009093, M06 Go labels 36368009024, and Real World Go 36368009068 all pass on three operating systems.","status":"PASS"},
+              {"id":"M15-STRICT-GOVERNANCE-FINAL","requirement":"Generated Project Truth and M15 sequence artifacts must pass strict governance on the final exact branch SHA after temporary workflows are removed.","evidence":"NOT_PROVEN until synchronized final candidate is checked.","status":"NOT_PROVEN"}
+          ]
+          if "go test ./internal/skilladapter -v" not in acceptance["test_commands"]:
+              acceptance["test_commands"].append("go test ./internal/skilladapter -v")
+          if "DoctorCode skill contract validation" not in acceptance["runtime_checks"]:
+              acceptance["runtime_checks"].append("DoctorCode skill contract validation")
+          acceptance.setdefault("truth_gates", {})["SEQUENCE_SYNC"] = "PASS"
+          acceptance["truth_gates"]["CROSS_DOCUMENT_CONSISTENCY"] = "NOT_PROVEN"
+          acceptance["truth_gates"]["PROJECT_STATE_SYNC"] = "NOT_PROVEN"
+          save(".workflow/acceptance.json", acceptance)
+
+          project = load(".workflow/project.json")
+          if not any(x.get("name") == "DoctorCode agent skill" for x in project["entry_points"]):
+              project["entry_points"].append({
+                  "name": "DoctorCode agent skill",
+                  "path": "skills/doctorcode/SKILL.md",
+                  "purpose": "Guide agents through the deterministic DoctorCode audit, context, contract, repair, and verify lifecycle without duplicating core logic."
+              })
+          save(".workflow/project.json", project)
+
+          architecture = load(".workflow/architecture.json")
+          if not any(x.get("id") == "skill_adapter" for x in architecture["components"]):
+              architecture["components"].append({
+                  "id": "skill_adapter",
+                  "name": "Thin Agent Skill Adapter",
+                  "purpose": "Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core.",
+                  "owns": ["skills/doctorcode/SKILL.md orchestration contract"],
+                  "depends_on": ["CLI"]
+              })
+          if not any(x.get("from") == "coding agent" and x.get("to") == "Thin Agent Skill Adapter" for x in architecture["data_flows"]):
+              architecture["data_flows"].append({"from":"coding agent","to":"Thin Agent Skill Adapter","meaning":"The agent loads a bounded workflow contract when code diagnosis or repair needs DoctorCode evidence."})
+              architecture["data_flows"].append({"from":"Thin Agent Skill Adapter","to":"CLI","meaning":"The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms."})
+          if not any(x.get("name") == "Skill adapter authority boundary" for x in architecture["external_boundaries"]):
+              architecture["external_boundaries"].append({
+                  "name":"Skill adapter authority boundary",
+                  "contract":"Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results."
+              })
+          save(".workflow/architecture.json", architecture)
+
+          claims = load(".workflow/claims.json")
+          known = {x["id"] for x in claims["claims"]}
+          additions = [
+              {"id":"TRUTH-M15-THIN-SKILL","claim":"M15 provides a self-contained DoctorCode Agent Skill whose only product behavior is orchestration of existing CLI authority.","documents":["PROJECT_TRUTH_SYNC.md"],"source_owners":["skills/doctorcode/SKILL.md"],"tests":["internal/skilladapter/skill_test.go"],"runtime_evidence":["GitHub Actions Core CI 36368008963 at " + PRODUCT],"status":"PASS"},
+              {"id":"TRUTH-M15-CROSS-PLATFORM","claim":"The M15 skill contract is newline-portable and passes the DoctorCode core test matrix on Linux, Windows, and macOS without changing adapter semantics per platform.","documents":["PROJECT_TRUTH_SYNC.md"],"source_owners":["skills/doctorcode/SKILL.md","internal/skilladapter/skill_test.go"],"tests":["internal/skilladapter/skill_test.go"],"runtime_evidence":["RED GitHub Actions Core CI 36367916668 at c3d633784fecf10defe6513ac873b70a71016ebc","GREEN GitHub Actions Core CI 36368008963 at " + PRODUCT],"status":"PASS"},
+              {"id":"TRUTH-M15-REGRESSION-MATRIX","claim":"The M15 product candidate preserves all previously accepted Go/Python detector, context, verification, labeled, and public-source lanes on Linux, Windows, and macOS.","documents":["PROJECT_TRUTH_SYNC.md"],"source_owners":[".github/workflows/ci.yml"],"tests":[".github/workflows/ci.yml",".github/workflows/m10-python-labeled-real-world.yml",".github/workflows/m07-python-real-world.yml",".github/workflows/m06-labeled-real-world.yml",".github/workflows/real-world-go.yml"],"runtime_evidence":["Core CI 36368008963 at " + PRODUCT,"M10 Python labels 36368009004 at " + PRODUCT,"M07 Python Real World 36368009093 at " + PRODUCT,"M06 Go labels 36368009024 at " + PRODUCT,"Real World Go 36368009068 at " + PRODUCT],"status":"PASS"}
+          ]
+          for item in additions:
+              if item["id"] not in known:
+                  claims["claims"].append(item)
+          save(".workflow/claims.json", claims)
+
+          decisions = load(".workflow/decisions.json")
+          ids = {x["id"] for x in decisions["decisions"]}
+          for item in [
+              {"id":"ADR-M15-001","title":"Keep the Agent Skill orchestration-only","status":"ACCEPTED","decision":"M15 ships one self-contained SKILL.md that sequences existing DoctorCode CLI operations and carries no detector, context, or verifier implementation.","rationale":"A second implementation in prose or scripts would drift from deterministic core authority and make agent behavior model-dependent."},
+              {"id":"ADR-M15-002","title":"Freeze verification before repair in the skill workflow","status":"ACCEPTED","decision":"The skill requires doctorcode contract before any repair edit and doctorcode verify after the edit.","rationale":"M14 verification needs a genuine pre-repair baseline; creating the contract after mutation destroys that evidence."},
+              {"id":"ADR-M15-003","title":"Keep repository execution outside DoctorCode skill authority","status":"ACCEPTED","decision":"Project tests and runtime checks may be run only under project-specific trust/governance and remain separate evidence from DoctorCode verification.","rationale":"DoctorCode analyzes arbitrary repositories as untrusted input and must not turn repository-provided command strings into execution authority."}
+          ]:
+              if item["id"] not in ids:
+                  decisions["decisions"].append(item)
+          save(".workflow/decisions.json", decisions)
+
+          changelog = load(".workflow/changelog.json")
+          if not any(x.get("title") == "M15 Thin Skill Adapter candidate" for x in changelog["entries"]):
+              changelog["entries"].insert(0,{
+                  "date":"2026-09-28",
+                  "title":"M15 Thin Skill Adapter candidate",
+                  "type":"development",
+                  "changes":[
+                      "Added self-contained skills/doctorcode/SKILL.md with Agent Skills frontmatter and bounded DoctorCode workflow.",
+                      "Kept detector, context, verification, mutation, and repository-command execution authority out of the adapter.",
+                      "Added cross-platform contract tests and repaired Windows CRLF sensitivity in the test itself.",
+                      "Preserved every accepted Linux, Windows, and macOS regression lane."
+                  ]
+              })
+          save(".workflow/changelog.json", changelog)
+
+          m14 = load("docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json")
+          m14["scope"] = "HISTORICAL"
+          save("docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json", m14)
+
+          save(".workflow/workflows/FLOW-THIN-SKILL-ADAPTER.json",{
+              "schema_version":1,
+              "flow_id":"FLOW-THIN-SKILL-ADAPTER",
+              "title":"Agent-guided DoctorCode repair lifecycle",
+              "purpose":"Sequence one deterministic DoctorCode finding through bounded context, pre-repair contract capture, minimal repair, and deterministic verification without duplicating core logic.",
+              "authority":"skills/doctorcode/SKILL.md plus DoctorCode CLI/core",
+              "entry_condition":"An agent or human chooses to use DoctorCode for diagnosis or repair evidence.",
+              "source_owners":["skills/doctorcode/SKILL.md","cmd/doctorcode/main.go"],
+              "states":["AUDITED","FINDING_SELECTED","CONTEXT_BOUNDED","CONTRACT_FROZEN","REPAIR_APPLIED","VERIFIED","EVIDENCE_REPORTED"],
+              "transitions":[
+                  {"from":"AUDITED","to":"FINDING_SELECTED","action":"Select one exact current deterministic finding.","side_effects":[]},
+                  {"from":"FINDING_SELECTED","to":"CONTEXT_BOUNDED","action":"Request a bounded context packet for the exact finding ID.","side_effects":[]},
+                  {"from":"CONTEXT_BOUNDED","to":"CONTRACT_FROZEN","action":"Capture the verification contract before source mutation.","side_effects":["writes caller-selected contract file"]},
+                  {"from":"CONTRACT_FROZEN","to":"REPAIR_APPLIED","action":"Apply the smallest evidence-supported source repair under project authority.","side_effects":["source mutation is performed by the human or agent, not DoctorCode"]},
+                  {"from":"REPAIR_APPLIED","to":"VERIFIED","action":"Run DoctorCode verify against the frozen contract.","side_effects":[]},
+                  {"from":"VERIFIED","to":"EVIDENCE_REPORTED","action":"Report DoctorCode evidence separately from project-specific runtime or test evidence.","side_effects":[]}
+              ],
+              "invariants":[
+                  "The skill never creates findings independently of the CLI.",
+                  "The verification contract is captured before repair.",
+                  "safe_autofix=false never becomes mutation authority.",
+                  "Zero conservative references never prove safe deletion.",
+                  "Repository-provided commands are not DoctorCode verification authority.",
+                  "DoctorCode verification PASS is narrower than runtime correctness."
+              ],
+              "tests":["internal/skilladapter/skill_test.go",".github/workflows/ci.yml"],
+              "sequence_session":"M15-THIN-SKILL-ADAPTER",
+              "critical":false,
+              "failure_behavior":["Stale finding IDs, analyzer drift, blocking regressions, or ambiguous evidence stop the DoctorCode verification path instead of being guessed around."],
+              "restart_behavior":["Re-audit current source, select the current finding, and capture a fresh contract before a new repair attempt."],
+              "rollback_behavior":["Removing the skill returns DoctorCode to direct CLI usage without changing core behavior."]
+          })
+
+          save("docs/sequence/sessions/M15-THIN-SKILL-ADAPTER.json",{
+              "schema_version":1,
+              "session_id":"M15-THIN-SKILL-ADAPTER",
+              "phase":"M15_THIN_SKILL_ADAPTER",
+              "mode":"DURING",
+              "scope":"CURRENT",
+              "critical":false,
+              "status":"IN_PROGRESS",
+              "implementation_base_sha":BASE_MAIN,
+              "plan":{"required":False,"contract":"","frozen":False,"frozen_commit":"","sha256":"","diagram":""},
+              "actual":{"graph":"docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.json","diagram":"docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.mmd","source_digest":"","entries":[]},
+              "test_traceability_required":True,
+              "tests":["internal/skilladapter/skill_test.go",".github/workflows/ci.yml"],
+              "runtime_trace":{"required":False,"graph":""},
+              "acceptance_report":""
+          })
+
+          readme_path = Path("README.md")
+          readme = readme_path.read_text(encoding="utf-8")
+          if "### M15 thin Agent Skill adapter" not in readme:
+              section = (
+                  "\n### M15 thin Agent Skill adapter\n\n"
+                  "DoctorCode ships a self-contained agent skill at `skills/doctorcode/SKILL.md`. "
+                  "The skill is orchestration-only: it guides agents through `audit -> context -> contract -> repair -> verify` "
+                  "while the CLI/core remains the sole detector, evidence, and verification authority. It preserves "
+                  "`safe_autofix=false`, zero-reference uncertainty, and the rule that repository-provided commands are "
+                  "not DoctorCode verification authority.\n\n"
+              )
+              insert_at = readme.find("\n## Funding")
+              if insert_at < 0:
+                  insert_at = len(readme)
+              readme = readme[:insert_at] + section + readme[insert_at:]
+          readme_path.write_bytes(readme.encode("utf-8"))
+
+      - name: Remove temporary workflow from intended final tree
+        run: git rm .github/workflows/m15-project-truth-sync.yml
+
+      - name: Generate M15 sequence actual
+        run: >
+          python .workflow/tools/generate_sequence_actual.py
+          --root .
+          --output-json docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.json
+          --output-mermaid docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.mmd
+
+      - name: Synchronize generated Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+
+      - name: Commit intended final tree locally
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs(m15): synchronize thin skill adapter project truth"
+
+      - name: Validate intended final M15 tree
+        run: |
+          git diff --exit-code
+          git diff --cached --exit-code
+          python .workflow/tools/validate_sequence_contract.py --root . --session docs/sequence/sessions/M15-THIN-SKILL-ADAPTER.json
+          python .workflow/tools/validate_sequence_sessions.py
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_cross_document_consistency.py --base 86c0998bbdb3b6d8c76bbcaf3e48b2ad39d4f198 --require-base
+          python .workflow/tools/validate_project_truth.py
+
+      - name: Prepare connector-safe non-workflow commit
+        shell: bash
+        run: |
+          git reset --soft "$GITHUB_SHA"
+          git restore --source="$GITHUB_SHA" --staged --worktree .github/workflows/m15-project-truth-sync.yml
+          git add -A
+          git commit -m "docs(m15): synchronize thin skill adapter project truth"
+
+      - name: Push synchronized non-workflow truth
+        shell: bash
+        run: git push origin HEAD:work/m15-thin-skill-adapter
