@@ -1,0 +1,55 @@
+name: M17 Publish v0.1.0 Tag
+
+on:
+  push:
+    branches:
+      - "work/m17-publish-v010"
+
+permissions:
+  contents: read
+
+jobs:
+  publish-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify release authorization
+        shell: bash
+        env:
+          ADMIN_TOKEN: ${{ secrets.DOCTORCODE_ADMIN_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$ADMIN_TOKEN" || {
+            echo "::error::DOCTORCODE_ADMIN_TOKEN is required so the tag event can trigger the permanent release workflow"
+            exit 1
+          }
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          state = json.loads(Path(".workflow/state.json").read_text(encoding="utf-8"))
+          assert state["status"] == "M17_MAIN_ACCEPTED", state["status"]
+          assert state["last_accepted_sha"] == "cd05f064e1bb1054271e7028941c1fbb80ea32aa", state["last_accepted_sha"]
+          print("M17_MAIN_ACCEPTED_AUTHORIZATION=PASS")
+          PY
+          git cat-file -e cd05f064e1bb1054271e7028941c1fbb80ea32aa^{commit}
+          if git ls-remote --exit-code origin refs/tags/v0.1.0 >/dev/null 2>&1; then
+            echo "::error::v0.1.0 already exists; refusing to move or recreate it"
+            exit 1
+          fi
+
+      - name: Create immutable annotated v0.1.0 tag
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.DOCTORCODE_ADMIN_TOKEN }}
+        run: |
+          set -euo pipefail
+          tag_object_sha="$(
+            gh api               --method POST               "repos/$GITHUB_REPOSITORY/git/tags"               -f tag='v0.1.0'               -f message='DoctorCode v0.1.0'               -f object='cd05f064e1bb1054271e7028941c1fbb80ea32aa'               -f type='commit'               --jq .sha
+          )"
+          test -n "$tag_object_sha"
+          gh api             --method POST             "repos/$GITHUB_REPOSITORY/git/refs"             -f ref='refs/tags/v0.1.0'             -f sha="$tag_object_sha" >/dev/null
+          echo "ANNOTATED_TAG_OBJECT=$tag_object_sha"
+          echo "V010_TAG_CREATED=PASS"
