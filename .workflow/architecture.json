@@ -5,7 +5,8 @@
         "scanner",
         "toolchain registry",
         "detector engine",
-        "evidence reducer"
+        "evidence reducer",
+        "Shared Application Facade"
       ],
       "id": "cli",
       "name": "CLI",
@@ -204,6 +205,37 @@
         "skills/doctorcode/SKILL.md orchestration contract"
       ],
       "purpose": "Provide model-neutral orchestration instructions over the DoctorCode CLI while keeping all analysis and verification authority in the core."
+    },
+    {
+      "id": "application_facade",
+      "name": "Shared Application Facade",
+      "purpose": "Expose audit, bounded context, pre-repair contract, and deterministic verify as one transport-neutral application surface.",
+      "owns": [
+        "Audit",
+        "Context",
+        "Contract",
+        "Verify orchestration"
+      ],
+      "depends_on": [
+        "detector engine",
+        "evidence reducer",
+        "Deterministic Verification Contract"
+      ]
+    },
+    {
+      "id": "mcp_adapter",
+      "name": "Thin MCP Adapter",
+      "purpose": "Expose the shared DoctorCode application facade as four read-only bounded MCP tools over local stdio.",
+      "owns": [
+        "startup root binding",
+        "MCP tool schemas",
+        "stdio server entrypoint",
+        "MCP result/error translation"
+      ],
+      "depends_on": [
+        "Shared Application Facade",
+        "modelcontextprotocol/go-sdk"
+      ]
     }
   ],
   "data_flows": [
@@ -351,6 +383,16 @@
       "from": "Thin Agent Skill Adapter",
       "meaning": "The skill invokes the existing audit, context, contract, and verify surfaces; it does not reproduce their algorithms.",
       "to": "CLI"
+    },
+    {
+      "from": "MCP client",
+      "to": "Thin MCP Adapter",
+      "meaning": "A client invokes one of four bounded read-only DoctorCode tools; repository scope is fixed when the server starts."
+    },
+    {
+      "from": "Thin MCP Adapter",
+      "to": "Shared Application Facade",
+      "meaning": "The adapter translates typed MCP input/results and delegates DoctorCode semantics to the same application authority used by the CLI."
     }
   ],
   "external_boundaries": [
@@ -401,6 +443,10 @@
     {
       "contract": "Skill prose may sequence DoctorCode CLI operations and restate proof limits but cannot create findings, expand evidence, authorize mutation, or override verification results.",
       "name": "Skill adapter authority boundary"
+    },
+    {
+      "name": "MCP transport boundary",
+      "contract": "M16 proves local stdio transport only. Tool schemas cannot select repository root/path or execute arbitrary commands; all four tools are read-only and preserve underlying DoctorCode proof boundaries."
     }
   ],
   "schema_version": 1
