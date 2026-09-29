@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
-Status: M19_HARDENED_PENDING_FINAL_ACCEPTANCE
+Status: M19_BRANCH_ACCEPTED_PENDING_FINAL_SYNC
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -80,6 +80,7 @@ SEQUENCE_SYNC: PASS
 - M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 - M19 parameter-mutation hardening rejects duplicate-condition proof when the relevant nearest-function parameter is assigned or updated between occurrences.
 - Focused GitHub Actions run 36558288844 on the expanded 24-case M19 corpus passed with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0, while also preserving the M18 regression benchmark and JavaScript analyzer unit tests.
+- Exact M19 branch candidate 0888ce69057e2c344fc51b9145d076b77c5e84fb passed Governance 36558637734, Core CI 36558637710 with the 24-case LOGIC corpus at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36558637761, Real World Go 36558637776, M07 36558637718, M10 36558637787, M16 MCP 36558637784, and M17 Release and Install 36558637739 including Ubuntu/Windows/macOS native install-smoke.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -97,8 +98,8 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M19 Project Truth and current sequence evidence using Skill_Workflow authority 2148313678f476c4990e447b4d657724f071adff.
-- Remove temporary focused-validation workflow and run all permanent workflows on one exact 24-case M19 candidate.
+- Bind exact 24-case branch acceptance evidence into M19 acceptance ledger and regenerate Project Truth.
+- Run one final exact synchronized M19 branch candidate through all permanent workflows.
 - Merge accepted M19 through pull request and revalidate exact main.
 
 ## Explicitly blocked
