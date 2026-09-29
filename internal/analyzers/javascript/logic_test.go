@@ -2,12 +2,10 @@ package javascriptanalysis
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"path/filepath"
 	"testing"
 
-	gotreesitter "github.com/odvcencio/gotreesitter"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
 
@@ -54,26 +52,7 @@ func TestASTLogicFindsSupportedPrimitiveConditions(t *testing.T) {
 				"}\n"
 			findings := analyzeLogicFixture(t, "sample.js", source)
 			if len(findings) != 1 {
-				document, parseErr := parseSyntax("sample.js", []byte(source))
-				if parseErr != nil {
-					t.Fatalf("findings=%d want=1 parseErr=%v: %#v", len(findings), parseErr, findings)
-				}
-				var firstIf *gotreesitter.Node
-				gotreesitter.Walk(document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
-					if firstIf == nil && node.Type(document.language) == "if_statement" {
-						firstIf = node
-						return gotreesitter.WalkStop
-					}
-					return gotreesitter.WalkContinue
-				})
-				chain := logicASTIfChain(firstIf, document.language)
-				var diagnostics []string
-				for _, item := range chain {
-					key, binding, ok := normalizeLogicASTCondition(source, item.condition, document.language)
-					param := logicASTNearestTraditionalParameter(item.condition, document.language, source, binding)
-					diagnostics = append(diagnostics, fmt.Sprintf("key=%q binding=%q ok=%v param=%v", key, binding, ok, param))
-				}
-				t.Fatalf("findings=%d want=1 chain=%d diag=%v tree=%s: %#v", len(findings), len(chain), diagnostics, document.tree.RootNode().SExpr(document.language), findings)
+				t.Fatalf("findings=%d want=1: %#v", len(findings), findings)
 			}
 			if findings[0].LineStart != 6 || findings[0].SafeAutofix {
 				t.Fatalf("unexpected finding: %#v", findings[0])
