@@ -299,12 +299,13 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 | LEXICAL_VALIDATION | IF_CHAIN_SCAN | Mask comments, strings, and template bodies while preserving source offsets; malformed lexical constructs fail closed. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
 | IF_CHAIN_SCAN | PURE_CONDITION_NORMALIZATION | Inspect if/else-if chains without executing source. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
 | PURE_CONDITION_NORMALIZATION | DUPLICATE_CHECK | Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
-| DUPLICATE_CHECK | FINDING_OUTPUT | Emit at most one LOGIC finding per chain when a normalized condition repeats later. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
+| DUPLICATE_CHECK | FINDING_OUTPUT | Emit at most one LOGIC finding per chain when a normalized parameter condition repeats later and the tracked parameter is not assigned or updated between occurrences. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
 
 ### Invariants
 
 - No JavaScript or TypeScript source is executed by DoctorCode.
 - M19 binding proof is limited to parameters of the nearest traditional function/function-expression scope; globals, closures, methods, arrows, and local declarations are not inferred.
+- A tracked parameter assignment or update between the first and repeated condition invalidates duplicate-condition proof.
 - Calls, member access, optional chaining, assignments, update expressions, loose equality, arithmetic/coercive comparisons, and template/string-dependent conditions are outside M19 proof.
 - Every M19 finding keeps safe_autofix=false.
 - M19 does not add DEADCODE or BLOAT authority and does not claim full JS/TS parsing.

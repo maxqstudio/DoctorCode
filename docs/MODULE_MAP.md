@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
+Source digest: 337ab0e80ab6d4d6a2db114edfffae92f4b07c6f1c6c501bf68cf709bf3328c1
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -19,8 +19,8 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
 | internal/analyzers/javascript/analyzer.go | Go | 197 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/analyzer_test.go | Go | 61 | internal/analyzers/javascript | NO |
-| internal/analyzers/javascript/logic.go | Go | 386 | internal/analyzers/javascript | NO |
-| internal/analyzers/javascript/logic_test.go | Go | 114 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic.go | Go | 450 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic_test.go | Go | 148 | internal/analyzers/javascript | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
@@ -157,6 +157,8 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m19-js-ts-logic/member-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/member-negative | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/method-negative/sample.js | JavaScript | 12 | internal/benchmark/testdata/m19-js-ts-logic/method-negative | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive/sample.js | JavaScript | 12 | internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/parameter-reassigned-negative/sample.js | JavaScript | 11 | internal/benchmark/testdata/m19-js-ts-logic/parameter-reassigned-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/parameter-updated-negative/sample.js | JavaScript | 11 | internal/benchmark/testdata/m19-js-ts-logic/parameter-updated-negative | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative/sample.js | JavaScript | 9 | internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative | NO |

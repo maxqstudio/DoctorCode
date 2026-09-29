@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The final M19 corpus has 22 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The hardened M19 corpus has 24 cases. The two added parameter-mutation guards first exposed 8 TP / 2 FP / 0 FN; after repair the corpus reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. A tracked parameter assignment or update between duplicate conditions invalidates proof. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
+Current source digest: 337ab0e80ab6d4d6a2db114edfffae92f4b07c6f1c6c501bf68cf709bf3328c1
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -39,6 +39,9 @@ Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c80
 | M19-GLOBAL-BINDING-RED | Adversarial evidence must reject treating unqualified global identifiers as proven stable bindings. | Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; global-accessor-negative was the sole unexpected LOGIC finding. | PASS |
 | M19-BOUNDED-LOGIC | The M19 LOGIC rule must remain read-only and bounded to nearest traditional-function parameters plus primitive non-coercive condition forms. | internal/analyzers/javascript/logic.go requires nearest traditional function/function-expression parameter proof, accepts only bare/negated identifiers or identifier ===/!== true/false/null, resets tracking at unsupported/unproven conditions, emits MEDIUM/HIGH LOGIC findings, and leaves safe_autofix=false. | PASS |
 | M19-ADVERSARIAL-GREEN | The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. | PASS |
+| M19-PARAMETER-MUTATION-RED | The accepted 22-case M19 rule must be challenged with parameter reassignment/update cases before final closure. | Core CI run 36560538238 at d2b22be0356a8282a4cc589ba9e91e6b68b8a69d failed on Ubuntu, Windows, and macOS with 24 cases at 8 TP / 2 FP / 0 FN. The two false positives were parameter-reassigned-negative and parameter-updated-negative. | PASS |
+| M19-PARAMETER-MUTATION-GREEN | Parameter assignment/update between the first and repeated primitive condition must invalidate duplicate-condition proof, while all prior M19 positives remain detected. | Core CI run 36560887829 at 033c5153104b855f6ee01ca45ccf374a07c656d2 passed Ubuntu, Windows, and macOS with 24 cases at 8 TP / 0 FP / 0 FN, precision=1.0 and recall=1.0. | PASS |
+| M19-HARDENING-REGRESSION | The mutation-repaired branch must preserve all accepted Go/Python/MCP/release regression behavior before governance synchronization. | At 033c5153104b855f6ee01ca45ccf374a07c656d2: M06 36560887695 PASS; Real World Go 36560887693 PASS; M07 36560887700 PASS; M10 36560887684 PASS; M16 36560887644 PASS; M17 Release and Install 36560887725 PASS including Ubuntu/Windows/macOS install-smoke. | PASS |
 
 ## Test commands
 
@@ -60,7 +63,7 @@ Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c80
 - scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py
 - existing pinned Go/Python real-world validation lanes
 - M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
-- M19 JavaScript/TypeScript 22-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS
+- M19 JavaScript/TypeScript 24-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS
 
 ## Sequence contract evidence
 
