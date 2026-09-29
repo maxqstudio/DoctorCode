@@ -7,12 +7,12 @@ Authority verified at SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Governance profile: strict
 
 ## Current phase
-Phase: M17_RELEASE_INSTALL_HARDENING
-Status: M17_PUBLIC_RELEASE_COMPLETE
+Phase: M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC
+Status: M18_IMPLEMENTED_PENDING_FINAL_ACCEPTANCE
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m18-javascript-typescript-semantic
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Current candidate SHA: external final acceptance evidence
@@ -64,12 +64,15 @@ SEQUENCE_SYNC: PASS
 - Release readback contains exactly six platform archives plus checksums.txt and release-manifest.json; every asset is uploaded and GitHub reports a SHA-256 digest.
 - Recovered checksums.txt from workflow artifact 10971548461 has SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace, exactly matching the published checksums.txt asset digest.
 - checksums.txt binds darwin/amd64 b2eea88a053f2db772217c6832bacc50969c49246e58ebb18cfa6753e27091c6, darwin/arm64 960a0834009a293635fe15c3d78d0db535e6dce46b5425cb86a8b6f1d4e7fc69, linux/amd64 c276764f7120f3d49b5343c58d91834814ef27517bc5923c017b34f457bcdb22, linux/arm64 85ad43921cca5a485a3c567411f153c955a0cbd2fc89216c722207e2a35159db, windows/amd64 e8d785da0b1a6e6345400ba3e5ca3fb215c9216a295bc420410a2002b5f936e4, windows/arm64 ce8e7de05051d3f6a998fda62f41710f7c479dd0586bb59320c8fc9daac17534, and release-manifest.json 0691d5f8a3499081ea532164881633d200d92d6133d4e9e68002a11c61d5183d.
+- M18 RED run 36442207887 at ff2eacff57b9a957765a777ecbbfd266341e3ee9 failed on all three Core CI OS lanes because the javascript benchmark analyzer did not yet exist.
+- M18 behavioral candidate fdf45321f61c5ceff2de975614967ee1864c1e62 passed Core CI run 36546094256 on Ubuntu, macOS, and Windows, including the JavaScript/TypeScript benchmark gate; accepted Go/Python/MCP/release regression workflows also passed.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
 - SHA-256 checksums provide release-channel integrity verification but are not a code-signing or hardware-backed provenance claim.
 - M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
+- M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 
 ## Known blockers
 - None declared.
@@ -78,9 +81,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Treat DoctorCode v0.1.0 as the completed public release baseline.
-- Any future product work must start as a new declared milestone from the then-current protected main without moving or recreating v0.1.0.
-- Future release versions must preserve deterministic bundle verification, native install-smoke, immutable tagging, and explicit publication readback.
+- Synchronize and validate M18 Project Truth and sequence artifacts.
+- Harden the bounded JavaScript/TypeScript corpus against adversarial false positives before final acceptance.
+- After exact branch acceptance, merge through pull request and revalidate exact main.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

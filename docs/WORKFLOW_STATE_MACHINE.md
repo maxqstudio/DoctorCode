@@ -234,6 +234,49 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 
 - M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics.
 
+## FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural analysis
+
+Purpose: Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.
+Critical: FALSE
+Entry condition: Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.
+Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json
+
+### States
+
+- APPLICABILITY_CHECK
+- SOURCE_READ
+- BOUNDED_RULE_EVALUATION
+- FINDING_CONVERSION
+- SORTED_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| APPLICABILITY_CHECK | SOURCE_READ | Detect supported visible JavaScript or TypeScript files; none returns detector unavailable. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
+| SOURCE_READ | BOUNDED_RULE_EVALUATION | Read source without following source symlinks; read errors and NUL-containing input fail closed. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
+| BOUNDED_RULE_EVALUATION | FINDING_CONVERSION | Apply only opposite boolean-return simplification and hardcoded credential literal rules. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
+| FINDING_CONVERSION | SORTED_OUTPUT | Emit stable IDs, redacted credential evidence, and safe_autofix=false; engine provides stable priority sorting. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
+
+### Invariants
+
+- No JavaScript or TypeScript source is executed by DoctorCode.
+- Credential literal values are never emitted; evidence retains only identifier, byte length, and SHA-256 prefix.
+- The M18 analyzer does not claim full AST semantics, dead-code proof, or JSX/TSX coverage.
+- Every finding keeps safe_autofix=false.
+
+### Failure behavior
+
+- No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
+
+### Restart behavior
+
+- Analysis is stateless and can be rerun against the same repository state.
+
+### Rollback behavior
+
+- The analyzer is read-only; rollback is source-control only.
+
 ## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
