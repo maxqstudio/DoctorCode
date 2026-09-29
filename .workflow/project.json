@@ -107,7 +107,9 @@
     ],
     "languages": [
       "Go",
-      "Python"
+      "Python",
+      "JavaScript",
+      "TypeScript"
     ],
     "persistence": []
   }
