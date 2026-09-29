@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m18-javascript-typescript-semantic
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
-Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
+Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -24,7 +24,7 @@ UI authority: see SOURCE_AUTHORITY_MAP.md
 Historical/reference authority: see SOURCE_AUTHORITY_MAP.md
 
 ## Technology
-Languages: Go, Python
+Languages: Go, Python, JavaScript, TypeScript
 Frameworks: Model Context Protocol Go SDK
 Persistence:
 External systems: GitHub Actions, host compilers and language runtimes, local MCP stdio clients

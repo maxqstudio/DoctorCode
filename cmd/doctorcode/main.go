@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/application"
 	"github.com/maxqstudio/DoctorCode/internal/benchmark"
@@ -455,6 +456,8 @@ func runBenchmark(args []string) {
 		analyzer = goanalysis.New()
 	case "python":
 		analyzer = pythonanalysis.New()
+	case "javascript":
+		analyzer = javascriptanalysis.New()
 	default:
 		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
 	}
@@ -528,7 +531,7 @@ Usage:
   doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
   doctorcode contract <finding-id> [path] [--json]
   doctorcode verify <contract.json> [path] [--json]
-  doctorcode benchmark <manifest.json> [--analyzer=go|python] [--json]
+  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript] [--json]
   doctorcode version [--json]
 
 M01 detector foundation:

@@ -7,6 +7,7 @@ import (
 	"sort"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/model"
@@ -21,6 +22,7 @@ func Default() *Engine {
 		analyzers: []detector.Analyzer{
 			goanalysis.New(),
 			pythonanalysis.New(),
+			javascriptanalysis.New(),
 		},
 	}
 }

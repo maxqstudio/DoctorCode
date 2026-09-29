@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 144 files, 4 language categories.
+Observed source inventory: 159 files, 6 language categories.
 
 ## Major components
 
@@ -146,6 +146,17 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 - FUNCTION_IDENTIFIED -> REFERENCES_CLASSIFIED : Reuse source AST object identity and inspect same-package Go files for production/test references while excluding local shadows and external test packages.
 - REFERENCES_CLASSIFIED -> RELATED_EXCERPTS_BOUNDED : Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.
 - RELATED_EXCERPTS_BOUNDED -> PACKET_REPORTED : Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.
+
+### FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural analysis
+
+Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.
+
+Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json
+
+- APPLICABILITY_CHECK -> SOURCE_READ : Detect supported visible JavaScript or TypeScript files; none returns detector unavailable.
+- SOURCE_READ -> BOUNDED_RULE_EVALUATION : Read source without following source symlinks; read errors and NUL-containing input fail closed.
+- BOUNDED_RULE_EVALUATION -> FINDING_CONVERSION : Apply only opposite boolean-return simplification and hardcoded credential literal rules.
+- FINDING_CONVERSION -> SORTED_OUTPUT : Emit stable IDs, redacted credential evidence, and safe_autofix=false; engine provides stable priority sorting.
 
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
@@ -275,9 +286,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M17_RELEASE_INSTALL_HARDENING
+Current phase: M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC
 
-Current status: M17_PUBLIC_RELEASE_COMPLETE
+Current status: M18_BRANCH_ACCEPTED_READY_FOR_MERGE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -316,6 +327,7 @@ compiler does not infer them from implementation names.
 - FLOW-CONTEXT-COMPILER: Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
 - FLOW-DETERMINISTIC-VERIFICATION: Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
+- FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS: No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
@@ -334,9 +346,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Treat DoctorCode v0.1.0 as the completed public release baseline.
-- Any future product work must start as a new declared milestone from the then-current protected main without moving or recreating v0.1.0.
-- Future release versions must preserve deterministic bundle verification, native install-smoke, immutable tagging, and explicit publication readback.
+- Synchronize the final M18 acceptance ledger and generated Project Truth.
+- Run exact final branch acceptance after synchronization.
+- Merge accepted M18 through pull request, then revalidate exact main.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -379,6 +391,12 @@ Known blockers:
 - Release readback contains exactly six platform archives plus checksums.txt and release-manifest.json; every asset is uploaded and GitHub reports a SHA-256 digest.
 - Recovered checksums.txt from workflow artifact 10971548461 has SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace, exactly matching the published checksums.txt asset digest.
 - checksums.txt binds darwin/amd64 b2eea88a053f2db772217c6832bacc50969c49246e58ebb18cfa6753e27091c6, darwin/arm64 960a0834009a293635fe15c3d78d0db535e6dce46b5425cb86a8b6f1d4e7fc69, linux/amd64 c276764f7120f3d49b5343c58d91834814ef27517bc5923c017b34f457bcdb22, linux/arm64 85ad43921cca5a485a3c567411f153c955a0cbd2fc89216c722207e2a35159db, windows/amd64 e8d785da0b1a6e6345400ba3e5ca3fb215c9216a295bc420410a2002b5f936e4, windows/arm64 ce8e7de05051d3f6a998fda62f41710f7c479dd0586bb59320c8fc9daac17534, and release-manifest.json 0691d5f8a3499081ea532164881633d200d92d6133d4e9e68002a11c61d5183d.
+- M18 RED run 36442207887 at ff2eacff57b9a957765a777ecbbfd266341e3ee9 failed on all three Core CI OS lanes because the javascript benchmark analyzer did not yet exist.
+- M18 behavioral candidate fdf45321f61c5ceff2de975614967ee1864c1e62 passed Core CI run 36546094256 on Ubuntu, macOS, and Windows, including the JavaScript/TypeScript benchmark gate; accepted Go/Python/MCP/release regression workflows also passed.
+- M18 adversarial RED run 36547914570 at 800ddaf827aa388e1c42b42ae3a1e5110fd1f935 exposed two JS-SIMPLIFY-BOOL-RETURN false positives from code-like text inside a line comment and quoted string: 6 TP / 2 FP / 0 FN.
+- Extended M18 adversarial run 36549001445 at 83e5c6d3104fd4d7befb46a408a6a1626670c7ec exposed one JS-SEC-HARDCODED-CREDENTIAL false positive inside a block comment: 6 TP / 1 FP / 0 FN across 13 cases.
+- M18 repaired analyzer at 01123b2ed1e12eccc5a1cafec93030f5788008df passed the 13-case JavaScript/TypeScript corpus with 6 TP / 0 FP / 0 FN and precision=1.0, recall=1.0 on Core CI Ubuntu, macOS, and Windows run 36549239948.
+- Exact branch acceptance candidate 51c75f76ee96e6989b68b21856d6b59b6f3c25cd passed Governance 36549487578, Core CI 36549487453, M06 36549487603, Real World Go 36549487556, M07 36549487515, M10 36549487546, M16 MCP 36549487583, and M17 Release and Install 36549487560.
 
 ### Not proven
 
@@ -386,6 +404,7 @@ Known blockers:
 - SHA-256 checksums provide release-channel integrity verification but are not a code-signing or hardware-backed provenance claim.
 - M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
+- M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 
 ## Important limitations
 
