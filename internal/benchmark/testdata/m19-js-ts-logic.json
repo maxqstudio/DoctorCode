@@ -163,6 +163,16 @@
       "name": "reverse-comparison-negative",
       "root": "m19-js-ts-logic/reverse-comparison-negative",
       "expected": []
+    },
+    {
+      "name": "parameter-reassigned-negative",
+      "root": "m19-js-ts-logic/parameter-reassigned-negative",
+      "expected": []
+    },
+    {
+      "name": "parameter-updated-negative",
+      "root": "m19-js-ts-logic/parameter-updated-negative",
+      "expected": []
     }
   ]
 }
