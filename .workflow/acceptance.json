@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The permanent 22-case M19 corpus previously reported 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. The corpus is now expanded to 24 cases with parameter assignment/update barriers; focused GitHub evidence reports 8 TP / 0 FP / 0 FN, with permanent three-OS revalidation still required before final acceptance. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
+  "evidence_boundary": "M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The final branch corpus contains 24 cases with parameter assignment/update barriers and reports 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0 on permanent Core CI Ubuntu, macOS, and Windows. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -189,6 +189,18 @@
       "id": "M19-PARAMETER-MUTATION-HARDENING",
       "requirement": "M19 must not report a duplicate primitive parameter condition when that parameter is assigned or updated between the first and repeated condition.",
       "status": "PASS"
+    },
+    {
+      "id": "M19-24-CASE-PERMANENT-GREEN",
+      "requirement": "The expanded 24-case M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all permanent Core CI operating systems.",
+      "status": "PASS",
+      "evidence": "Core CI run 36558637710 at 0888ce69057e2c344fc51b9145d076b77c5e84fb passed Ubuntu, macOS, and Windows. M19 reports 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0."
+    },
+    {
+      "id": "M19-BRANCH-REGRESSION",
+      "requirement": "Exact M19 branch acceptance must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes.",
+      "status": "PASS",
+      "evidence": "At 0888ce69057e2c344fc51b9145d076b77c5e84fb: Governance 36558637734 PASS; Core 36558637710 PASS 3/3; M16 36558637784 PASS; M17 Release and Install 36558637739 PASS including Ubuntu/Windows/macOS install-smoke; M10 36558637787 PASS; M07 36558637718 PASS; M06 36558637761 PASS; Real World Go 36558637776 PASS."
     }
   ],
   "runtime_checks": [
