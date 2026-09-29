@@ -839,6 +839,13 @@
       "lines": 5
     },
     {
+      "directory": "internal/benchmark/testdata/m18-js-ts/block-comment-fake-code",
+      "file": "internal/benchmark/testdata/m18-js-ts/block-comment-fake-code/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 5
+    },
+    {
       "directory": "internal/benchmark/testdata/m18-js-ts/comment-fake-code",
       "file": "internal/benchmark/testdata/m18-js-ts/comment-fake-code/sample.js",
       "is_test": false,
@@ -893,6 +900,13 @@
       "is_test": false,
       "language": "JavaScript",
       "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/template-fake-code",
+      "file": "internal/benchmark/testdata/m18-js-ts/template-fake-code/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 1
     },
     {
       "directory": "internal/benchmark/testdata/m18-js-ts/template-interpolation",
@@ -2794,18 +2808,18 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "632af81ab7ce257e9dcb37ebc003d44dcfb67dd6150affa9c2eb988b76a99507",
+  "source_digest": "6a5c43ab9ab2af8f81e5bf0e4bf205860407404a8e59783eb913010fa635c725",
   "source_summary": {
-    "files": 157,
+    "files": 159,
     "languages": {
       "Go": 86,
-      "JavaScript": 9,
+      "JavaScript": 11,
       "PowerShell": 1,
       "Python": 58,
       "Shell": 1,
       "TypeScript": 2
     },
-    "lines": 7574,
+    "lines": 7580,
     "test_files": 2
   },
   "tests": [
