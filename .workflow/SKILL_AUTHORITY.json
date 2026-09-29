@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
   "repository": "maxqstudio/Skill_Workflow",
-  "ref": "1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720",
-  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; this authority includes deterministic LF Project Truth synchronization for acceptance.json."
+  "ref": "2148313678f476c4990e447b4d657724f071adff",
+  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority; this authority includes deterministic LF Project Truth and sequence output synchronization for cross-platform acceptance."
 }
