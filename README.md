@@ -64,7 +64,7 @@ The JavaScript/TypeScript analyzer is intentionally narrower than a full parser.
 
 M19 deliberately does **not** infer arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general control-flow semantics. These are skipped rather than guessed.
 
-The M19 corpus has been expanded to **24 cases**. The earlier 22-case permanent Core CI candidate passed Ubuntu, Windows, and macOS with **8 TP, 0 FP, and 0 FN**; the two added parameter-mutation guards also pass the focused GitHub runner, with permanent three-OS revalidation required before final M19 acceptance. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
+The accepted M19 branch corpus contains **24 cases** and reports **8 TP, 0 FP, and 0 FN** on Ubuntu, Windows, and macOS. The two added parameter-mutation guards prove that assignment/update of the tracked parameter invalidates duplicate-condition proof. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
 
 ### M02 precision regression gate
 
