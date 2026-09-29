@@ -80,7 +80,7 @@
       "file": "internal/analyzers/javascript/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 71
+      "lines": 170
     },
     {
       "directory": "internal/analyzers/javascript",
@@ -2794,7 +2794,7 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "70474a21ad11dae9facb695994e8bc88a9ffca6b110ef92fbf67c5472717e042",
+  "source_digest": "632af81ab7ce257e9dcb37ebc003d44dcfb67dd6150affa9c2eb988b76a99507",
   "source_summary": {
     "files": 157,
     "languages": {
@@ -2805,7 +2805,7 @@
       "Shell": 1,
       "TypeScript": 2
     },
-    "lines": 7475,
+    "lines": 7574,
     "test_files": 2
   },
   "tests": [
