@@ -19,13 +19,13 @@ The LLM is not the source of truth.
 
 ## Current status
 
-**DoctorCode v0.1.0 is publicly released from accepted product SHA `cd05f064e1bb1054271e7028941c1fbb80ea32aa`.** The immutable tag, deterministic bundle, native Ubuntu/Windows/macOS install-smoke, public release assets, and checksums have been verified. Go and Python semantic coverage remain deliberately narrow; transport adapters do not enlarge core proof boundaries.
+**DoctorCode v0.1.0 is publicly released from accepted product SHA `cd05f064e1bb1054271e7028941c1fbb80ea32aa`.** The immutable tag, deterministic bundle, native Ubuntu/Windows/macOS install-smoke, public release assets, and checksums have been verified. Current main also has deliberately narrow Go, Python, and JavaScript/TypeScript semantic coverage; transport adapters do not enlarge core proof boundaries.
 
 | Language | Recognition | Toolchain detection | Built-in semantic rules |
 |---|---:|---:|---:|
 | Go | Yes | Yes | **Yes — narrow rules, three synthetic regression gates + pinned compatibility + bounded real-world labels** |
 | Python | Yes | Yes | **Yes — narrow stdlib-AST rules for all five categories; adversarial + repository-shaped gated; host Python required** |
-| JavaScript / TypeScript | Yes | Yes | Not yet |
+| JavaScript / TypeScript | Yes | Yes | **Yes — conservative structural rules for SIMPLIFY, SECURITY, and bounded LOGIC; no JSX/TSX** |
 | Rust | Yes | Yes | Not yet |
 | Java / Kotlin | Yes | Yes | Not yet |
 | C / C++ | Yes | Yes | Not yet |
@@ -49,6 +49,22 @@ The LLM is not the source of truth.
 | BLOAT | one-call unexported pass-through wrapper with one lexical reference | `SUSPICIOUS` |
 
 No current rule performs automatic fixing or deletion.
+
+### JavaScript / TypeScript detector rules
+
+The JavaScript/TypeScript analyzer is intentionally narrower than a full parser. Supported semantic source extensions are `.js`, `.mjs`, `.cjs`, `.ts`, `.mts`, and `.cts`.
+
+| Category | Current rule | Confidence boundary |
+|---|---|---|
+| LOGIC | repeated primitive condition later in the same braced if/else-if chain, with the identifier proven as a parameter of the nearest traditional `function` / function expression | `HIGH`; only bare/negated identifiers and `identifier ===/!== true/false/null`; unsupported or unproven conditions break the proof chain |
+| SIMPLIFY | opposite boolean-return branches | `HIGH` structural evidence; lexical comments/strings/templates are masked and autofix remains disabled |
+| SECURITY | credential-like variable assigned a hardcoded quoted literal | `SUSPICIOUS`; comment/template false positives are masked and the literal value is redacted |
+| DEADCODE | not implemented | no JS/TS dead-code safety claim |
+| BLOAT | not implemented | no JS/TS wrapper-removal claim |
+
+M19 deliberately does **not** infer arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general control-flow semantics. These are skipped rather than guessed.
+
+The blocking M19 corpus contains **22 cases**. The accepted pre-governance candidate reports **8 TP, 0 FP, and 0 FN** on Ubuntu, Windows, and macOS. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
 
 ### M02 precision regression gate
 
