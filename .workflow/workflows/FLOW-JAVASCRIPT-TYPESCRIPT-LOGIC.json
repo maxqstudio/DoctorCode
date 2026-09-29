@@ -2,7 +2,7 @@
   "schema_version": 1,
   "flow_id": "FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC",
   "title": "JavaScript and TypeScript duplicate primitive-condition analysis",
-  "purpose": "Extend the conservative JavaScript/TypeScript analyzer with one bounded LOGIC rule for duplicate side-effect-free primitive conditions later in the same if/else-if chain.",
+  "purpose": "Extend the conservative JavaScript/TypeScript analyzer with one bounded LOGIC rule for duplicate primitive conditions over proven nearest-function parameter bindings later in the same if/else-if chain.",
   "authority": "internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json",
   "entry_condition": "Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.",
   "source_owners": [
@@ -33,7 +33,7 @@
     {
       "from": "PURE_CONDITION_NORMALIZATION",
       "to": "DUPLICATE_CHECK",
-      "action": "Accept only bounded primitive conditions: bare identifier, negated identifier, or strict ===/!== comparison of an identifier with true, false, or null; reject calls, member access, assignments, coercive operators, and other expressions.",
+      "action": "Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions.",
       "side_effects": []
     },
     {
@@ -44,7 +44,8 @@
     }
   ],
   "invariants": [
-    "No JavaScript or TypeScript source is executed.",
+    "No JavaScript or TypeScript source is executed by DoctorCode.",
+    "M19 binding proof is limited to parameters of the nearest traditional function/function-expression scope; globals, closures, methods, arrows, and local declarations are not inferred.",
     "Calls, member access, optional chaining, assignments, update expressions, loose equality, arithmetic/coercive comparisons, and template/string-dependent conditions are outside M19 proof.",
     "Every M19 finding keeps safe_autofix=false.",
     "M19 does not add DEADCODE or BLOAT authority and does not claim full JS/TS parsing."
