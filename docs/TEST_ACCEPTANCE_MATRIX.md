@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M19 on current main already provides bounded JS-LOGIC-DUPLICATE-CONDITION with the accepted 22-case corpus. The rebased mutation-hardening delta adds two negative guards proving that assignment or update of the tracked nearest-function parameter between repeated conditions invalidates duplicate-condition proof, expanding the corpus to 24 cases. Historical divergent-branch evidence passed 24 cases at 8 TP / 0 FP / 0 FN, but rebased acceptance requires fresh exact-SHA permanent workflow evidence. M19 remains read-only and does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M19 on current main provides the bounded 22-case JS-LOGIC-DUPLICATE-CONDITION baseline. The rebased mutation-hardening delta adds parameter assignment/update barriers and expands the corpus to 24 cases. Exact rebased candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passes permanent Core CI on Ubuntu/macOS/Windows with 8 TP / 0 FP / 0 FN and all permanent regression workflows. M19 remains read-only and does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
@@ -39,6 +39,8 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 | M19-GLOBAL-BINDING-RED | Adversarial evidence must reject treating unqualified global identifiers as proven stable bindings. | Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; global-accessor-negative was the sole unexpected LOGIC finding. | PASS |
 | M19-BOUNDED-LOGIC | The M19 LOGIC rule must remain read-only and bounded to nearest traditional-function parameters plus primitive non-coercive condition forms. | internal/analyzers/javascript/logic.go requires nearest traditional function/function-expression parameter proof, accepts only bare/negated identifiers or identifier ===/!== true/false/null, resets tracking at unsupported/unproven conditions, emits MEDIUM/HIGH LOGIC findings, and leaves safe_autofix=false. | PASS |
 | M19-ADVERSARIAL-GREEN | The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. | PASS |
+| M19-MUTATION-HARDENING-REBASED | The rebased M19 rule must invalidate duplicate-condition proof when the tracked nearest-function parameter is assigned or updated between occurrences. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912, parameter-reassigned-negative and parameter-updated-negative remain finding-free; the 24-case M19 corpus reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows in Core CI run 36564198646. | PASS |
+| M19-REBASED-BRANCH-REGRESSION | The exact rebased M19 mutation-hardening branch must pass governance, Core, MCP, release/install, and all accepted Go/Python regression lanes before merge. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912: Governance 36564198574 PASS; Core 36564198646 PASS 3/3; M16 36564198599 PASS; M17 36564198585 PASS including Ubuntu/Windows/macOS install-smoke; M10 36564198781 PASS; M07 36564198656 PASS; M06 36564198620 PASS; Real World Go 36564198793 PASS. | PASS |
 
 ## Test commands
 

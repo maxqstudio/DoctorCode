@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
-Status: M19_MUTATION_HARDENING_REBASED_PENDING_ACCEPTANCE
+Status: M19_MUTATION_HARDENING_BRANCH_ACCEPTED_PENDING_FINAL_SYNC
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -81,6 +81,7 @@ SEQUENCE_SYNC: PASS
 - Current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde already contains the earlier 22-case M19 JavaScript/TypeScript LOGIC implementation as a squash commit.
 - A later divergent M19 hardening branch exposed and repaired parameter mutation risk, expanding the corpus from 22 to 24 cases; exact branch candidate 596ab10c440b26a8f51e8db42142f0173a459df0 passed all permanent workflows before divergence from current main was detected.
 - PR #28 was closed without merge after the divergence was detected; work/m19-mutation-hardening was created directly from current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde to carry only the remaining mutation-hardening delta.
+- Exact rebased M19 mutation-hardening candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passed Governance 36564198574, Core CI 36564198646 with 24 cases at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36564198620, Real World Go 36564198793, M07 36564198656, M10 36564198781, M16 MCP 36564198599, and M17 Release and Install 36564198585 including Ubuntu/Windows/macOS native install-smoke.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -89,7 +90,6 @@ SEQUENCE_SYNC: PASS
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
-- The rebased 24-case M19 mutation-hardening delta is not accepted until the exact rebased branch passes governance, Core CI on Ubuntu/macOS/Windows, MCP, release/install, and accepted Go/Python regression lanes.
 
 ## Known blockers
 - None declared.
@@ -98,9 +98,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize Project Truth for work/m19-mutation-hardening from current main authority.
-- Run the expanded 24-case M19 corpus and all permanent workflows on one exact rebased branch SHA.
-- Merge only the minimal mutation-hardening delta through a new pull request, then revalidate exact main.
+- Bind exact rebased M19 mutation-hardening acceptance evidence into the canonical ledger and regenerate Project Truth.
+- Run all permanent workflows on the resulting exact final rebased branch SHA.
+- Merge only the minimal mutation-hardening delta through a new pull request and revalidate exact main.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.
