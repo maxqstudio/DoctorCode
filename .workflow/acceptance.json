@@ -185,10 +185,10 @@
       "status": "PASS"
     },
     {
+      "evidence": "Focused GitHub Actions run 36558288844 at 9602d4234ee410edb5ea5b9e4288e3aaae1ffd79 passed the expanded 24-case M19 corpus with 8 TP / 0 FP / 0 FN; parameter-reassigned-negative and parameter-updated-negative remained finding-free.",
       "id": "M19-PARAMETER-MUTATION-HARDENING",
       "requirement": "M19 must not report a duplicate primitive parameter condition when that parameter is assigned or updated between the first and repeated condition.",
-      "status": "PASS",
-      "evidence": "Focused GitHub Actions run 36558288844 at 9602d4234ee410edb5ea5b9e4288e3aaae1ffd79 passed the expanded 24-case M19 corpus with 8 TP / 0 FP / 0 FN; parameter-reassigned-negative and parameter-updated-negative remained finding-free."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

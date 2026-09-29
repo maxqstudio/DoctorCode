@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
-Status: M19_IMPLEMENTED_PENDING_FINAL_ACCEPTANCE
+Status: M19_HARDENED_PENDING_FINAL_ACCEPTANCE
 
 ## Source
 Repository: maxqstudio/DoctorCode
@@ -16,7 +16,7 @@ Branch: work/m19-javascript-typescript-logic
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 6b24ec85518d1b24efba8806032577ca18b4ba61
 Current candidate SHA: external final acceptance evidence
-Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
+Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -78,6 +78,8 @@ SEQUENCE_SYNC: PASS
 - M19 adversarial Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; the false positive was global-accessor-negative at sample.js:12, proving unqualified global identifiers could not be treated as stable bindings.
 - M19 repaired binding proof requires the relevant identifier to be a parameter of the nearest traditional function/function-expression and treats unsupported, side-effect-capable, global, closure, method, arrow, local-declaration, and unproven conditions as proof barriers.
 - M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
+- M19 parameter-mutation hardening rejects duplicate-condition proof when the relevant nearest-function parameter is assigned or updated between occurrences.
+- Focused GitHub Actions run 36558288844 on the expanded 24-case M19 corpus passed with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0, while also preserving the M18 regression benchmark and JavaScript analyzer unit tests.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -95,8 +97,8 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M19 Project Truth and current sequence evidence using the pinned Skill_Workflow tools.
-- Run all permanent workflows on one exact synchronized M19 branch candidate.
+- Synchronize M19 Project Truth and current sequence evidence using Skill_Workflow authority 2148313678f476c4990e447b4d657724f071adff.
+- Remove temporary focused-validation workflow and run all permanent workflows on one exact 24-case M19 candidate.
 - Merge accepted M19 through pull request and revalidate exact main.
 
 ## Explicitly blocked
