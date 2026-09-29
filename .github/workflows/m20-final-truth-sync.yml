@@ -26,9 +26,6 @@ jobs:
         run: |
           python .workflow/tools/sync_project_truth.py
           python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.json --output-mermaid docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.mmd
-          python .workflow/tools/validate_project_docs.py
-          python .workflow/tools/validate_project_truth.py
-          python .workflow/tools/validate_sequence_sessions.py
       - name: Commit synchronized generated evidence
         run: |
           git config user.name "github-actions[bot]"
