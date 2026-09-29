@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 185 files, 6 language categories.
+Observed source inventory: 197 files, 8 language categories.
 
 ## Major components
 
@@ -169,6 +169,18 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 - PURE_CONDITION_NORMALIZATION -> DUPLICATE_CHECK : Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions.
 - DUPLICATE_CHECK -> FINDING_OUTPUT : Emit at most one LOGIC finding per chain when a normalized parameter condition repeats later and the parameter is not assigned or updated between occurrences.
 
+### FLOW-JAVASCRIPT-TYPESCRIPT-PARSER — JavaScript and TypeScript parser-backed semantic foundation
+
+Replace parserless syntax authority with a deterministic pure-Go syntax-tree gate for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 findings until individual rules are explicitly migrated to AST-backed proof.
+
+Authority: internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora
+
+- SOURCE_DISCOVERY -> GRAMMAR_SELECTION : Map the supported source extension to an explicit JavaScript, TypeScript, or TSX grammar without executing source.
+- GRAMMAR_SELECTION -> STRICT_PARSE : Parse source using the pinned pure-Go parser runtime and pinned embedded grammar artifact.
+- STRICT_PARSE -> TREE_HEALTH_GATE : Reject parser errors, stopped/truncated parses, ERROR nodes, or MISSING nodes; malformed syntax fails closed.
+- TREE_HEALTH_GATE -> BOUNDED_RULE_EVALUATION : Only after a healthy syntax tree, run accepted bounded rules; parser validation does not by itself widen rule semantics.
+- BOUNDED_RULE_EVALUATION -> SORTED_OUTPUT : Emit deterministic findings with existing confidence and safe_autofix boundaries; migrate individual rules to AST-backed proof only with explicit M20 evidence.
+
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
@@ -297,9 +309,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
+Current phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
 
-Current status: M19_MAIN_ACCEPTED
+Current status: M20_CANDIDATE_GREEN_FINAL_SYNC
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -340,6 +352,7 @@ compiler does not infer them from implementation names.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
 - FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS: No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
 - FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC: No supported files returns analyzer unavailable; malformed lexical input fails closed; unsupported condition shapes are skipped without a finding.
+- FLOW-JAVASCRIPT-TYPESCRIPT-PARSER: No supported files returns analyzer unavailable; unknown grammar mapping, parser error, stopped/truncated parse, ERROR node, or MISSING node fails the analyzer closed.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
@@ -358,9 +371,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Treat main@c54e4af0335c10354baee150f8748184f1e11580 as the accepted M19 product baseline.
-- Start M20 product work only as a new declared milestone from the then-current accepted main.
-- Preserve M19 proof boundaries unless a later milestone explicitly widens them.
+- Synchronize M20 Project Truth and sequence actual evidence from the current governed ledger without changing M20 semantic scope.
+- Require all eight permanent workflows to PASS on one exact final branch SHA before opening/merging the M20 PR.
+- After merge, revalidate the exact main merge SHA before governance closure advances roadmap/state together to M21_LANGUAGE_ANALYZER_FRAMEWORK.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -377,7 +390,7 @@ Known blockers:
 ### Proven
 
 - M16 is MAIN_ACCEPTED with product baseline main@2e76c9e635a8a68507fea9d44438f74e96d8e754 and governance-normalized main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
-- Skill_Workflow authority remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.
+- Historical M16/M17 governance used earlier Skill_Workflow authority; current M20 authority is separately pinned below.
 - M17 branches from protected main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
 - M17 RED run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed at Build deterministic release bundle because scripts/build_release.py did not yet exist.
 - Pre-fix M17 run 36378036522 built and verified all six release archives plus release-manifest.json/checksums.txt successfully; Ubuntu and Windows installed and executed their native artifacts successfully.
@@ -423,6 +436,14 @@ Known blockers:
 - Exact rebased M19 mutation-hardening candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passed Governance 36564198574, Core CI 36564198646 with 24 cases at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36564198620, Real World Go 36564198793, M07 36564198656, M10 36564198781, M16 MCP 36564198599, and M17 Release and Install 36564198585 including Ubuntu/Windows/macOS native install-smoke.
 - M19 mutation-hardening merged through PR #29 to main at c54e4af0335c10354baee150f8748184f1e11580.
 - Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke.
+- M20 branches from governance-normalized M19 main@c632a49b57274a0a801e234592613069104574b0; accepted M19 product baseline remains c54e4af0335c10354baee150f8748184f1e11580.
+- M20 parser selection is gotreesitter v0.55.1: MIT-licensed, Go 1.22-compatible, pure Go/no-CGO runtime with standalone embedded JavaScript, TypeScript, and TSX grammar packages; this preserves DoctorCode cross-platform cross-compilation constraints.
+- M20 governance authority is Skill_Workflow main@c1d7e58a0fcadc606c8cf75c6283a17278f99259, which adds mandatory .workflow/roadmap.json authority, generated docs/ROADMAP.md, exact roadmap/state phase synchronization, and blocking ROADMAP_SYNC validation.
+- M20 RED Core CI run 36586686595 at 4f5b69466f6a655688682890cb12ae871edb23c7 failed on Ubuntu, macOS, and Windows because .jsx/.tsx were unavailable and malformed .js/.ts were not rejected, proving the parser-grade capability absent before implementation.
+- M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 uses javascript/parser-backed-v2 with pure-Go gotreesitter v0.55.1, strict parser ERROR/MISSING rejection, syntax-tree masking, JSX/TSX recognition, and AST-backed bounded LOGIC proof while preserving M19 fail-closed boundaries.
+- At M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core CI 36609998432 PASS on Ubuntu/Windows/macOS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 Thin MCP 36609998474 PASS; M17 Release and Install 36609998442 PASS.
+- Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.
+- GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry.
 
 ### Not proven
 
@@ -432,6 +453,7 @@ Known blockers:
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
+- M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening.
 
 ## Important limitations
 
@@ -448,6 +470,7 @@ See GLOSSARY.md.
 | Need | Document |
 |---|---|
 | Current state | CURRENT_STATE.md |
+| Roadmap | ROADMAP.md |
 | Project identity | PROJECT_MANIFEST.md |
 | Architecture | ARCHITECTURE.md |
 | Lifecycle | WORKFLOW_STATE_MACHINE.md |

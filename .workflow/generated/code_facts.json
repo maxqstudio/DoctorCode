@@ -80,7 +80,7 @@
       "file": "internal/analyzers/javascript/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 197
+      "lines": 198
     },
     {
       "directory": "internal/analyzers/javascript",
@@ -94,14 +94,28 @@
       "file": "internal/analyzers/javascript/logic.go",
       "is_test": false,
       "language": "Go",
-      "lines": 450
+      "lines": 340
     },
     {
       "directory": "internal/analyzers/javascript",
       "file": "internal/analyzers/javascript/logic_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 114
+      "lines": 169
+    },
+    {
+      "directory": "internal/analyzers/javascript",
+      "file": "internal/analyzers/javascript/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 104
+    },
+    {
+      "directory": "internal/analyzers/javascript",
+      "file": "internal/analyzers/javascript/syntax_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 111
     },
     {
       "directory": "internal/analyzers/python",
@@ -1110,6 +1124,76 @@
       "is_test": false,
       "language": "TypeScript",
       "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/anchor.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/sample.jsx",
+      "is_test": false,
+      "language": "JavaScript/React",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/anchor.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/sample.jsx",
+      "is_test": false,
+      "language": "JavaScript/React",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/anchor.ts",
+      "is_test": false,
+      "language": "TypeScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/sample.tsx",
+      "is_test": false,
+      "language": "TypeScript/React",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/anchor.ts",
+      "is_test": false,
+      "language": "TypeScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/sample.tsx",
+      "is_test": false,
+      "language": "TypeScript/React",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/anchor.ts",
+      "is_test": false,
+      "language": "TypeScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive",
+      "file": "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx",
+      "is_test": false,
+      "language": "TypeScript/React",
+      "lines": 4
     },
     {
       "directory": "internal/buildinfo",
@@ -2990,18 +3074,20 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b",
+  "source_digest": "7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9",
   "source_summary": {
-    "files": 185,
+    "files": 197,
     "languages": {
-      "Go": 88,
-      "JavaScript": 33,
+      "Go": 90,
+      "JavaScript": 35,
+      "JavaScript/React": 2,
       "PowerShell": 1,
       "Python": 58,
       "Shell": 1,
-      "TypeScript": 4
+      "TypeScript": 7,
+      "TypeScript/React": 3
     },
-    "lines": 8452,
+    "lines": 8648,
     "test_files": 2
   },
   "tests": [

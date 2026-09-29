@@ -4,6 +4,8 @@ DoctorCode is a deterministic, LLM-optional code intelligence tool that turns re
 
 It targets five code-maintenance problems: **BLOAT**, **SECURITY**, **SIMPLIFY**, **LOGIC**, and **DEADCODE**.
 
+The path from the current accepted milestones to public v1.0 is tracked in [`docs/ROADMAP.md`](docs/ROADMAP.md).
+
 ## Why DoctorCode
 
 ```text

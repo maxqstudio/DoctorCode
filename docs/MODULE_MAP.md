@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
+Source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -17,10 +17,12 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/javascript/analyzer.go | Go | 197 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/analyzer.go | Go | 198 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/analyzer_test.go | Go | 61 | internal/analyzers/javascript | NO |
-| internal/analyzers/javascript/logic.go | Go | 450 | internal/analyzers/javascript | NO |
-| internal/analyzers/javascript/logic_test.go | Go | 114 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic.go | Go | 340 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic_test.go | Go | 169 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/syntax.go | Go | 104 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/syntax_test.go | Go | 111 | internal/analyzers/javascript | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
@@ -165,6 +167,16 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative | NO |
 | internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/anchor.js | JavaScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/sample.jsx | JavaScript/React | 8 | internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/anchor.js | JavaScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/sample.jsx | JavaScript/React | 3 | internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/anchor.ts | TypeScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/sample.tsx | TypeScript/React | 4 | internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/anchor.ts | TypeScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/sample.tsx | TypeScript/React | 11 | internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/anchor.ts | TypeScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive | NO |
+| internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx | TypeScript/React | 4 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |

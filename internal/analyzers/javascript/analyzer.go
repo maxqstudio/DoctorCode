@@ -23,7 +23,7 @@ const (
 type Analyzer struct{}
 
 func New() *Analyzer { return &Analyzer{} }
-func (a *Analyzer) Name() string { return "javascript/conservative-structural-v1" }
+func (a *Analyzer) Name() string { return "javascript/parser-backed-v2" }
 
 var boolReturn = regexp.MustCompile("(?s)if\\s*\\([^{}]+\\)\\s*\\{\\s*return\\s+(true|false)\\s*;?\\s*\\}\\s*else\\s*\\{\\s*return\\s+(true|false)\\s*;?\\s*\\}")
 var credential = regexp.MustCompile("(?im)^\\s*(?:const|let|var)\\s+([A-Za-z_$][\\w$]*)(?:\\s*:\\s*[^=;]+)?\\s*=\\s*[\\\"\x27]([^\\\"\x27\\r\\n]+)[\\\"\x27]\\s*;?")
@@ -46,9 +46,10 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 	for _, path := range files {
 		data, err := os.ReadFile(path); if err != nil { return nil, fmt.Errorf("read JavaScript/TypeScript source %s: %w", path, err) }
 		source := string(data); if strings.IndexByte(source, 0) >= 0 { return nil, fmt.Errorf("javascript/typescript parse incomplete: %s contains NUL byte", path) }
-		structural, credentialSource, err := maskLexicalViews(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
+		document, err := parseSyntax(path, data); if err != nil { return nil, fmt.Errorf("javascript/typescript syntax validation failed for %s: %w", path, err) }
+		structural, credentialSource := document.lexicalViews(source)
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
-		findings = append(findings, logicFindings(source, structural, rel)...)
+		findings = append(findings, logicFindingsAST(source, structural, rel, document.tree.RootNode(), document.language)...)
 		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
 			left, right := structural[m[2]:m[3]], structural[m[4]:m[5]]; if left == right { continue }
 			findings = append(findings, makeFinding(ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh, rel, lineAt(source, m[0]), "opposite boolean-return branches can be reduced to the condition or its negation", []string{"structurally matched boolean return branches", "safe_autofix remains disabled"}))
@@ -192,6 +193,6 @@ func makeFinding(rule string, category model.Category, severity model.Severity, 
 }
 
 func lineAt(source string, offset int) int { return 1 + strings.Count(source[:offset], "\n") }
-func supported(path string) bool { switch strings.ToLower(filepath.Ext(path)) { case ".js", ".mjs", ".cjs", ".ts", ".mts", ".cts": return true; default: return false } }
+func supported(path string) bool { switch strings.ToLower(filepath.Ext(path)) { case ".js", ".mjs", ".cjs", ".jsx", ".ts", ".mts", ".cts", ".tsx": return true; default: return false } }
 func ignoredDirectory(name string) bool { switch name { case ".git", ".hg", ".svn", ".idea", ".vscode", "node_modules", "vendor", "dist", "build", "target", "coverage", "testdata": return true; default: return false } }
 func placeholder(value string) bool { v := strings.ToLower(strings.TrimSpace(value)); if v == "" { return true }; for _, token := range []string{"example", "placeholder", "changeme", "change-me", "dummy", "test", "your_", "your-", "<", "${"} { if strings.Contains(v, token) { return true } }; return false }

@@ -322,6 +322,53 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 
 - The analyzer is read-only; rollback is source-control only.
 
+## FLOW-JAVASCRIPT-TYPESCRIPT-PARSER — JavaScript and TypeScript parser-backed semantic foundation
+
+Purpose: Replace parserless syntax authority with a deterministic pure-Go syntax-tree gate for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 findings until individual rules are explicitly migrated to AST-backed proof.
+Critical: FALSE
+Entry condition: Repository contains at least one visible JavaScript/TypeScript semantic source file.
+Authority: internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora
+
+### States
+
+- SOURCE_DISCOVERY
+- GRAMMAR_SELECTION
+- STRICT_PARSE
+- TREE_HEALTH_GATE
+- BOUNDED_RULE_EVALUATION
+- SORTED_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| SOURCE_DISCOVERY | GRAMMAR_SELECTION | Map the supported source extension to an explicit JavaScript, TypeScript, or TSX grammar without executing source. | internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora |  |
+| GRAMMAR_SELECTION | STRICT_PARSE | Parse source using the pinned pure-Go parser runtime and pinned embedded grammar artifact. | internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora |  |
+| STRICT_PARSE | TREE_HEALTH_GATE | Reject parser errors, stopped/truncated parses, ERROR nodes, or MISSING nodes; malformed syntax fails closed. | internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora |  |
+| TREE_HEALTH_GATE | BOUNDED_RULE_EVALUATION | Only after a healthy syntax tree, run accepted bounded rules; parser validation does not by itself widen rule semantics. | internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora |  |
+| BOUNDED_RULE_EVALUATION | SORTED_OUTPUT | Emit deterministic findings with existing confidence and safe_autofix boundaries; migrate individual rules to AST-backed proof only with explicit M20 evidence. | internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora |  |
+
+### Invariants
+
+- Analyzed JavaScript/TypeScript source is never executed.
+- Parser dependency must remain pure Go for DoctorCode release cross-compilation; M20 must not introduce a CGO requirement.
+- Malformed or truncated syntax fails closed instead of falling back silently to parserless findings.
+- JSX/TSX recognition may be added by M20, but existing SIMPLIFY/SECURITY/LOGIC semantics are not automatically widened to JSX/TSX without labeled evidence.
+- M20 does not add JavaScript/TypeScript DEADCODE or BLOAT authority.
+- Every finding remains safe_autofix=false unless a later accepted milestone explicitly changes that contract.
+
+### Failure behavior
+
+- No supported files returns analyzer unavailable; unknown grammar mapping, parser error, stopped/truncated parse, ERROR node, or MISSING node fails the analyzer closed.
+
+### Restart behavior
+
+- Parsing and rule evaluation are stateless for a fixed source tree and can be rerun deterministically.
+
+### Rollback behavior
+
+- The analyzer is read-only; rollback is source-control only.
+
 ## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.

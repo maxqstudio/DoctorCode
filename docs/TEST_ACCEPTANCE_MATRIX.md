@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M19 is MAIN_ACCEPTED at c54e4af0335c10354baee150f8748184f1e11580. JavaScript/TypeScript LOGIC remains a bounded, read-only duplicate-condition rule over nearest traditional-function parameter bindings. The accepted corpus has 24 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows, including negative guards for global accessors and intervening parameter assignment/update. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M20 is a branch candidate, not yet MAIN_ACCEPTED. Candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 establishes parser-backed JavaScript/TypeScript syntax authority with JSX/TSX recognition, strict malformed-syntax rejection, syntax-tree masking, and AST-backed bounded LOGIC proof while preserving M18/M19 rule boundaries. M20 does not authorize JS/TS DEADCODE, BLOAT, general whole-program semantics, safe autofix, or automatic deletion. Final promotion still requires synchronized Project Truth, one exact final branch SHA with all permanent workflows PASS, squash merge, and exact-main revalidation.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
+Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -42,6 +42,13 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 | M19-MUTATION-HARDENING-REBASED | The rebased M19 rule must invalidate duplicate-condition proof when the tracked nearest-function parameter is assigned or updated between occurrences. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912, parameter-reassigned-negative and parameter-updated-negative remain finding-free; the 24-case M19 corpus reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows in Core CI run 36564198646. | PASS |
 | M19-REBASED-BRANCH-REGRESSION | The exact rebased M19 mutation-hardening branch must pass governance, Core, MCP, release/install, and all accepted Go/Python regression lanes before merge. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912: Governance 36564198574 PASS; Core 36564198646 PASS 3/3; M16 36564198599 PASS; M17 36564198585 PASS including Ubuntu/Windows/macOS install-smoke; M10 36564198781 PASS; M07 36564198656 PASS; M06 36564198620 PASS; Real World Go 36564198793 PASS. | PASS |
 | M19-MAIN-POST-MERGE-HARDENED | The exact M19 mutation-hardening merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python regression lanes. | At main@c54e4af0335c10354baee150f8748184f1e11580: Governance 36565284946 PASS; Core 36565284842 PASS 3/3 with 24-case M19 = 8 TP / 0 FP / 0 FN; M16 36565284846 PASS; M17 36565284851 PASS including Ubuntu/Windows/macOS install-smoke; M10 36565284910 PASS; M07 36565284852 PASS; M06 36565284886 PASS; Real World Go 36565284964 PASS. | PASS |
+| M20-MAIN-BASELINE | M20 must branch from governance-normalized accepted M19 main and use the current pinned Skill_Workflow roadmap authority. | work/m20-js-ts-parser-foundation branches from main@c632a49b57274a0a801e234592613069104574b0; accepted M19 product baseline is c54e4af0335c10354baee150f8748184f1e11580; Skill_Workflow is pinned to c1d7e58a0fcadc606c8cf75c6283a17278f99259. | PASS |
+| M20-PARSER-RED | M20 must demonstrate parser-grade JSX/TSX recognition and malformed-syntax fail-closed behavior absent before implementation. | Core CI run 36586686595 at 4f5b69466f6a655688682890cb12ae871edb23c7 failed on Ubuntu, macOS, and Windows: .jsx/.tsx were analyzer-unavailable and malformed .js/.ts were not rejected. | PASS |
+| M20-PARSER-AUTHORITY | JavaScript/TypeScript syntax and non-code masking must be backed by the pure-Go parser tree rather than the legacy character scanner. | javascript/parser-backed-v2 pins github.com/odvcencio/gotreesitter v0.55.1, rejects parser errors plus ERROR/MISSING nodes, supports .js/.mjs/.cjs/.jsx/.ts/.mts/.cts/.tsx, and derives masking from parsed comment/string/template/regex/jsx_text nodes. | PASS |
+| M20-AST-LOGIC-BOUNDARY | The bounded M19 duplicate-condition LOGIC rule must migrate to AST proof without widening accepted semantic authority or regressing mutation/global/generic/comment boundaries. | Core CI run 36609998432 at 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS under javascript/parser-backed-v2. | PASS |
+| M20-PARSER-CORPUS | The M20 parser-backed JSX/TSX and bounded rule corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36609998432 at 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports 5 cases = 3 TP / 0 FP / 0 FN, precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. | PASS |
+| M20-BRANCH-CANDIDATE | A single M20 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression workflows before final ledger synchronization. | At 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core 36609998432 PASS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 36609998474 PASS; M17 36609998442 PASS. | PASS |
+| M20-RELEASE-SIZE-TELEMETRY | M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size. | GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists. | PASS |
 
 ## Test commands
 
@@ -53,6 +60,7 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 - Core CI and all accepted real-world regression workflows
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m20-js-ts-parser.json --analyzer=javascript --json
 
 ## Runtime checks
 
@@ -63,12 +71,18 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 - scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py
 - existing pinned Go/Python real-world validation lanes
 - M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
-- M19 JavaScript/TypeScript 22-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS
+- M19 JavaScript/TypeScript 24-case LOGIC regression benchmark on Core CI Ubuntu/Windows/macOS
+- M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS
+
+## Roadmap synchronization evidence
+
+Roadmap authority: .workflow/roadmap.json
+ROADMAP_SYNC: PASS
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M19-JAVASCRIPT-TYPESCRIPT-LOGIC
+Sequence session contract: M20-JAVASCRIPT-TYPESCRIPT-PARSER
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence
