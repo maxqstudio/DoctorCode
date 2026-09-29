@@ -46,8 +46,8 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 	for _, path := range files {
 		data, err := os.ReadFile(path); if err != nil { return nil, fmt.Errorf("read JavaScript/TypeScript source %s: %w", path, err) }
 		source := string(data); if strings.IndexByte(source, 0) >= 0 { return nil, fmt.Errorf("javascript/typescript parse incomplete: %s contains NUL byte", path) }
-		if err := validateSyntax(path, data); err != nil { return nil, fmt.Errorf("javascript/typescript syntax validation failed for %s: %w", path, err) }
-		structural, credentialSource, err := maskLexicalViews(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
+		document, err := parseSyntax(path, data); if err != nil { return nil, fmt.Errorf("javascript/typescript syntax validation failed for %s: %w", path, err) }
+		structural, credentialSource := document.lexicalViews(source)
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
 		findings = append(findings, logicFindings(source, structural, rel)...)
 		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
