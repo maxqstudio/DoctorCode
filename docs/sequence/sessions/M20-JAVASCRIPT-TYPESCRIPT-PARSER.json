@@ -3,9 +3,9 @@
   "session_id": "M20-JAVASCRIPT-TYPESCRIPT-PARSER",
   "phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "implementation_base_sha": "c632a49b57274a0a801e234592613069104574b0",
   "plan": {
     "required": false,
