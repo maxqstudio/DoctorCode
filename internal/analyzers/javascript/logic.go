@@ -20,19 +20,29 @@ type logicSeenCondition struct {
 	end  int
 }
 
+type logicASTFunctionScope struct {
+	bodyStart uint32
+	bodyEnd   uint32
+	params    map[string]bool
+	supported bool
+}
+
 func logicFindingsAST(source, structural, path string, root *gotreesitter.Node, language *gotreesitter.Language) []model.Finding {
 	if root == nil || language == nil {
 		return nil
 	}
 	var out []model.Finding
+	functionScopes := collectLogicASTFunctionScopes(root, language, source)
+	continuations := map[uint32]bool{}
 	gotreesitter.Walk(root, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
-		if node.Type(language) != "if_statement" {
+		if node.Type(language) != "if_statement" || continuations[node.StartByte()] {
 			return gotreesitter.WalkContinue
 		}
-		if parent := node.Parent(); parent != nil && parent.Type(language) == "else_clause" {
-			return gotreesitter.WalkContinue
+		chain := logicASTIfChain(node, language)
+		for i := 1; i < len(chain); i++ {
+			continuations[chain[i].node.StartByte()] = true
 		}
-		if finding, ok := logicFindingForASTChain(source, structural, path, node, language); ok {
+		if finding, ok := logicFindingForASTChain(source, structural, path, chain, language, functionScopes); ok {
 			out = append(out, finding)
 		}
 		return gotreesitter.WalkContinue
@@ -40,8 +50,7 @@ func logicFindingsAST(source, structural, path string, root *gotreesitter.Node, 
 	return out
 }
 
-func logicFindingForASTChain(source, structural, path string, start *gotreesitter.Node, language *gotreesitter.Language) (model.Finding, bool) {
-	conditions := logicASTIfChain(start, language)
+func logicFindingForASTChain(source, structural, path string, conditions []logicASTCondition, language *gotreesitter.Language, functionScopes []logicASTFunctionScope) (model.Finding, bool) {
 	if len(conditions) < 2 {
 		return model.Finding{}, false
 	}
@@ -49,7 +58,7 @@ func logicFindingForASTChain(source, structural, path string, start *gotreesitte
 	seen := map[string]logicSeenCondition{}
 	for _, item := range conditions {
 		key, binding, ok := normalizeLogicASTCondition(source, item.condition, language)
-		if !ok || !logicASTNearestTraditionalParameter(item.condition, language, source, binding) {
+		if !ok || !logicASTNearestTraditionalParameter(functionScopes, item.condition.StartByte(), binding) {
 			seen = map[string]logicSeenCondition{}
 			continue
 		}
@@ -172,17 +181,57 @@ func unwrapLogicASTParens(node *gotreesitter.Node, language *gotreesitter.Langua
 	return node
 }
 
-func logicASTNearestTraditionalParameter(node *gotreesitter.Node, language *gotreesitter.Language, source, name string) bool {
-	for parent := node.Parent(); parent != nil; parent = parent.Parent() {
-		switch parent.Type(language) {
-		case "function_declaration", "function_expression":
-			params := parent.ChildByFieldName("parameters", language)
-			return logicASTHasSimpleParameter(params, language, source, name)
-		case "arrow_function", "method_definition", "generator_function", "generator_function_declaration":
-			return false
+func collectLogicASTFunctionScopes(root *gotreesitter.Node, language *gotreesitter.Language, source string) []logicASTFunctionScope {
+	var scopes []logicASTFunctionScope
+	gotreesitter.Walk(root, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		kind := node.Type(language)
+		supported := kind == "function_declaration" || kind == "function_expression"
+		switch kind {
+		case "function_declaration", "function_expression", "arrow_function", "method_definition", "generator_function", "generator_function_declaration":
+		default:
+			return gotreesitter.WalkContinue
+		}
+		body := node.ChildByFieldName("body", language)
+		if body == nil {
+			return gotreesitter.WalkContinue
+		}
+		scope := logicASTFunctionScope{
+			bodyStart: body.StartByte(),
+			bodyEnd:   body.EndByte(),
+			params:    map[string]bool{},
+			supported: supported,
+		}
+		if supported {
+			params := node.ChildByFieldName("parameters", language)
+			if params != nil {
+				for i := 0; i < params.NamedChildCount(); i++ {
+					if name := logicASTSimpleParameterName(params.NamedChild(i), language, source); name != "" {
+						scope.params[name] = true
+					}
+				}
+			}
+		}
+		scopes = append(scopes, scope)
+		return gotreesitter.WalkContinue
+	})
+	return scopes
+}
+
+func logicASTNearestTraditionalParameter(scopes []logicASTFunctionScope, pos uint32, name string) bool {
+	best := -1
+	var bestSpan uint32
+	for i := range scopes {
+		scope := scopes[i]
+		if pos <= scope.bodyStart || pos >= scope.bodyEnd {
+			continue
+		}
+		span := scope.bodyEnd - scope.bodyStart
+		if best < 0 || span < bestSpan {
+			best = i
+			bestSpan = span
 		}
 	}
-	return false
+	return best >= 0 && scopes[best].supported && scopes[best].params[name]
 }
 
 func logicASTHasSimpleParameter(params *gotreesitter.Node, language *gotreesitter.Language, source, name string) bool {
