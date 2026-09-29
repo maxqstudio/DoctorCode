@@ -52,7 +52,11 @@ func TestASTLogicFindsSupportedPrimitiveConditions(t *testing.T) {
 				"}\n"
 			findings := analyzeLogicFixture(t, "sample.js", source)
 			if len(findings) != 1 {
-				t.Fatalf("findings=%d want=1: %#v", len(findings), findings)
+				document, parseErr := parseSyntax("sample.js", []byte(source))
+				if parseErr != nil {
+					t.Fatalf("findings=%d want=1 parseErr=%v: %#v", len(findings), parseErr, findings)
+				}
+				t.Fatalf("findings=%d want=1 tree=%s: %#v", len(findings), document.tree.RootNode().SExpr(document.language), findings)
 			}
 			if findings[0].LineStart != 6 || findings[0].SafeAutofix {
 				t.Fatalf("unexpected finding: %#v", findings[0])
