@@ -18,7 +18,7 @@
   "actual": {
     "graph": "docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.json",
     "diagram": "docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.mmd",
-    "source_digest": "",
+    "source_digest": "7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9",
     "entries": []
   },
   "test_traceability_required": true,
