@@ -29,6 +29,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/work/m18-javascript-typescript-semantic'
         run: |
           python .workflow/tools/sync_project_truth.py
+          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.json --output-mermaid docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.mmd
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           if ! git diff --quiet; then
