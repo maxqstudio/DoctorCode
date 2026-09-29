@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "language": "JavaScript / TypeScript parser-backed JSX/TSX",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "jsx-simplify-positive",
+      "root": "m20-js-ts-parser/jsx-simplify-positive",
+      "expected": [
+        {
+          "rule_id": "JS-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.jsx",
+          "line_start": 2
+        }
+      ]
+    },
+    {
+      "name": "tsx-security-positive",
+      "root": "m20-js-ts-parser/tsx-security-positive",
+      "expected": [
+        {
+          "rule_id": "JS-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.tsx",
+          "line_start": 1
+        }
+      ]
+    },
+    {
+      "name": "tsx-logic-positive",
+      "root": "m20-js-ts-parser/tsx-logic-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.tsx",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "jsx-string-noise-negative",
+      "root": "m20-js-ts-parser/jsx-string-noise-negative",
+      "expected": []
+    },
+    {
+      "name": "tsx-comment-noise-negative",
+      "root": "m20-js-ts-parser/tsx-comment-noise-negative",
+      "expected": []
+    }
+  ]
+}
