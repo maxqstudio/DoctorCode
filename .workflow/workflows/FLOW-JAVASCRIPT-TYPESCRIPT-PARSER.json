@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-JAVASCRIPT-TYPESCRIPT-PARSER",
+  "title": "JavaScript and TypeScript parser-backed semantic foundation",
+  "purpose": "Replace parserless syntax authority with a deterministic pure-Go syntax-tree gate for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 findings until individual rules are explicitly migrated to AST-backed proof.",
+  "authority": "internal/analyzers/javascript/syntax.go, internal/analyzers/javascript/analyzer.go, internal/analyzers/javascript/logic.go, and M20 parser corpora",
+  "entry_condition": "Repository contains at least one visible JavaScript/TypeScript semantic source file.",
+  "source_owners": [
+    "internal/analyzers/javascript/syntax.go",
+    "internal/analyzers/javascript/analyzer.go",
+    "internal/analyzers/javascript/logic.go",
+    "internal/analyzers/javascript/syntax_test.go",
+    "internal/benchmark/testdata/m20-js-ts-parser.json"
+  ],
+  "states": [
+    "SOURCE_DISCOVERY",
+    "GRAMMAR_SELECTION",
+    "STRICT_PARSE",
+    "TREE_HEALTH_GATE",
+    "BOUNDED_RULE_EVALUATION",
+    "SORTED_OUTPUT"
+  ],
+  "transitions": [
+    {
+      "from": "SOURCE_DISCOVERY",
+      "to": "GRAMMAR_SELECTION",
+      "action": "Map the supported source extension to an explicit JavaScript, TypeScript, or TSX grammar without executing source.",
+      "side_effects": []
+    },
+    {
+      "from": "GRAMMAR_SELECTION",
+      "to": "STRICT_PARSE",
+      "action": "Parse source using the pinned pure-Go parser runtime and pinned embedded grammar artifact.",
+      "side_effects": []
+    },
+    {
+      "from": "STRICT_PARSE",
+      "to": "TREE_HEALTH_GATE",
+      "action": "Reject parser errors, stopped/truncated parses, ERROR nodes, or MISSING nodes; malformed syntax fails closed.",
+      "side_effects": []
+    },
+    {
+      "from": "TREE_HEALTH_GATE",
+      "to": "BOUNDED_RULE_EVALUATION",
+      "action": "Only after a healthy syntax tree, run accepted bounded rules; parser validation does not by itself widen rule semantics.",
+      "side_effects": []
+    },
+    {
+      "from": "BOUNDED_RULE_EVALUATION",
+      "to": "SORTED_OUTPUT",
+      "action": "Emit deterministic findings with existing confidence and safe_autofix boundaries; migrate individual rules to AST-backed proof only with explicit M20 evidence.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "Analyzed JavaScript/TypeScript source is never executed.",
+    "Parser dependency must remain pure Go for DoctorCode release cross-compilation; M20 must not introduce a CGO requirement.",
+    "Malformed or truncated syntax fails closed instead of falling back silently to parserless findings.",
+    "JSX/TSX recognition may be added by M20, but existing SIMPLIFY/SECURITY/LOGIC semantics are not automatically widened to JSX/TSX without labeled evidence.",
+    "M20 does not add JavaScript/TypeScript DEADCODE or BLOAT authority.",
+    "Every finding remains safe_autofix=false unless a later accepted milestone explicitly changes that contract."
+  ],
+  "tests": [
+    "internal/analyzers/javascript/syntax_test.go",
+    "internal/analyzers/javascript/analyzer_test.go",
+    "internal/analyzers/javascript/logic_test.go",
+    "internal/benchmark/testdata/m20-js-ts-parser.json",
+    "internal/benchmark/testdata/m18-js-ts.json",
+    "internal/benchmark/testdata/m19-js-ts-logic.json"
+  ],
+  "sequence_session": "M20-JAVASCRIPT-TYPESCRIPT-PARSER",
+  "critical": false,
+  "failure_behavior": [
+    "No supported files returns analyzer unavailable; unknown grammar mapping, parser error, stopped/truncated parse, ERROR node, or MISSING node fails the analyzer closed."
+  ],
+  "restart_behavior": [
+    "Parsing and rule evaluation are stateless for a fixed source tree and can be rerun deterministically."
+  ],
+  "rollback_behavior": [
+    "The analyzer is read-only; rollback is source-control only."
+  ]
+}
