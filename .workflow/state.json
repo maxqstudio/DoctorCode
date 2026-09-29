@@ -10,9 +10,9 @@
   "last_accepted_branch": "main",
   "last_accepted_sha": "c54e4af0335c10354baee150f8748184f1e11580",
   "next_authorized_actions": [
-    "Regenerate M20 Project Truth using Skill_Workflow c1d7e58a0fcadc606c8cf75c6283a17278f99259 and require ROADMAP_SYNC=PASS.",
-    "Continue M20 parser adversarial hardening and release-size/cross-platform validation after governance synchronization.",
-    "Do not treat manually authored docs/ROADMAP.md as authority; .workflow/roadmap.json is canonical."
+    "Synchronize M20 Project Truth and sequence actual evidence from the current governed ledger without changing M20 semantic scope.",
+    "Require all eight permanent workflows to PASS on one exact final branch SHA before opening/merging the M20 PR.",
+    "After merge, revalidate the exact main merge SHA before governance closure advances roadmap/state together to M21_LANGUAGE_ANALYZER_FRAMEWORK."
   ],
   "not_proven": [
     "arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.",
@@ -21,7 +21,7 @@
     "The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.",
     "M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.",
     "M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.",
-    "M20 parser integration, malformed-syntax fail-closed behavior, JSX/TSX recognition, release-size impact, and AST-backed semantic migration are not proven until exact GitHub Actions evidence is recorded."
+    "M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening."
   ],
   "phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
   "proven": [
@@ -74,9 +74,14 @@
     "Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke.",
     "M20 branches from governance-normalized M19 main@c632a49b57274a0a801e234592613069104574b0; accepted M19 product baseline remains c54e4af0335c10354baee150f8748184f1e11580.",
     "M20 parser selection is gotreesitter v0.55.1: MIT-licensed, Go 1.22-compatible, pure Go/no-CGO runtime with standalone embedded JavaScript, TypeScript, and TSX grammar packages; this preserves DoctorCode cross-platform cross-compilation constraints.",
-    "M20 governance authority is Skill_Workflow main@c1d7e58a0fcadc606c8cf75c6283a17278f99259, which adds mandatory .workflow/roadmap.json authority, generated docs/ROADMAP.md, exact roadmap/state phase synchronization, and blocking ROADMAP_SYNC validation."
+    "M20 governance authority is Skill_Workflow main@c1d7e58a0fcadc606c8cf75c6283a17278f99259, which adds mandatory .workflow/roadmap.json authority, generated docs/ROADMAP.md, exact roadmap/state phase synchronization, and blocking ROADMAP_SYNC validation.",
+    "M20 RED Core CI run 36586686595 at 4f5b69466f6a655688682890cb12ae871edb23c7 failed on Ubuntu, macOS, and Windows because .jsx/.tsx were unavailable and malformed .js/.ts were not rejected, proving the parser-grade capability absent before implementation.",
+    "M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 uses javascript/parser-backed-v2 with pure-Go gotreesitter v0.55.1, strict parser ERROR/MISSING rejection, syntax-tree masking, JSX/TSX recognition, and AST-backed bounded LOGIC proof while preserving M19 fail-closed boundaries.",
+    "At M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core CI 36609998432 PASS on Ubuntu/Windows/macOS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 Thin MCP 36609998474 PASS; M17 Release and Install 36609998442 PASS.",
+    "Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.",
+    "GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry."
   ],
   "schema_version": 1,
-  "status": "M20_DECLARED_RED_PENDING",
+  "status": "M20_CANDIDATE_GREEN_FINAL_SYNC",
   "working_branch": "work/m20-js-ts-parser-foundation"
 }
