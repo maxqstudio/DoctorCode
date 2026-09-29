@@ -69,3 +69,43 @@ func TestM20ParserFoundationRejectsMalformedSyntax(t *testing.T) {
 		})
 	}
 }
+
+func TestM20ParserFoundationAcceptsValidModernSyntax(t *testing.T) {
+	tests := []struct {
+		name   string
+		file   string
+		source string
+	}{
+		{
+			name:   "jsx text apostrophe",
+			file:   "view.jsx",
+			source: "export function View() { return <div>don't stop</div>; }\n",
+		},
+		{
+			name:   "typescript module",
+			file:   "module.mts",
+			source: "export interface Box<T> { value: T }\nexport const box: Box<number> = { value: 1 };\n",
+		},
+		{
+			name:   "commonjs typescript",
+			file:   "module.cts",
+			source: "type Value = { ok: boolean };\nconst value: Value = { ok: true };\nexport = value;\n",
+		},
+		{
+			name:   "tsx fragment",
+			file:   "fragment.tsx",
+			source: "export const View = (name: string) => <><span>{name}</span></>;\n",
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			root := t.TempDir()
+			if err := os.WriteFile(filepath.Join(root, test.file), []byte(test.source), 0o600); err != nil {
+				t.Fatal(err)
+			}
+			if findings, err := New().Analyze(context.Background(), root); err != nil {
+				t.Fatalf("Analyze(%s) rejected valid parser syntax: %v; findings=%#v", test.file, err, findings)
+			}
+		})
+	}
+}
