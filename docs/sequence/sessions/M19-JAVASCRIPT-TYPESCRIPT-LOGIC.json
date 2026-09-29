@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "session_id": "M19-JAVASCRIPT-TYPESCRIPT-LOGIC",
+  "phase": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "IN_PROGRESS",
+  "implementation_base_sha": "79e0b0ff886b2155dbffbb973cb96ae501b11a4c",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.actual.json",
+    "diagram": "docs/sequence/generated/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/analyzers/javascript/analyzer_test.go",
+    "internal/benchmark/testdata/m19-js-ts-logic.json"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}
