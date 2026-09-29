@@ -10,9 +10,9 @@
   "last_accepted_branch": "main",
   "last_accepted_sha": "c54e4af0335c10354baee150f8748184f1e11580",
   "next_authorized_actions": [
-    "Treat main@c54e4af0335c10354baee150f8748184f1e11580 as the accepted M19 product baseline.",
-    "Start M20 product work only as a new declared milestone from the then-current accepted main.",
-    "Preserve M19 proof boundaries unless a later milestone explicitly widens them."
+    "Create M20 RED parser corpus proving current analyzer lacks parser-backed JSX/TSX and strict malformed-syntax authority.",
+    "Integrate gotreesitter v0.55.1 with only JavaScript/TypeScript/TSX standalone grammars and no CGO.",
+    "Preserve M18/M19 findings while adding strict syntax-tree health gates, then adversarially harden before any AST-backed rule migration."
   ],
   "not_proven": [
     "arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.",
@@ -20,9 +20,10 @@
     "M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.",
     "The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.",
     "M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.",
-    "M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics."
+    "M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.",
+    "M20 parser integration, malformed-syntax fail-closed behavior, JSX/TSX recognition, release-size impact, and AST-backed semantic migration are not proven until exact GitHub Actions evidence is recorded."
   ],
-  "phase": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
+  "phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
   "proven": [
     "M16 is MAIN_ACCEPTED with product baseline main@2e76c9e635a8a68507fea9d44438f74e96d8e754 and governance-normalized main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.",
     "Skill_Workflow authority remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
@@ -70,9 +71,11 @@
     "PR #28 was closed without merge after the divergence was detected; work/m19-mutation-hardening was created directly from current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde to carry only the remaining mutation-hardening delta.",
     "Exact rebased M19 mutation-hardening candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passed Governance 36564198574, Core CI 36564198646 with 24 cases at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36564198620, Real World Go 36564198793, M07 36564198656, M10 36564198781, M16 MCP 36564198599, and M17 Release and Install 36564198585 including Ubuntu/Windows/macOS native install-smoke.",
     "M19 mutation-hardening merged through PR #29 to main at c54e4af0335c10354baee150f8748184f1e11580.",
-    "Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke."
+    "Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke.",
+    "M20 branches from governance-normalized M19 main@c632a49b57274a0a801e234592613069104574b0; accepted M19 product baseline remains c54e4af0335c10354baee150f8748184f1e11580.",
+    "M20 parser selection is gotreesitter v0.55.1: MIT-licensed, Go 1.22-compatible, pure Go/no-CGO runtime with standalone embedded JavaScript, TypeScript, and TSX grammar packages; this preserves DoctorCode cross-platform cross-compilation constraints."
   ],
   "schema_version": 1,
-  "status": "M19_MAIN_ACCEPTED",
-  "working_branch": "main"
+  "status": "M20_DECLARED_RED_PENDING",
+  "working_branch": "work/m20-js-ts-parser-foundation"
 }
