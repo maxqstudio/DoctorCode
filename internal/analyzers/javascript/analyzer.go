@@ -49,7 +49,7 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 		document, err := parseSyntax(path, data); if err != nil { return nil, fmt.Errorf("javascript/typescript syntax validation failed for %s: %w", path, err) }
 		structural, credentialSource := document.lexicalViews(source)
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
-		findings = append(findings, logicFindings(source, structural, rel)...)
+		findings = append(findings, logicFindingsAST(source, structural, rel, document.tree.RootNode(), document.language)...)
 		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
 			left, right := structural[m[2]:m[3]], structural[m[4]:m[5]]; if left == right { continue }
 			findings = append(findings, makeFinding(ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh, rel, lineAt(source, m[0]), "opposite boolean-return branches can be reduced to the condition or its negation", []string{"structurally matched boolean return branches", "safe_autofix remains disabled"}))
