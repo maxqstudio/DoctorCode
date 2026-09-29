@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M19 on current main provides the bounded 22-case JS-LOGIC-DUPLICATE-CONDITION baseline. The rebased mutation-hardening delta adds parameter assignment/update barriers and expands the corpus to 24 cases. Exact rebased candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passes permanent Core CI on Ubuntu/macOS/Windows with 8 TP / 0 FP / 0 FN and all permanent regression workflows. M19 remains read-only and does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
+  "evidence_boundary": "M19 is MAIN_ACCEPTED at c54e4af0335c10354baee150f8748184f1e11580. JavaScript/TypeScript LOGIC remains a bounded, read-only duplicate-condition rule over nearest traditional-function parameter bindings. The accepted corpus has 24 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows, including negative guards for global accessors and intervening parameter assignment/update. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -195,6 +195,12 @@
       "id": "M19-REBASED-BRANCH-REGRESSION",
       "requirement": "The exact rebased M19 mutation-hardening branch must pass governance, Core, MCP, release/install, and all accepted Go/Python regression lanes before merge.",
       "status": "PASS"
+    },
+    {
+      "id": "M19-MAIN-POST-MERGE-HARDENED",
+      "requirement": "The exact M19 mutation-hardening merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python regression lanes.",
+      "status": "PASS",
+      "evidence": "At main@c54e4af0335c10354baee150f8748184f1e11580: Governance 36565284946 PASS; Core 36565284842 PASS 3/3 with 24-case M19 = 8 TP / 0 FP / 0 FN; M16 36565284846 PASS; M17 36565284851 PASS including Ubuntu/Windows/macOS install-smoke; M10 36565284910 PASS; M07 36565284852 PASS; M06 36565284886 PASS; Real World Go 36565284964 PASS."
     }
   ],
   "runtime_checks": [
