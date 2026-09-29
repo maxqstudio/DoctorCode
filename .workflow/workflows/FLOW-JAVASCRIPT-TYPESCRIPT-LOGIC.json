@@ -39,13 +39,14 @@
     {
       "from": "DUPLICATE_CHECK",
       "to": "FINDING_OUTPUT",
-      "action": "Emit at most one LOGIC finding per chain when a normalized condition repeats later.",
+      "action": "Emit at most one LOGIC finding per chain when a normalized parameter condition repeats later and the tracked parameter is not assigned or updated between occurrences.",
       "side_effects": []
     }
   ],
   "invariants": [
     "No JavaScript or TypeScript source is executed by DoctorCode.",
     "M19 binding proof is limited to parameters of the nearest traditional function/function-expression scope; globals, closures, methods, arrows, and local declarations are not inferred.",
+    "A tracked parameter assignment or update between the first and repeated condition invalidates duplicate-condition proof.",
     "Calls, member access, optional chaining, assignments, update expressions, loose equality, arithmetic/coercive comparisons, and template/string-dependent conditions are outside M19 proof.",
     "Every M19 finding keeps safe_autofix=false.",
     "M19 does not add DEADCODE or BLOAT authority and does not claim full JS/TS parsing."
