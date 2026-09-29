@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m20-js-ts-parser-foundation
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: c54e4af0335c10354baee150f8748184f1e11580
+Last accepted SHA: c90e5d570a5c9eed3685df3381a1509deff40e88
 Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
 ## Authorities
