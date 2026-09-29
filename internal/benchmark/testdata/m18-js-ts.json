@@ -2,29 +2,97 @@
   "schema_version": 1,
   "language": "JavaScript / TypeScript",
   "thresholds": {
-    "min_precision": 1.0,
-    "min_recall": 1.0
+    "min_precision": 1,
+    "min_recall": 1
   },
   "cases": [
     {
       "name": "javascript-all-positive",
       "root": "m18-js-ts/javascript-all-positive",
       "expected": [
-        {"rule_id":"JS-SIMPLIFY-BOOL-RETURN","path":"sample.js","line_start":2},
-        {"rule_id":"JS-SEC-HARDCODED-CREDENTIAL","path":"sample.js","line_start":8}
+        {
+          "rule_id": "JS-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.js",
+          "line_start": 2
+        },
+        {
+          "rule_id": "JS-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.js",
+          "line_start": 8
+        }
       ]
     },
     {
       "name": "typescript-all-positive",
       "root": "m18-js-ts/typescript-all-positive",
       "expected": [
-        {"rule_id":"JS-SIMPLIFY-BOOL-RETURN","path":"sample.ts","line_start":2},
-        {"rule_id":"JS-SEC-HARDCODED-CREDENTIAL","path":"sample.ts","line_start":8}
+        {
+          "rule_id": "JS-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.ts",
+          "line_start": 2
+        },
+        {
+          "rule_id": "JS-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.ts",
+          "line_start": 8
+        }
       ]
     },
     {
       "name": "conservative-negative",
       "root": "m18-js-ts/conservative-negative",
+      "expected": []
+    },
+    {
+      "name": "comment-fake-code",
+      "root": "m18-js-ts/comment-fake-code",
+      "expected": []
+    },
+    {
+      "name": "string-fake-code",
+      "root": "m18-js-ts/string-fake-code",
+      "expected": []
+    },
+    {
+      "name": "env-credential",
+      "root": "m18-js-ts/env-credential",
+      "expected": []
+    },
+    {
+      "name": "object-property-token",
+      "root": "m18-js-ts/object-property-token",
+      "expected": []
+    },
+    {
+      "name": "template-interpolation",
+      "root": "m18-js-ts/template-interpolation",
+      "expected": []
+    },
+    {
+      "name": "inverse-bool",
+      "root": "m18-js-ts/inverse-bool",
+      "expected": [
+        {
+          "rule_id": "JS-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.js",
+          "line_start": 2
+        }
+      ]
+    },
+    {
+      "name": "typescript-annotation",
+      "root": "m18-js-ts/typescript-annotation",
+      "expected": [
+        {
+          "rule_id": "JS-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.ts",
+          "line_start": 1
+        }
+      ]
+    },
+    {
+      "name": "same-bool-negative",
+      "root": "m18-js-ts/same-bool-negative",
       "expected": []
     }
   ]
