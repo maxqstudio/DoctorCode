@@ -36,7 +36,8 @@ jobs:
             git add .workflow/generated/code_facts.json .workflow/acceptance.json docs
             git commit -m "docs(m18): synchronize project truth"
             git push
-            echo "Project Truth synchronized; validation continues against the generated worktree."
+            git reset --hard HEAD
+            echo "Project Truth synchronized; validation continues against the committed generated tree."
           fi
       - name: Validate tracked project docs
         run: python .workflow/tools/validate_project_docs.py
