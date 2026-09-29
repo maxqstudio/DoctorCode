@@ -68,7 +68,7 @@ func logicFindings(source, structural, path string) []model.Finding {
 				// Parserless M19 does not infer globals, closures, arrow/method
 				// parameters, or local declaration scopes. An unproven binding is
 				// a barrier, not evidence for a duplicate-condition finding.
-				seen = map[string]int{}
+				seen = map[string]logicSeenCondition{}
 				continue
 			}
 
