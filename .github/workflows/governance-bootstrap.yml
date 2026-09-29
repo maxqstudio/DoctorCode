@@ -8,7 +8,7 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -25,20 +25,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Synchronize M18 project truth
-        if: github.event_name == 'push' && github.ref == 'refs/heads/work/m18-javascript-typescript-semantic'
-        run: |
-          python .workflow/tools/sync_project_truth.py
-          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.json --output-mermaid docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.mmd
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
-            git add .workflow/generated/code_facts.json .workflow/acceptance.json docs
-            git commit -m "docs(m18): synchronize project truth"
-            git push
-            git reset --hard HEAD
-            echo "Project Truth synchronized; validation continues against the committed generated tree."
-          fi
       - name: Validate tracked project docs
         run: python .workflow/tools/validate_project_docs.py
       - name: Validate doc quality
