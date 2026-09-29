@@ -17,7 +17,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 556
+      "lines": 559
     },
     {
       "directory": "cmd/doctorcode",
@@ -74,6 +74,20 @@
       "is_test": false,
       "language": "Go",
       "lines": 28
+    },
+    {
+      "directory": "internal/analyzers/javascript",
+      "file": "internal/analyzers/javascript/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 71
+    },
+    {
+      "directory": "internal/analyzers/javascript",
+      "file": "internal/analyzers/javascript/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 33
     },
     {
       "directory": "internal/analyzers/python",
@@ -825,6 +839,27 @@
       "lines": 5
     },
     {
+      "directory": "internal/benchmark/testdata/m18-js-ts/conservative-negative",
+      "file": "internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/javascript-all-positive",
+      "file": "internal/benchmark/testdata/m18-js-ts/javascript-all-positive/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/typescript-all-positive",
+      "file": "internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts",
+      "is_test": false,
+      "language": "TypeScript",
+      "lines": 10
+    },
+    {
       "directory": "internal/buildinfo",
       "file": "internal/buildinfo/buildinfo.go",
       "is_test": false,
@@ -850,7 +885,7 @@
       "file": "internal/engine/engine.go",
       "is_test": false,
       "language": "Go",
-      "lines": 93
+      "lines": 95
     },
     {
       "directory": "internal/evidence",
@@ -2703,16 +2738,18 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095",
+  "source_digest": "c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a",
   "source_summary": {
-    "files": 144,
+    "files": 149,
     "languages": {
-      "Go": 84,
+      "Go": 86,
+      "JavaScript": 2,
       "PowerShell": 1,
       "Python": 58,
-      "Shell": 1
+      "Shell": 1,
+      "TypeScript": 1
     },
-    "lines": 7320,
+    "lines": 7455,
     "test_files": 2
   },
   "tests": [

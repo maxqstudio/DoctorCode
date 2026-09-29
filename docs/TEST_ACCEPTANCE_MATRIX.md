@@ -7,7 +7,7 @@
 M17 Release and Install Hardening packages the accepted DoctorCode CLI and local stdio MCP server as deterministic versioned archives for linux/darwin/windows on amd64/arm64. Public v0.1.0 is immutable at product SHA cd05f064e1bb1054271e7028941c1fbb80ea32aa. Publication recovery run 36426199149 rebuilt and verified the same tag-pinned bundle, passed native install-smoke on Ubuntu/Windows/macOS, and published GitHub Release 398260613. Release readback and workflow-artifact checksums agree. arm64 native execution, cryptographic code signing, and broader analyzer/MCP authority remain outside the proof boundary.
 
 Final tested source: external final acceptance evidence.
-Current source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
+Current source digest: c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|

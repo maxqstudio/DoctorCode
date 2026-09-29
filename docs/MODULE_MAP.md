@@ -3,12 +3,12 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: e18e36ac2b2abc906fb200a68b1453c73e219702f1ee5ce9f30c118fe1bf3095
+Source digest: c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 556 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 559 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
@@ -17,6 +17,8 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
+| internal/analyzers/javascript/analyzer.go | Go | 71 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/analyzer_test.go | Go | 33 | internal/analyzers/javascript | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
@@ -124,10 +126,13 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | Python | 4 | internal/benchmark/testdata/m09-python/test-reference-live/tests | YES |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
+| internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js | JavaScript | 6 | internal/benchmark/testdata/m18-js-ts/conservative-negative | NO |
+| internal/benchmark/testdata/m18-js-ts/javascript-all-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m18-js-ts/javascript-all-positive | NO |
+| internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m18-js-ts/typescript-all-positive | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |
-| internal/engine/engine.go | Go | 93 | internal/engine | NO |
+| internal/engine/engine.go | Go | 95 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 272 | internal/evidence | NO |
 | internal/evidence/packet_test.go | Go | 242 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |
