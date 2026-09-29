@@ -87,7 +87,7 @@
       "file": "internal/analyzers/javascript/analyzer_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 33
+      "lines": 61
     },
     {
       "directory": "internal/analyzers/python",
@@ -2808,7 +2808,7 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "6a5c43ab9ab2af8f81e5bf0e4bf205860407404a8e59783eb913010fa635c725",
+  "source_digest": "fad4ebd6c182bfab25f779f23aaae3e47b395684c1a2d824f3df600d5e27919d",
   "source_summary": {
     "files": 159,
     "languages": {
@@ -2819,7 +2819,7 @@
       "Shell": 1,
       "TypeScript": 2
     },
-    "lines": 7580,
+    "lines": 7608,
     "test_files": 2
   },
   "tests": [
