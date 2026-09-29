@@ -143,10 +143,10 @@
       "status": "PASS"
     },
     {
+      "evidence": "At main@6b24ec85518d1b24efba8806032577ca18b4ba61: Governance 36550725126 PASS; Core 36550725245 PASS 3/3; M16 MCP 36550725113 PASS; M17 Release and Install 36550725244 PASS including Ubuntu/Windows/macOS install-smoke; M10 36550725127 PASS; M07 36550725069 PASS; M06 36550725148 PASS; Real World Go 36550725084 PASS.",
       "id": "M18-MAIN-POST-MERGE",
       "requirement": "The exact M18 merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world lanes.",
-      "status": "PASS",
-      "evidence": "At main@6b24ec85518d1b24efba8806032577ca18b4ba61: Governance 36550725126 PASS; Core 36550725245 PASS 3/3; M16 MCP 36550725113 PASS; M17 Release and Install 36550725244 PASS including Ubuntu/Windows/macOS install-smoke; M10 36550725127 PASS; M07 36550725069 PASS; M06 36550725148 PASS; Real World Go 36550725084 PASS."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
