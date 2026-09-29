@@ -24,7 +24,7 @@ UI authority: see SOURCE_AUTHORITY_MAP.md
 Historical/reference authority: see SOURCE_AUTHORITY_MAP.md
 
 ## Technology
-Languages: Go, Python
+Languages: Go, Python, JavaScript, TypeScript
 Frameworks: Model Context Protocol Go SDK
 Persistence:
 External systems: GitHub Actions, host compilers and language runtimes, local MCP stdio clients

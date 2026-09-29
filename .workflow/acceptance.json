@@ -107,40 +107,40 @@
       "status": "PASS"
     },
     {
+      "evidence": "work/m18-javascript-typescript-semantic branches from main@ca27c331fd6af7128d0c65536e5fb7e8843516bf; Skill_Workflow remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.",
       "id": "M18-MAIN-BASELINE",
       "requirement": "M18 must branch from the current accepted main and retain the pinned Skill_Workflow authority.",
-      "status": "PASS",
-      "evidence": "work/m18-javascript-typescript-semantic branches from main@ca27c331fd6af7128d0c65536e5fb7e8843516bf; Skill_Workflow remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36442207887 at ff2eacff57b9a957765a777ecbbfd266341e3ee9 failed on all three OS lanes with unknown benchmark analyzer \"javascript\".",
       "id": "M18-RED-ANALYZER-ABSENT",
       "requirement": "The JavaScript/TypeScript semantic benchmark must demonstrate the capability absent before implementation.",
-      "status": "PASS",
-      "evidence": "Core CI run 36442207887 at ff2eacff57b9a957765a777ecbbfd266341e3ee9 failed on all three OS lanes with unknown benchmark analyzer \"javascript\"."
+      "status": "PASS"
     },
     {
+      "evidence": "javascript/conservative-structural-v1 supports .js/.mjs/.cjs/.ts/.mts/.cts and emits only JS-SIMPLIFY-BOOL-RETURN and JS-SEC-HARDCODED-CREDENTIAL with safe_autofix=false.",
       "id": "M18-BOUNDED-RULES",
       "requirement": "M18 must expose only the declared conservative JS/TS rules and supported extensions without claiming broader semantics.",
-      "status": "PASS",
-      "evidence": "javascript/conservative-structural-v1 supports .js/.mjs/.cjs/.ts/.mts/.cts and emits only JS-SIMPLIFY-BOOL-RETURN and JS-SEC-HARDCODED-CREDENTIAL with safe_autofix=false."
+      "status": "PASS"
     },
     {
+      "evidence": "Run 36547914570 at 800ddaf827aa388e1c42b42ae3a1e5110fd1f935 exposed comment/string SIMPLIFY false positives; run 36549001445 at 83e5c6d3104fd4d7befb46a408a6a1626670c7ec exposed a block-comment SECURITY false positive.",
       "id": "M18-ADVERSARIAL-RED",
       "requirement": "Adversarial corpus must surface lexical false positives instead of hiding them through expected-label changes.",
-      "status": "PASS",
-      "evidence": "Run 36547914570 at 800ddaf827aa388e1c42b42ae3a1e5110fd1f935 exposed comment/string SIMPLIFY false positives; run 36549001445 at 83e5c6d3104fd4d7befb46a408a6a1626670c7ec exposed a block-comment SECURITY false positive."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36549239948 at 01123b2ed1e12eccc5a1cafec93030f5788008df passed Ubuntu, macOS, and Windows. The 13-case corpus reports 6 TP / 0 FP / 0 FN; both M18 rules report precision=1.0 and recall=1.0.",
       "id": "M18-ADVERSARIAL-GREEN",
       "requirement": "The repaired analyzer must pass the full adversarial JS/TS corpus at precision=1.0 and recall=1.0 with zero false positives and zero false negatives on all Core CI operating systems.",
-      "status": "PASS",
-      "evidence": "Core CI run 36549239948 at 01123b2ed1e12eccc5a1cafec93030f5788008df passed Ubuntu, macOS, and Windows. The 13-case corpus reports 6 TP / 0 FP / 0 FN; both M18 rules report precision=1.0 and recall=1.0."
+      "status": "PASS"
     },
     {
+      "evidence": "At 51c75f76ee96e6989b68b21856d6b59b6f3c25cd: Governance 36549487578 PASS; Core 36549487453 PASS 3/3; M16 36549487583 PASS; M17 36549487560 PASS including native install-smoke; M10 36549487546 PASS; M07 36549487515 PASS; M06 36549487603 PASS; Real World Go 36549487556 PASS.",
       "id": "M18-BRANCH-REGRESSION",
       "requirement": "Exact M18 branch acceptance must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes.",
-      "status": "PASS",
-      "evidence": "At 51c75f76ee96e6989b68b21856d6b59b6f3c25cd: Governance 36549487578 PASS; Core 36549487453 PASS 3/3; M16 36549487583 PASS; M17 36549487560 PASS including native install-smoke; M10 36549487546 PASS; M07 36549487515 PASS; M06 36549487603 PASS; Real World Go 36549487556 PASS."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

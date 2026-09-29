@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M17 Release and Install Hardening packages the accepted DoctorCode CLI and local stdio MCP server as deterministic versioned archives for linux/darwin/windows on amd64/arm64. Public v0.1.0 is immutable at product SHA cd05f064e1bb1054271e7028941c1fbb80ea32aa. Publication recovery run 36426199149 rebuilt and verified the same tag-pinned bundle, passed native install-smoke on Ubuntu/Windows/macOS, and published GitHub Release 398260613. Release readback and workflow-artifact checksums agree. arm64 native execution, cryptographic code signing, and broader analyzer/MCP authority remain outside the proof boundary.
+M18 adds a conservative structural JavaScript/TypeScript analyzer for .js, .mjs, .cjs, .ts, .mts, and .cts. Accepted M18 rules are limited to opposite boolean-return simplification and hardcoded credential-like quoted literals. The final adversarial corpus contains 13 cases and proves 6 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, macOS, and Windows. Existing Go, Python, MCP, and release/install lanes remain regression evidence. M18 does not prove a full JavaScript/TypeScript parser or AST, JSX/TSX support, dead-code safety, BLOAT/LOGIC rules, template-interpolation credential semantics, or general semantic completeness. Public v0.1.0 remains an immutable historical release baseline.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
@@ -26,6 +26,12 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 | M17-PUBLIC-TAG | Public v0.1.0 must be immutable and resolve exactly to the accepted M17 product-main SHA. | refs/tags/v0.1.0 readback resolves to commit cd05f064e1bb1054271e7028941c1fbb80ea32aa; tag bootstrap run 36425956853 completed success. | PASS |
 | M17-PUBLICATION-RECOVERY | If GitHub suppresses recursive tag workflow events created by GITHUB_TOKEN, publication recovery must rebuild from the immutable tag, verify the same release contract, pass native install-smoke on all supported runner OSes, and publish only after those checks pass. | GitHub recursion suppression prevented a native tag-trigger run. Recovery run 36426199149 checked out v0.1.0, verified exact SHA, completed build-release, install-smoke on windows-latest/macos-latest/ubuntu-latest, and publish-release with success. | PASS |
 | M17-PUBLIC-RELEASE-READBACK | Final closure must read back the public release, asset set, and checksums and prove they correspond to the published deterministic bundle. | GitHub Release 398260613 is public/non-prerelease and contains six platform archives plus checksums.txt and release-manifest.json. Artifact 10971548461 checksums.txt SHA-256 608e5e7c898604da9fefb277c35a6ae57232f0bf7ba571516e2908fcbb6ddace matches the release asset digest; all listed archive/manifest hashes match GitHub asset digests. | PASS |
+| M18-MAIN-BASELINE | M18 must branch from the current accepted main and retain the pinned Skill_Workflow authority. | work/m18-javascript-typescript-semantic branches from main@ca27c331fd6af7128d0c65536e5fb7e8843516bf; Skill_Workflow remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720. | PASS |
+| M18-RED-ANALYZER-ABSENT | The JavaScript/TypeScript semantic benchmark must demonstrate the capability absent before implementation. | Core CI run 36442207887 at ff2eacff57b9a957765a777ecbbfd266341e3ee9 failed on all three OS lanes with unknown benchmark analyzer "javascript". | PASS |
+| M18-BOUNDED-RULES | M18 must expose only the declared conservative JS/TS rules and supported extensions without claiming broader semantics. | javascript/conservative-structural-v1 supports .js/.mjs/.cjs/.ts/.mts/.cts and emits only JS-SIMPLIFY-BOOL-RETURN and JS-SEC-HARDCODED-CREDENTIAL with safe_autofix=false. | PASS |
+| M18-ADVERSARIAL-RED | Adversarial corpus must surface lexical false positives instead of hiding them through expected-label changes. | Run 36547914570 at 800ddaf827aa388e1c42b42ae3a1e5110fd1f935 exposed comment/string SIMPLIFY false positives; run 36549001445 at 83e5c6d3104fd4d7befb46a408a6a1626670c7ec exposed a block-comment SECURITY false positive. | PASS |
+| M18-ADVERSARIAL-GREEN | The repaired analyzer must pass the full adversarial JS/TS corpus at precision=1.0 and recall=1.0 with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36549239948 at 01123b2ed1e12eccc5a1cafec93030f5788008df passed Ubuntu, macOS, and Windows. The 13-case corpus reports 6 TP / 0 FP / 0 FN; both M18 rules report precision=1.0 and recall=1.0. | PASS |
+| M18-BRANCH-REGRESSION | Exact M18 branch acceptance must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes. | At 51c75f76ee96e6989b68b21856d6b59b6f3c25cd: Governance 36549487578 PASS; Core 36549487453 PASS 3/3; M16 36549487583 PASS; M17 36549487560 PASS including native install-smoke; M10 36549487546 PASS; M07 36549487515 PASS; M06 36549487603 PASS; Real World Go 36549487556 PASS. | PASS |
 
 ## Test commands
 
@@ -35,6 +41,7 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 - cd mcp && go test ./... && go vet ./... && go build -trimpath ./cmd/doctorcode-mcp
 - M17 Release and Install workflow build-release plus three native install-smoke jobs
 - Core CI and all accepted real-world regression workflows
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
 
 ## Runtime checks
 
@@ -44,11 +51,12 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 - python scripts/verify_release.py dist --version <version> --commit <sha> --date <date>
 - scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py
 - existing pinned Go/Python real-world validation lanes
+- M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M17-RELEASE-INSTALL-HARDENING
+Sequence session contract: M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence
