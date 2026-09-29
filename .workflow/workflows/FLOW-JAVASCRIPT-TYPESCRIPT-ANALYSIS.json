@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS",
+  "title": "JavaScript and TypeScript conservative structural analysis",
+  "purpose": "Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.",
+  "authority": "internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json",
+  "entry_condition": "Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.",
+  "source_owners": [
+    "internal/analyzers/javascript/analyzer.go",
+    "internal/analyzers/javascript/analyzer_test.go",
+    "internal/engine/engine.go",
+    "cmd/doctorcode/main.go",
+    "internal/benchmark/testdata/m18-js-ts.json"
+  ],
+  "states": [
+    "APPLICABILITY_CHECK",
+    "SOURCE_READ",
+    "BOUNDED_RULE_EVALUATION",
+    "FINDING_CONVERSION",
+    "SORTED_OUTPUT"
+  ],
+  "transitions": [
+    {
+      "from": "APPLICABILITY_CHECK",
+      "to": "SOURCE_READ",
+      "action": "Detect supported visible JavaScript or TypeScript files; none returns detector unavailable.",
+      "side_effects": []
+    },
+    {
+      "from": "SOURCE_READ",
+      "to": "BOUNDED_RULE_EVALUATION",
+      "action": "Read source without following source symlinks; read errors and NUL-containing input fail closed.",
+      "side_effects": []
+    },
+    {
+      "from": "BOUNDED_RULE_EVALUATION",
+      "to": "FINDING_CONVERSION",
+      "action": "Apply only opposite boolean-return simplification and hardcoded credential literal rules.",
+      "side_effects": []
+    },
+    {
+      "from": "FINDING_CONVERSION",
+      "to": "SORTED_OUTPUT",
+      "action": "Emit stable IDs, redacted credential evidence, and safe_autofix=false; engine provides stable priority sorting.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "No JavaScript or TypeScript source is executed by DoctorCode.",
+    "Credential literal values are never emitted; evidence retains only identifier, byte length, and SHA-256 prefix.",
+    "The M18 analyzer does not claim full AST semantics, dead-code proof, or JSX/TSX coverage.",
+    "Every finding keeps safe_autofix=false."
+  ],
+  "tests": [
+    "internal/analyzers/javascript/analyzer_test.go",
+    "internal/benchmark/testdata/m18-js-ts.json"
+  ],
+  "sequence_session": "M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC",
+  "critical": false,
+  "failure_behavior": [
+    "No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis."
+  ],
+  "restart_behavior": [
+    "Analysis is stateless and can be rerun against the same repository state."
+  ],
+  "rollback_behavior": [
+    "The analyzer is read-only; rollback is source-control only."
+  ]
+}
