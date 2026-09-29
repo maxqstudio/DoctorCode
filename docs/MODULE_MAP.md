@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: fad4ebd6c182bfab25f779f23aaae3e47b395684c1a2d824f3df600d5e27919d
+Source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -17,7 +17,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/javascript/analyzer.go | Go | 170 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/analyzer.go | Go | 196 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/analyzer_test.go | Go | 61 | internal/analyzers/javascript | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
