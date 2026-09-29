@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M19 is MAIN_ACCEPTED at c54e4af0335c10354baee150f8748184f1e11580. JavaScript/TypeScript LOGIC remains a bounded, read-only duplicate-condition rule over nearest traditional-function parameter bindings. The accepted corpus has 24 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows, including negative guards for global accessors and intervening parameter assignment/update. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M19 is MAIN_ACCEPTED at c54e4af0335c10354baee150f8748184f1e11580. JavaScript/TypeScript LOGIC remains a bounded, read-only duplicate-condition rule over nearest traditional-function parameter bindings. The accepted corpus has 24 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows, including negative guards for global accessors and intervening parameter assignment/update. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix. M20 governance now uses Skill_Workflow roadmap authority c1d7e58a0fcadc606c8cf75c6283a17278f99259; .workflow/roadmap.json is canonical and docs/ROADMAP.md must be generated with ROADMAP_SYNC=PASS before M20 acceptance.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
+Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -64,6 +64,11 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 - existing pinned Go/Python real-world validation lanes
 - M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
 - M19 JavaScript/TypeScript 22-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS
+
+## Roadmap synchronization evidence
+
+Roadmap authority: .workflow/roadmap.json
+ROADMAP_SYNC: PASS
 
 ## Sequence contract evidence
 

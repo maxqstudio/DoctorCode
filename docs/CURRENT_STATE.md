@@ -7,16 +7,18 @@ Authority verified at SHA: c54e4af0335c10354baee150f8748184f1e11580
 Governance profile: strict
 
 ## Current phase
-Phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
-Status: M19_MAIN_ACCEPTED
+Phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
+Status: M20_DECLARED_RED_PENDING
+Roadmap phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
+ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m20-js-ts-parser-foundation
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: c54e4af0335c10354baee150f8748184f1e11580
 Current candidate SHA: external final acceptance evidence
-Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
+Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -38,7 +40,7 @@ SEQUENCE_SYNC: PASS
 
 ## Proven
 - M16 is MAIN_ACCEPTED with product baseline main@2e76c9e635a8a68507fea9d44438f74e96d8e754 and governance-normalized main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
-- Skill_Workflow authority remains pinned to 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720.
+- Historical M16/M17 governance used earlier Skill_Workflow authority; current M20 authority is separately pinned below.
 - M17 branches from protected main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.
 - M17 RED run 36377497638 at 325f2ac7a8e01581cdbddb6eb8cf61f5842be4b7 failed at Build deterministic release bundle because scripts/build_release.py did not yet exist.
 - Pre-fix M17 run 36378036522 built and verified all six release archives plus release-manifest.json/checksums.txt successfully; Ubuntu and Windows installed and executed their native artifacts successfully.
@@ -84,6 +86,9 @@ SEQUENCE_SYNC: PASS
 - Exact rebased M19 mutation-hardening candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passed Governance 36564198574, Core CI 36564198646 with 24 cases at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36564198620, Real World Go 36564198793, M07 36564198656, M10 36564198781, M16 MCP 36564198599, and M17 Release and Install 36564198585 including Ubuntu/Windows/macOS native install-smoke.
 - M19 mutation-hardening merged through PR #29 to main at c54e4af0335c10354baee150f8748184f1e11580.
 - Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke.
+- M20 branches from governance-normalized M19 main@c632a49b57274a0a801e234592613069104574b0; accepted M19 product baseline remains c54e4af0335c10354baee150f8748184f1e11580.
+- M20 parser selection is gotreesitter v0.55.1: MIT-licensed, Go 1.22-compatible, pure Go/no-CGO runtime with standalone embedded JavaScript, TypeScript, and TSX grammar packages; this preserves DoctorCode cross-platform cross-compilation constraints.
+- M20 governance authority is Skill_Workflow main@c1d7e58a0fcadc606c8cf75c6283a17278f99259, which adds mandatory .workflow/roadmap.json authority, generated docs/ROADMAP.md, exact roadmap/state phase synchronization, and blocking ROADMAP_SYNC validation.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -92,6 +97,7 @@ SEQUENCE_SYNC: PASS
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
+- M20 parser integration, malformed-syntax fail-closed behavior, JSX/TSX recognition, release-size impact, and AST-backed semantic migration are not proven until exact GitHub Actions evidence is recorded.
 
 ## Known blockers
 - None declared.
@@ -100,9 +106,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Treat main@c54e4af0335c10354baee150f8748184f1e11580 as the accepted M19 product baseline.
-- Start M20 product work only as a new declared milestone from the then-current accepted main.
-- Preserve M19 proof boundaries unless a later milestone explicitly widens them.
+- Regenerate M20 Project Truth using Skill_Workflow c1d7e58a0fcadc606c8cf75c6283a17278f99259 and require ROADMAP_SYNC=PASS.
+- Continue M20 parser adversarial hardening and release-size/cross-platform validation after governance synchronization.
+- Do not treat manually authored docs/ROADMAP.md as authority; .workflow/roadmap.json is canonical.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

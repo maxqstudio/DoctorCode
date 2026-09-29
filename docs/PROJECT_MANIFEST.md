@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m20-js-ts-parser-foundation
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: c54e4af0335c10354baee150f8748184f1e11580
-Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
+Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
@@ -56,15 +56,16 @@ Generated from code inventory. See MODULE_MAP.md.
 1. ../PROJECT_PROFILE.yaml
 2. SYSTEM_OVERVIEW.md
 3. CURRENT_STATE.md
-4. PROJECT_MANIFEST.md
-5. profile-required authority / architecture / workflow docs
-6. SEQUENCE_CONTRACTS.md when enabled
-7. MODULE_MAP.md
-8. FLOW_INDEX.md
-9. SYMBOL_INDEX.md
-10. TEST_ACCEPTANCE_MATRIX.md
-11. DOC_SYNC_MATRIX.md
-12. PROJECT_TRUTH_SYNC.md when applicable
+4. ROADMAP.md
+5. PROJECT_MANIFEST.md
+6. profile-required authority / architecture / workflow docs
+7. SEQUENCE_CONTRACTS.md when enabled
+8. MODULE_MAP.md
+9. FLOW_INDEX.md
+10. SYMBOL_INDEX.md
+11. TEST_ACCEPTANCE_MATRIX.md
+12. DOC_SYNC_MATRIX.md
+13. PROJECT_TRUTH_SYNC.md when applicable
 
 ## Profile-specific applicability
 
