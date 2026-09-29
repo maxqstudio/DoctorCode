@@ -64,7 +64,7 @@ The JavaScript/TypeScript analyzer is intentionally narrower than a full parser.
 
 M19 deliberately does **not** infer arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general control-flow semantics. These are skipped rather than guessed.
 
-The accepted M19 branch corpus contains **24 cases** and reports **8 TP, 0 FP, and 0 FN** on Ubuntu, Windows, and macOS. The two added parameter-mutation guards prove that assignment/update of the tracked parameter invalidates duplicate-condition proof. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
+Current main contains the accepted **22-case** M19 LOGIC baseline. The rebased mutation-hardening candidate expands it to **24 cases** by adding parameter assignment/update guards; fresh permanent three-OS validation of this rebased delta is required before those two new guards become accepted main evidence. This remains bounded corpus evidence, not a claim of universal precision or recall.
 
 ### M02 precision regression gate
 
