@@ -203,10 +203,10 @@
       "status": "PASS"
     },
     {
+      "evidence": "At 1f47b34234ad3ce522cbb5aed1b0a9ae7640c3da: Governance 36559430725 PASS; Core 36559430708 PASS 3/3 with 24-case M19 8 TP / 0 FP / 0 FN; M16 36559430707 PASS; M17 36559430719 PASS including Ubuntu/Windows/macOS install-smoke; M10 36559430737 PASS; M07 36559430688 PASS; M06 36559430722 PASS; Real World Go 36559430690 PASS.",
       "id": "M19-FINAL-SYNC-BRANCH",
       "requirement": "The synchronized M19 branch tree must pass all permanent workflows before merge.",
-      "status": "PASS",
-      "evidence": "At 1f47b34234ad3ce522cbb5aed1b0a9ae7640c3da: Governance 36559430725 PASS; Core 36559430708 PASS 3/3 with 24-case M19 8 TP / 0 FP / 0 FN; M16 36559430707 PASS; M17 36559430719 PASS including Ubuntu/Windows/macOS install-smoke; M10 36559430737 PASS; M07 36559430688 PASS; M06 36559430722 PASS; Real World Go 36559430690 PASS."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
