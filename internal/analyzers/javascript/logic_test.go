@@ -71,3 +71,44 @@ func TestLogicFindingsUnsupportedConditionIsBarrier(t *testing.T) {
 		t.Fatalf("unsupported condition must break duplicate proof: %#v", findings)
 	}
 }
+
+func TestLogicFindingsRejectsUnprovenGlobalBinding(t *testing.T) {
+	source := `Object.defineProperty(globalThis, "flag", { get() { return Math.random() > 0.5 } })
+function choose(other) {
+  if (flag) {
+    return 1
+  } else if (other) {
+    return 2
+  } else if (flag) {
+    return 3
+  }
+}`
+	structural, err := maskStructural(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if findings := logicFindings(source, structural, "sample.js"); len(findings) != 0 {
+		t.Fatalf("unproven global binding must not produce M19 logic finding: %#v", findings)
+	}
+}
+
+func TestLogicNearestFunctionParameterUsesInnermostFunction(t *testing.T) {
+	source := `function outer(flag) {
+  function inner(other) {
+    if (flag) {
+      return 1
+    } else if (other) {
+      return 2
+    } else if (flag) {
+      return 3
+    }
+  }
+}`
+	structural, err := maskStructural(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if findings := logicFindings(source, structural, "sample.js"); len(findings) != 0 {
+		t.Fatalf("closure binding is outside M19 proof and must not produce a finding: %#v", findings)
+	}
+}
