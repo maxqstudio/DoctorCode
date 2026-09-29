@@ -3,9 +3,9 @@
   "session_id": "M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC",
   "phase": "M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC",
   "mode": "DURING",
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "critical": false,
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "implementation_base_sha": "ca27c331fd6af7128d0c65536e5fb7e8843516bf",
   "plan": {
     "required": false,

@@ -48,6 +48,7 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 		source := string(data); if strings.IndexByte(source, 0) >= 0 { return nil, fmt.Errorf("javascript/typescript parse incomplete: %s contains NUL byte", path) }
 		structural, credentialSource, err := maskLexicalViews(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
+		findings = append(findings, logicFindings(source, structural, rel)...)
 		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
 			left, right := structural[m[2]:m[3]], structural[m[4]:m[5]]; if left == right { continue }
 			findings = append(findings, makeFinding(ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh, rel, lineAt(source, m[0]), "opposite boolean-return branches can be reduced to the condition or its negation", []string{"structurally matched boolean return branches", "safe_autofix remains disabled"}))

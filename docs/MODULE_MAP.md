@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
+Source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -17,8 +17,10 @@ Generated/refreshed: current compiler run
 | internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/javascript/analyzer.go | Go | 196 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/analyzer.go | Go | 197 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/analyzer_test.go | Go | 61 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic.go | Go | 386 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/logic_test.go | Go | 114 | internal/analyzers/javascript | NO |
 | internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
@@ -139,6 +141,28 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m18-js-ts/template-interpolation/sample.js | JavaScript | 1 | internal/benchmark/testdata/m18-js-ts/template-interpolation | NO |
 | internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m18-js-ts/typescript-all-positive | NO |
 | internal/benchmark/testdata/m18-js-ts/typescript-annotation/sample.ts | TypeScript | 1 | internal/benchmark/testdata/m18-js-ts/typescript-annotation | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/arrow-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/arrow-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/call-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/call-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/closure-negative/sample.js | JavaScript | 13 | internal/benchmark/testdata/m19-js-ts-logic/closure-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/comment-spacing-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/comment-spacing-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/function-expression-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/function-expression-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/global-accessor-negative/sample.js | JavaScript | 16 | internal/benchmark/testdata/m19-js-ts-logic/global-accessor-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/intervening-call-barrier/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/intervening-call-barrier | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/intervening-member-barrier/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/intervening-member-barrier | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/js-bare-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/js-bare-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/js-negated-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/js-negated-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/lexical-fake-negative/sample.js | JavaScript | 8 | internal/benchmark/testdata/m19-js-ts-logic/lexical-fake-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/local-binding-negative/sample.js | JavaScript | 11 | internal/benchmark/testdata/m19-js-ts-logic/local-binding-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/loose-equality-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/loose-equality-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/member-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/member-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/method-negative/sample.js | JavaScript | 12 | internal/benchmark/testdata/m19-js-ts-logic/method-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive/sample.js | JavaScript | 12 | internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative/sample.js | JavaScript | 9 | internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative | NO |
+| internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |

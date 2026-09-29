@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "language": "JavaScript / TypeScript",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "js-bare-positive",
+      "root": "m19-js-ts-logic/js-bare-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "ts-strict-null-positive",
+      "root": "m19-js-ts-logic/ts-strict-null-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.ts",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "js-negated-positive",
+      "root": "m19-js-ts-logic/js-negated-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "call-negative",
+      "root": "m19-js-ts-logic/call-negative",
+      "expected": []
+    },
+    {
+      "name": "member-negative",
+      "root": "m19-js-ts-logic/member-negative",
+      "expected": []
+    },
+    {
+      "name": "loose-equality-negative",
+      "root": "m19-js-ts-logic/loose-equality-negative",
+      "expected": []
+    },
+    {
+      "name": "separate-chains-negative",
+      "root": "m19-js-ts-logic/separate-chains-negative",
+      "expected": []
+    },
+    {
+      "name": "lexical-fake-negative",
+      "root": "m19-js-ts-logic/lexical-fake-negative",
+      "expected": []
+    },
+    {
+      "name": "intervening-call-barrier",
+      "root": "m19-js-ts-logic/intervening-call-barrier",
+      "expected": []
+    },
+    {
+      "name": "intervening-member-barrier",
+      "root": "m19-js-ts-logic/intervening-member-barrier",
+      "expected": []
+    },
+    {
+      "name": "parenthesized-positive",
+      "root": "m19-js-ts-logic/parenthesized-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "comment-spacing-positive",
+      "root": "m19-js-ts-logic/comment-spacing-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "global-accessor-negative",
+      "root": "m19-js-ts-logic/global-accessor-negative",
+      "expected": []
+    },
+    {
+      "name": "nested-own-param-positive",
+      "root": "m19-js-ts-logic/nested-own-param-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 7
+        }
+      ]
+    },
+    {
+      "name": "function-expression-positive",
+      "root": "m19-js-ts-logic/function-expression-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "closure-negative",
+      "root": "m19-js-ts-logic/closure-negative",
+      "expected": []
+    },
+    {
+      "name": "arrow-negative",
+      "root": "m19-js-ts-logic/arrow-negative",
+      "expected": []
+    },
+    {
+      "name": "method-negative",
+      "root": "m19-js-ts-logic/method-negative",
+      "expected": []
+    },
+    {
+      "name": "local-binding-negative",
+      "root": "m19-js-ts-logic/local-binding-negative",
+      "expected": []
+    },
+    {
+      "name": "ts-generic-negative",
+      "root": "m19-js-ts-logic/ts-generic-negative",
+      "expected": []
+    },
+    {
+      "name": "strict-false-positive",
+      "root": "m19-js-ts-logic/strict-false-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "reverse-comparison-negative",
+      "root": "m19-js-ts-logic/reverse-comparison-negative",
+      "expected": []
+    }
+  ]
+}

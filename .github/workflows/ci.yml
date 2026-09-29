@@ -50,6 +50,8 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m09-python-repository-shaped.json --analyzer=python --json
       - name: M18 JavaScript TypeScript semantic benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
+      - name: M19 JavaScript TypeScript logic benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI

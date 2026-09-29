@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "flow_id": "FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS",
-  "title": "JavaScript and TypeScript conservative structural analysis",
-  "purpose": "Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.",
+  "title": "JavaScript and TypeScript conservative structural baseline analysis",
+  "purpose": "Describe the accepted M18 baseline SIMPLIFY and SECURITY subset of the conservative JavaScript/TypeScript analyzer; later accepted semantic extensions such as M19 LOGIC are governed by their own workflow contracts.",
   "authority": "internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json",
   "entry_condition": "Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.",
   "source_owners": [
@@ -35,7 +35,7 @@
     {
       "from": "BOUNDED_RULE_EVALUATION",
       "to": "FINDING_CONVERSION",
-      "action": "Apply only opposite boolean-return simplification and hardcoded credential literal rules.",
+      "action": "Apply the M18 baseline opposite boolean-return simplification and hardcoded credential literal rules; later accepted extension flows are evaluated separately.",
       "side_effects": []
     },
     {
