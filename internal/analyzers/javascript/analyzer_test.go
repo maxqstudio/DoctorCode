@@ -31,3 +31,31 @@ const apiToken = "hardcoded-production-token-12345";
 		}
 	}
 }
+
+func TestMaskStructuralRejectsUnterminatedLexicalConstructs(t *testing.T) {
+	cases := []string{
+		"const value = 'unterminated",
+		"const value = \"unterminated",
+		"const value = `unterminated",
+		"/* unterminated",
+	}
+	for _, source := range cases {
+		if _, err := maskStructural(source); err == nil {
+			t.Fatalf("maskStructural(%q) error=nil, want fail-closed lexical error", source)
+		}
+	}
+}
+
+func TestMaskStructuralIgnoresCodeLikeNonCodeRegions(t *testing.T) {
+	source := "// if (flag) { return true; } else { return false; }\n" +
+		"const a = 'if (flag) { return true; } else { return false; }';\n" +
+		"const b = `if (flag) { return true; } else { return false; }`;\n" +
+		"/* if (flag) { return true; } else { return false; } */\n"
+	masked, err := maskStructural(source)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if boolReturn.MatchString(masked) {
+		t.Fatalf("masked non-code region still matched simplify rule: %q", masked)
+	}
+}
