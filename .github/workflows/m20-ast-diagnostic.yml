@@ -1,0 +1,49 @@
+name: M20 AST Field Diagnostic
+
+on:
+  push:
+    branches:
+      - work/m20-js-ts-parser-foundation
+
+permissions:
+  contents: read
+
+jobs:
+  fields:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: false
+      - name: Dump pinned JavaScript AST fields
+        shell: bash
+        run: |
+          cat > m20_ast_diag.go <<'EOF'
+          package main
+          import (
+            "fmt"
+            g "github.com/odvcencio/gotreesitter"
+            js "github.com/odvcencio/gotreesitter/grammars/javascript"
+          )
+          func dump(n *g.Node, lang *g.Language, depth int) {
+            if n == nil { return }
+            fmt.Printf("%s%s [%d,%d) named=%v\n", string(make([]byte, depth*2)), n.Type(lang), n.StartByte(), n.EndByte(), n.IsNamed())
+            for i:=0; i<n.ChildCount(); i++ {
+              c:=n.Child(i)
+              if c==nil { continue }
+              fmt.Printf("%s  child[%d] field=%q -> %s [%d,%d)\n", string(make([]byte, depth*2)), i, n.FieldNameForChild(i, lang), c.Type(lang), c.StartByte(), c.EndByte())
+              dump(c,lang,depth+1)
+            }
+          }
+          func main() {
+            src:=[]byte("function choose(flag, other) {\n  if (flag) { return 1; } else if (other) { return 2; } else if (flag) { return 3; }\n}\n")
+            lang:=js.Language()
+            p:=g.NewParser(lang)
+            tree,err:=p.Parse(src); if err!=nil { panic(err) }
+            dump(tree.RootNode(),lang,0)
+          }
+          EOF
+          go run ./m20_ast_diag.go
+          rm m20_ast_diag.go
