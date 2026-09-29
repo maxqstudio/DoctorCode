@@ -46,13 +46,13 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 	for _, path := range files {
 		data, err := os.ReadFile(path); if err != nil { return nil, fmt.Errorf("read JavaScript/TypeScript source %s: %w", path, err) }
 		source := string(data); if strings.IndexByte(source, 0) >= 0 { return nil, fmt.Errorf("javascript/typescript parse incomplete: %s contains NUL byte", path) }
-		structural, err := maskStructural(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
+		structural, credentialSource, err := maskLexicalViews(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
 		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
 			left, right := structural[m[2]:m[3]], structural[m[4]:m[5]]; if left == right { continue }
 			findings = append(findings, makeFinding(ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh, rel, lineAt(source, m[0]), "opposite boolean-return branches can be reduced to the condition or its negation", []string{"structurally matched boolean return branches", "safe_autofix remains disabled"}))
 		}
-		for _, m := range credential.FindAllStringSubmatchIndex(source, -1) {
+		for _, m := range credential.FindAllStringSubmatchIndex(credentialSource, -1) {
 			name, value := source[m[2]:m[3]], source[m[4]:m[5]]; if !credentialName.MatchString(name) || placeholder(value) { continue }
 			digest := sha256.Sum256([]byte(value))
 			findings = append(findings, makeFinding(ruleSecurity, model.CategorySecurity, model.SeverityHigh, model.ConfidenceSuspicious, rel, lineAt(source, m[0]), "credential-like identifier is assigned a hardcoded string literal", []string{fmt.Sprintf("identifier=%s literal_bytes=%d sha256_prefix=%x", name, len(value), digest[:6]), "literal value is redacted"}))
@@ -61,8 +61,15 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 	return findings, nil
 }
 
+
 func maskStructural(source string) (string, error) {
-	out := []byte(source)
+	structural, _, err := maskLexicalViews(source)
+	return structural, err
+}
+
+func maskLexicalViews(source string) (string, string, error) {
+	structural := []byte(source)
+	credentialSource := []byte(source)
 	const (
 		stateCode = iota
 		stateSingleQuote
@@ -73,33 +80,36 @@ func maskStructural(source string) (string, error) {
 	)
 	state := stateCode
 	escaped := false
-	for i := 0; i < len(out); i++ {
+	for i := 0; i < len(structural); i++ {
 		ch := source[i]
 		switch state {
 		case stateCode:
-			if ch == '/' && i+1 < len(out) && source[i+1] == '/' {
-				out[i], out[i+1] = ' ', ' '
+			if ch == '/' && i+1 < len(structural) && source[i+1] == '/' {
+				structural[i], structural[i+1] = ' ', ' '
+				credentialSource[i], credentialSource[i+1] = ' ', ' '
 				i++
 				state = stateLineComment
 				continue
 			}
-			if ch == '/' && i+1 < len(out) && source[i+1] == '*' {
-				out[i], out[i+1] = ' ', ' '
+			if ch == '/' && i+1 < len(structural) && source[i+1] == '*' {
+				structural[i], structural[i+1] = ' ', ' '
+				credentialSource[i], credentialSource[i+1] = ' ', ' '
 				i++
 				state = stateBlockComment
 				continue
 			}
 			switch ch {
 			case '\'':
-				out[i] = ' '
+				structural[i] = ' '
 				state = stateSingleQuote
 				escaped = false
 			case '"':
-				out[i] = ' '
+				structural[i] = ' '
 				state = stateDoubleQuote
 				escaped = false
 			case '`':
-				out[i] = ' '
+				structural[i] = ' '
+				credentialSource[i] = ' '
 				state = stateTemplate
 				escaped = false
 			}
@@ -107,29 +117,28 @@ func maskStructural(source string) (string, error) {
 			if ch == '\n' {
 				state = stateCode
 			} else {
-				out[i] = ' '
+				structural[i] = ' '
+				credentialSource[i] = ' '
 			}
 		case stateBlockComment:
-			if ch == '*' && i+1 < len(out) && source[i+1] == '/' {
-				out[i], out[i+1] = ' ', ' '
+			if ch == '*' && i+1 < len(structural) && source[i+1] == '/' {
+				structural[i], structural[i+1] = ' ', ' '
+				credentialSource[i], credentialSource[i+1] = ' ', ' '
 				i++
 				state = stateCode
 			} else if ch != '\n' {
-				out[i] = ' '
+				structural[i] = ' '
+				credentialSource[i] = ' '
 			}
-		case stateSingleQuote, stateDoubleQuote, stateTemplate:
+		case stateSingleQuote, stateDoubleQuote:
 			if ch == '\n' {
-				if state == stateSingleQuote || state == stateDoubleQuote {
-					if !escaped {
-						return "", fmt.Errorf("unterminated quoted string before line break")
-					}
-					escaped = false
-					continue
+				if !escaped {
+					return "", "", fmt.Errorf("unterminated quoted string before line break")
 				}
 				escaped = false
 				continue
 			}
-			out[i] = ' '
+			structural[i] = ' '
 			if escaped {
 				escaped = false
 				continue
@@ -139,23 +148,40 @@ func maskStructural(source string) (string, error) {
 				continue
 			}
 			if (state == stateSingleQuote && ch == '\'') ||
-				(state == stateDoubleQuote && ch == '"') ||
-				(state == stateTemplate && ch == '`') {
+				(state == stateDoubleQuote && ch == '"') {
+				state = stateCode
+			}
+		case stateTemplate:
+			if ch == '\n' {
+				escaped = false
+				continue
+			}
+			structural[i] = ' '
+			credentialSource[i] = ' '
+			if escaped {
+				escaped = false
+				continue
+			}
+			if ch == '\\' {
+				escaped = true
+				continue
+			}
+			if ch == '`' {
 				state = stateCode
 			}
 		}
 	}
 	switch state {
 	case stateCode, stateLineComment:
-		return string(out), nil
+		return string(structural), string(credentialSource), nil
 	case stateBlockComment:
-		return "", fmt.Errorf("unterminated block comment")
+		return "", "", fmt.Errorf("unterminated block comment")
 	case stateSingleQuote, stateDoubleQuote:
-		return "", fmt.Errorf("unterminated quoted string")
+		return "", "", fmt.Errorf("unterminated quoted string")
 	case stateTemplate:
-		return "", fmt.Errorf("unterminated template literal")
+		return "", "", fmt.Errorf("unterminated template literal")
 	default:
-		return "", fmt.Errorf("unknown lexical state")
+		return "", "", fmt.Errorf("unknown lexical state")
 	}
 }
 
