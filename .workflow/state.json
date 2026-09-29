@@ -10,8 +10,8 @@
   "last_accepted_branch": "main",
   "last_accepted_sha": "6b24ec85518d1b24efba8806032577ca18b4ba61",
   "next_authorized_actions": [
-    "Synchronize M19 Project Truth and current sequence evidence using the pinned Skill_Workflow tools.",
-    "Run all permanent workflows on one exact synchronized M19 branch candidate.",
+    "Synchronize M19 Project Truth and current sequence evidence using Skill_Workflow authority 2148313678f476c4990e447b4d657724f071adff.",
+    "Remove temporary focused-validation workflow and run all permanent workflows on one exact 24-case M19 candidate.",
     "Merge accepted M19 through pull request and revalidate exact main."
   ],
   "not_proven": [
@@ -65,9 +65,11 @@
     "M19 RED Core CI run 36552995359 at 109da8f9d617ecadf7bb6662df03200ba5bd6115 executed the 8-case labeled LOGIC corpus before implementation and reported 0 TP / 0 FP / 3 FN, proving JS-LOGIC-DUPLICATE-CONDITION absent.",
     "M19 adversarial Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; the false positive was global-accessor-negative at sample.js:12, proving unqualified global identifiers could not be treated as stable bindings.",
     "M19 repaired binding proof requires the relevant identifier to be a parameter of the nearest traditional function/function-expression and treats unsupported, side-effect-capable, global, closure, method, arrow, local-declaration, and unproven conditions as proof barriers.",
-    "M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0."
+    "M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.",
+    "M19 parameter-mutation hardening rejects duplicate-condition proof when the relevant nearest-function parameter is assigned or updated between occurrences.",
+    "Focused GitHub Actions run 36558288844 on the expanded 24-case M19 corpus passed with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0, while also preserving the M18 regression benchmark and JavaScript analyzer unit tests."
   ],
   "schema_version": 1,
-  "status": "M19_IMPLEMENTED_PENDING_FINAL_ACCEPTANCE",
+  "status": "M19_HARDENED_PENDING_FINAL_ACCEPTANCE",
   "working_branch": "work/m19-javascript-typescript-logic"
 }
