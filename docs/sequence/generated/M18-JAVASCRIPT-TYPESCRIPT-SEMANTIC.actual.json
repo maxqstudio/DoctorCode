@@ -1130,7 +1130,7 @@
       "locator": "scripts/verify_release.py::validate_archive"
     }
   ],
-  "observed_head": "d9f40eeb0ec2c92158d747e39c7aa3e32c955344",
+  "observed_head": "800ddaf827aa388e1c42b42ae3a1e5110fd1f935",
   "schema_version": 1,
-  "source_digest": "c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a"
+  "source_digest": "70474a21ad11dae9facb695994e8bc88a9ffca6b110ef92fbf67c5472717e042"
 }

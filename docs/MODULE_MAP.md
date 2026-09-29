@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a
+Source digest: 70474a21ad11dae9facb695994e8bc88a9ffca6b110ef92fbf67c5472717e042
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -126,9 +126,17 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | Python | 4 | internal/benchmark/testdata/m09-python/test-reference-live/tests | YES |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | Python | 2 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/types.py | Python | 5 | internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg | NO |
+| internal/benchmark/testdata/m18-js-ts/comment-fake-code/sample.js | JavaScript | 3 | internal/benchmark/testdata/m18-js-ts/comment-fake-code | NO |
 | internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js | JavaScript | 6 | internal/benchmark/testdata/m18-js-ts/conservative-negative | NO |
+| internal/benchmark/testdata/m18-js-ts/env-credential/sample.js | JavaScript | 2 | internal/benchmark/testdata/m18-js-ts/env-credential | NO |
+| internal/benchmark/testdata/m18-js-ts/inverse-bool/sample.js | JavaScript | 7 | internal/benchmark/testdata/m18-js-ts/inverse-bool | NO |
 | internal/benchmark/testdata/m18-js-ts/javascript-all-positive/sample.js | JavaScript | 10 | internal/benchmark/testdata/m18-js-ts/javascript-all-positive | NO |
+| internal/benchmark/testdata/m18-js-ts/object-property-token/sample.js | JavaScript | 1 | internal/benchmark/testdata/m18-js-ts/object-property-token | NO |
+| internal/benchmark/testdata/m18-js-ts/same-bool-negative/sample.js | JavaScript | 3 | internal/benchmark/testdata/m18-js-ts/same-bool-negative | NO |
+| internal/benchmark/testdata/m18-js-ts/string-fake-code/sample.js | JavaScript | 2 | internal/benchmark/testdata/m18-js-ts/string-fake-code | NO |
+| internal/benchmark/testdata/m18-js-ts/template-interpolation/sample.js | JavaScript | 1 | internal/benchmark/testdata/m18-js-ts/template-interpolation | NO |
 | internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts | TypeScript | 10 | internal/benchmark/testdata/m18-js-ts/typescript-all-positive | NO |
+| internal/benchmark/testdata/m18-js-ts/typescript-annotation/sample.ts | TypeScript | 1 | internal/benchmark/testdata/m18-js-ts/typescript-annotation | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 15 | internal/detector | NO |

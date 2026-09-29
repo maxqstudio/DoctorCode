@@ -839,11 +839,32 @@
       "lines": 5
     },
     {
+      "directory": "internal/benchmark/testdata/m18-js-ts/comment-fake-code",
+      "file": "internal/benchmark/testdata/m18-js-ts/comment-fake-code/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 3
+    },
+    {
       "directory": "internal/benchmark/testdata/m18-js-ts/conservative-negative",
       "file": "internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js",
       "is_test": false,
       "language": "JavaScript",
       "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/env-credential",
+      "file": "internal/benchmark/testdata/m18-js-ts/env-credential/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/inverse-bool",
+      "file": "internal/benchmark/testdata/m18-js-ts/inverse-bool/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 7
     },
     {
       "directory": "internal/benchmark/testdata/m18-js-ts/javascript-all-positive",
@@ -853,11 +874,46 @@
       "lines": 10
     },
     {
+      "directory": "internal/benchmark/testdata/m18-js-ts/object-property-token",
+      "file": "internal/benchmark/testdata/m18-js-ts/object-property-token/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/same-bool-negative",
+      "file": "internal/benchmark/testdata/m18-js-ts/same-bool-negative/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/string-fake-code",
+      "file": "internal/benchmark/testdata/m18-js-ts/string-fake-code/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/template-interpolation",
+      "file": "internal/benchmark/testdata/m18-js-ts/template-interpolation/sample.js",
+      "is_test": false,
+      "language": "JavaScript",
+      "lines": 1
+    },
+    {
       "directory": "internal/benchmark/testdata/m18-js-ts/typescript-all-positive",
       "file": "internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts",
       "is_test": false,
       "language": "TypeScript",
       "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m18-js-ts/typescript-annotation",
+      "file": "internal/benchmark/testdata/m18-js-ts/typescript-annotation/sample.ts",
+      "is_test": false,
+      "language": "TypeScript",
+      "lines": 1
     },
     {
       "directory": "internal/buildinfo",
@@ -2738,18 +2794,18 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a",
+  "source_digest": "70474a21ad11dae9facb695994e8bc88a9ffca6b110ef92fbf67c5472717e042",
   "source_summary": {
-    "files": 149,
+    "files": 157,
     "languages": {
       "Go": 86,
-      "JavaScript": 2,
+      "JavaScript": 9,
       "PowerShell": 1,
       "Python": 58,
       "Shell": 1,
-      "TypeScript": 1
+      "TypeScript": 2
     },
-    "lines": 7455,
+    "lines": 7475,
     "test_files": 2
   },
   "tests": [

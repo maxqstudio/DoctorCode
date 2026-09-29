@@ -16,7 +16,7 @@ Branch: work/m18-javascript-typescript-semantic
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
 Current candidate SHA: external final acceptance evidence
-Current source digest: c7e541295161e24bb9714c6c6b8d4a3d4fe961ef15a80ec06c06577498f71f6a
+Current source digest: 70474a21ad11dae9facb695994e8bc88a9ffca6b110ef92fbf67c5472717e042
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
