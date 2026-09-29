@@ -94,6 +94,16 @@
       "name": "same-bool-negative",
       "root": "m18-js-ts/same-bool-negative",
       "expected": []
+    },
+    {
+      "name": "block-comment-fake-code",
+      "root": "m18-js-ts/block-comment-fake-code",
+      "expected": []
+    },
+    {
+      "name": "template-fake-code",
+      "root": "m18-js-ts/template-fake-code",
+      "expected": []
     }
   ]
 }
