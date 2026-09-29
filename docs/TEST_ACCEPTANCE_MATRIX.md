@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M20 is a branch candidate, not yet MAIN_ACCEPTED. Candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 establishes parser-backed JavaScript/TypeScript syntax authority with JSX/TSX recognition, strict malformed-syntax rejection, syntax-tree masking, and AST-backed bounded LOGIC proof while preserving M18/M19 rule boundaries. M20 does not authorize JS/TS DEADCODE, BLOAT, general whole-program semantics, safe autofix, or automatic deletion. Final promotion still requires synchronized Project Truth, one exact final branch SHA with all permanent workflows PASS, squash merge, and exact-main revalidation.
+M20 is MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. Parser-backed JavaScript/TypeScript syntax authority, JSX/TSX recognition, strict malformed-syntax rejection, syntax-tree masking, AST-backed bounded LOGIC proof, M19 regression preservation, multi-OS release/install, and roadmap governance are accepted. M20 still does not authorize JS/TS DEADCODE, BLOAT, general whole-program semantics, safe autofix, or automatic deletion. The current project phase is M21_LANGUAGE_ANALYZER_FRAMEWORK; M21 implementation has not yet widened semantic authority.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
@@ -49,6 +49,7 @@ Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c
 | M20-PARSER-CORPUS | The M20 parser-backed JSX/TSX and bounded rule corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36609998432 at 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports 5 cases = 3 TP / 0 FP / 0 FN, precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. | PASS |
 | M20-BRANCH-CANDIDATE | A single M20 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression workflows before final ledger synchronization. | At 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core 36609998432 PASS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 36609998474 PASS; M17 36609998442 PASS. | PASS |
 | M20-RELEASE-SIZE-TELEMETRY | M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size. | GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists. | PASS |
+| M20-MAIN-POST-MERGE | The exact M20 squash-merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M20 is closed. | At main@c90e5d570a5c9eed3685df3381a1509deff40e88: Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke; publish-release skipped as expected for a non-tag push. | PASS |
 
 ## Test commands
 

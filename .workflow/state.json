@@ -8,11 +8,11 @@
   ],
   "blockers": [],
   "last_accepted_branch": "main",
-  "last_accepted_sha": "c54e4af0335c10354baee150f8748184f1e11580",
+  "last_accepted_sha": "c90e5d570a5c9eed3685df3381a1509deff40e88",
   "next_authorized_actions": [
-    "Synchronize M20 Project Truth and sequence actual evidence from the current governed ledger without changing M20 semantic scope.",
-    "Require all eight permanent workflows to PASS on one exact final branch SHA before opening/merging the M20 PR.",
-    "After merge, revalidate the exact main merge SHA before governance closure advances roadmap/state together to M21_LANGUAGE_ANALYZER_FRAMEWORK."
+    "Begin M21 language analyzer framework planning from accepted main@c90e5d570a5c9eed3685df3381a1509deff40e88 without widening existing language semantics.",
+    "Define reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, availability, and benchmark contracts before implementing new language baselines.",
+    "Preserve M20 parser-backed JavaScript/TypeScript boundaries and retain the recorded release-size telemetry for later production-hardening decisions."
   ],
   "not_proven": [
     "arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.",
@@ -23,7 +23,7 @@
     "M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.",
     "M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening."
   ],
-  "phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
+  "phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
   "proven": [
     "M16 is MAIN_ACCEPTED with product baseline main@2e76c9e635a8a68507fea9d44438f74e96d8e754 and governance-normalized main@48b6d930b5231a9f808e74a7c58ebbd76174fabd.",
     "Historical M16/M17 governance used earlier Skill_Workflow authority; current M20 authority is separately pinned below.",
@@ -79,9 +79,10 @@
     "M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 uses javascript/parser-backed-v2 with pure-Go gotreesitter v0.55.1, strict parser ERROR/MISSING rejection, syntax-tree masking, JSX/TSX recognition, and AST-backed bounded LOGIC proof while preserving M19 fail-closed boundaries.",
     "At M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core CI 36609998432 PASS on Ubuntu/Windows/macOS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 Thin MCP 36609998474 PASS; M17 Release and Install 36609998442 PASS.",
     "Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.",
-    "GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry."
+    "GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry.",
+    "M20 merged through PR #31 to main at c90e5d570a5c9eed3685df3381a1509deff40e88. Exact-main Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke."
   ],
   "schema_version": 1,
-  "status": "M20_CANDIDATE_GREEN_FINAL_SYNC",
-  "working_branch": "work/m20-js-ts-parser-foundation"
+  "status": "M20_MAIN_ACCEPTED",
+  "working_branch": "main"
 }

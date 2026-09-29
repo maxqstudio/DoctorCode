@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: c54e4af0335c10354baee150f8748184f1e11580
+Authority verified at SHA: c90e5d570a5c9eed3685df3381a1509deff40e88
 Governance profile: strict
 
 ## Current phase
-Phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
-Status: M20_CANDIDATE_GREEN_FINAL_SYNC
-Roadmap phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
+Phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
+Status: M20_MAIN_ACCEPTED
+Roadmap phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m20-js-ts-parser-foundation
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: c54e4af0335c10354baee150f8748184f1e11580
+Last accepted SHA: c90e5d570a5c9eed3685df3381a1509deff40e88
 Current candidate SHA: external final acceptance evidence
 Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
 
@@ -94,6 +94,7 @@ SEQUENCE_SYNC: PASS
 - At M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core CI 36609998432 PASS on Ubuntu/Windows/macOS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 Thin MCP 36609998474 PASS; M17 Release and Install 36609998442 PASS.
 - Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.
 - GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry.
+- M20 merged through PR #31 to main at c90e5d570a5c9eed3685df3381a1509deff40e88. Exact-main Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -111,9 +112,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M20 Project Truth and sequence actual evidence from the current governed ledger without changing M20 semantic scope.
-- Require all eight permanent workflows to PASS on one exact final branch SHA before opening/merging the M20 PR.
-- After merge, revalidate the exact main merge SHA before governance closure advances roadmap/state together to M21_LANGUAGE_ANALYZER_FRAMEWORK.
+- Begin M21 language analyzer framework planning from accepted main@c90e5d570a5c9eed3685df3381a1509deff40e88 without widening existing language semantics.
+- Define reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, availability, and benchmark contracts before implementing new language baselines.
+- Preserve M20 parser-backed JavaScript/TypeScript boundaries and retain the recorded release-size telemetry for later production-hardening decisions.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

@@ -2,8 +2,8 @@
 
 # ROADMAP
 
-Current project phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
-Current roadmap phase: M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION
+Current project phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
+Current roadmap phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
 ROADMAP_SYNC: PASS
 
 ## Phase plan
@@ -11,8 +11,8 @@ ROADMAP_SYNC: PASS
 | Order | Phase | Title | Roadmap status | Objective | Exit criteria |
 |---:|---|---|---|---|---|
 | 1 | M19_JAVASCRIPT_TYPESCRIPT_LOGIC | JavaScript/TypeScript bounded LOGIC | ACCEPTED | Establish a bounded duplicate-condition LOGIC rule with conservative binding and mutation proof. | 24-case M19 corpus accepted with zero false positives and zero false negatives on Ubuntu, Windows, and macOS.<br>Exact-main post-merge acceptance completed. |
-| 2 | M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION | JavaScript/TypeScript parser-grade foundation | CURRENT | Introduce a deterministic pure-Go parser authority for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 rule behavior and fail-closed syntax handling. | Pure-Go parser dependency is pinned and release cross-compilation remains valid without CGO.<br>JS/JSX/TS/TSX syntax validation is fail-closed for parser errors, ERROR nodes, and MISSING nodes.<br>Existing M18/M19 corpora remain regression-clean.<br>JSX/TSX parser-backed corpus passes on Ubuntu, Windows, and macOS.<br>Release/install and governance lanes pass on one exact candidate and exact main. |
-| 3 | M21_LANGUAGE_ANALYZER_FRAMEWORK | Language analyzer framework | PLANNED | Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages. | New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.<br>Framework contract is regression-tested across existing Go, Python, and JavaScript/TypeScript analyzers. |
+| 2 | M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION | JavaScript/TypeScript parser-grade foundation | ACCEPTED | Introduce a deterministic pure-Go parser authority for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 rule behavior and fail-closed syntax handling. | Pure-Go parser dependency is pinned and release cross-compilation remains valid without CGO.<br>JS/JSX/TS/TSX syntax validation is fail-closed for parser errors, ERROR nodes, and MISSING nodes.<br>Existing M18/M19 corpora remain regression-clean.<br>JSX/TSX parser-backed corpus passes on Ubuntu, Windows, and macOS.<br>Release/install and governance lanes pass on one exact candidate and exact main. |
+| 3 | M21_LANGUAGE_ANALYZER_FRAMEWORK | Language analyzer framework | CURRENT | Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages. | New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.<br>Framework contract is regression-tested across existing Go, Python, and JavaScript/TypeScript analyzers. |
 | 4 | M22_RUST_SEMANTIC_BASELINE | Rust semantic baseline | PLANNED | Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules. | Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence have labeled and adversarial corpora.<br>BLOAT is enabled only if safe evidence is proven.<br>Cross-platform CI and repository-shaped validation pass. |
 | 5 | M23_JAVA_KOTLIN_SEMANTIC_BASELINE | Java and Kotlin semantic baseline | PLANNED | Add JVM-family semantic analysis with package, class, method, and build-system awareness. | Java and Kotlin bounded rules pass synthetic, adversarial, and repository-shaped tests.<br>Maven/Gradle project boundaries are handled conservatively.<br>Ubuntu, Windows, and macOS acceptance passes. |
 | 6 | M24_C_CPP_SEMANTIC_BASELINE | C and C++ semantic baseline | PLANNED | Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation. | Header/include and declaration-definition evidence is deterministic.<br>Macro and conditional-compilation ambiguity fails closed.<br>No aggressive dead-code claim is accepted without target-aware proof. |
