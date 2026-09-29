@@ -28,6 +28,11 @@ type logicFunctionScope struct {
 	params    map[string]bool
 }
 
+type logicSeenCondition struct {
+	line int
+	end  int
+}
+
 func logicFindings(source, structural, path string) []model.Finding {
 	var out []model.Finding
 	continuation := map[int]bool{}
@@ -51,11 +56,11 @@ func logicFindings(source, structural, path string) []model.Finding {
 			continue
 		}
 
-		seen := map[string]int{}
+		seen := map[string]logicSeenCondition{}
 		for _, condition := range conditions {
 			key, ok := normalizeLogicCondition(structural[condition.start:condition.end])
 			if !ok {
-				seen = map[string]int{}
+				seen = map[string]logicSeenCondition{}
 				continue
 			}
 			binding := logicConditionBindingName(key)
@@ -69,6 +74,10 @@ func logicFindings(source, structural, path string) []model.Finding {
 
 			line := lineAt(source, condition.start)
 			if earlier, exists := seen[key]; exists {
+				if logicBindingMutated(structural[earlier.end:condition.start], binding) {
+					seen = map[string]logicSeenCondition{}
+					continue
+				}
 				out = append(out, makeFinding(
 					ruleLogic,
 					model.CategoryLogic,
@@ -78,7 +87,7 @@ func logicFindings(source, structural, path string) []model.Finding {
 					line,
 					"duplicate side-effect-free primitive parameter condition appears later in the same if/else-if chain",
 					[]string{
-						fmt.Sprintf("same normalized primitive parameter condition already appeared at line %d", earlier),
+						fmt.Sprintf("same normalized primitive parameter condition already appeared at line %d", earlier.line),
 						"proof subset is limited to nearest function parameters used as bare identifiers, negated identifiers, or identifier ===/!== true/false/null",
 						"unsupported, side-effect-capable, or unproven bindings reset duplicate tracking",
 						"safe_autofix remains disabled",
@@ -86,7 +95,7 @@ func logicFindings(source, structural, path string) []model.Finding {
 				))
 				break
 			}
-			seen[key] = line
+			seen[key] = logicSeenCondition{line: line, end: condition.end}
 		}
 	}
 	return out
@@ -307,6 +316,61 @@ func logicNearestFunctionParameter(scopes []logicFunctionScope, pos int, name st
 		}
 	}
 	return best >= 0 && scopes[best].params[name]
+}
+
+
+func logicBindingMutated(segment, name string) bool {
+	for search := 0; search < len(segment); {
+		idx := strings.Index(segment[search:], name)
+		if idx < 0 {
+			return false
+		}
+		idx += search
+		end := idx + len(name)
+		if (idx == 0 || !logicIdentifierByte(segment[idx-1])) &&
+			(end == len(segment) || !logicIdentifierByte(segment[end])) {
+			before := idx - 1
+			for before >= 0 && isLogicSpace(segment[before]) {
+				before--
+			}
+			if before >= 1 {
+				prefix := segment[before-1 : before+1]
+				if prefix == "++" || prefix == "--" {
+					return true
+				}
+			}
+
+			after := end
+			for after < len(segment) && isLogicSpace(segment[after]) {
+				after++
+			}
+			for _, op := range []string{"++", "--", "**=", "&&=", "||=", "??=", "+=", "-=", "*=", "/=", "%=", "&=", "|=", "^=", "<<=", ">>=", ">>>="} {
+				if strings.HasPrefix(segment[after:], op) {
+					return true
+				}
+			}
+			if after < len(segment) && segment[after] == '=' {
+				next := byte(0)
+				if after+1 < len(segment) {
+					next = segment[after+1]
+				}
+				if next != '=' && next != '>' {
+					return true
+				}
+			}
+		}
+		search = end
+	}
+	return false
+}
+
+func isLogicSpace(ch byte) bool {
+	switch ch {
+	case ' ', '\t', '\r', '\n':
+		return true
+	default:
+		return false
+	}
 }
 
 func unwrapLogicParens(value string) (string, bool) {
