@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M18 adds a conservative structural JavaScript/TypeScript analyzer for .js, .mjs, .cjs, .ts, .mts, and .cts. Accepted M18 rules are limited to opposite boolean-return simplification and hardcoded credential-like quoted literals. The final adversarial corpus contains 13 cases and proves 6 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, macOS, and Windows. Existing Go, Python, MCP, and release/install lanes remain regression evidence. M18 does not prove a full JavaScript/TypeScript parser or AST, JSX/TSX support, dead-code safety, BLOAT/LOGIC rules, template-interpolation credential semantics, or general semantic completeness. Public v0.1.0 remains an immutable historical release baseline.",
+  "evidence_boundary": "M18 adds a conservative structural JavaScript/TypeScript analyzer for .js, .mjs, .cjs, .ts, .mts, and .cts. Accepted M18 rules are limited to opposite boolean-return simplification and hardcoded credential-like quoted literals. The final adversarial corpus contains 13 cases and proves 6 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, macOS, and Windows. Existing Go, Python, MCP, and release/install lanes remain regression evidence. M18 does not prove a full JavaScript/TypeScript parser or AST, JSX/TSX support, dead-code safety, BLOAT/LOGIC rules, template-interpolation credential semantics, or general semantic completeness. Public v0.1.0 remains an immutable historical release baseline. M18 merged through PR #24 and exact main@6b24ec85518d1b24efba8806032577ca18b4ba61 passed all permanent acceptance workflows.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -141,6 +141,12 @@
       "id": "M18-BRANCH-REGRESSION",
       "requirement": "Exact M18 branch acceptance must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes.",
       "status": "PASS"
+    },
+    {
+      "id": "M18-MAIN-POST-MERGE",
+      "requirement": "The exact M18 merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world lanes.",
+      "status": "PASS",
+      "evidence": "At main@6b24ec85518d1b24efba8806032577ca18b4ba61: Governance 36550725126 PASS; Core 36550725245 PASS 3/3; M16 MCP 36550725113 PASS; M17 Release and Install 36550725244 PASS including Ubuntu/Windows/macOS install-smoke; M10 36550725127 PASS; M07 36550725069 PASS; M06 36550725148 PASS; Real World Go 36550725084 PASS."
     }
   ],
   "runtime_checks": [
