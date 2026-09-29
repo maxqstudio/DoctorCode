@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
+  "current_phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
   "phases": [
     {
       "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
@@ -15,7 +15,7 @@
     {
       "id": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
       "title": "JavaScript/TypeScript parser-grade foundation",
-      "status": "CURRENT",
+      "status": "ACCEPTED",
       "objective": "Introduce a deterministic pure-Go parser authority for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 rule behavior and fail-closed syntax handling.",
       "exit_criteria": [
         "Pure-Go parser dependency is pinned and release cross-compilation remains valid without CGO.",
@@ -28,7 +28,7 @@
     {
       "id": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
       "title": "Language analyzer framework",
-      "status": "PLANNED",
+      "status": "CURRENT",
       "objective": "Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages.",
       "exit_criteria": [
         "New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.",
