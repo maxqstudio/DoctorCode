@@ -173,10 +173,21 @@ func normalizeLogicASTCondition(source string, node *gotreesitter.Node, language
 
 func unwrapLogicASTParens(node *gotreesitter.Node, language *gotreesitter.Language) *gotreesitter.Node {
 	for node != nil && node.Type(language) == "parenthesized_expression" {
-		if node.NamedChildCount() != 1 {
+		var semantic *gotreesitter.Node
+		for i := 0; i < node.NamedChildCount(); i++ {
+			child := node.NamedChild(i)
+			if child == nil || child.Type(language) == "comment" {
+				continue
+			}
+			if semantic != nil {
+				return nil
+			}
+			semantic = child
+		}
+		if semantic == nil {
 			return nil
 		}
-		node = node.NamedChild(0)
+		node = semantic
 	}
 	return node
 }
@@ -185,7 +196,8 @@ func collectLogicASTFunctionScopes(root *gotreesitter.Node, language *gotreesitt
 	var scopes []logicASTFunctionScope
 	gotreesitter.Walk(root, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
 		kind := node.Type(language)
-		supported := kind == "function_declaration" || kind == "function_expression"
+		supported := (kind == "function_declaration" || kind == "function_expression") &&
+			node.ChildByFieldName("type_parameters", language) == nil
 		switch kind {
 		case "function_declaration", "function_expression", "arrow_function", "method_definition", "generator_function", "generator_function_declaration":
 		default:
