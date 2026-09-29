@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 183 files, 6 language categories.
+Observed source inventory: 185 files, 6 language categories.
 
 ## Major components
 
@@ -167,7 +167,7 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 - LEXICAL_VALIDATION -> IF_CHAIN_SCAN : Mask comments, strings, and template bodies while preserving source offsets; malformed lexical constructs fail closed.
 - IF_CHAIN_SCAN -> PURE_CONDITION_NORMALIZATION : Inspect if/else-if chains without executing source.
 - PURE_CONDITION_NORMALIZATION -> DUPLICATE_CHECK : Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions.
-- DUPLICATE_CHECK -> FINDING_OUTPUT : Emit at most one LOGIC finding per chain when a normalized condition repeats later.
+- DUPLICATE_CHECK -> FINDING_OUTPUT : Emit at most one LOGIC finding per chain when a normalized parameter condition repeats later and the parameter is not assigned or updated between occurrences.
 
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
@@ -299,7 +299,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
 
-Current status: M19_IMPLEMENTED_PENDING_FINAL_ACCEPTANCE
+Current status: M19_MUTATION_HARDENING_REBASED_PENDING_ACCEPTANCE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -358,9 +358,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M19 Project Truth and current sequence evidence using the pinned Skill_Workflow tools.
-- Run all permanent workflows on one exact synchronized M19 branch candidate.
-- Merge accepted M19 through pull request and revalidate exact main.
+- Synchronize Project Truth for work/m19-mutation-hardening from current main authority.
+- Run the expanded 24-case M19 corpus and all permanent workflows on one exact rebased branch SHA.
+- Merge only the minimal mutation-hardening delta through a new pull request, then revalidate exact main.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -417,6 +417,9 @@ Known blockers:
 - M19 adversarial Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; the false positive was global-accessor-negative at sample.js:12, proving unqualified global identifiers could not be treated as stable bindings.
 - M19 repaired binding proof requires the relevant identifier to be a parameter of the nearest traditional function/function-expression and treats unsupported, side-effect-capable, global, closure, method, arrow, local-declaration, and unproven conditions as proof barriers.
 - M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
+- Current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde already contains the earlier 22-case M19 JavaScript/TypeScript LOGIC implementation as a squash commit.
+- A later divergent M19 hardening branch exposed and repaired parameter mutation risk, expanding the corpus from 22 to 24 cases; exact branch candidate 596ab10c440b26a8f51e8db42142f0173a459df0 passed all permanent workflows before divergence from current main was detected.
+- PR #28 was closed without merge after the divergence was detected; work/m19-mutation-hardening was created directly from current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde to carry only the remaining mutation-hardening delta.
 
 ### Not proven
 
@@ -425,8 +428,8 @@ Known blockers:
 - M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
-- M19 LOGIC behavior is not proven until the labeled RED corpus fails before implementation and then passes with zero false positives and zero false negatives across Core CI operating systems.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
+- The rebased 24-case M19 mutation-hardening delta is not accepted until the exact rebased branch passes governance, Core CI on Ubuntu/macOS/Windows, MCP, release/install, and accepted Go/Python regression lanes.
 
 ## Important limitations
 

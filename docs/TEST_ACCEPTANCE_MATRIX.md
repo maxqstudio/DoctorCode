@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The final M19 corpus has 22 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M19 on current main already provides bounded JS-LOGIC-DUPLICATE-CONDITION with the accepted 22-case corpus. The rebased mutation-hardening delta adds two negative guards proving that assignment or update of the tracked nearest-function parameter between repeated conditions invalidates duplicate-condition proof, expanding the corpus to 24 cases. Historical divergent-branch evidence passed 24 cases at 8 TP / 0 FP / 0 FN, but rebased acceptance requires fresh exact-SHA permanent workflow evidence. M19 remains read-only and does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
+Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
