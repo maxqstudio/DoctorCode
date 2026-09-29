@@ -234,9 +234,9 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 
 - M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics.
 
-## FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural analysis
+## FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural baseline analysis
 
-Purpose: Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.
+Purpose: Describe the accepted M18 baseline SIMPLIFY and SECURITY subset of the conservative JavaScript/TypeScript analyzer; later accepted semantic extensions such as M19 LOGIC are governed by their own workflow contracts.
 Critical: FALSE
 Entry condition: Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.
 Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json
@@ -255,7 +255,7 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 |---|---|---|---|---|
 | APPLICABILITY_CHECK | SOURCE_READ | Detect supported visible JavaScript or TypeScript files; none returns detector unavailable. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
 | SOURCE_READ | BOUNDED_RULE_EVALUATION | Read source without following source symlinks; read errors and NUL-containing input fail closed. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
-| BOUNDED_RULE_EVALUATION | FINDING_CONVERSION | Apply only opposite boolean-return simplification and hardcoded credential literal rules. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
+| BOUNDED_RULE_EVALUATION | FINDING_CONVERSION | Apply the M18 baseline opposite boolean-return simplification and hardcoded credential literal rules; later accepted extension flows are evaluated separately. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
 | FINDING_CONVERSION | SORTED_OUTPUT | Emit stable IDs, redacted credential evidence, and safe_autofix=false; engine provides stable priority sorting. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json |  |
 
 ### Invariants
@@ -272,6 +272,50 @@ Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/test
 ### Restart behavior
 
 - Analysis is stateless and can be rerun against the same repository state.
+
+### Rollback behavior
+
+- The analyzer is read-only; rollback is source-control only.
+
+## FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC — JavaScript and TypeScript duplicate primitive-condition analysis
+
+Purpose: Extend the conservative JavaScript/TypeScript analyzer with one bounded LOGIC rule for duplicate primitive conditions over proven nearest-function parameter bindings later in the same if/else-if chain.
+Critical: FALSE
+Entry condition: Repository contains at least one visible .js, .mjs, .cjs, .ts, .mts, or .cts file.
+Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json
+
+### States
+
+- LEXICAL_VALIDATION
+- IF_CHAIN_SCAN
+- PURE_CONDITION_NORMALIZATION
+- DUPLICATE_CHECK
+- FINDING_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| LEXICAL_VALIDATION | IF_CHAIN_SCAN | Mask comments, strings, and template bodies while preserving source offsets; malformed lexical constructs fail closed. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
+| IF_CHAIN_SCAN | PURE_CONDITION_NORMALIZATION | Inspect if/else-if chains without executing source. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
+| PURE_CONDITION_NORMALIZATION | DUPLICATE_CHECK | Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
+| DUPLICATE_CHECK | FINDING_OUTPUT | Emit at most one LOGIC finding per chain when a normalized condition repeats later. | internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json |  |
+
+### Invariants
+
+- No JavaScript or TypeScript source is executed by DoctorCode.
+- M19 binding proof is limited to parameters of the nearest traditional function/function-expression scope; globals, closures, methods, arrows, and local declarations are not inferred.
+- Calls, member access, optional chaining, assignments, update expressions, loose equality, arithmetic/coercive comparisons, and template/string-dependent conditions are outside M19 proof.
+- Every M19 finding keeps safe_autofix=false.
+- M19 does not add DEADCODE or BLOAT authority and does not claim full JS/TS parsing.
+
+### Failure behavior
+
+- No supported files returns analyzer unavailable; malformed lexical input fails closed; unsupported condition shapes are skipped without a finding.
+
+### Restart behavior
+
+- Analysis is stateless and deterministic for the same source tree.
 
 ### Rollback behavior
 

@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 159 files, 6 language categories.
+Observed source inventory: 183 files, 6 language categories.
 
 ## Major components
 
@@ -147,16 +147,27 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 - REFERENCES_CLASSIFIED -> RELATED_EXCERPTS_BOUNDED : Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.
 - RELATED_EXCERPTS_BOUNDED -> PACKET_REPORTED : Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.
 
-### FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural analysis
+### FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural baseline analysis
 
-Analyze supported JavaScript and TypeScript source deterministically with bounded structural rules for boolean-return simplification and hardcoded credential literals without source mutation.
+Describe the accepted M18 baseline SIMPLIFY and SECURITY subset of the conservative JavaScript/TypeScript analyzer; later accepted semantic extensions such as M19 LOGIC are governed by their own workflow contracts.
 
 Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m18-js-ts.json
 
 - APPLICABILITY_CHECK -> SOURCE_READ : Detect supported visible JavaScript or TypeScript files; none returns detector unavailable.
 - SOURCE_READ -> BOUNDED_RULE_EVALUATION : Read source without following source symlinks; read errors and NUL-containing input fail closed.
-- BOUNDED_RULE_EVALUATION -> FINDING_CONVERSION : Apply only opposite boolean-return simplification and hardcoded credential literal rules.
+- BOUNDED_RULE_EVALUATION -> FINDING_CONVERSION : Apply the M18 baseline opposite boolean-return simplification and hardcoded credential literal rules; later accepted extension flows are evaluated separately.
 - FINDING_CONVERSION -> SORTED_OUTPUT : Emit stable IDs, redacted credential evidence, and safe_autofix=false; engine provides stable priority sorting.
+
+### FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC — JavaScript and TypeScript duplicate primitive-condition analysis
+
+Extend the conservative JavaScript/TypeScript analyzer with one bounded LOGIC rule for duplicate primitive conditions over proven nearest-function parameter bindings later in the same if/else-if chain.
+
+Authority: internal/analyzers/javascript/analyzer.go and internal/benchmark/testdata/m19-js-ts-logic.json
+
+- LEXICAL_VALIDATION -> IF_CHAIN_SCAN : Mask comments, strings, and template bodies while preserving source offsets; malformed lexical constructs fail closed.
+- IF_CHAIN_SCAN -> PURE_CONDITION_NORMALIZATION : Inspect if/else-if chains without executing source.
+- PURE_CONDITION_NORMALIZATION -> DUPLICATE_CHECK : Accept only bounded primitive conditions over a nearest enclosing traditional function parameter: bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null; reject globals, closures, calls, member access, assignments, coercive operators, and other expressions.
+- DUPLICATE_CHECK -> FINDING_OUTPUT : Emit at most one LOGIC finding per chain when a normalized condition repeats later.
 
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
@@ -286,9 +297,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC
+Current phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
 
-Current status: M18_MAIN_ACCEPTED
+Current status: M19_IMPLEMENTED_PENDING_FINAL_ACCEPTANCE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -328,6 +339,7 @@ compiler does not infer them from implementation names.
 - FLOW-DETERMINISTIC-VERIFICATION: Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
 - FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS: No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
+- FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC: No supported files returns analyzer unavailable; malformed lexical input fails closed; unsupported condition shapes are skipped without a finding.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
@@ -346,9 +358,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Treat main@6b24ec85518d1b24efba8806032577ca18b4ba61 as the accepted M18 product baseline.
-- Start any M19 product work as a new declared milestone from the then-current accepted main.
-- Preserve M18 scope boundaries unless a later milestone explicitly widens them.
+- Synchronize M19 Project Truth and current sequence evidence using the pinned Skill_Workflow tools.
+- Run all permanent workflows on one exact synchronized M19 branch candidate.
+- Merge accepted M19 through pull request and revalidate exact main.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -399,6 +411,12 @@ Known blockers:
 - Exact branch acceptance candidate 51c75f76ee96e6989b68b21856d6b59b6f3c25cd passed Governance 36549487578, Core CI 36549487453, M06 36549487603, Real World Go 36549487556, M07 36549487515, M10 36549487546, M16 MCP 36549487583, and M17 Release and Install 36549487560.
 - M18 merged through PR #24 to main at 6b24ec85518d1b24efba8806032577ca18b4ba61.
 - Exact merged main@6b24ec85518d1b24efba8806032577ca18b4ba61 passed Governance 36550725126, Core CI 36550725245, M06 36550725148, Real World Go 36550725084, M07 36550725069, M10 36550725127, M16 MCP 36550725113, and M17 Release and Install 36550725244.
+- M19 branches from accepted governance authority main@79e0b0ff886b2155dbffbb973cb96ae501b11a4c.
+- Before M19 product work, vendored Skill_Workflow runtime authority was advanced from 1f9b48b9a3bf29bf2929a7d38b1ec9a645dfb720 to upstream main@2148313678f476c4990e447b4d657724f071adff, incorporating deterministic LF sequence JSON/Mermaid output.
+- M19 RED Core CI run 36552995359 at 109da8f9d617ecadf7bb6662df03200ba5bd6115 executed the 8-case labeled LOGIC corpus before implementation and reported 0 TP / 0 FP / 3 FN, proving JS-LOGIC-DUPLICATE-CONDITION absent.
+- M19 adversarial Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; the false positive was global-accessor-negative at sample.js:12, proving unqualified global identifiers could not be treated as stable bindings.
+- M19 repaired binding proof requires the relevant identifier to be a parameter of the nearest traditional function/function-expression and treats unsupported, side-effect-capable, global, closure, method, arrow, local-declaration, and unproven conditions as proof barriers.
+- M19 final 22-case adversarial corpus passed Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f on Ubuntu, macOS, and Windows with 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 
 ### Not proven
 
@@ -407,6 +425,8 @@ Known blockers:
 - M17 does not widen Go/Python semantic analyzer proof boundaries or MCP transport authority.
 - The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
+- M19 LOGIC behavior is not proven until the labeled RED corpus fails before implementation and then passes with zero false positives and zero false negatives across Core CI operating systems.
+- M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
 
 ## Important limitations
 

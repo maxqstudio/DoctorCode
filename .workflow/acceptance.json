@@ -149,40 +149,40 @@
       "status": "PASS"
     },
     {
+      "evidence": "work/m19-javascript-typescript-logic branches from main@79e0b0ff886b2155dbffbb973cb96ae501b11a4c; v0.1.0 remains unchanged at cd05f064e1bb1054271e7028941c1fbb80ea32aa.",
       "id": "M19-MAIN-BASELINE",
       "requirement": "M19 must branch from the accepted M18 governance main and preserve the immutable v0.1.0 historical release.",
-      "status": "PASS",
-      "evidence": "work/m19-javascript-typescript-logic branches from main@79e0b0ff886b2155dbffbb973cb96ae501b11a4c; v0.1.0 remains unchanged at cd05f064e1bb1054271e7028941c1fbb80ea32aa."
+      "status": "PASS"
     },
     {
+      "evidence": "DoctorCode vendored Skill_Workflow authority was advanced to 2148313678f476c4990e447b4d657724f071adff, adding deterministic LF sequence JSON/Mermaid output and its strict selftest.",
       "id": "M19-SKILL-AUTHORITY",
       "requirement": "M19 must use the latest materially relevant Skill_Workflow authority before product widening.",
-      "status": "PASS",
-      "evidence": "DoctorCode vendored Skill_Workflow authority was advanced to 2148313678f476c4990e447b4d657724f071adff, adding deterministic LF sequence JSON/Mermaid output and its strict selftest."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36552995359 at 109da8f9d617ecadf7bb6662df03200ba5bd6115 reported 0 TP / 0 FP / 3 FN and recall=0 for JS-LOGIC-DUPLICATE-CONDITION.",
       "id": "M19-RED-LOGIC-ABSENT",
       "requirement": "The labeled M19 LOGIC corpus must demonstrate the rule absent before implementation.",
-      "status": "PASS",
-      "evidence": "Core CI run 36552995359 at 109da8f9d617ecadf7bb6662df03200ba5bd6115 reported 0 TP / 0 FP / 3 FN and recall=0 for JS-LOGIC-DUPLICATE-CONDITION."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; global-accessor-negative was the sole unexpected LOGIC finding.",
       "id": "M19-GLOBAL-BINDING-RED",
       "requirement": "Adversarial evidence must reject treating unqualified global identifiers as proven stable bindings.",
-      "status": "PASS",
-      "evidence": "Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; global-accessor-negative was the sole unexpected LOGIC finding."
+      "status": "PASS"
     },
     {
+      "evidence": "internal/analyzers/javascript/logic.go requires nearest traditional function/function-expression parameter proof, accepts only bare/negated identifiers or identifier ===/!== true/false/null, resets tracking at unsupported/unproven conditions, emits MEDIUM/HIGH LOGIC findings, and leaves safe_autofix=false.",
       "id": "M19-BOUNDED-LOGIC",
       "requirement": "The M19 LOGIC rule must remain read-only and bounded to nearest traditional-function parameters plus primitive non-coercive condition forms.",
-      "status": "PASS",
-      "evidence": "internal/analyzers/javascript/logic.go requires nearest traditional function/function-expression parameter proof, accepts only bare/negated identifiers or identifier ===/!== true/false/null, resets tracking at unsupported/unproven conditions, emits MEDIUM/HIGH LOGIC findings, and leaves safe_autofix=false."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.",
       "id": "M19-ADVERSARIAL-GREEN",
       "requirement": "The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems.",
-      "status": "PASS",
-      "evidence": "Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

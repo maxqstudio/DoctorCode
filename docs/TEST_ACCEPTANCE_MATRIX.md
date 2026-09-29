@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M18 adds a conservative structural JavaScript/TypeScript analyzer for .js, .mjs, .cjs, .ts, .mts, and .cts. Accepted M18 rules are limited to opposite boolean-return simplification and hardcoded credential-like quoted literals. The final adversarial corpus contains 13 cases and proves 6 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, macOS, and Windows. Existing Go, Python, MCP, and release/install lanes remain regression evidence. M18 does not prove a full JavaScript/TypeScript parser or AST, JSX/TSX support, dead-code safety, BLOAT/LOGIC rules, template-interpolation credential semantics, or general semantic completeness. Public v0.1.0 remains an immutable historical release baseline. M18 merged through PR #24 and exact main@6b24ec85518d1b24efba8806032577ca18b4ba61 passed all permanent acceptance workflows.
+M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The final M19 corpus has 22 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
+Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -33,6 +33,12 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 | M18-ADVERSARIAL-GREEN | The repaired analyzer must pass the full adversarial JS/TS corpus at precision=1.0 and recall=1.0 with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36549239948 at 01123b2ed1e12eccc5a1cafec93030f5788008df passed Ubuntu, macOS, and Windows. The 13-case corpus reports 6 TP / 0 FP / 0 FN; both M18 rules report precision=1.0 and recall=1.0. | PASS |
 | M18-BRANCH-REGRESSION | Exact M18 branch acceptance must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes. | At 51c75f76ee96e6989b68b21856d6b59b6f3c25cd: Governance 36549487578 PASS; Core 36549487453 PASS 3/3; M16 36549487583 PASS; M17 36549487560 PASS including native install-smoke; M10 36549487546 PASS; M07 36549487515 PASS; M06 36549487603 PASS; Real World Go 36549487556 PASS. | PASS |
 | M18-MAIN-POST-MERGE | The exact M18 merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world lanes. | At main@6b24ec85518d1b24efba8806032577ca18b4ba61: Governance 36550725126 PASS; Core 36550725245 PASS 3/3; M16 MCP 36550725113 PASS; M17 Release and Install 36550725244 PASS including Ubuntu/Windows/macOS install-smoke; M10 36550725127 PASS; M07 36550725069 PASS; M06 36550725148 PASS; Real World Go 36550725084 PASS. | PASS |
+| M19-MAIN-BASELINE | M19 must branch from the accepted M18 governance main and preserve the immutable v0.1.0 historical release. | work/m19-javascript-typescript-logic branches from main@79e0b0ff886b2155dbffbb973cb96ae501b11a4c; v0.1.0 remains unchanged at cd05f064e1bb1054271e7028941c1fbb80ea32aa. | PASS |
+| M19-SKILL-AUTHORITY | M19 must use the latest materially relevant Skill_Workflow authority before product widening. | DoctorCode vendored Skill_Workflow authority was advanced to 2148313678f476c4990e447b4d657724f071adff, adding deterministic LF sequence JSON/Mermaid output and its strict selftest. | PASS |
+| M19-RED-LOGIC-ABSENT | The labeled M19 LOGIC corpus must demonstrate the rule absent before implementation. | Core CI run 36552995359 at 109da8f9d617ecadf7bb6662df03200ba5bd6115 reported 0 TP / 0 FP / 3 FN and recall=0 for JS-LOGIC-DUPLICATE-CONDITION. | PASS |
+| M19-GLOBAL-BINDING-RED | Adversarial evidence must reject treating unqualified global identifiers as proven stable bindings. | Core CI run 36554093524 at 8a981c1e5fa9447bd76440a98e2257c11464d122 reported 5 TP / 1 FP / 0 FN; global-accessor-negative was the sole unexpected LOGIC finding. | PASS |
+| M19-BOUNDED-LOGIC | The M19 LOGIC rule must remain read-only and bounded to nearest traditional-function parameters plus primitive non-coercive condition forms. | internal/analyzers/javascript/logic.go requires nearest traditional function/function-expression parameter proof, accepts only bare/negated identifiers or identifier ===/!== true/false/null, resets tracking at unsupported/unproven conditions, emits MEDIUM/HIGH LOGIC findings, and leaves safe_autofix=false. | PASS |
+| M19-ADVERSARIAL-GREEN | The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. | PASS |
 
 ## Test commands
 
@@ -43,6 +49,7 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 - M17 Release and Install workflow build-release plus three native install-smoke jobs
 - Core CI and all accepted real-world regression workflows
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json
 
 ## Runtime checks
 
@@ -53,11 +60,12 @@ Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f227
 - scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py
 - existing pinned Go/Python real-world validation lanes
 - M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
+- M19 JavaScript/TypeScript 22-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS
 
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC
+Sequence session contract: M19-JAVASCRIPT-TYPESCRIPT-LOGIC
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

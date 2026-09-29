@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m19-javascript-typescript-logic
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 6b24ec85518d1b24efba8806032577ca18b4ba61
-Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
+Current source digest: 0450bf7e6f25e9df57ff76b86d973513cc871460f7e26f5131bda6c809e4b402
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.
