@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The final M19 corpus has 22 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
+  "evidence_boundary": "M19 extends the accepted conservative JavaScript/TypeScript analyzer with JS-LOGIC-DUPLICATE-CONDITION. The rule is HIGH-confidence, read-only, and limited to repeated primitive conditions later in the same braced if/else-if chain where every tracked condition uses a parameter of the nearest traditional function/function-expression as a bare identifier, negated identifier, or strict ===/!== comparison with true, false, or null. Unsupported, side-effect-capable, global, closure, arrow, method, local-declaration, and unproven conditions are proof barriers. The hardened M19 corpus has 24 cases. The two added parameter-mutation guards first exposed 8 TP / 2 FP / 0 FN; after repair the corpus reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows. A tracked parameter assignment or update between duplicate conditions invalidates proof. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -183,6 +183,24 @@
       "id": "M19-ADVERSARIAL-GREEN",
       "requirement": "The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems.",
       "status": "PASS"
+    },
+    {
+      "id": "M19-PARAMETER-MUTATION-RED",
+      "requirement": "The accepted 22-case M19 rule must be challenged with parameter reassignment/update cases before final closure.",
+      "status": "PASS",
+      "evidence": "Core CI run 36560538238 at d2b22be0356a8282a4cc589ba9e91e6b68b8a69d failed on Ubuntu, Windows, and macOS with 24 cases at 8 TP / 2 FP / 0 FN. The two false positives were parameter-reassigned-negative and parameter-updated-negative."
+    },
+    {
+      "id": "M19-PARAMETER-MUTATION-GREEN",
+      "requirement": "Parameter assignment/update between the first and repeated primitive condition must invalidate duplicate-condition proof, while all prior M19 positives remain detected.",
+      "status": "PASS",
+      "evidence": "Core CI run 36560887829 at 033c5153104b855f6ee01ca45ccf374a07c656d2 passed Ubuntu, Windows, and macOS with 24 cases at 8 TP / 0 FP / 0 FN, precision=1.0 and recall=1.0."
+    },
+    {
+      "id": "M19-HARDENING-REGRESSION",
+      "requirement": "The mutation-repaired branch must preserve all accepted Go/Python/MCP/release regression behavior before governance synchronization.",
+      "status": "PASS",
+      "evidence": "At 033c5153104b855f6ee01ca45ccf374a07c656d2: M06 36560887695 PASS; Real World Go 36560887693 PASS; M07 36560887700 PASS; M10 36560887684 PASS; M16 36560887644 PASS; M17 Release and Install 36560887725 PASS including Ubuntu/Windows/macOS install-smoke."
     }
   ],
   "runtime_checks": [
@@ -193,7 +211,7 @@
     "scripts/install.sh or scripts/install.ps1 against the generated local release bundle followed by scripts/smoke_release.py",
     "existing pinned Go/Python real-world validation lanes",
     "M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS",
-    "M19 JavaScript/TypeScript 22-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS"
+    "M19 JavaScript/TypeScript 24-case LOGIC adversarial benchmark on Core CI Ubuntu/Windows/macOS"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
