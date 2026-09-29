@@ -299,7 +299,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M19_JAVASCRIPT_TYPESCRIPT_LOGIC
 
-Current status: M19_MUTATION_HARDENING_BRANCH_ACCEPTED_PENDING_FINAL_SYNC
+Current status: M19_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -358,9 +358,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Bind exact rebased M19 mutation-hardening acceptance evidence into the canonical ledger and regenerate Project Truth.
-- Run all permanent workflows on the resulting exact final rebased branch SHA.
-- Merge only the minimal mutation-hardening delta through a new pull request and revalidate exact main.
+- Treat main@c54e4af0335c10354baee150f8748184f1e11580 as the accepted M19 product baseline.
+- Start M20 product work only as a new declared milestone from the then-current accepted main.
+- Preserve M19 proof boundaries unless a later milestone explicitly widens them.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -421,6 +421,8 @@ Known blockers:
 - A later divergent M19 hardening branch exposed and repaired parameter mutation risk, expanding the corpus from 22 to 24 cases; exact branch candidate 596ab10c440b26a8f51e8db42142f0173a459df0 passed all permanent workflows before divergence from current main was detected.
 - PR #28 was closed without merge after the divergence was detected; work/m19-mutation-hardening was created directly from current main@c1587f7112c98d5dbef68b04a41c5b0c9e942dde to carry only the remaining mutation-hardening delta.
 - Exact rebased M19 mutation-hardening candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passed Governance 36564198574, Core CI 36564198646 with 24 cases at 8 TP / 0 FP / 0 FN on Ubuntu/macOS/Windows, M06 36564198620, Real World Go 36564198793, M07 36564198656, M10 36564198781, M16 MCP 36564198599, and M17 Release and Install 36564198585 including Ubuntu/Windows/macOS native install-smoke.
+- M19 mutation-hardening merged through PR #29 to main at c54e4af0335c10354baee150f8748184f1e11580.
+- Exact main@c54e4af0335c10354baee150f8748184f1e11580 passed Governance 36565284946, Core CI 36565284842, M06 36565284886, Real World Go 36565284964, M07 36565284852, M10 36565284910, M16 MCP 36565284846, and M17 Release and Install 36565284851 including Ubuntu/Windows/macOS native install-smoke.
 
 ### Not proven
 

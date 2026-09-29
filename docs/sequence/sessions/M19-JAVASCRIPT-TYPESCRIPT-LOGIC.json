@@ -5,7 +5,7 @@
   "mode": "DURING",
   "scope": "CURRENT",
   "critical": false,
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "implementation_base_sha": "79e0b0ff886b2155dbffbb973cb96ae501b11a4c",
   "plan": {
     "required": false,

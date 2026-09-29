@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M19 on current main provides the bounded 22-case JS-LOGIC-DUPLICATE-CONDITION baseline. The rebased mutation-hardening delta adds parameter assignment/update barriers and expands the corpus to 24 cases. Exact rebased candidate 12aeeea53a1dcc6fc29f9906f6f8724148355912 passes permanent Core CI on Ubuntu/macOS/Windows with 8 TP / 0 FP / 0 FN and all permanent regression workflows. M19 remains read-only and does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
+M19 is MAIN_ACCEPTED at c54e4af0335c10354baee150f8748184f1e11580. JavaScript/TypeScript LOGIC remains a bounded, read-only duplicate-condition rule over nearest traditional-function parameter bindings. The accepted corpus has 24 cases and reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows, including negative guards for global accessors and intervening parameter assignment/update. M19 does not claim full JS/TS parsing, generic TypeScript function coverage, JSX/TSX, DEADCODE/BLOAT authority, or safe autofix.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
@@ -41,6 +41,7 @@ Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243dd
 | M19-ADVERSARIAL-GREEN | The complete M19 JS/TS LOGIC corpus must pass with zero false positives and zero false negatives on all Core CI operating systems. | Core CI run 36555231205 at a9da408d6fca4ba4ee7a801dfabcd52b39c0548f passed Ubuntu, macOS, and Windows; 22 cases report 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. | PASS |
 | M19-MUTATION-HARDENING-REBASED | The rebased M19 rule must invalidate duplicate-condition proof when the tracked nearest-function parameter is assigned or updated between occurrences. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912, parameter-reassigned-negative and parameter-updated-negative remain finding-free; the 24-case M19 corpus reports 8 TP / 0 FP / 0 FN on Ubuntu, macOS, and Windows in Core CI run 36564198646. | PASS |
 | M19-REBASED-BRANCH-REGRESSION | The exact rebased M19 mutation-hardening branch must pass governance, Core, MCP, release/install, and all accepted Go/Python regression lanes before merge. | At 12aeeea53a1dcc6fc29f9906f6f8724148355912: Governance 36564198574 PASS; Core 36564198646 PASS 3/3; M16 36564198599 PASS; M17 36564198585 PASS including Ubuntu/Windows/macOS install-smoke; M10 36564198781 PASS; M07 36564198656 PASS; M06 36564198620 PASS; Real World Go 36564198793 PASS. | PASS |
+| M19-MAIN-POST-MERGE-HARDENED | The exact M19 mutation-hardening merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python regression lanes. | At main@c54e4af0335c10354baee150f8748184f1e11580: Governance 36565284946 PASS; Core 36565284842 PASS 3/3 with 24-case M19 = 8 TP / 0 FP / 0 FN; M16 36565284846 PASS; M17 36565284851 PASS including Ubuntu/Windows/macOS install-smoke; M10 36565284910 PASS; M07 36565284852 PASS; M06 36565284886 PASS; Real World Go 36565284964 PASS. | PASS |
 
 ## Test commands
 

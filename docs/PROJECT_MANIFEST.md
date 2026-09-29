@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m19-mutation-hardening
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 6b24ec85518d1b24efba8806032577ca18b4ba61
+Last accepted SHA: c54e4af0335c10354baee150f8748184f1e11580
 Current source digest: 19ecedee9e1b700f800dfcba3ad89172dba3f094b50d6a740473243ddf43389b
 
 ## Authorities
