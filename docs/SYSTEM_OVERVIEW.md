@@ -288,7 +288,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC
 
-Current status: M18_BRANCH_ACCEPTED_READY_FOR_MERGE
+Current status: M18_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -346,9 +346,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize the final M18 acceptance ledger and generated Project Truth.
-- Run exact final branch acceptance after synchronization.
-- Merge accepted M18 through pull request, then revalidate exact main.
+- Treat main@6b24ec85518d1b24efba8806032577ca18b4ba61 as the accepted M18 product baseline.
+- Start any M19 product work as a new declared milestone from the then-current accepted main.
+- Preserve M18 scope boundaries unless a later milestone explicitly widens them.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -397,6 +397,8 @@ Known blockers:
 - Extended M18 adversarial run 36549001445 at 83e5c6d3104fd4d7befb46a408a6a1626670c7ec exposed one JS-SEC-HARDCODED-CREDENTIAL false positive inside a block comment: 6 TP / 1 FP / 0 FN across 13 cases.
 - M18 repaired analyzer at 01123b2ed1e12eccc5a1cafec93030f5788008df passed the 13-case JavaScript/TypeScript corpus with 6 TP / 0 FP / 0 FN and precision=1.0, recall=1.0 on Core CI Ubuntu, macOS, and Windows run 36549239948.
 - Exact branch acceptance candidate 51c75f76ee96e6989b68b21856d6b59b6f3c25cd passed Governance 36549487578, Core CI 36549487453, M06 36549487603, Real World Go 36549487556, M07 36549487515, M10 36549487546, M16 MCP 36549487583, and M17 Release and Install 36549487560.
+- M18 merged through PR #24 to main at 6b24ec85518d1b24efba8806032577ca18b4ba61.
+- Exact merged main@6b24ec85518d1b24efba8806032577ca18b4ba61 passed Governance 36550725126, Core CI 36550725245, M06 36550725148, Real World Go 36550725084, M07 36550725069, M10 36550725127, M16 MCP 36550725113, and M17 Release and Install 36550725244.
 
 ### Not proven
 

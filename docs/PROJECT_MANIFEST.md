@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m18-javascript-typescript-semantic
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: cd05f064e1bb1054271e7028941c1fbb80ea32aa
+Last accepted SHA: 6b24ec85518d1b24efba8806032577ca18b4ba61
 Current source digest: 0624d065cb406ea7f2785e2239220a4e9fc061543f39a8fa5b5e8f2270ae1314
 
 ## Authorities
