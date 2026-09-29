@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "language": "JavaScript / TypeScript",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "js-bare-positive",
+      "root": "m19-js-ts-logic/js-bare-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "ts-strict-null-positive",
+      "root": "m19-js-ts-logic/ts-strict-null-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.ts",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "js-negated-positive",
+      "root": "m19-js-ts-logic/js-negated-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "call-negative",
+      "root": "m19-js-ts-logic/call-negative",
+      "expected": []
+    },
+    {
+      "name": "member-negative",
+      "root": "m19-js-ts-logic/member-negative",
+      "expected": []
+    },
+    {
+      "name": "loose-equality-negative",
+      "root": "m19-js-ts-logic/loose-equality-negative",
+      "expected": []
+    },
+    {
+      "name": "separate-chains-negative",
+      "root": "m19-js-ts-logic/separate-chains-negative",
+      "expected": []
+    },
+    {
+      "name": "lexical-fake-negative",
+      "root": "m19-js-ts-logic/lexical-fake-negative",
+      "expected": []
+    }
+  ]
+}
