@@ -63,6 +63,43 @@
       "name": "lexical-fake-negative",
       "root": "m19-js-ts-logic/lexical-fake-negative",
       "expected": []
+    },
+    {
+      "name": "intervening-call-barrier",
+      "root": "m19-js-ts-logic/intervening-call-barrier",
+      "expected": []
+    },
+    {
+      "name": "intervening-member-barrier",
+      "root": "m19-js-ts-logic/intervening-member-barrier",
+      "expected": []
+    },
+    {
+      "name": "parenthesized-positive",
+      "root": "m19-js-ts-logic/parenthesized-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "comment-spacing-positive",
+      "root": "m19-js-ts-logic/comment-spacing-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "global-accessor-negative",
+      "root": "m19-js-ts-logic/global-accessor-negative",
+      "expected": []
     }
   ]
 }
