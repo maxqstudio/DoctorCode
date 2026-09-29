@@ -234,18 +234,6 @@ func logicASTNearestTraditionalParameter(scopes []logicASTFunctionScope, pos uin
 	return best >= 0 && scopes[best].supported && scopes[best].params[name]
 }
 
-func logicASTHasSimpleParameter(params *gotreesitter.Node, language *gotreesitter.Language, source, name string) bool {
-	if params == nil {
-		return false
-	}
-	for i := 0; i < params.NamedChildCount(); i++ {
-		if logicASTSimpleParameterName(params.NamedChild(i), language, source) == name {
-			return true
-		}
-	}
-	return false
-}
-
 func logicASTSimpleParameterName(node *gotreesitter.Node, language *gotreesitter.Language, source string) string {
 	if node == nil {
 		return ""
