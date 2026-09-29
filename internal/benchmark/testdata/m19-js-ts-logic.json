@@ -100,6 +100,69 @@
       "name": "global-accessor-negative",
       "root": "m19-js-ts-logic/global-accessor-negative",
       "expected": []
+    },
+    {
+      "name": "nested-own-param-positive",
+      "root": "m19-js-ts-logic/nested-own-param-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 7
+        }
+      ]
+    },
+    {
+      "name": "function-expression-positive",
+      "root": "m19-js-ts-logic/function-expression-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "closure-negative",
+      "root": "m19-js-ts-logic/closure-negative",
+      "expected": []
+    },
+    {
+      "name": "arrow-negative",
+      "root": "m19-js-ts-logic/arrow-negative",
+      "expected": []
+    },
+    {
+      "name": "method-negative",
+      "root": "m19-js-ts-logic/method-negative",
+      "expected": []
+    },
+    {
+      "name": "local-binding-negative",
+      "root": "m19-js-ts-logic/local-binding-negative",
+      "expected": []
+    },
+    {
+      "name": "ts-generic-negative",
+      "root": "m19-js-ts-logic/ts-generic-negative",
+      "expected": []
+    },
+    {
+      "name": "strict-false-positive",
+      "root": "m19-js-ts-logic/strict-false-positive",
+      "expected": [
+        {
+          "rule_id": "JS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.js",
+          "line_start": 6
+        }
+      ]
+    },
+    {
+      "name": "reverse-comparison-negative",
+      "root": "m19-js-ts-logic/reverse-comparison-negative",
+      "expected": []
     }
   ]
 }
