@@ -112,3 +112,37 @@ func TestLogicNearestFunctionParameterUsesInnermostFunction(t *testing.T) {
 		t.Fatalf("closure binding is outside M19 proof and must not produce a finding: %#v", findings)
 	}
 }
+
+func TestLogicFindingsParameterMutationIsBarrier(t *testing.T) {
+	cases := []string{
+		`function choose(flag, other) {
+  if (flag) {
+    return 1
+  } else if (other) {
+    flag = false
+    return 2
+  } else if (flag) {
+    return 3
+  }
+}`,
+		`function choose(flag, other) {
+  if (flag) {
+    return 1
+  } else if (other) {
+    flag++
+    return 2
+  } else if (flag) {
+    return 3
+  }
+}`,
+	}
+	for _, source := range cases {
+		structural, err := maskStructural(source)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if findings := logicFindings(source, structural, "sample.js"); len(findings) != 0 {
+			t.Fatalf("parameter mutation must invalidate duplicate-condition proof: %#v", findings)
+		}
+	}
+}
