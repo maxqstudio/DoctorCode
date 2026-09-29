@@ -1,0 +1,29 @@
+name: M19 Focused Logic Check
+
+on:
+  push:
+    branches:
+      - work/m19-javascript-typescript-logic
+
+permissions:
+  contents: read
+
+jobs:
+  m19-focused:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: JavaScript analyzer unit tests
+        run: go test ./internal/analyzers/javascript
+      - name: M18 regression benchmark
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
+      - name: M19 logic adversarial benchmark
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json
+      - name: Vet
+        run: go vet ./...
