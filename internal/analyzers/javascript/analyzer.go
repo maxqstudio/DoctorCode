@@ -46,9 +46,10 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 	for _, path := range files {
 		data, err := os.ReadFile(path); if err != nil { return nil, fmt.Errorf("read JavaScript/TypeScript source %s: %w", path, err) }
 		source := string(data); if strings.IndexByte(source, 0) >= 0 { return nil, fmt.Errorf("javascript/typescript parse incomplete: %s contains NUL byte", path) }
+		structural, err := maskStructural(source); if err != nil { return nil, fmt.Errorf("javascript/typescript lexical validation failed for %s: %w", path, err) }
 		rel, err := filepath.Rel(root, path); if err != nil { return nil, err }; rel = filepath.ToSlash(rel)
-		for _, m := range boolReturn.FindAllStringSubmatchIndex(source, -1) {
-			left, right := source[m[2]:m[3]], source[m[4]:m[5]]; if left == right { continue }
+		for _, m := range boolReturn.FindAllStringSubmatchIndex(structural, -1) {
+			left, right := structural[m[2]:m[3]], structural[m[4]:m[5]]; if left == right { continue }
 			findings = append(findings, makeFinding(ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh, rel, lineAt(source, m[0]), "opposite boolean-return branches can be reduced to the condition or its negation", []string{"structurally matched boolean return branches", "safe_autofix remains disabled"}))
 		}
 		for _, m := range credential.FindAllStringSubmatchIndex(source, -1) {
@@ -58,6 +59,104 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 		}
 	}
 	return findings, nil
+}
+
+func maskStructural(source string) (string, error) {
+	out := []byte(source)
+	const (
+		stateCode = iota
+		stateSingleQuote
+		stateDoubleQuote
+		stateTemplate
+		stateLineComment
+		stateBlockComment
+	)
+	state := stateCode
+	escaped := false
+	for i := 0; i < len(out); i++ {
+		ch := source[i]
+		switch state {
+		case stateCode:
+			if ch == '/' && i+1 < len(out) && source[i+1] == '/' {
+				out[i], out[i+1] = ' ', ' '
+				i++
+				state = stateLineComment
+				continue
+			}
+			if ch == '/' && i+1 < len(out) && source[i+1] == '*' {
+				out[i], out[i+1] = ' ', ' '
+				i++
+				state = stateBlockComment
+				continue
+			}
+			switch ch {
+			case '\'':
+				out[i] = ' '
+				state = stateSingleQuote
+				escaped = false
+			case '"':
+				out[i] = ' '
+				state = stateDoubleQuote
+				escaped = false
+			case '`':
+				out[i] = ' '
+				state = stateTemplate
+				escaped = false
+			}
+		case stateLineComment:
+			if ch == '\n' {
+				state = stateCode
+			} else {
+				out[i] = ' '
+			}
+		case stateBlockComment:
+			if ch == '*' && i+1 < len(out) && source[i+1] == '/' {
+				out[i], out[i+1] = ' ', ' '
+				i++
+				state = stateCode
+			} else if ch != '\n' {
+				out[i] = ' '
+			}
+		case stateSingleQuote, stateDoubleQuote, stateTemplate:
+			if ch == '\n' {
+				if state == stateSingleQuote || state == stateDoubleQuote {
+					if !escaped {
+						return "", fmt.Errorf("unterminated quoted string before line break")
+					}
+					escaped = false
+					continue
+				}
+				escaped = false
+				continue
+			}
+			out[i] = ' '
+			if escaped {
+				escaped = false
+				continue
+			}
+			if ch == '\\' {
+				escaped = true
+				continue
+			}
+			if (state == stateSingleQuote && ch == '\'') ||
+				(state == stateDoubleQuote && ch == '"') ||
+				(state == stateTemplate && ch == '`') {
+				state = stateCode
+			}
+		}
+	}
+	switch state {
+	case stateCode, stateLineComment:
+		return string(out), nil
+	case stateBlockComment:
+		return "", fmt.Errorf("unterminated block comment")
+	case stateSingleQuote, stateDoubleQuote:
+		return "", fmt.Errorf("unterminated quoted string")
+	case stateTemplate:
+		return "", fmt.Errorf("unterminated template literal")
+	default:
+		return "", fmt.Errorf("unknown lexical state")
+	}
 }
 
 func makeFinding(rule string, category model.Category, severity model.Severity, confidence model.Confidence, path string, line int, summary string, evidence []string) model.Finding {
