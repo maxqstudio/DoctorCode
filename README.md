@@ -56,7 +56,7 @@ The JavaScript/TypeScript analyzer is intentionally narrower than a full parser.
 
 | Category | Current rule | Confidence boundary |
 |---|---|---|
-| LOGIC | repeated primitive condition later in the same braced if/else-if chain, with the identifier proven as a parameter of the nearest traditional `function` / function expression | `HIGH`; only bare/negated identifiers and `identifier ===/!== true/false/null`; unsupported or unproven conditions break the proof chain |
+| LOGIC | repeated primitive condition later in the same braced if/else-if chain, with the identifier proven as a stable parameter of the nearest traditional `function` / function expression | `HIGH`; only bare/negated identifiers and `identifier ===/!== true/false/null`; unsupported/unproven conditions or intervening parameter assignment/update break the proof chain |
 | SIMPLIFY | opposite boolean-return branches | `HIGH` structural evidence; lexical comments/strings/templates are masked and autofix remains disabled |
 | SECURITY | credential-like variable assigned a hardcoded quoted literal | `SUSPICIOUS`; comment/template false positives are masked and the literal value is redacted |
 | DEADCODE | not implemented | no JS/TS dead-code safety claim |
@@ -64,7 +64,7 @@ The JavaScript/TypeScript analyzer is intentionally narrower than a full parser.
 
 M19 deliberately does **not** infer arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general control-flow semantics. These are skipped rather than guessed.
 
-The blocking M19 corpus contains **22 cases**. The accepted pre-governance candidate reports **8 TP, 0 FP, and 0 FN** on Ubuntu, Windows, and macOS. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
+The hardened M19 corpus contains **24 cases**. Before the mutation repair, the two added cases exposed **2 false positives** when a tracked parameter was assigned or updated between repeated conditions. After repair, Core CI reports **8 TP, 0 FP, and 0 FN** on Ubuntu, Windows, and macOS. This is bounded regression evidence for the tracked corpus only, not a claim of universal precision or recall.
 
 ### M02 precision regression gate
 
