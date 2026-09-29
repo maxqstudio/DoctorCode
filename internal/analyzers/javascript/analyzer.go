@@ -65,7 +65,7 @@ func makeFinding(rule string, category model.Category, severity model.Severity, 
 	return model.Finding{ID: fmt.Sprintf("%s-%x", rule, digest[:5]), RuleID: rule, Category: category, Severity: severity, Confidence: confidence, Path: path, LineStart: line, LineEnd: line, Summary: summary, Evidence: evidence, Verification: []string{"project parser/typecheck", "project tests"}, SafeAutofix: false}
 }
 
-func lineAt(source string, offset int) int { return 1 + strings.Count(source[:offset], "\\n") }
+func lineAt(source string, offset int) int { return 1 + strings.Count(source[:offset], "\n") }
 func supported(path string) bool { switch strings.ToLower(filepath.Ext(path)) { case ".js", ".mjs", ".cjs", ".ts", ".mts", ".cts": return true; default: return false } }
 func ignoredDirectory(name string) bool { switch name { case ".git", ".hg", ".svn", ".idea", ".vscode", "node_modules", "vendor", "dist", "build", "target", "coverage", "testdata": return true; default: return false } }
 func placeholder(value string) bool { v := strings.ToLower(strings.TrimSpace(value)); if v == "" { return true }; for _, token := range []string{"example", "placeholder", "changeme", "change-me", "dummy", "test", "your_", "your-", "<", "${"} { if strings.Contains(v, token) { return true } }; return false }
