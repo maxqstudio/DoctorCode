@@ -246,7 +246,7 @@ func securityFinding(file *parsedFile, node *gotreesitter.Node, name, value stri
 }
 
 func literalStringValue(source []byte, node *gotreesitter.Node, kotlin bool) (string, bool) {
-	if node == nil || node.Type(nil) == "" {
+	if node == nil {
 		return "", false
 	}
 	raw := strings.TrimSpace(nodeText(source, node))
