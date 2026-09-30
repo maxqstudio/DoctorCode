@@ -323,7 +323,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
 
-Current status: M21_IMPLEMENTED_VALIDATION_PENDING
+Current status: M21_BRANCH_ACCEPTED_READY_FOR_MERGE
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -385,9 +385,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M21 Project Truth and CURRENT sequence evidence for the reusable analyzer capability framework.
-- Run exact-branch regression across governance, Core CI, Go/Python real-world lanes, MCP, and release/install without widening existing language semantics.
-- Only after one exact branch SHA passes all permanent workflows may M21 be proposed for merge and exact-main revalidation.
+- Synchronize the final M21 acceptance ledger and generated Project Truth without changing product semantics.
+- Require all eight permanent workflows to PASS again on the exact synchronized M21 branch SHA.
+- Only then open the M21 pull request, squash merge to main, and require exact-main post-merge acceptance before M21 closure.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -462,6 +462,8 @@ Known blockers:
 - M21 starts from governance-accepted main@5fc0be4881ee72b593920f24d2d866a003ea828b with M20 product authority c90e5d570a5c9eed3685df3381a1509deff40e88.
 - M21 adopts Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8; upstream Governance Selftest run 36654539575 passed, and DoctorCode authority-sync branch candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350.
 - M21 RED Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows because Go was reported active for JavaScript-only and source-empty roots, proving analyzer availability/recognition was not governed by a reusable capability contract.
+- M21 framework candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance Bootstrap run 36669873885 and Core CI run 36669873901 on Ubuntu, macOS, and Windows, including the M21 availability repair plus all accepted Go/Python/JavaScript/TypeScript benchmark regressions.
+- At exact M21 candidate ed4592f0da53619894b1ddbf60961eec885f2587: M06 run 36669873896 PASS; Real World Go run 36669873898 PASS; M07 run 36669873931 PASS; M10 run 36669873873 PASS; M16 Thin MCP run 36669873921 PASS on Ubuntu/macOS/Windows; M17 Release and Install run 36669873911 PASS with release build and native Ubuntu/Windows/macOS install-smoke, with publish-release correctly skipped for a non-tag branch.
 
 ### Not proven
 
@@ -472,7 +474,6 @@ Known blockers:
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
 - M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening.
-- M21 capability framework implementation is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation.
 
 ## Important limitations
 
