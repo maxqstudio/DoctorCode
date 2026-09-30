@@ -1,0 +1,37 @@
+name: M21 Authority Truth Sync
+
+on:
+  push:
+    branches:
+      - work/m21-language-analyzer-framework
+
+permissions:
+  contents: write
+
+concurrency:
+  group: m21-authority-truth-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Synchronize governed authority truth
+        run: |
+          python .workflow/tools/sync_project_truth.py
+          python .workflow/tools/generate_sequence_actual.py --output-json docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.json --output-mermaid docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.mmd
+      - name: Commit synchronized outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            git add .workflow/generated/code_facts.json .workflow/acceptance.json docs
+            git commit -m "docs(m21): sync latest Skill_Workflow truth"
+            git push
+          fi
