@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m22-rust-semantic-baseline
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: f9e08e20300bbc0bc756f2cc40aa2536bfd0251a
-Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
+Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

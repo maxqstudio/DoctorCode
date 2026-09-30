@@ -8,17 +8,17 @@ Governance profile: strict
 
 ## Current phase
 Phase: M22_RUST_SEMANTIC_BASELINE
-Status: M21_MAIN_ACCEPTED
+Status: M22_IMPLEMENTED_VALIDATION_PENDING
 Roadmap phase: M22_RUST_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m22-rust-semantic-baseline
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: f9e08e20300bbc0bc756f2cc40aa2536bfd0251a
 Current candidate SHA: external final acceptance evidence
-Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
+Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -35,7 +35,7 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M21-LANGUAGE-ANALYZER-FRAMEWORK
+Current sequence session: M22-RUST-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Proven
@@ -101,6 +101,12 @@ SEQUENCE_SYNC: PASS
 - M21 framework candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance Bootstrap run 36669873885 and Core CI run 36669873901 on Ubuntu, macOS, and Windows, including the M21 availability repair plus all accepted Go/Python/JavaScript/TypeScript benchmark regressions.
 - At exact M21 candidate ed4592f0da53619894b1ddbf60961eec885f2587: M06 run 36669873896 PASS; Real World Go run 36669873898 PASS; M07 run 36669873931 PASS; M10 run 36669873873 PASS; M16 Thin MCP run 36669873921 PASS on Ubuntu/macOS/Windows; M17 Release and Install run 36669873911 PASS with release build and native Ubuntu/Windows/macOS install-smoke, with publish-release correctly skipped for a non-tag branch.
 - M21 merged through PR #33 to main at f9e08e20300bbc0bc756f2cc40aa2536bfd0251a. Exact-main Governance 36674860273 PASS; Core CI 36674860109 PASS; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke.
+- M22 starts from governance-accepted main@b76a4d0dc7e6e59bb33240e81526a596a9c5d2a4 with M21 product authority f9e08e20300bbc0bc756f2cc40aa2536bfd0251a and Skill_Workflow authority 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.
+- M22 RED Core CI run 36676672713 at ad8b99e11c96d512313db372f6cedf62d133b6ed failed on Ubuntu, macOS, and Windows at the Rust semantic benchmark with unknown benchmark analyzer "rust", proving the Rust analyzer capability absent before implementation.
+- M22 shadowing adversarial Core CI run 36731530612 at 556feed1a6ba407ed20a128a273362f50c6e7440 reported 10 cases = 4 TP / 1 FP / 0 FN; shadowed-parameter-negative produced an unexpected RS-LOGIC-DUPLICATE-CONDITION at sample.rs:5.
+- M22 for-binding adversarial Core CI run 36732824341 at 8921900828122a856d64b37c1885ff7dae5f2bd2 reported 12 cases = 4 TP / 1 FP / 0 FN; for-shadowed-parameter-negative produced an unexpected RS-LOGIC-DUPLICATE-CONDITION at sample.rs:5.
+- M22 unresolved-macro adversarial Core CI run 36733550595 at fc05091d37d38a110f6ff8b99c19398dfe83e456 reported 13 cases = 4 TP / 1 FP / 0 FN; unresolved-macro-deadcode-negative produced an unexpected RS-DEADCODE-PRIVATE-ZERO-REF at sample.rs:1.
+- M22 repaired behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 passed Core CI run 36733856112 on Ubuntu, macOS, and Windows. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each of SECURITY, SIMPLIFY, LOGIC, and DEADCODE reports precision=1.0 and recall=1.0.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -110,6 +116,10 @@ SEQUENCE_SYNC: PASS
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
 - M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening.
+- M22 Rust BLOAT authority is not proven and remains unavailable.
+- M22 Rust DEADCODE intentionally emits no findings for a visible Rust source set containing any macro invocation because DoctorCode has no macro-expansion authority in this milestone.
+- M22 Rust LOGIC is bounded to bare or negated unshadowed bool parameters of the nearest function item; any visible AST pattern rebinding the parameter name removes that parameter from the proof set.
+- M22 Rust parser authority is embedded gotreesitter syntax/AST only; borrow checking, type inference, cargo feature resolution, procedural macro expansion, build-script output, external linkage, and whole-program reachability are not proven.
 
 ## Known blockers
 - None declared.
@@ -118,9 +128,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Begin M22 Rust semantic baseline planning from accepted main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a without widening existing Go/Python/JavaScript/TypeScript semantics.
-- Select a deterministic Rust parser/provider and define RED labeled/adversarial corpora for SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE before implementation.
-- Enable Rust BLOAT only if a separate conservative evidence contract is proven; otherwise keep it unavailable.
+- Synchronize M22 Rust semantic Project Truth and CURRENT sequence evidence without widening the accepted Rust rule set.
+- Require all eight permanent workflows to PASS on one exact synchronized M22 branch SHA.
+- Only after exact branch acceptance may M22 be proposed for squash merge, exact-main revalidation, and governance closure to M23_JAVA_KOTLIN_SEMANTIC_BASELINE.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

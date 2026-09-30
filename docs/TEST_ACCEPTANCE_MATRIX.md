@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M21 is MAIN_ACCEPTED at f9e08e20300bbc0bc756f2cc40aa2536bfd0251a. The reusable analyzer framework now governs source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, benchmark compatibility, and default analyzer registration while preserving accepted Go, Python, and JavaScript/TypeScript semantic boundaries. Current project phase is M22_RUST_SEMANTIC_BASELINE; no Rust semantic authority is accepted yet.
+M21 is MAIN_ACCEPTED at f9e08e20300bbc0bc756f2cc40aa2536bfd0251a and governance-closed at main@b76a4d0dc7e6e59bb33240e81526a596a9c5d2a4. M22 branch behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 establishes a conservative Rust parser-backed baseline for SECURITY, SIMPLIFY, LOGIC, and DEADCODE with 13-case adversarial evidence at 4 TP / 0 FP / 0 FN. Rust BLOAT remains unavailable. Macro expansion, borrow/type semantics, cargo feature/build-script semantics, external linkage, whole-program reachability, safe autofix, and automatic deletion remain outside M22 authority. M22 is not MAIN_ACCEPTED until synchronized exact-branch acceptance, squash merge, and exact-main revalidation complete.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
+Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -57,6 +57,13 @@ Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7
 | M21-SEMANTIC-REGRESSION | Framework extraction must preserve all accepted Go, Python, JavaScript/TypeScript semantic benchmarks and release/MCP behavior. | At ed4592f0da53619894b1ddbf60961eec885f2587: Core CI 36669873901 PASS 3/3 including M03/M04/M07/M08/M09/M18/M19/M20 gates; M06 36669873896 PASS; Real World Go 36669873898 PASS; M07 36669873931 PASS; M10 36669873873 PASS; M16 36669873921 PASS 3/3; M17 36669873911 PASS including native install-smoke. | PASS |
 | M21-BRANCH-REGRESSION | One exact synchronized M21 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion. | Exact candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance 36669873885, Core 36669873901, M06 36669873896, Real World Go 36669873898, M07 36669873931, M10 36669873873, M16 36669873921, and M17 36669873911. | PASS |
 | M21-MAIN-POST-MERGE | The exact M21 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M21 closure. | At main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a: Governance 36674860273 PASS; Core CI 36674860109 PASS 3/3; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS 3/3; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke. | PASS |
+| M22-MAIN-BASELINE | M22 must begin from governance-accepted M21 main and preserve the current Skill_Workflow authority. | work/m22-rust-semantic-baseline starts from main@b76a4d0dc7e6e59bb33240e81526a596a9c5d2a4; M21 product authority is f9e08e20300bbc0bc756f2cc40aa2536bfd0251a; Skill_Workflow remains 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8. | PASS |
+| M22-RED-RUST-ABSENT | The Rust semantic benchmark must demonstrate Rust analyzer authority absent before implementation. | Core CI run 36676672713 at ad8b99e11c96d512313db372f6cedf62d133b6ed failed on Ubuntu, macOS, and Windows with unknown benchmark analyzer "rust". | PASS |
+| M22-PARSER-AUTHORITY | Rust source must use deterministic embedded syntax/AST parsing with malformed syntax failing closed. | rust/gotreesitter-v1 uses gotreesitter v0.55.1 embedded Rust grammar and ParseWithStrict; analyzer tests require malformed Rust to return a blocking syntax-validation error. | PASS |
+| M22-BOUNDED-RULES | M22 Rust authority must be limited to declared SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE rules with safe_autofix=false; BLOAT must remain unavailable. | Rust descriptor declares exactly RS-DEADCODE-PRIVATE-ZERO-REF, RS-LOGIC-DUPLICATE-CONDITION, RS-SEC-HARDCODED-CREDENTIAL, and RS-SIMPLIFY-BOOL-RETURN, all safe_autofix=false. No Rust BLOAT rule is registered. | PASS |
+| M22-SHADOWING-RED | Rust LOGIC must fail closed when a bool parameter name is shadowed by local/pattern bindings. | Core runs 36731530612 at 556feed1a6ba407ed20a128a273362f50c6e7440 and 36732824341 at 8921900828122a856d64b37c1885ff7dae5f2bd2 each exposed one LOGIC false positive from let/for shadowing. The repaired proof removes any parameter name rebound by a visible AST pattern. | PASS |
+| M22-MACRO-DEADCODE-RED | Rust DEADCODE must fail closed when macro expansion can create unobserved references. | Core CI run 36733550595 at fc05091d37d38a110f6ff8b99c19398dfe83e456 reported 13 cases = 4 TP / 1 FP / 0 FN; unresolved-macro-deadcode-negative was the sole false positive. The repair suppresses Rust DEADCODE whenever a macro_invocation is visible. | PASS |
+| M22-ADVERSARIAL-GREEN | The repaired Rust corpus must pass all declared M22 rules with zero false positives and zero false negatives on Core CI Ubuntu, macOS, and Windows. | Core CI run 36733856112 at f559f0517b0fae39edc53370a30ea17f0b140dc8 passes all three OS jobs. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each declared Rust rule reports precision=1.0 and recall=1.0. | PASS |
 
 ## Test commands
 
@@ -72,6 +79,8 @@ Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7
 - go test ./internal/detector ./internal/analyzers ./internal/engine ./internal/benchmark
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --analyzer=go --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
+- go test ./internal/analyzers/rust ./internal/analyzers ./internal/engine ./internal/benchmark
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m22-rust.json --analyzer=rust --json
 
 ## Runtime checks
 
@@ -85,6 +94,7 @@ Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7
 - M19 JavaScript/TypeScript 24-case LOGIC regression benchmark on Core CI Ubuntu/Windows/macOS
 - M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS
 - M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS
+- M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS
 
 ## Roadmap synchronization evidence
 
@@ -94,7 +104,7 @@ ROADMAP_SYNC: PASS
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M21-LANGUAGE-ANALYZER-FRAMEWORK
+Sequence session contract: M22-RUST-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence
