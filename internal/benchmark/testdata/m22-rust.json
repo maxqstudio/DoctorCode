@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "language": "Rust",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "simplify-positive",
+      "root": "m22-rust/simplify-positive",
+      "expected": [
+        {
+          "rule_id": "RS-SIMPLIFY-BOOL-RETURN",
+          "path": "sample.rs",
+          "line_start": 2
+        }
+      ]
+    },
+    {
+      "name": "security-positive",
+      "root": "m22-rust/security-positive",
+      "expected": [
+        {
+          "rule_id": "RS-SEC-HARDCODED-CREDENTIAL",
+          "path": "sample.rs",
+          "line_start": 1
+        }
+      ]
+    },
+    {
+      "name": "logic-positive",
+      "root": "m22-rust/logic-positive",
+      "expected": [
+        {
+          "rule_id": "RS-LOGIC-DUPLICATE-CONDITION",
+          "path": "sample.rs",
+          "line_start": 4
+        }
+      ]
+    },
+    {
+      "name": "deadcode-positive",
+      "root": "m22-rust/deadcode-positive",
+      "expected": [
+        {
+          "rule_id": "RS-DEADCODE-PRIVATE-ZERO-REF",
+          "path": "sample.rs",
+          "line_start": 1
+        }
+      ]
+    },
+    {
+      "name": "public-function-negative",
+      "root": "m22-rust/public-function-negative",
+      "expected": []
+    },
+    {
+      "name": "attributed-function-negative",
+      "root": "m22-rust/attributed-function-negative",
+      "expected": []
+    },
+    {
+      "name": "placeholder-secret-negative",
+      "root": "m22-rust/placeholder-secret-negative",
+      "expected": []
+    },
+    {
+      "name": "same-boolean-negative",
+      "root": "m22-rust/same-boolean-negative",
+      "expected": []
+    },
+    {
+      "name": "different-condition-negative",
+      "root": "m22-rust/different-condition-negative",
+      "expected": []
+    }
+  ]
+}
