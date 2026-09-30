@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "session_id": "M21-LANGUAGE-ANALYZER-FRAMEWORK",
+  "phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
+  "mode": "DURING",
+  "scope": "CURRENT",
+  "critical": false,
+  "status": "IN_PROGRESS",
+  "implementation_base_sha": "5fc0be4881ee72b593920f24d2d866a003ea828b",
+  "plan": {
+    "required": false,
+    "contract": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "sha256": "",
+    "diagram": ""
+  },
+  "actual": {
+    "graph": "docs/sequence/generated/M21-LANGUAGE-ANALYZER-FRAMEWORK.actual.json",
+    "diagram": "docs/sequence/generated/M21-LANGUAGE-ANALYZER-FRAMEWORK.actual.mmd",
+    "source_digest": "",
+    "entries": []
+  },
+  "test_traceability_required": true,
+  "tests": [
+    "internal/detector/detector_test.go",
+    "internal/analyzers/registry_test.go",
+    "internal/engine/engine_test.go",
+    "internal/benchmark/benchmark_test.go",
+    "internal/benchmark/testdata/manifest.json",
+    "internal/benchmark/testdata/m07-python.json",
+    "internal/benchmark/testdata/m20-js-ts-parser.json"
+  ],
+  "runtime_trace": {
+    "required": false,
+    "graph": ""
+  },
+  "acceptance_report": ""
+}
