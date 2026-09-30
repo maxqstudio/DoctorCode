@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_phase": "M22_RUST_SEMANTIC_BASELINE",
+  "current_phase": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
   "phases": [
     {
       "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
@@ -38,7 +38,7 @@
     {
       "id": "M22_RUST_SEMANTIC_BASELINE",
       "title": "Rust semantic baseline",
-      "status": "CURRENT",
+      "status": "ACCEPTED",
       "objective": "Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules.",
       "exit_criteria": [
         "Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence have labeled and adversarial corpora.",
@@ -49,7 +49,7 @@
     {
       "id": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
       "title": "Java and Kotlin semantic baseline",
-      "status": "PLANNED",
+      "status": "CURRENT",
       "objective": "Add JVM-family semantic analysis with package, class, method, and build-system awareness.",
       "exit_criteria": [
         "Java and Kotlin bounded rules pass synthetic, adversarial, and repository-shaped tests.",

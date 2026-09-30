@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M21 is MAIN_ACCEPTED and governance-closed at main@b76a4d0dc7e6e59bb33240e81526a596a9c5d2a4. Exact synchronized M22 candidate bedfc1d473cdcd747485b465740718f76e0f64f6 has passed all eight permanent workflows and establishes a conservative Rust parser-backed baseline for SECURITY, SIMPLIFY, LOGIC, and DEADCODE. The 13-case Rust corpus remains 4 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0. Rust BLOAT, macro expansion semantics, borrow/type authority, cargo feature/build-script semantics, whole-program reachability, safe autofix, and automatic deletion remain outside M22 authority. M22 is not MAIN_ACCEPTED until squash merge and exact-main revalidation complete.",
+  "evidence_boundary": "M22 is MAIN_ACCEPTED at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. The accepted Rust baseline provides embedded parser-backed syntax authority and bounded SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence with 13 adversarial/labeled cases at 4 TP / 0 FP / 0 FN, while Rust BLOAT, macro expansion semantics, borrow/type authority, cargo feature/build-script semantics, whole-program reachability, safe autofix, and automatic deletion remain outside authority. Current project phase is M23_JAVA_KOTLIN_SEMANTIC_BASELINE; no Java/Kotlin semantic authority is accepted yet.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -338,6 +338,12 @@
       "evidence": "At bedfc1d473cdcd747485b465740718f76e0f64f6: Governance 36734883264 PASS; Core CI 36734883437 PASS 3/3; M06 36734883305 PASS; Real World Go 36734883121 PASS; M07 36734883366 PASS; M10 36734883146 PASS; M16 36734883490 PASS 3/3; M17 36734883371 PASS with release build and Ubuntu/Windows/macOS native install-smoke.",
       "id": "M22-BRANCH-REGRESSION",
       "requirement": "One exact synchronized M22 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "At main@5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3: Governance 36738553649 PASS; Core CI 36738553502 PASS 3/3; M06 36738553556 PASS; Real World Go 36738553867 PASS; M07 36738554060 PASS; M10 36738553857 PASS; M16 Thin MCP 36738553920 PASS 3/3; M17 Release and Install 36738553978 PASS with release build and Ubuntu/Windows/macOS native install-smoke.",
+      "id": "M22-MAIN-POST-MERGE",
+      "requirement": "The exact M22 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M22 closure.",
       "status": "PASS"
     }
   ],
