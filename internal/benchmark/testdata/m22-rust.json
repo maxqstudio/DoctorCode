@@ -84,6 +84,11 @@
       "name": "macro-reference-negative",
       "root": "m22-rust/macro-reference-negative",
       "expected": []
+    },
+    {
+      "name": "for-shadowed-parameter-negative",
+      "root": "m22-rust/for-shadowed-parameter-negative",
+      "expected": []
     }
   ]
 }
