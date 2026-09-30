@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-JAVA-KOTLIN-SEMANTIC-BASELINE",
+  "title": "Java and Kotlin parser-backed semantic baseline",
+  "purpose": "Provide conservative Java/Kotlin syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on unsupported JVM/build-system semantics.",
+  "authority": "internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI",
+  "entry_condition": "A visible .java, .kt, or .kts source file is recognized outside ignored build/generated directories.",
+  "source_owners": [
+    "internal/analyzers/jvm/analyzer.go",
+    "internal/analyzers/jvm/syntax.go",
+    "internal/analyzers/jvm/analyzer_test.go",
+    "internal/analyzers/registry.go",
+    "cmd/doctorcode/main.go",
+    "internal/benchmark/testdata/m23-java.json",
+    "internal/benchmark/testdata/m23-kotlin.json",
+    ".github/workflows/ci.yml"
+  ],
+  "states": [
+    "SOURCE_DISCOVERY",
+    "STRICT_PARSE",
+    "BOUNDARY_FILTER",
+    "BOUNDED_RULE_PROOF",
+    "FINDING_CONTRACT_VALIDATE",
+    "DETERMINISTIC_OUTPUT"
+  ],
+  "transitions": [
+    {
+      "from": "SOURCE_DISCOVERY",
+      "to": "STRICT_PARSE",
+      "action": "Discover visible Java/Kotlin source while excluding symlinks and ignored build/generated directories.",
+      "side_effects": []
+    },
+    {
+      "from": "STRICT_PARSE",
+      "to": "BOUNDARY_FILTER",
+      "action": "Parse with embedded gotreesitter Java/Kotlin grammar and fail closed on parser errors, ERROR nodes, or MISSING nodes.",
+      "side_effects": []
+    },
+    {
+      "from": "BOUNDARY_FILTER",
+      "to": "BOUNDED_RULE_PROOF",
+      "action": "Skip generated-source markers and retain only M23-authorized source/AST evidence.",
+      "side_effects": []
+    },
+    {
+      "from": "BOUNDED_RULE_PROOF",
+      "to": "FINDING_CONTRACT_VALIDATE",
+      "action": "Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool-parameter LOGIC without DEADCODE/BLOAT claims.",
+      "side_effects": []
+    },
+    {
+      "from": "FINDING_CONTRACT_VALIDATE",
+      "to": "DETERMINISTIC_OUTPUT",
+      "action": "Validate declared rule/category/autofix metadata and deterministic finding identity before output.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "M23 does not claim Java/Kotlin DEADCODE or BLOAT authority.",
+    "safe_autofix is false for every M23 finding.",
+    "Java/Kotlin parser health is blocking for recognized visible source.",
+    "Credential literal evidence never exposes the literal value.",
+    "Maven/Gradle files may shape repository layout but do not imply dependency-resolution authority.",
+    "Generated/build outputs do not establish or widen semantic authority.",
+    "LOGIC accepts only bare or negated unmodified boolean/Boolean parameters of the nearest callable and skips nested callable/class scopes."
+  ],
+  "tests": [
+    "internal/analyzers/jvm/analyzer_test.go",
+    "internal/benchmark/testdata/m23-java.json",
+    "internal/benchmark/testdata/m23-kotlin.json"
+  ],
+  "sequence_session": "M23-JAVA-KOTLIN-SEMANTIC-BASELINE",
+  "critical": false,
+  "failure_behavior": [
+    "Malformed recognized Java/Kotlin syntax fails closed.",
+    "Unsupported semantic ambiguity emits no finding rather than widening proof."
+  ],
+  "restart_behavior": [
+    "JVM analysis is read-only and deterministic for a fixed visible source tree."
+  ],
+  "rollback_behavior": [
+    "M23 is read-only; rollback is source-control only and requires no data migration."
+  ]
+}
