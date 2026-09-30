@@ -487,6 +487,9 @@ func rustBoolCondition(source []byte, node *gotreesitter.Node, lang *gotreesitte
 }
 
 func deadCodeFindings(files []*parsedFile) []model.Finding {
+	if rustHasMacroInvocation(files) {
+		return nil
+	}
 	var candidates []deadCodeCandidate
 	nameCounts := map[string]int{}
 	for _, file := range files {
@@ -547,12 +550,30 @@ func deadCodeFindings(files []*parsedFile) []model.Finding {
 			[]string{
 				"AST-proven private top-level free function with no attributes or function modifiers",
 				"no same-name identifier reference was found in visible Rust source",
-				"public, attributed, modified, method, nested-module, generated, duplicate-name, and main entry functions fail closed",
+				"public, attributed, modified, method, nested-module, generated, duplicate-name, main entry, and macro-bearing repositories fail closed",
 				"safe_autofix remains disabled",
 			},
 		))
 	}
 	return out
+}
+
+func rustHasMacroInvocation(files []*parsedFile) bool {
+	for _, file := range files {
+		lang := file.document.language
+		found := false
+		gotreesitter.Walk(file.document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+			if node.Type(lang) == "macro_invocation" {
+				found = true
+				return gotreesitter.WalkStop
+			}
+			return gotreesitter.WalkContinue
+		})
+		if found {
+			return true
+		}
+	}
+	return false
 }
 
 func rustIdentifierReferenced(files []*parsedFile, candidate deadCodeCandidate) bool {
