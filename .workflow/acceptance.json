@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -251,16 +251,16 @@
       "status": "PASS"
     },
     {
+      "evidence": "M21 branch starts from main@5fc0be4881ee72b593920f24d2d866a003ea828b. Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8 passed upstream Governance Selftest run 36654539575; DoctorCode authority-sync candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350.",
       "id": "M21-SKILL-AUTHORITY",
       "requirement": "M21 must begin from accepted M20 governance main and adopt the latest materially relevant Skill_Workflow authority before framework widening.",
-      "status": "PASS",
-      "evidence": "M21 branch starts from main@5fc0be4881ee72b593920f24d2d866a003ea828b. Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8 passed upstream Governance Selftest run 36654539575; DoctorCode authority-sync candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows. JavaScript-only roots incorrectly reported go/builtin-v1 as active, and empty roots still reported go/builtin-v1.",
       "id": "M21-RED-ANALYZER-AVAILABILITY",
       "requirement": "M21 must demonstrate the absence of a reusable recognition/availability contract before implementation.",
-      "status": "PASS",
-      "evidence": "Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows. JavaScript-only roots incorrectly reported go/builtin-v1 as active, and empty roots still reported go/builtin-v1."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

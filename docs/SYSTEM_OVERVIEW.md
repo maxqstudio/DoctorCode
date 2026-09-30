@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 197 files, 8 language categories.
+Observed source inventory: 201 files, 8 language categories.
 
 ## Major components
 
@@ -181,6 +181,18 @@ Authority: internal/analyzers/javascript/syntax.go, internal/analyzers/javascrip
 - TREE_HEALTH_GATE -> BOUNDED_RULE_EVALUATION : Only after a healthy syntax tree, run accepted bounded rules; parser validation does not by itself widen rule semantics.
 - BOUNDED_RULE_EVALUATION -> SORTED_OUTPUT : Emit deterministic findings with existing confidence and safe_autofix boundaries; migrate individual rules to AST-backed proof only with explicit M20 evidence.
 
+### FLOW-LANGUAGE-ANALYZER-FRAMEWORK — Reusable language analyzer capability framework
+
+Centralize analyzer identity, source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding IDs, and benchmark compatibility without widening existing language semantics.
+
+Authority: internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests
+
+- REGISTRY_LOAD -> DESCRIPTOR_VALIDATE : Load the default analyzer registry and require analyzer name, descriptor identity, parser/provider, availability, rule, evidence, extension, and benchmark metadata to be explicit.
+- DESCRIPTOR_VALIDATE -> SOURCE_RECOGNITION : Fail closed on malformed or internally inconsistent descriptors before analyzer execution.
+- SOURCE_RECOGNITION -> ANALYZE : Run only analyzers whose declared source extensions occur in the visible repository tree; ignored directories and symlinks do not establish availability.
+- ANALYZE -> FINDING_CONTRACT_VALIDATE : Execute the existing language analyzer without widening its semantic rules, then validate every emitted rule/category/safe_autofix value and deterministic finding ID against the descriptor.
+- FINDING_CONTRACT_VALIDATE -> SORTED_OUTPUT : Only contract-valid findings and analyzer identities are admitted to deterministic audit or benchmark output.
+
 ### FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
@@ -311,7 +323,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
 
-Current status: M20_MAIN_ACCEPTED
+Current status: M21_IMPLEMENTED_VALIDATION_PENDING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -353,6 +365,8 @@ compiler does not infer them from implementation names.
 - FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS: No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
 - FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC: No supported files returns analyzer unavailable; malformed lexical input fails closed; unsupported condition shapes are skipped without a finding.
 - FLOW-JAVASCRIPT-TYPESCRIPT-PARSER: No supported files returns analyzer unavailable; unknown grammar mapping, parser error, stopped/truncated parse, ERROR node, or MISSING node fails the analyzer closed.
+- FLOW-LANGUAGE-ANALYZER-FRAMEWORK: Invalid descriptor metadata, undeclared finding rules, category/autofix drift, deterministic-ID drift, or benchmark-language mismatch fails closed.
+- FLOW-LANGUAGE-ANALYZER-FRAMEWORK: No recognized source files skips the analyzer instead of reporting it active.
 - FLOW-PYTHON-ADVERSARIAL: Any unexpected finding, missing expected finding, old-corpus regression, public-source regression, or parse incompleteness blocks M08.
 - FLOW-PYTHON-ANALYSIS: Missing runtime returns analyzer unavailable during normal audit; applicable parse/read failure returns an audit error; benchmark/public validation treat unavailable or parse errors as blocking.
 - FLOW-PYTHON-REALWORLD-LABELED: SHA mismatch, missing VALID_FINDING, emitted INVALID_FINDING, analyzer error, prior-regression failure, or cross-platform divergence blocks M10.
@@ -371,9 +385,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Begin M21 language analyzer framework planning from accepted main@c90e5d570a5c9eed3685df3381a1509deff40e88 without widening existing language semantics.
-- Define reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, availability, and benchmark contracts before implementing new language baselines.
-- Preserve M20 parser-backed JavaScript/TypeScript boundaries and retain the recorded release-size telemetry for later production-hardening decisions.
+- Synchronize M21 Project Truth and CURRENT sequence evidence for the reusable analyzer capability framework.
+- Run exact-branch regression across governance, Core CI, Go/Python real-world lanes, MCP, and release/install without widening existing language semantics.
+- Only after one exact branch SHA passes all permanent workflows may M21 be proposed for merge and exact-main revalidation.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -445,6 +459,9 @@ Known blockers:
 - Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.
 - GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry.
 - M20 merged through PR #31 to main at c90e5d570a5c9eed3685df3381a1509deff40e88. Exact-main Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke.
+- M21 starts from governance-accepted main@5fc0be4881ee72b593920f24d2d866a003ea828b with M20 product authority c90e5d570a5c9eed3685df3381a1509deff40e88.
+- M21 adopts Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8; upstream Governance Selftest run 36654539575 passed, and DoctorCode authority-sync branch candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350.
+- M21 RED Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows because Go was reported active for JavaScript-only and source-empty roots, proving analyzer availability/recognition was not governed by a reusable capability contract.
 
 ### Not proven
 
@@ -455,6 +472,7 @@ Known blockers:
 - M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.
 - M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.
 - M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening.
+- M21 capability framework implementation is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation.
 
 ## Important limitations
 

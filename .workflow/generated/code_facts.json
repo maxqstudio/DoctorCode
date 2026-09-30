@@ -31,7 +31,7 @@
       "file": "internal/analyzers/golang/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 632
+      "lines": 654
     },
     {
       "directory": "internal/analyzers/golang",
@@ -80,7 +80,7 @@
       "file": "internal/analyzers/javascript/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 198
+      "lines": 224
     },
     {
       "directory": "internal/analyzers/javascript",
@@ -122,7 +122,7 @@
       "file": "internal/analyzers/python/analyzer.go",
       "is_test": false,
       "language": "Go",
-      "lines": 643
+      "lines": 666
     },
     {
       "directory": "internal/analyzers/python",
@@ -146,6 +146,20 @@
       "lines": 74
     },
     {
+      "directory": "internal/analyzers",
+      "file": "internal/analyzers/registry.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 52
+    },
+    {
+      "directory": "internal/analyzers",
+      "file": "internal/analyzers/registry_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 19
+    },
+    {
       "directory": "internal/application",
       "file": "internal/application/application.go",
       "is_test": false,
@@ -164,14 +178,14 @@
       "file": "internal/benchmark/benchmark.go",
       "is_test": false,
       "language": "Go",
-      "lines": 317
+      "lines": 330
     },
     {
       "directory": "internal/benchmark",
       "file": "internal/benchmark/benchmark_test.go",
       "is_test": false,
       "language": "Go",
-      "lines": 160
+      "lines": 191
     },
     {
       "directory": "internal/benchmark/testdata/cases/bloat-positive",
@@ -1214,14 +1228,28 @@
       "file": "internal/detector/detector.go",
       "is_test": false,
       "language": "Go",
-      "lines": 15
+      "lines": 249
+    },
+    {
+      "directory": "internal/detector",
+      "file": "internal/detector/detector_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 87
     },
     {
       "directory": "internal/engine",
       "file": "internal/engine/engine.go",
       "is_test": false,
       "language": "Go",
-      "lines": 95
+      "lines": 107
+    },
+    {
+      "directory": "internal/engine",
+      "file": "internal/engine/engine_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 35
     },
     {
       "directory": "internal/evidence",
@@ -3074,11 +3102,11 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9",
+  "source_digest": "5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a",
   "source_summary": {
-    "files": 197,
+    "files": 201,
     "languages": {
-      "Go": 90,
+      "Go": 94,
       "JavaScript": 35,
       "JavaScript/React": 2,
       "PowerShell": 1,
@@ -3087,7 +3115,7 @@
       "TypeScript": 7,
       "TypeScript/React": 3
     },
-    "lines": 8648,
+    "lines": 9202,
     "test_files": 2
   },
   "tests": [
