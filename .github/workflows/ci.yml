@@ -56,6 +56,10 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m20-js-ts-parser.json --analyzer=javascript --json
       - name: M22 Rust semantic benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m22-rust.json --analyzer=rust --json
+      - name: M23 Java semantic benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-java.json --analyzer=jvm --json
+      - name: M23 Kotlin semantic benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI

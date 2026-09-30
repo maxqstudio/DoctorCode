@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "language": "Kotlin",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "security-positive",
+      "root": "m23-kotlin/security-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-SEC-HARDCODED-CREDENTIAL",
+          "path": "Secrets.kt",
+          "line_start": 2
+        }
+      ]
+    },
+    {
+      "name": "simplify-positive",
+      "root": "m23-kotlin/simplify-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-SIMPLIFY-BOOL-RETURN",
+          "path": "Feature.kt",
+          "line_start": 3
+        }
+      ]
+    },
+    {
+      "name": "logic-positive",
+      "root": "m23-kotlin/logic-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-LOGIC-DUPLICATE-CONDITION",
+          "path": "Feature.kt",
+          "line_start": 5
+        }
+      ]
+    },
+    {
+      "name": "placeholder-secret-negative",
+      "root": "m23-kotlin/placeholder-secret-negative",
+      "expected": []
+    }
+  ]
+}
