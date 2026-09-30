@@ -89,6 +89,11 @@
       "name": "for-shadowed-parameter-negative",
       "root": "m22-rust/for-shadowed-parameter-negative",
       "expected": []
+    },
+    {
+      "name": "unresolved-macro-deadcode-negative",
+      "root": "m22-rust/unresolved-macro-deadcode-negative",
+      "expected": []
     }
   ]
 }
