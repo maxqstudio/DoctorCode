@@ -6,43 +6,14 @@
     "min_recall": 1
   },
   "cases": [
-    {
-      "name": "security-positive",
-      "root": "m23-kotlin/security-positive",
-      "expected": [
-        {
-          "rule_id": "JVM-SEC-HARDCODED-CREDENTIAL",
-          "path": "Secrets.kt",
-          "line_start": 2
-        }
-      ]
-    },
-    {
-      "name": "simplify-positive",
-      "root": "m23-kotlin/simplify-positive",
-      "expected": [
-        {
-          "rule_id": "JVM-SIMPLIFY-BOOL-RETURN",
-          "path": "Feature.kt",
-          "line_start": 3
-        }
-      ]
-    },
-    {
-      "name": "logic-positive",
-      "root": "m23-kotlin/logic-positive",
-      "expected": [
-        {
-          "rule_id": "JVM-LOGIC-DUPLICATE-CONDITION",
-          "path": "Feature.kt",
-          "line_start": 5
-        }
-      ]
-    },
-    {
-      "name": "placeholder-secret-negative",
-      "root": "m23-kotlin/placeholder-secret-negative",
-      "expected": []
-    }
+    {"name":"security-positive","root":"m23-kotlin/security-positive","expected":[{"rule_id":"JVM-SEC-HARDCODED-CREDENTIAL","path":"Secrets.kt","line_start":2}]},
+    {"name":"simplify-positive","root":"m23-kotlin/simplify-positive","expected":[{"rule_id":"JVM-SIMPLIFY-BOOL-RETURN","path":"Feature.kt","line_start":3}]},
+    {"name":"logic-positive","root":"m23-kotlin/logic-positive","expected":[{"rule_id":"JVM-LOGIC-DUPLICATE-CONDITION","path":"Feature.kt","line_start":5}]},
+    {"name":"placeholder-secret-negative","root":"m23-kotlin/placeholder-secret-negative","expected":[]},
+    {"name":"shadowed-parameter-negative","root":"m23-kotlin/shadowed-parameter-negative","expected":[]},
+    {"name":"interpolated-secret-negative","root":"m23-kotlin/interpolated-secret-negative","expected":[]},
+    {"name":"nested-lambda-negative","root":"m23-kotlin/nested-lambda-negative","expected":[]},
+    {"name":"generated-source-negative","root":"m23-kotlin/generated-source-negative","expected":[]},
+    {"name":"gradle-repository-shaped","root":"m23-kotlin/gradle-repository-shaped","expected":[{"rule_id":"JVM-SIMPLIFY-BOOL-RETURN","path":"src/main/kotlin/demo/Feature.kt","line_start":4}]}
   ]
 }
