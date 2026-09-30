@@ -7,10 +7,10 @@ func TestDefaultAnalyzerContractsValidate(t *testing.T) {
 		t.Fatal(err)
 	}
 	descriptors := Descriptors()
-	if len(descriptors) != 3 {
-		t.Fatalf("descriptors=%d want=3", len(descriptors))
+	if len(descriptors) != 4 {
+		t.Fatalf("descriptors=%d want=4", len(descriptors))
 	}
-	want := []string{"go/builtin-v1", "python/stdlib-ast-v1", "javascript/parser-backed-v2"}
+	want := []string{"go/builtin-v1", "python/stdlib-ast-v1", "javascript/parser-backed-v2", "rust/gotreesitter-v1"}
 	for i, desc := range descriptors {
 		if desc.ID != want[i] {
 			t.Fatalf("descriptor[%d]=%q want=%q", i, desc.ID, want[i])

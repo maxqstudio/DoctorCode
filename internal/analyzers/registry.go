@@ -6,6 +6,7 @@ import (
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
+	rustanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/rust"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 )
 
@@ -14,6 +15,7 @@ func Default() []detector.Analyzer {
 		goanalysis.New(),
 		pythonanalysis.New(),
 		javascriptanalysis.New(),
+		rustanalysis.New(),
 	}
 }
 
