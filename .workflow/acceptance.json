@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M20 is MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. M21 introduces a reusable analyzer capability framework only: analyzer recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, and benchmark-language contracts. Existing Go, Python, and JavaScript/TypeScript semantic rule authority remains unchanged. M21 is not yet accepted; exact synchronized branch and exact-main regression evidence are still required.",
+  "evidence_boundary": "M20 remains MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. M21 branch candidate ed4592f0da53619894b1ddbf60961eec885f2587 has passed all eight permanent workflows and establishes the reusable analyzer capability framework: source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, and benchmark-language contracts. Existing Go, Python, and JavaScript/TypeScript semantic proof boundaries remain unchanged. M21 is not MAIN_ACCEPTED until squash merge and exact-main revalidation complete.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -261,6 +261,30 @@
       "id": "M21-RED-ANALYZER-AVAILABILITY",
       "requirement": "M21 must demonstrate the absence of a reusable recognition/availability contract before implementation.",
       "status": "PASS"
+    },
+    {
+      "id": "M21-FRAMEWORK-CONTRACT",
+      "requirement": "M21 must centralize analyzer recognition, parser/provider, availability, rule metadata, evidence boundaries, deterministic finding identity, and benchmark compatibility without widening existing semantic rules.",
+      "status": "PASS",
+      "evidence": "internal/detector/detector.go defines Descriptor contracts and validation; internal/analyzers/registry.go centralizes default analyzers; engine recognition skips analyzers without declared visible source; benchmark validation requires declared language compatibility and finding contracts. Existing Go/Python/JS rule IDs and safe_autofix=false boundaries remain unchanged."
+    },
+    {
+      "id": "M21-AVAILABILITY-GREEN",
+      "requirement": "The analyzer framework must report only analyzers that recognize visible source and must report none for an unrecognized/empty root.",
+      "status": "PASS",
+      "evidence": "Core CI run 36669873901 at ed4592f0da53619894b1ddbf60961eec885f2587 passed Ubuntu, macOS, and Windows. The M21 engine tests prove JavaScript-only roots report only javascript/parser-backed-v2 and empty roots report no active analyzer."
+    },
+    {
+      "id": "M21-SEMANTIC-REGRESSION",
+      "requirement": "Framework extraction must preserve all accepted Go, Python, JavaScript/TypeScript semantic benchmarks and release/MCP behavior.",
+      "status": "PASS",
+      "evidence": "At ed4592f0da53619894b1ddbf60961eec885f2587: Core CI 36669873901 PASS 3/3 including M03/M04/M07/M08/M09/M18/M19/M20 gates; M06 36669873896 PASS; Real World Go 36669873898 PASS; M07 36669873931 PASS; M10 36669873873 PASS; M16 36669873921 PASS 3/3; M17 36669873911 PASS including native install-smoke."
+    },
+    {
+      "id": "M21-BRANCH-REGRESSION",
+      "requirement": "One exact synchronized M21 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
+      "status": "PASS",
+      "evidence": "Exact candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance 36669873885, Core 36669873901, M06 36669873896, Real World Go 36669873898, M07 36669873931, M10 36669873873, M16 36669873921, and M17 36669873911."
     }
   ],
   "runtime_checks": [
