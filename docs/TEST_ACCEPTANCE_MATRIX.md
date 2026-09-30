@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M20 is MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. Parser-backed JavaScript/TypeScript syntax authority, JSX/TSX recognition, strict malformed-syntax rejection, syntax-tree masking, AST-backed bounded LOGIC proof, M19 regression preservation, multi-OS release/install, and roadmap governance are accepted. M20 still does not authorize JS/TS DEADCODE, BLOAT, general whole-program semantics, safe autofix, or automatic deletion. The current project phase is M21_LANGUAGE_ANALYZER_FRAMEWORK; M21 implementation has not yet widened semantic authority.
+M20 remains MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. M21 branch candidate ed4592f0da53619894b1ddbf60961eec885f2587 has passed all eight permanent workflows and establishes the reusable analyzer capability framework: source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, and benchmark-language contracts. Existing Go, Python, and JavaScript/TypeScript semantic proof boundaries remain unchanged. M21 is not MAIN_ACCEPTED until squash merge and exact-main revalidation complete.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
+Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -50,6 +50,12 @@ Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c
 | M20-BRANCH-CANDIDATE | A single M20 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression workflows before final ledger synchronization. | At 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core 36609998432 PASS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 36609998474 PASS; M17 36609998442 PASS. | PASS |
 | M20-RELEASE-SIZE-TELEMETRY | M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size. | GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists. | PASS |
 | M20-MAIN-POST-MERGE | The exact M20 squash-merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M20 is closed. | At main@c90e5d570a5c9eed3685df3381a1509deff40e88: Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke; publish-release skipped as expected for a non-tag push. | PASS |
+| M21-SKILL-AUTHORITY | M21 must begin from accepted M20 governance main and adopt the latest materially relevant Skill_Workflow authority before framework widening. | M21 branch starts from main@5fc0be4881ee72b593920f24d2d866a003ea828b. Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8 passed upstream Governance Selftest run 36654539575; DoctorCode authority-sync candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350. | PASS |
+| M21-RED-ANALYZER-AVAILABILITY | M21 must demonstrate the absence of a reusable recognition/availability contract before implementation. | Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows. JavaScript-only roots incorrectly reported go/builtin-v1 as active, and empty roots still reported go/builtin-v1. | PASS |
+| M21-FRAMEWORK-CONTRACT | M21 must centralize analyzer recognition, parser/provider, availability, rule metadata, evidence boundaries, deterministic finding identity, and benchmark compatibility without widening existing semantic rules. | internal/detector/detector.go defines Descriptor contracts and validation; internal/analyzers/registry.go centralizes default analyzers; engine recognition skips analyzers without declared visible source; benchmark validation requires declared language compatibility and finding contracts. Existing Go/Python/JS rule IDs and safe_autofix=false boundaries remain unchanged. | PASS |
+| M21-AVAILABILITY-GREEN | The analyzer framework must report only analyzers that recognize visible source and must report none for an unrecognized/empty root. | Core CI run 36669873901 at ed4592f0da53619894b1ddbf60961eec885f2587 passed Ubuntu, macOS, and Windows. The M21 engine tests prove JavaScript-only roots report only javascript/parser-backed-v2 and empty roots report no active analyzer. | PASS |
+| M21-SEMANTIC-REGRESSION | Framework extraction must preserve all accepted Go, Python, JavaScript/TypeScript semantic benchmarks and release/MCP behavior. | At ed4592f0da53619894b1ddbf60961eec885f2587: Core CI 36669873901 PASS 3/3 including M03/M04/M07/M08/M09/M18/M19/M20 gates; M06 36669873896 PASS; Real World Go 36669873898 PASS; M07 36669873931 PASS; M10 36669873873 PASS; M16 36669873921 PASS 3/3; M17 36669873911 PASS including native install-smoke. | PASS |
+| M21-BRANCH-REGRESSION | One exact synchronized M21 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion. | Exact candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance 36669873885, Core 36669873901, M06 36669873896, Real World Go 36669873898, M07 36669873931, M10 36669873873, M16 36669873921, and M17 36669873911. | PASS |
 
 ## Test commands
 
@@ -62,6 +68,9 @@ Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m20-js-ts-parser.json --analyzer=javascript --json
+- go test ./internal/detector ./internal/analyzers ./internal/engine ./internal/benchmark
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --analyzer=go --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 
 ## Runtime checks
 
@@ -74,6 +83,7 @@ Current source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c
 - M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS
 - M19 JavaScript/TypeScript 24-case LOGIC regression benchmark on Core CI Ubuntu/Windows/macOS
 - M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS
+- M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS
 
 ## Roadmap synchronization evidence
 
@@ -83,7 +93,7 @@ ROADMAP_SYNC: PASS
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M20-JAVASCRIPT-TYPESCRIPT-PARSER
+Sequence session contract: M21-LANGUAGE-ANALYZER-FRAMEWORK
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

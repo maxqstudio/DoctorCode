@@ -3,34 +3,36 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9
+Source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
 | cmd/doctorcode/main.go | Go | 559 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
-| internal/analyzers/golang/analyzer.go | Go | 632 | internal/analyzers/golang | NO |
+| internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/related.go | Go | 178 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/related_test.go | Go | 56 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/testdata/negative/sample.go | Go | 17 | internal/analyzers/golang/testdata/negative | NO |
 | internal/analyzers/golang/testdata/positive/sample.go | Go | 28 | internal/analyzers/golang/testdata/positive | NO |
-| internal/analyzers/javascript/analyzer.go | Go | 198 | internal/analyzers/javascript | NO |
+| internal/analyzers/javascript/analyzer.go | Go | 224 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/analyzer_test.go | Go | 61 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/logic.go | Go | 340 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/logic_test.go | Go | 169 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/syntax.go | Go | 104 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/syntax_test.go | Go | 111 | internal/analyzers/javascript | NO |
-| internal/analyzers/python/analyzer.go | Go | 643 | internal/analyzers/python | NO |
+| internal/analyzers/python/analyzer.go | Go | 666 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
+| internal/analyzers/registry.go | Go | 52 | internal/analyzers | NO |
+| internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/application/application.go | Go | 64 | internal/application | NO |
 | internal/application/application_test.go | Go | 71 | internal/application | NO |
-| internal/benchmark/benchmark.go | Go | 317 | internal/benchmark | NO |
-| internal/benchmark/benchmark_test.go | Go | 160 | internal/benchmark | NO |
+| internal/benchmark/benchmark.go | Go | 330 | internal/benchmark | NO |
+| internal/benchmark/benchmark_test.go | Go | 191 | internal/benchmark | NO |
 | internal/benchmark/testdata/cases/bloat-positive/sample.go | Go | 5 | internal/benchmark/testdata/cases/bloat-positive | NO |
 | internal/benchmark/testdata/cases/deadcode-bodyless/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-bodyless | NO |
 | internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go | Go | 4 | internal/benchmark/testdata/cases/deadcode-linkage-escape | NO |
@@ -179,8 +181,10 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx | TypeScript/React | 4 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
-| internal/detector/detector.go | Go | 15 | internal/detector | NO |
-| internal/engine/engine.go | Go | 95 | internal/engine | NO |
+| internal/detector/detector.go | Go | 249 | internal/detector | NO |
+| internal/detector/detector_test.go | Go | 87 | internal/detector | NO |
+| internal/engine/engine.go | Go | 107 | internal/engine | NO |
+| internal/engine/engine_test.go | Go | 35 | internal/engine | NO |
 | internal/evidence/packet.go | Go | 272 | internal/evidence | NO |
 | internal/evidence/packet_test.go | Go | 242 | internal/evidence | NO |
 | internal/language/registry.go | Go | 49 | internal/language | NO |

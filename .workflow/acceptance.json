@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M20 is MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. Parser-backed JavaScript/TypeScript syntax authority, JSX/TSX recognition, strict malformed-syntax rejection, syntax-tree masking, AST-backed bounded LOGIC proof, M19 regression preservation, multi-OS release/install, and roadmap governance are accepted. M20 still does not authorize JS/TS DEADCODE, BLOAT, general whole-program semantics, safe autofix, or automatic deletion. The current project phase is M21_LANGUAGE_ANALYZER_FRAMEWORK; M21 implementation has not yet widened semantic authority.",
+  "evidence_boundary": "M20 remains MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. M21 branch candidate ed4592f0da53619894b1ddbf60961eec885f2587 has passed all eight permanent workflows and establishes the reusable analyzer capability framework: source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, and benchmark-language contracts. Existing Go, Python, and JavaScript/TypeScript semantic proof boundaries remain unchanged. M21 is not MAIN_ACCEPTED until squash merge and exact-main revalidation complete.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -249,6 +249,42 @@
       "id": "M20-MAIN-POST-MERGE",
       "requirement": "The exact M20 squash-merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M20 is closed.",
       "status": "PASS"
+    },
+    {
+      "evidence": "M21 branch starts from main@5fc0be4881ee72b593920f24d2d866a003ea828b. Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8 passed upstream Governance Selftest run 36654539575; DoctorCode authority-sync candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350.",
+      "id": "M21-SKILL-AUTHORITY",
+      "requirement": "M21 must begin from accepted M20 governance main and adopt the latest materially relevant Skill_Workflow authority before framework widening.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows. JavaScript-only roots incorrectly reported go/builtin-v1 as active, and empty roots still reported go/builtin-v1.",
+      "id": "M21-RED-ANALYZER-AVAILABILITY",
+      "requirement": "M21 must demonstrate the absence of a reusable recognition/availability contract before implementation.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "internal/detector/detector.go defines Descriptor contracts and validation; internal/analyzers/registry.go centralizes default analyzers; engine recognition skips analyzers without declared visible source; benchmark validation requires declared language compatibility and finding contracts. Existing Go/Python/JS rule IDs and safe_autofix=false boundaries remain unchanged.",
+      "id": "M21-FRAMEWORK-CONTRACT",
+      "requirement": "M21 must centralize analyzer recognition, parser/provider, availability, rule metadata, evidence boundaries, deterministic finding identity, and benchmark compatibility without widening existing semantic rules.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 36669873901 at ed4592f0da53619894b1ddbf60961eec885f2587 passed Ubuntu, macOS, and Windows. The M21 engine tests prove JavaScript-only roots report only javascript/parser-backed-v2 and empty roots report no active analyzer.",
+      "id": "M21-AVAILABILITY-GREEN",
+      "requirement": "The analyzer framework must report only analyzers that recognize visible source and must report none for an unrecognized/empty root.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "At ed4592f0da53619894b1ddbf60961eec885f2587: Core CI 36669873901 PASS 3/3 including M03/M04/M07/M08/M09/M18/M19/M20 gates; M06 36669873896 PASS; Real World Go 36669873898 PASS; M07 36669873931 PASS; M10 36669873873 PASS; M16 36669873921 PASS 3/3; M17 36669873911 PASS including native install-smoke.",
+      "id": "M21-SEMANTIC-REGRESSION",
+      "requirement": "Framework extraction must preserve all accepted Go, Python, JavaScript/TypeScript semantic benchmarks and release/MCP behavior.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Exact candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance 36669873885, Core 36669873901, M06 36669873896, Real World Go 36669873898, M07 36669873931, M10 36669873873, M16 36669873921, and M17 36669873911.",
+      "id": "M21-BRANCH-REGRESSION",
+      "requirement": "One exact synchronized M21 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -260,12 +296,13 @@
     "existing pinned Go/Python real-world validation lanes",
     "M18 JavaScript/TypeScript 13-case adversarial benchmark on Core CI Ubuntu/Windows/macOS",
     "M19 JavaScript/TypeScript 24-case LOGIC regression benchmark on Core CI Ubuntu/Windows/macOS",
-    "M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS"
+    "M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS",
+    "M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
   "sequence_mode": "DURING",
-  "sequence_session": "M20-JAVASCRIPT-TYPESCRIPT-PARSER",
+  "sequence_session": "M21-LANGUAGE-ANALYZER-FRAMEWORK",
   "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
@@ -276,7 +313,10 @@
     "Core CI and all accepted real-world regression workflows",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m18-js-ts.json --analyzer=javascript --json",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m19-js-ts-logic.json --analyzer=javascript --json",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m20-js-ts-parser.json --analyzer=javascript --json"
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m20-js-ts-parser.json --analyzer=javascript --json",
+    "go test ./internal/detector ./internal/analyzers ./internal/engine ./internal/benchmark",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --analyzer=go --json",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json"
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",

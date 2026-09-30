@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
 
@@ -31,6 +32,29 @@ func New() *Analyzer {
 
 func (a *Analyzer) Name() string {
 	return "go/builtin-v1"
+}
+
+func (a *Analyzer) Descriptor() detector.Descriptor {
+	return detector.Descriptor{
+		ID:         a.Name(),
+		Language:   "Go",
+		Extensions: []string{".go"},
+		Parser: detector.ParserContract{
+			Kind:       detector.ParserBuiltinAST,
+			Provider:   "go/parser",
+			FailClosed: true,
+		},
+		Availability:     detector.AvailabilityContract{Mode: detector.AvailabilitySourceOnly},
+		EvidenceBoundary: "Go parser/AST over visible .go source with conservative package-local proof; generated/test/reference evidence is handled by bounded rule logic and unresolved dynamic/linkage behavior fails closed.",
+		Rules: []detector.RuleMetadata{
+			{ID: ruleBloat, Category: model.CategoryBloat, SafeAutofix: false},
+			{ID: ruleDeadCode, Category: model.CategoryDeadCode, SafeAutofix: false},
+			{ID: ruleLogic, Category: model.CategoryLogic, SafeAutofix: false},
+			{ID: ruleSecurity, Category: model.CategorySecurity, SafeAutofix: false},
+			{ID: ruleSimplify, Category: model.CategorySimplify, SafeAutofix: false},
+		},
+		Benchmark: detector.BenchmarkContract{SchemaVersion: 1, Languages: []string{"Go"}},
+	}
 }
 
 type parsedFile struct {
@@ -613,10 +637,8 @@ func obviousPlaceholder(value string) bool {
 }
 
 func newFinding(rule string, category model.Category, severity model.Severity, confidence model.Confidence, path string, lineStart, lineEnd int, summary string, evidence []string) model.Finding {
-	key := fmt.Sprintf("%s|%s|%d|%s", rule, path, lineStart, summary)
-	digest := sha256.Sum256([]byte(key))
 	return model.Finding{
-		ID:           fmt.Sprintf("%s-%x", rule, digest[:5]),
+		ID:           detector.FindingID(rule, path, lineStart, summary),
 		RuleID:       rule,
 		Category:     category,
 		Severity:     severity,

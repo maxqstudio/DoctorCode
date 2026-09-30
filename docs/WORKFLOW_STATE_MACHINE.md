@@ -369,6 +369,56 @@ Authority: internal/analyzers/javascript/syntax.go, internal/analyzers/javascrip
 
 - The analyzer is read-only; rollback is source-control only.
 
+## FLOW-LANGUAGE-ANALYZER-FRAMEWORK — Reusable language analyzer capability framework
+
+Purpose: Centralize analyzer identity, source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding IDs, and benchmark compatibility without widening existing language semantics.
+Critical: FALSE
+Entry condition: A repository audit or benchmark requests one of the registered analyzers.
+Authority: internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests
+
+### States
+
+- REGISTRY_LOAD
+- DESCRIPTOR_VALIDATE
+- SOURCE_RECOGNITION
+- ANALYZE
+- FINDING_CONTRACT_VALIDATE
+- SORTED_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| REGISTRY_LOAD | DESCRIPTOR_VALIDATE | Load the default analyzer registry and require analyzer name, descriptor identity, parser/provider, availability, rule, evidence, extension, and benchmark metadata to be explicit. | internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests |  |
+| DESCRIPTOR_VALIDATE | SOURCE_RECOGNITION | Fail closed on malformed or internally inconsistent descriptors before analyzer execution. | internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests |  |
+| SOURCE_RECOGNITION | ANALYZE | Run only analyzers whose declared source extensions occur in the visible repository tree; ignored directories and symlinks do not establish availability. | internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests |  |
+| ANALYZE | FINDING_CONTRACT_VALIDATE | Execute the existing language analyzer without widening its semantic rules, then validate every emitted rule/category/safe_autofix value and deterministic finding ID against the descriptor. | internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests |  |
+| FINDING_CONTRACT_VALIDATE | SORTED_OUTPUT | Only contract-valid findings and analyzer identities are admitted to deterministic audit or benchmark output. | internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests |  |
+
+### Invariants
+
+- M21 changes analyzer framework contracts, not the accepted semantic proof boundaries of Go, Python, or JavaScript/TypeScript rules.
+- Analyzer descriptor ID must exactly match Analyzer.Name().
+- An analyzer is not reported active when the visible repository tree contains none of its declared source extensions.
+- Parser/provider metadata documents the actual parsing authority and cannot substitute for parser health checks inside a language analyzer.
+- Every emitted finding rule must be declared by the analyzer descriptor with the same category and safe_autofix contract.
+- Finding IDs remain compatible with the existing SHA-256-derived deterministic identity algorithm.
+- Benchmark manifests must use a language label explicitly declared by the analyzer descriptor.
+- Ignored directories, nested testdata fixtures, and symlinked files do not establish analyzer availability.
+
+### Failure behavior
+
+- Invalid descriptor metadata, undeclared finding rules, category/autofix drift, deterministic-ID drift, or benchmark-language mismatch fails closed.
+- No recognized source files skips the analyzer instead of reporting it active.
+
+### Restart behavior
+
+- Registry loading, source recognition, analysis, and contract validation are read-only and deterministic for a fixed source tree.
+
+### Rollback behavior
+
+- The framework is read-only; rollback is source-control only and does not require data migration.
+
 ## FLOW-PYTHON-ADVERSARIAL — Python adversarial regression validation
 
 Purpose: Challenge accepted Python rules with high-risk false-positive and false-negative patterns before expanding Python capability.
