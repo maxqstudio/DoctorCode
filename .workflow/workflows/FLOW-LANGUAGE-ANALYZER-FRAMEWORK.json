@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "flow_id": "FLOW-LANGUAGE-ANALYZER-FRAMEWORK",
+  "title": "Reusable language analyzer capability framework",
+  "purpose": "Centralize analyzer identity, source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding IDs, and benchmark compatibility without widening existing language semantics.",
+  "authority": "internal/detector/detector.go, internal/analyzers/registry.go, internal/engine/engine.go, internal/benchmark/benchmark.go, and M21 framework tests",
+  "entry_condition": "A repository audit or benchmark requests one of the registered analyzers.",
+  "source_owners": [
+    "internal/detector/detector.go",
+    "internal/analyzers/registry.go",
+    "internal/engine/engine.go",
+    "internal/benchmark/benchmark.go",
+    "internal/detector/detector_test.go",
+    "internal/analyzers/registry_test.go",
+    "internal/engine/engine_test.go"
+  ],
+  "states": [
+    "REGISTRY_LOAD",
+    "DESCRIPTOR_VALIDATE",
+    "SOURCE_RECOGNITION",
+    "ANALYZE",
+    "FINDING_CONTRACT_VALIDATE",
+    "SORTED_OUTPUT"
+  ],
+  "transitions": [
+    {
+      "from": "REGISTRY_LOAD",
+      "to": "DESCRIPTOR_VALIDATE",
+      "action": "Load the default analyzer registry and require analyzer name, descriptor identity, parser/provider, availability, rule, evidence, extension, and benchmark metadata to be explicit.",
+      "side_effects": []
+    },
+    {
+      "from": "DESCRIPTOR_VALIDATE",
+      "to": "SOURCE_RECOGNITION",
+      "action": "Fail closed on malformed or internally inconsistent descriptors before analyzer execution.",
+      "side_effects": []
+    },
+    {
+      "from": "SOURCE_RECOGNITION",
+      "to": "ANALYZE",
+      "action": "Run only analyzers whose declared source extensions occur in the visible repository tree; ignored directories and symlinks do not establish availability.",
+      "side_effects": []
+    },
+    {
+      "from": "ANALYZE",
+      "to": "FINDING_CONTRACT_VALIDATE",
+      "action": "Execute the existing language analyzer without widening its semantic rules, then validate every emitted rule/category/safe_autofix value and deterministic finding ID against the descriptor.",
+      "side_effects": []
+    },
+    {
+      "from": "FINDING_CONTRACT_VALIDATE",
+      "to": "SORTED_OUTPUT",
+      "action": "Only contract-valid findings and analyzer identities are admitted to deterministic audit or benchmark output.",
+      "side_effects": []
+    }
+  ],
+  "invariants": [
+    "M21 changes analyzer framework contracts, not the accepted semantic proof boundaries of Go, Python, or JavaScript/TypeScript rules.",
+    "Analyzer descriptor ID must exactly match Analyzer.Name().",
+    "An analyzer is not reported active when the visible repository tree contains none of its declared source extensions.",
+    "Parser/provider metadata documents the actual parsing authority and cannot substitute for parser health checks inside a language analyzer.",
+    "Every emitted finding rule must be declared by the analyzer descriptor with the same category and safe_autofix contract.",
+    "Finding IDs remain compatible with the existing SHA-256-derived deterministic identity algorithm.",
+    "Benchmark manifests must use a language label explicitly declared by the analyzer descriptor.",
+    "Ignored directories, nested testdata fixtures, and symlinked files do not establish analyzer availability."
+  ],
+  "tests": [
+    "internal/detector/detector_test.go",
+    "internal/analyzers/registry_test.go",
+    "internal/engine/engine_test.go",
+    "internal/benchmark/benchmark_test.go",
+    "internal/benchmark/testdata/manifest.json",
+    "internal/benchmark/testdata/m07-python.json",
+    "internal/benchmark/testdata/m18-js-ts.json",
+    "internal/benchmark/testdata/m19-js-ts-logic.json",
+    "internal/benchmark/testdata/m20-js-ts-parser.json"
+  ],
+  "sequence_session": "M21-LANGUAGE-ANALYZER-FRAMEWORK",
+  "critical": false,
+  "failure_behavior": [
+    "Invalid descriptor metadata, undeclared finding rules, category/autofix drift, deterministic-ID drift, or benchmark-language mismatch fails closed.",
+    "No recognized source files skips the analyzer instead of reporting it active."
+  ],
+  "restart_behavior": [
+    "Registry loading, source recognition, analysis, and contract validation are read-only and deterministic for a fixed source tree."
+  ],
+  "rollback_behavior": [
+    "The framework is read-only; rollback is source-control only and does not require data migration."
+  ]
+}
