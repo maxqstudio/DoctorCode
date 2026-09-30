@@ -3,12 +3,11 @@ package engine
 import (
 	"context"
 	"errors"
+	"fmt"
 	"path/filepath"
 	"sort"
 
-	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
-	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
-	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
+	"github.com/maxqstudio/DoctorCode/internal/analyzers"
 	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
@@ -19,11 +18,7 @@ type Engine struct {
 
 func Default() *Engine {
 	return &Engine{
-		analyzers: []detector.Analyzer{
-			goanalysis.New(),
-			pythonanalysis.New(),
-			javascriptanalysis.New(),
-		},
+		analyzers: analyzers.Default(),
 	}
 }
 
@@ -35,6 +30,20 @@ func (e *Engine) Audit(ctx context.Context, root string) (model.AuditResult, err
 
 	result := model.AuditResult{Root: absoluteRoot}
 	for _, analyzer := range e.analyzers {
+		desc := analyzer.Descriptor()
+		if desc.ID != analyzer.Name() {
+			return model.AuditResult{}, fmt.Errorf("analyzer descriptor id %q does not match name %q", desc.ID, analyzer.Name())
+		}
+		if err := detector.ValidateDescriptor(desc); err != nil {
+			return model.AuditResult{}, fmt.Errorf("analyzer %q descriptor: %w", analyzer.Name(), err)
+		}
+		recognized, err := detector.RecognizesRoot(ctx, absoluteRoot, desc)
+		if err != nil {
+			return model.AuditResult{}, fmt.Errorf("analyzer %q recognition: %w", analyzer.Name(), err)
+		}
+		if !recognized {
+			continue
+		}
 		findings, analyzeErr := analyzer.Analyze(ctx, absoluteRoot)
 		if analyzeErr != nil {
 			if errors.Is(analyzeErr, detector.ErrUnavailable) {
@@ -42,7 +51,10 @@ func (e *Engine) Audit(ctx context.Context, root string) (model.AuditResult, err
 			}
 			return model.AuditResult{}, analyzeErr
 		}
-		result.Analyzers = append(result.Analyzers, analyzer.Name())
+		if err := detector.ValidateFindings(desc, findings); err != nil {
+			return model.AuditResult{}, fmt.Errorf("analyzer %q findings: %w", analyzer.Name(), err)
+		}
+		result.Analyzers = append(result.Analyzers, desc.ID)
 		result.Findings = append(result.Findings, findings...)
 	}
 
