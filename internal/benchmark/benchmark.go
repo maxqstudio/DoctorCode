@@ -76,6 +76,16 @@ func Evaluate(ctx context.Context, manifestPath string, analyzer detector.Analyz
 	if err != nil {
 		return Report{}, err
 	}
+	desc := analyzer.Descriptor()
+	if desc.ID != analyzer.Name() {
+		return Report{}, fmt.Errorf("analyzer descriptor id %q does not match name %q", desc.ID, analyzer.Name())
+	}
+	if err := detector.ValidateDescriptor(desc); err != nil {
+		return Report{}, fmt.Errorf("analyzer descriptor: %w", err)
+	}
+	if !detector.SupportsBenchmarkLanguage(desc, manifest.Language) {
+		return Report{}, fmt.Errorf("benchmark language %q is not declared by analyzer %q", manifest.Language, desc.ID)
+	}
 
 	report := Report{
 		SchemaVersion: 1,
@@ -98,6 +108,9 @@ func Evaluate(ctx context.Context, manifestPath string, analyzer detector.Analyz
 		actual, err := analyzer.Analyze(ctx, caseRoot)
 		if err != nil {
 			return Report{}, fmt.Errorf("case %q analyze: %w", benchmarkCase.Name, err)
+		}
+		if err := detector.ValidateFindings(desc, actual); err != nil {
+			return Report{}, fmt.Errorf("case %q findings: %w", benchmarkCase.Name, err)
 		}
 		sortFindings(actual)
 
