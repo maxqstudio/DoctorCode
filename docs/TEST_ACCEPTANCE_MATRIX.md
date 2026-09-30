@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M22 is MAIN_ACCEPTED at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. The accepted Rust baseline provides embedded parser-backed syntax authority and bounded SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence with 13 adversarial/labeled cases at 4 TP / 0 FP / 0 FN, while Rust BLOAT, macro expansion semantics, borrow/type authority, cargo feature/build-script semantics, whole-program reachability, safe autofix, and automatic deletion remain outside authority. Current project phase is M23_JAVA_KOTLIN_SEMANTIC_BASELINE; no Java/Kotlin semantic authority is accepted yet.
+M22 is MAIN_ACCEPTED and governance-closed at main@761c216453d3ac07235bd2c693aa3a3175d68ba5. M23 candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 establishes an embedded gotreesitter Java/Kotlin syntax/AST baseline for bounded SECURITY, SIMPLIFY, and LOGIC only. Java and Kotlin each pass a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN on Core CI Ubuntu, macOS, and Windows. JVM DEADCODE, BLOAT, Maven/Gradle dependency resolution, annotation processing, reflection, framework wiring, type/overload resolution, safe autofix, and automatic deletion remain outside M23 authority. M23 is not MAIN_ACCEPTED until synchronized exact-branch acceptance, squash merge, and exact-main revalidation complete.
 
 Final tested source: external final acceptance evidence.
-Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
+Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -66,6 +66,12 @@ Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae5
 | M22-ADVERSARIAL-GREEN | The repaired Rust corpus must pass all declared M22 rules with zero false positives and zero false negatives on Core CI Ubuntu, macOS, and Windows. | Core CI run 36733856112 at f559f0517b0fae39edc53370a30ea17f0b140dc8 passes all three OS jobs. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each declared Rust rule reports precision=1.0 and recall=1.0. | PASS |
 | M22-BRANCH-REGRESSION | One exact synchronized M22 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion. | At bedfc1d473cdcd747485b465740718f76e0f64f6: Governance 36734883264 PASS; Core CI 36734883437 PASS 3/3; M06 36734883305 PASS; Real World Go 36734883121 PASS; M07 36734883366 PASS; M10 36734883146 PASS; M16 36734883490 PASS 3/3; M17 36734883371 PASS with release build and Ubuntu/Windows/macOS native install-smoke. | PASS |
 | M22-MAIN-POST-MERGE | The exact M22 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M22 closure. | At main@5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3: Governance 36738553649 PASS; Core CI 36738553502 PASS 3/3; M06 36738553556 PASS; Real World Go 36738553867 PASS; M07 36738554060 PASS; M10 36738553857 PASS; M16 Thin MCP 36738553920 PASS 3/3; M17 Release and Install 36738553978 PASS with release build and Ubuntu/Windows/macOS native install-smoke. | PASS |
+| M23-MAIN-BASELINE | M23 must begin from governance-accepted M22 main and preserve the current Skill_Workflow authority. | work/m23-java-kotlin-semantic-baseline starts from main@761c216453d3ac07235bd2c693aa3a3175d68ba5; M22 product authority is 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3; Skill_Workflow remains 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8. | PASS |
+| M23-RED-JVM-ABSENT | M23 must demonstrate Java/Kotlin analyzer authority absent before implementation. | Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at M23 Java semantic benchmark gate with unknown benchmark analyzer "jvm". | PASS |
+| M23-PARSER-AUTHORITY | Java and Kotlin source must use deterministic embedded syntax/AST parsing with malformed syntax failing closed. | jvm/gotreesitter-v1 reuses pinned gotreesitter v0.55.1 Java and Kotlin standalone grammars and ParseWithStrict; analyzer tests require malformed .java and .kt syntax to return blocking syntax-validation errors. | PASS |
+| M23-BOUNDED-RULES | M23 JVM authority must be limited to declared SECURITY, SIMPLIFY, and LOGIC rules with safe_autofix=false; DEADCODE and BLOAT must remain unavailable. | JVM descriptor declares exactly JVM-LOGIC-DUPLICATE-CONDITION, JVM-SEC-HARDCODED-CREDENTIAL, and JVM-SIMPLIFY-BOOL-RETURN, all safe_autofix=false. No JVM DEADCODE or BLOAT rule is registered. | PASS |
+| M23-ADVERSARIAL-GREEN | Java and Kotlin labeled/adversarial corpora must pass with zero false positives and zero false negatives on Core CI Ubuntu, macOS, and Windows. | Core CI run 36745770972 at c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passes all three OS jobs. Java: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. | PASS |
+| M23-BUILD-SYSTEM-BOUNDARY | Maven/Gradle-shaped repository roots and generated/build output boundaries must be handled conservatively without claiming dependency-graph authority. | M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only. | PASS |
 
 ## Test commands
 
@@ -83,6 +89,9 @@ Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae5
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json
 - go test ./internal/analyzers/rust ./internal/analyzers ./internal/engine ./internal/benchmark
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m22-rust.json --analyzer=rust --json
+- go test ./internal/analyzers/jvm ./internal/analyzers ./internal/engine ./internal/benchmark
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-java.json --analyzer=jvm --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json
 
 ## Runtime checks
 
@@ -97,6 +106,7 @@ Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae5
 - M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS
 - M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS
 - M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS
+- M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS
 
 ## Roadmap synchronization evidence
 
@@ -106,7 +116,7 @@ ROADMAP_SYNC: PASS
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: DURING
-Sequence session contract: M22-RUST-SEMANTIC-BASELINE
+Sequence session contract: M23-JAVA-KOTLIN-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

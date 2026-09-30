@@ -3,12 +3,12 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
+Source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 562 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 565 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
@@ -23,11 +23,14 @@ Generated/refreshed: current compiler run
 | internal/analyzers/javascript/logic_test.go | Go | 169 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/syntax.go | Go | 104 | internal/analyzers/javascript | NO |
 | internal/analyzers/javascript/syntax_test.go | Go | 111 | internal/analyzers/javascript | NO |
+| internal/analyzers/jvm/analyzer.go | Go | 730 | internal/analyzers/jvm | NO |
+| internal/analyzers/jvm/analyzer_test.go | Go | 122 | internal/analyzers/jvm | NO |
+| internal/analyzers/jvm/syntax.go | Go | 53 | internal/analyzers/jvm | NO |
 | internal/analyzers/python/analyzer.go | Go | 666 | internal/analyzers/python | NO |
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 54 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 56 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
 | internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
@@ -195,6 +198,26 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m22-rust/shadowed-parameter-negative/sample.rs | Rust | 10 | internal/benchmark/testdata/m22-rust/shadowed-parameter-negative | NO |
 | internal/benchmark/testdata/m22-rust/simplify-positive/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/simplify-positive | NO |
 | internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative | NO |
+| internal/benchmark/testdata/m23-java/concatenated-secret-negative/Secrets.java | Java | 3 | internal/benchmark/testdata/m23-java/concatenated-secret-negative | NO |
+| internal/benchmark/testdata/m23-java/generated-source-negative/Generated.java | Java | 4 | internal/benchmark/testdata/m23-java/generated-source-negative | NO |
+| internal/benchmark/testdata/m23-java/logic-positive/Feature.java | Java | 10 | internal/benchmark/testdata/m23-java/logic-positive | NO |
+| internal/benchmark/testdata/m23-java/maven-repository-shaped/pom.xml | XML | 6 | internal/benchmark/testdata/m23-java/maven-repository-shaped | NO |
+| internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo/Feature.java | Java | 11 | internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo | NO |
+| internal/benchmark/testdata/m23-java/nested-lambda-negative/Feature.java | Java | 15 | internal/benchmark/testdata/m23-java/nested-lambda-negative | NO |
+| internal/benchmark/testdata/m23-java/placeholder-secret-negative/Secrets.java | Java | 3 | internal/benchmark/testdata/m23-java/placeholder-secret-negative | NO |
+| internal/benchmark/testdata/m23-java/reassigned-parameter-negative/Feature.java | Java | 11 | internal/benchmark/testdata/m23-java/reassigned-parameter-negative | NO |
+| internal/benchmark/testdata/m23-java/security-positive/Secrets.java | Java | 3 | internal/benchmark/testdata/m23-java/security-positive | NO |
+| internal/benchmark/testdata/m23-java/simplify-positive/Feature.java | Java | 9 | internal/benchmark/testdata/m23-java/simplify-positive | NO |
+| internal/benchmark/testdata/m23-kotlin/generated-source-negative/Generated.kt | Kotlin | 4 | internal/benchmark/testdata/m23-kotlin/generated-source-negative | NO |
+| internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/build.gradle.kts | Kotlin | 3 | internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped | NO |
+| internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo/Feature.kt | Kotlin | 11 | internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo | NO |
+| internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative/Secrets.kt | Kotlin | 4 | internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative | NO |
+| internal/benchmark/testdata/m23-kotlin/logic-positive/Feature.kt | Kotlin | 10 | internal/benchmark/testdata/m23-kotlin/logic-positive | NO |
+| internal/benchmark/testdata/m23-kotlin/nested-lambda-negative/Feature.kt | Kotlin | 14 | internal/benchmark/testdata/m23-kotlin/nested-lambda-negative | NO |
+| internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative/Secrets.kt | Kotlin | 3 | internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative | NO |
+| internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt | Kotlin | 3 | internal/benchmark/testdata/m23-kotlin/security-positive | NO |
+| internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt | Kotlin | 11 | internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative | NO |
+| internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt | Kotlin | 9 | internal/benchmark/testdata/m23-kotlin/simplify-positive | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 249 | internal/detector | NO |

@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -347,40 +347,40 @@
       "status": "PASS"
     },
     {
+      "evidence": "work/m23-java-kotlin-semantic-baseline starts from main@761c216453d3ac07235bd2c693aa3a3175d68ba5; M22 product authority is 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3; Skill_Workflow remains 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.",
       "id": "M23-MAIN-BASELINE",
       "requirement": "M23 must begin from governance-accepted M22 main and preserve the current Skill_Workflow authority.",
-      "status": "PASS",
-      "evidence": "work/m23-java-kotlin-semantic-baseline starts from main@761c216453d3ac07235bd2c693aa3a3175d68ba5; M22 product authority is 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3; Skill_Workflow remains 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at M23 Java semantic benchmark gate with unknown benchmark analyzer \"jvm\".",
       "id": "M23-RED-JVM-ABSENT",
       "requirement": "M23 must demonstrate Java/Kotlin analyzer authority absent before implementation.",
-      "status": "PASS",
-      "evidence": "Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at M23 Java semantic benchmark gate with unknown benchmark analyzer \"jvm\"."
+      "status": "PASS"
     },
     {
+      "evidence": "jvm/gotreesitter-v1 reuses pinned gotreesitter v0.55.1 Java and Kotlin standalone grammars and ParseWithStrict; analyzer tests require malformed .java and .kt syntax to return blocking syntax-validation errors.",
       "id": "M23-PARSER-AUTHORITY",
       "requirement": "Java and Kotlin source must use deterministic embedded syntax/AST parsing with malformed syntax failing closed.",
-      "status": "PASS",
-      "evidence": "jvm/gotreesitter-v1 reuses pinned gotreesitter v0.55.1 Java and Kotlin standalone grammars and ParseWithStrict; analyzer tests require malformed .java and .kt syntax to return blocking syntax-validation errors."
+      "status": "PASS"
     },
     {
+      "evidence": "JVM descriptor declares exactly JVM-LOGIC-DUPLICATE-CONDITION, JVM-SEC-HARDCODED-CREDENTIAL, and JVM-SIMPLIFY-BOOL-RETURN, all safe_autofix=false. No JVM DEADCODE or BLOAT rule is registered.",
       "id": "M23-BOUNDED-RULES",
       "requirement": "M23 JVM authority must be limited to declared SECURITY, SIMPLIFY, and LOGIC rules with safe_autofix=false; DEADCODE and BLOAT must remain unavailable.",
-      "status": "PASS",
-      "evidence": "JVM descriptor declares exactly JVM-LOGIC-DUPLICATE-CONDITION, JVM-SEC-HARDCODED-CREDENTIAL, and JVM-SIMPLIFY-BOOL-RETURN, all safe_autofix=false. No JVM DEADCODE or BLOAT rule is registered."
+      "status": "PASS"
     },
     {
+      "evidence": "Core CI run 36745770972 at c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passes all three OS jobs. Java: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.",
       "id": "M23-ADVERSARIAL-GREEN",
       "requirement": "Java and Kotlin labeled/adversarial corpora must pass with zero false positives and zero false negatives on Core CI Ubuntu, macOS, and Windows.",
-      "status": "PASS",
-      "evidence": "Core CI run 36745770972 at c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passes all three OS jobs. Java: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0."
+      "status": "PASS"
     },
     {
+      "evidence": "M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only.",
       "id": "M23-BUILD-SYSTEM-BOUNDARY",
       "requirement": "Maven/Gradle-shaped repository roots and generated/build output boundaries must be handled conservatively without claiming dependency-graph authority.",
-      "status": "PASS",
-      "evidence": "M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [

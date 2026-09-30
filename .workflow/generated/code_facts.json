@@ -17,7 +17,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 562
+      "lines": 565
     },
     {
       "directory": "cmd/doctorcode",
@@ -118,6 +118,27 @@
       "lines": 111
     },
     {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 730
+    },
+    {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 122
+    },
+    {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 53
+    },
+    {
       "directory": "internal/analyzers/python",
       "file": "internal/analyzers/python/analyzer.go",
       "is_test": false,
@@ -150,7 +171,7 @@
       "file": "internal/analyzers/registry.go",
       "is_test": false,
       "language": "Go",
-      "lines": 54
+      "lines": 56
     },
     {
       "directory": "internal/analyzers",
@@ -1320,6 +1341,146 @@
       "is_test": false,
       "language": "Rust",
       "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/concatenated-secret-negative",
+      "file": "internal/benchmark/testdata/m23-java/concatenated-secret-negative/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/generated-source-negative",
+      "file": "internal/benchmark/testdata/m23-java/generated-source-negative/Generated.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/logic-positive",
+      "file": "internal/benchmark/testdata/m23-java/logic-positive/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/maven-repository-shaped",
+      "file": "internal/benchmark/testdata/m23-java/maven-repository-shaped/pom.xml",
+      "is_test": false,
+      "language": "XML",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo",
+      "file": "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/nested-lambda-negative",
+      "file": "internal/benchmark/testdata/m23-java/nested-lambda-negative/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 15
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m23-java/placeholder-secret-negative/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/reassigned-parameter-negative",
+      "file": "internal/benchmark/testdata/m23-java/reassigned-parameter-negative/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/security-positive",
+      "file": "internal/benchmark/testdata/m23-java/security-positive/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/simplify-positive",
+      "file": "internal/benchmark/testdata/m23-java/simplify-positive/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/generated-source-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/generated-source-negative/Generated.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped",
+      "file": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/build.gradle.kts",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo",
+      "file": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/logic-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/logic-positive/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 14
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/security-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/simplify-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 9
     },
     {
       "directory": "internal/buildinfo",
@@ -3214,21 +3375,24 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb",
+  "source_digest": "61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366",
   "source_summary": {
-    "files": 217,
+    "files": 240,
     "languages": {
-      "Go": 97,
+      "Go": 100,
+      "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
+      "Kotlin": 10,
       "PowerShell": 1,
       "Python": 58,
       "Rust": 13,
       "Shell": 1,
       "TypeScript": 7,
-      "TypeScript/React": 3
+      "TypeScript/React": 3,
+      "XML": 1
     },
-    "lines": 10018,
+    "lines": 11075,
     "test_files": 2
   },
   "tests": [

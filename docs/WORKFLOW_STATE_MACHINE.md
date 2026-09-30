@@ -234,6 +234,55 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 
 - M12 can be reverted to M11 source-only packets without changing detector findings or safe_autofix semantics.
 
+## FLOW-JAVA-KOTLIN-SEMANTIC-BASELINE — Java and Kotlin parser-backed semantic baseline
+
+Purpose: Provide conservative Java/Kotlin syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on unsupported JVM/build-system semantics.
+Critical: FALSE
+Entry condition: A visible .java, .kt, or .kts source file is recognized outside ignored build/generated directories.
+Authority: internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI
+
+### States
+
+- SOURCE_DISCOVERY
+- STRICT_PARSE
+- BOUNDARY_FILTER
+- BOUNDED_RULE_PROOF
+- FINDING_CONTRACT_VALIDATE
+- DETERMINISTIC_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| SOURCE_DISCOVERY | STRICT_PARSE | Discover visible Java/Kotlin source while excluding symlinks and ignored build/generated directories. | internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI |  |
+| STRICT_PARSE | BOUNDARY_FILTER | Parse with embedded gotreesitter Java/Kotlin grammar and fail closed on parser errors, ERROR nodes, or MISSING nodes. | internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI |  |
+| BOUNDARY_FILTER | BOUNDED_RULE_PROOF | Skip generated-source markers and retain only M23-authorized source/AST evidence. | internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI |  |
+| BOUNDED_RULE_PROOF | FINDING_CONTRACT_VALIDATE | Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool-parameter LOGIC without DEADCODE/BLOAT claims. | internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI |  |
+| FINDING_CONTRACT_VALIDATE | DETERMINISTIC_OUTPUT | Validate declared rule/category/autofix metadata and deterministic finding identity before output. | internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI |  |
+
+### Invariants
+
+- M23 does not claim Java/Kotlin DEADCODE or BLOAT authority.
+- safe_autofix is false for every M23 finding.
+- Java/Kotlin parser health is blocking for recognized visible source.
+- Credential literal evidence never exposes the literal value.
+- Maven/Gradle files may shape repository layout but do not imply dependency-resolution authority.
+- Generated/build outputs do not establish or widen semantic authority.
+- LOGIC accepts only bare or negated unmodified boolean/Boolean parameters of the nearest callable and skips nested callable/class scopes.
+
+### Failure behavior
+
+- Malformed recognized Java/Kotlin syntax fails closed.
+- Unsupported semantic ambiguity emits no finding rather than widening proof.
+
+### Restart behavior
+
+- JVM analysis is read-only and deterministic for a fixed visible source tree.
+
+### Rollback behavior
+
+- M23 is read-only; rollback is source-control only and requires no data migration.
+
 ## FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural baseline analysis
 
 Purpose: Describe the accepted M18 baseline SIMPLIFY and SECURITY subset of the conservative JavaScript/TypeScript analyzer; later accepted semantic extensions such as M19 LOGIC are governed by their own workflow contracts.

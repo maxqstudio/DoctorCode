@@ -8,17 +8,17 @@ Governance profile: strict
 
 ## Current phase
 Phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
-Status: M22_MAIN_ACCEPTED
+Status: M23_IMPLEMENTED_VALIDATION_PENDING
 Roadmap phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m23-java-kotlin-semantic-baseline
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3
 Current candidate SHA: external final acceptance evidence
-Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
+Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -35,7 +35,7 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: DURING
-Current sequence session: M22-RUST-SEMANTIC-BASELINE
+Current sequence session: M23-JAVA-KOTLIN-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Proven
@@ -109,6 +109,9 @@ SEQUENCE_SYNC: PASS
 - M22 repaired behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 passed Core CI run 36733856112 on Ubuntu, macOS, and Windows. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each of SECURITY, SIMPLIFY, LOGIC, and DEADCODE reports precision=1.0 and recall=1.0.
 - Exact synchronized M22 candidate bedfc1d473cdcd747485b465740718f76e0f64f6 passed Governance 36734883264, Core CI 36734883437 on Ubuntu/macOS/Windows, M06 36734883305, Real World Go 36734883121, M07 36734883366, M10 36734883146, M16 Thin MCP 36734883490, and M17 Release and Install 36734883371 including Ubuntu/Windows/macOS native install-smoke.
 - M22 merged through PR #35 to main at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. Exact-main Governance 36738553649 PASS; Core CI 36738553502 PASS on Ubuntu/macOS/Windows; M06 36738553556 PASS; Real World Go 36738553867 PASS; M07 36738554060 PASS; M10 36738553857 PASS; M16 Thin MCP 36738553920 PASS; M17 Release and Install 36738553978 PASS including release build and Ubuntu/Windows/macOS native install-smoke.
+- M23 starts from governance-accepted main@761c216453d3ac07235bd2c693aa3a3175d68ba5 with M22 product authority 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 and Skill_Workflow authority 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.
+- M23 RED Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at the Java semantic gate with unknown benchmark analyzer "jvm", proving JVM analyzer authority absent before implementation.
+- M23 semantic candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passed Core CI run 36745770972 on Ubuntu, macOS, and Windows. Java corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -122,6 +125,11 @@ SEQUENCE_SYNC: PASS
 - M22 Rust DEADCODE intentionally emits no findings for a visible Rust source set containing any macro invocation because DoctorCode has no macro-expansion authority in this milestone.
 - M22 Rust LOGIC is bounded to bare or negated unshadowed bool parameters of the nearest function item; any visible AST pattern rebinding the parameter name removes that parameter from the proof set.
 - M22 Rust parser authority is embedded gotreesitter syntax/AST only; borrow checking, type inference, cargo feature resolution, procedural macro expansion, build-script output, external linkage, and whole-program reachability are not proven.
+- M23 Java/Kotlin DEADCODE and BLOAT authority are not proven and remain unavailable.
+- M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
+- M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
+- M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
+- M23 is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation.
 
 ## Known blockers
 - None declared.
@@ -130,9 +138,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Begin M23 Java/Kotlin semantic baseline planning from accepted main@5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 without widening accepted Go/Python/JavaScript/TypeScript/Rust semantics.
-- Select deterministic Java and Kotlin parser/provider boundaries and define RED labeled/adversarial corpora before implementation.
-- Handle Maven/Gradle/package/class/method boundaries conservatively and keep unsupported JVM/build-system semantics fail closed.
+- Synchronize M23 Project Truth and CURRENT sequence evidence without widening Java/Kotlin semantic authority.
+- Require all eight permanent workflows to PASS on one exact synchronized M23 branch SHA, including release/install after embedding Java/Kotlin grammars.
+- Only after exact branch acceptance may M23 be proposed for squash merge and exact-main revalidation.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.
