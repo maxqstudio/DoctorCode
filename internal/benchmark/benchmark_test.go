@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
+	"github.com/maxqstudio/DoctorCode/internal/detector"
 	"github.com/maxqstudio/DoctorCode/internal/model"
 )
 
@@ -21,8 +22,38 @@ func (f fakeAnalyzer) Name() string {
 	return "fake"
 }
 
+func (f fakeAnalyzer) Descriptor() detector.Descriptor {
+	return detector.Descriptor{
+		ID:         f.Name(),
+		Language:   "Go",
+		Extensions: []string{".go"},
+		Parser: detector.ParserContract{
+			Kind:       detector.ParserBuiltinAST,
+			Provider:   "fake/parser",
+			FailClosed: true,
+		},
+		Availability:     detector.AvailabilityContract{Mode: detector.AvailabilitySourceOnly},
+		EvidenceBoundary: "benchmark fake analyzer",
+		Rules: []detector.RuleMetadata{{
+			ID:          "RULE",
+			Category:    model.CategoryLogic,
+			SafeAutofix: false,
+		}},
+		Benchmark: detector.BenchmarkContract{SchemaVersion: 1, Languages: []string{"Go"}},
+	}
+}
+
 func (f fakeAnalyzer) Analyze(context.Context, string) ([]model.Finding, error) {
-	return append([]model.Finding(nil), f.findings...), nil
+	out := append([]model.Finding(nil), f.findings...)
+	for i := range out {
+		if out[i].Category == "" {
+			out[i].Category = model.CategoryLogic
+		}
+		if out[i].ID == "" {
+			out[i].ID = detector.FindingID(out[i].RuleID, out[i].Path, out[i].LineStart, out[i].Summary)
+		}
+	}
+	return out, nil
 }
 
 func TestEvaluateCuratedGoCorpus(t *testing.T) {
