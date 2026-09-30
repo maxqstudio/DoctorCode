@@ -334,9 +334,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M22_RUST_SEMANTIC_BASELINE
+Current phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
 
-Current status: M22_BRANCH_ACCEPTED_READY_FOR_MERGE
+Current status: M22_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -399,9 +399,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize the final M22 branch acceptance ledger and generated Project Truth without changing Rust semantic behavior.
-- Require all eight permanent workflows to PASS again on the exact ledger-synchronized M22 SHA.
-- Only then open the M22 pull request, squash merge to main, and require exact-main revalidation before governance closure advances to M23_JAVA_KOTLIN_SEMANTIC_BASELINE.
+- Begin M23 Java/Kotlin semantic baseline planning from accepted main@5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 without widening accepted Go/Python/JavaScript/TypeScript/Rust semantics.
+- Select deterministic Java and Kotlin parser/provider boundaries and define RED labeled/adversarial corpora before implementation.
+- Handle Maven/Gradle/package/class/method boundaries conservatively and keep unsupported JVM/build-system semantics fail closed.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -486,6 +486,7 @@ Known blockers:
 - M22 unresolved-macro adversarial Core CI run 36733550595 at fc05091d37d38a110f6ff8b99c19398dfe83e456 reported 13 cases = 4 TP / 1 FP / 0 FN; unresolved-macro-deadcode-negative produced an unexpected RS-DEADCODE-PRIVATE-ZERO-REF at sample.rs:1.
 - M22 repaired behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 passed Core CI run 36733856112 on Ubuntu, macOS, and Windows. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each of SECURITY, SIMPLIFY, LOGIC, and DEADCODE reports precision=1.0 and recall=1.0.
 - Exact synchronized M22 candidate bedfc1d473cdcd747485b465740718f76e0f64f6 passed Governance 36734883264, Core CI 36734883437 on Ubuntu/macOS/Windows, M06 36734883305, Real World Go 36734883121, M07 36734883366, M10 36734883146, M16 Thin MCP 36734883490, and M17 Release and Install 36734883371 including Ubuntu/Windows/macOS native install-smoke.
+- M22 merged through PR #35 to main at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. Exact-main Governance 36738553649 PASS; Core CI 36738553502 PASS on Ubuntu/macOS/Windows; M06 36738553556 PASS; Real World Go 36738553867 PASS; M07 36738554060 PASS; M10 36738553857 PASS; M16 Thin MCP 36738553920 PASS; M17 Release and Install 36738553978 PASS including release build and Ubuntu/Windows/macOS native install-smoke.
 
 ### Not proven
 
