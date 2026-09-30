@@ -74,6 +74,11 @@
       "name": "different-condition-negative",
       "root": "m22-rust/different-condition-negative",
       "expected": []
+    },
+    {
+      "name": "shadowed-parameter-negative",
+      "root": "m22-rust/shadowed-parameter-negative",
+      "expected": []
     }
   ]
 }
