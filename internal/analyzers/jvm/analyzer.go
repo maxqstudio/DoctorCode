@@ -1,0 +1,730 @@
+package jvmanalysis
+
+import (
+	"context"
+	"crypto/sha256"
+	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"sort"
+	"strconv"
+	"strings"
+	"unicode"
+
+	gotreesitter "github.com/odvcencio/gotreesitter"
+
+	"github.com/maxqstudio/DoctorCode/internal/detector"
+	"github.com/maxqstudio/DoctorCode/internal/model"
+)
+
+const (
+	ruleLogic    = "JVM-LOGIC-DUPLICATE-CONDITION"
+	ruleSecurity = "JVM-SEC-HARDCODED-CREDENTIAL"
+	ruleSimplify = "JVM-SIMPLIFY-BOOL-RETURN"
+)
+
+type Analyzer struct{}
+
+type parsedFile struct {
+	rel       string
+	source    []byte
+	document  *syntaxDocument
+	generated bool
+}
+
+func New() *Analyzer { return &Analyzer{} }
+
+func (a *Analyzer) Name() string { return "jvm/gotreesitter-v1" }
+
+func (a *Analyzer) Descriptor() detector.Descriptor {
+	return detector.Descriptor{
+		ID:         a.Name(),
+		Language:   "Java / Kotlin",
+		Extensions: []string{".java", ".kt", ".kts"},
+		Parser: detector.ParserContract{
+			Kind:       detector.ParserEmbeddedAST,
+			Provider:   "gotreesitter v0.55.1 Java/Kotlin",
+			FailClosed: true,
+		},
+		Availability: detector.AvailabilityContract{Mode: detector.AvailabilitySourceOnly},
+		EvidenceBoundary: "Pure-Go gotreesitter Java/Kotlin syntax/AST authority. M23 is bounded to direct literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool-parameter LOGIC. Maven/Gradle dependency resolution, annotation processing, reflection, generated code, framework wiring, Java/Kotlin type resolution, DEADCODE, BLOAT, safe autofix, and automatic deletion remain outside authority.",
+		Rules: []detector.RuleMetadata{
+			{ID: ruleLogic, Category: model.CategoryLogic, SafeAutofix: false},
+			{ID: ruleSecurity, Category: model.CategorySecurity, SafeAutofix: false},
+			{ID: ruleSimplify, Category: model.CategorySimplify, SafeAutofix: false},
+		},
+		Benchmark: detector.BenchmarkContract{SchemaVersion: 1, Languages: []string{"Java", "Kotlin"}},
+	}
+}
+
+func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, error) {
+	files, err := parseJVMFiles(ctx, root)
+	if err != nil {
+		return nil, err
+	}
+	if len(files) == 0 {
+		return nil, fmt.Errorf("%w: no Java or Kotlin source files", detector.ErrUnavailable)
+	}
+
+	var findings []model.Finding
+	for _, file := range files {
+		if file.generated {
+			continue
+		}
+		switch file.document.kind {
+		case sourceJava:
+			findings = append(findings, javaSecurityFindings(file)...)
+			findings = append(findings, javaSimplifyFindings(file)...)
+			findings = append(findings, javaLogicFindings(file)...)
+		case sourceKotlin:
+			findings = append(findings, kotlinSecurityFindings(file)...)
+			findings = append(findings, kotlinSimplifyFindings(file)...)
+			findings = append(findings, kotlinLogicFindings(file)...)
+		}
+	}
+	return findings, nil
+}
+
+func parseJVMFiles(ctx context.Context, root string) ([]*parsedFile, error) {
+	var paths []string
+	err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		if err := ctx.Err(); err != nil {
+			return err
+		}
+		if entry.IsDir() {
+			if path != root && ignoredDirectory(entry.Name()) {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if entry.Type()&fs.ModeSymlink != 0 {
+			return nil
+		}
+		switch strings.ToLower(filepath.Ext(path)) {
+		case ".java", ".kt", ".kts":
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	sort.Strings(paths)
+
+	files := make([]*parsedFile, 0, len(paths))
+	for _, path := range paths {
+		source, err := os.ReadFile(path)
+		if err != nil {
+			return nil, fmt.Errorf("read JVM source %s: %w", path, err)
+		}
+		if strings.IndexByte(string(source), 0) >= 0 {
+			return nil, fmt.Errorf("jvm parse incomplete: %s contains NUL byte", path)
+		}
+		kind := sourceJava
+		switch strings.ToLower(filepath.Ext(path)) {
+		case ".kt", ".kts":
+			kind = sourceKotlin
+		}
+		document, err := parseSyntax(source, kind)
+		if err != nil {
+			return nil, fmt.Errorf("%s syntax validation failed for %s: %w", kind, path, err)
+		}
+		rel, err := filepath.Rel(root, path)
+		if err != nil {
+			return nil, err
+		}
+		files = append(files, &parsedFile{
+			rel:       filepath.ToSlash(rel),
+			source:    source,
+			document:  document,
+			generated: generatedSource(source),
+		})
+	}
+	return files, nil
+}
+
+func ignoredDirectory(name string) bool {
+	switch strings.ToLower(name) {
+	case ".git", ".hg", ".svn", ".gradle", ".idea", ".vscode",
+		"build", "target", "out", "dist", "coverage", "node_modules", "vendor",
+		"generated", "generated-sources", "generated-test-sources", "testdata":
+		return true
+	default:
+		return false
+	}
+}
+
+func generatedSource(source []byte) bool {
+	limit := len(source)
+	if limit > 1024 {
+		limit = 1024
+	}
+	prefix := strings.ToLower(string(source[:limit]))
+	for _, marker := range []string{"code generated", "generated by", "do not edit", "@generated"} {
+		if strings.Contains(prefix, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+func javaSecurityFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if node.Type(lang) != "variable_declarator" {
+			return gotreesitter.WalkContinue
+		}
+		nameNode := node.ChildByFieldName("name", lang)
+		valueNode := node.ChildByFieldName("value", lang)
+		if nameNode == nil || valueNode == nil || nameNode.Type(lang) != "identifier" || valueNode.Type(lang) != "string_literal" {
+			return gotreesitter.WalkContinue
+		}
+		name := nodeText(file.source, nameNode)
+		if !credentialLike(name) {
+			return gotreesitter.WalkContinue
+		}
+		value, ok := literalStringValue(file.source, valueNode, false)
+		if !ok || obviousPlaceholder(value) {
+			return gotreesitter.WalkContinue
+		}
+		out = append(out, securityFinding(file, node, name, value))
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func kotlinSecurityFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if node.Type(lang) != "property_declaration" {
+			return gotreesitter.WalkContinue
+		}
+		decl := directNamedChildOfType(node, lang, "variable_declaration")
+		valueNode := directNamedChildOfType(node, lang, "string_literal")
+		if decl == nil || valueNode == nil {
+			return gotreesitter.WalkContinue
+		}
+		nameNode := directNamedChildOfType(decl, lang, "simple_identifier")
+		if nameNode == nil {
+			return gotreesitter.WalkContinue
+		}
+		name := nodeText(file.source, nameNode)
+		if !credentialLike(name) {
+			return gotreesitter.WalkContinue
+		}
+		value, ok := literalStringValue(file.source, valueNode, true)
+		if !ok || obviousPlaceholder(value) {
+			return gotreesitter.WalkContinue
+		}
+		out = append(out, securityFinding(file, node, name, value))
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func securityFinding(file *parsedFile, node *gotreesitter.Node, name, value string) model.Finding {
+	digest := sha256.Sum256([]byte(value))
+	return newFinding(
+		ruleSecurity,
+		model.CategorySecurity,
+		model.SeverityHigh,
+		model.ConfidenceSuspicious,
+		file.rel,
+		1+int(node.StartPoint().Row),
+		"credential-like JVM binding is assigned a hardcoded string literal",
+		[]string{
+			fmt.Sprintf("identifier=%s literal_bytes=%d sha256_prefix=%x", name, len(value), digest[:6]),
+			"literal value is redacted",
+		},
+	)
+}
+
+func literalStringValue(source []byte, node *gotreesitter.Node, kotlin bool) (string, bool) {
+	if node == nil || node.Type(nil) == "" {
+		return "", false
+	}
+	raw := strings.TrimSpace(nodeText(source, node))
+	if kotlin && strings.Contains(raw, "$") {
+		return "", false
+	}
+	if len(raw) < 2 || raw[0] != '"' || raw[len(raw)-1] != '"' {
+		return "", false
+	}
+	if strings.HasPrefix(raw, """"") {
+		return "", false
+	}
+	value, err := strconv.Unquote(raw)
+	if err != nil {
+		return "", false
+	}
+	return value, true
+}
+
+func credentialLike(name string) bool {
+	var normalized strings.Builder
+	for _, r := range strings.ToLower(name) {
+		if unicode.IsLetter(r) || unicode.IsDigit(r) {
+			normalized.WriteRune(r)
+		}
+	}
+	value := normalized.String()
+	for _, suffix := range []string{"password", "passwd", "secret", "apikey", "token", "privatekey", "accesskey"} {
+		if value == suffix || strings.HasSuffix(value, suffix) {
+			return true
+		}
+	}
+	return false
+}
+
+func obviousPlaceholder(value string) bool {
+	lower := strings.ToLower(strings.TrimSpace(value))
+	if lower == "" || strings.HasPrefix(lower, "${") || strings.HasPrefix(lower, "$(") {
+		return true
+	}
+	for _, marker := range []string{"example", "dummy", "placeholder", "changeme", "change-me", "notasecret", "not-a-secret", "your_", "your-", "<"} {
+		if strings.Contains(lower, marker) {
+			return true
+		}
+	}
+	return false
+}
+
+func javaSimplifyFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if node.Type(lang) != "if_statement" {
+			return gotreesitter.WalkContinue
+		}
+		consequence := node.ChildByFieldName("consequence", lang)
+		alternative := node.ChildByFieldName("alternative", lang)
+		left, leftOK := javaBranchBool(file.source, consequence, lang)
+		right, rightOK := javaBranchBool(file.source, alternative, lang)
+		if !leftOK || !rightOK || left == right {
+			return gotreesitter.WalkContinue
+		}
+		out = append(out, newFinding(
+			ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh,
+			file.rel, 1+int(node.StartPoint().Row),
+			"opposite Java boolean return branches can be reduced to the condition or its negation",
+			[]string{"AST-proven if/else branches each contain exactly one opposite boolean return", "safe_autofix remains disabled"},
+		))
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func javaBranchBool(source []byte, node *gotreesitter.Node, lang *gotreesitter.Language) (bool, bool) {
+	if node == nil {
+		return false, false
+	}
+	if node.Type(lang) == "block" {
+		if node.NamedChildCount() != 1 {
+			return false, false
+		}
+		node = node.NamedChild(0)
+	}
+	if node == nil || node.Type(lang) != "return_statement" || node.NamedChildCount() != 1 {
+		return false, false
+	}
+	return boolText(source, node.NamedChild(0))
+}
+
+func kotlinSimplifyFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if node.Type(lang) != "if_expression" {
+			return gotreesitter.WalkContinue
+		}
+		left, leftOK := kotlinBranchBool(file.source, node.ChildByFieldName("consequence", lang), lang)
+		right, rightOK := kotlinBranchBool(file.source, node.ChildByFieldName("alternative", lang), lang)
+		if !leftOK || !rightOK || left == right {
+			return gotreesitter.WalkContinue
+		}
+		out = append(out, newFinding(
+			ruleSimplify, model.CategorySimplify, model.SeverityLow, model.ConfidenceHigh,
+			file.rel, 1+int(node.StartPoint().Row),
+			"opposite Kotlin boolean branches can be reduced to the condition or its negation",
+			[]string{"AST-proven if/else branches each contain exactly one opposite boolean result", "safe_autofix remains disabled"},
+		))
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func kotlinBranchBool(source []byte, node *gotreesitter.Node, lang *gotreesitter.Language) (bool, bool) {
+	node = unwrapSingle(node, lang, "control_structure_body", "statements")
+	if node == nil {
+		return false, false
+	}
+	if node.Type(lang) == "boolean_literal" {
+		return boolText(source, node)
+	}
+	if node.Type(lang) == "jump_expression" && strings.HasPrefix(strings.TrimSpace(nodeText(source, node)), "return") && node.NamedChildCount() == 1 {
+		return boolText(source, node.NamedChild(0))
+	}
+	return false, false
+}
+
+func boolText(source []byte, node *gotreesitter.Node) (bool, bool) {
+	if node == nil {
+		return false, false
+	}
+	switch strings.TrimSpace(nodeText(source, node)) {
+	case "true":
+		return true, true
+	case "false":
+		return false, true
+	default:
+		return false, false
+	}
+}
+
+func javaLogicFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(method *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if method.Type(lang) != "method_declaration" {
+			return gotreesitter.WalkContinue
+		}
+		params := javaBoolParameters(file.source, method, lang)
+		body := method.ChildByFieldName("body", lang)
+		if len(params) == 0 || body == nil {
+			return gotreesitter.WalkSkipChildren
+		}
+		params = unmodifiedJavaParams(file.source, body, lang, params)
+		if len(params) == 0 {
+			return gotreesitter.WalkSkipChildren
+		}
+		gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+			if node != body {
+				switch node.Type(lang) {
+				case "lambda_expression", "class_declaration", "interface_declaration", "enum_declaration", "record_declaration":
+					return gotreesitter.WalkSkipChildren
+				}
+			}
+			if node.Type(lang) != "if_statement" {
+				return gotreesitter.WalkContinue
+			}
+			chain := javaIfChain(node, lang)
+			if len(chain) < 2 {
+				return gotreesitter.WalkSkipChildren
+			}
+			seen := map[string]int{}
+			for _, item := range chain {
+				key, ok := conditionKey(file.source, item.ChildByFieldName("condition", lang), params)
+				if !ok {
+					seen = map[string]int{}
+					continue
+				}
+				line := 1 + int(item.StartPoint().Row)
+				if earlier, exists := seen[key]; exists {
+					out = append(out, logicFinding(file.rel, line, earlier, "Java"))
+					break
+				}
+				seen[key] = line
+			}
+			return gotreesitter.WalkSkipChildren
+		})
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func javaBoolParameters(source []byte, method *gotreesitter.Node, lang *gotreesitter.Language) map[string]bool {
+	out := map[string]bool{}
+	params := method.ChildByFieldName("parameters", lang)
+	if params == nil {
+		return out
+	}
+	for i := 0; i < params.NamedChildCount(); i++ {
+		param := params.NamedChild(i)
+		if param == nil || param.Type(lang) != "formal_parameter" {
+			continue
+		}
+		name := param.ChildByFieldName("name", lang)
+		typ := param.ChildByFieldName("type", lang)
+		if name == nil || typ == nil || name.Type(lang) != "identifier" || strings.TrimSpace(nodeText(source, typ)) != "boolean" {
+			continue
+		}
+		out[nodeText(source, name)] = true
+	}
+	return out
+}
+
+func unmodifiedJavaParams(source []byte, body *gotreesitter.Node, lang *gotreesitter.Language, params map[string]bool) map[string]bool {
+	out := cloneNames(params)
+	gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if len(out) == 0 {
+			return gotreesitter.WalkStop
+		}
+		if node != body {
+			switch node.Type(lang) {
+			case "lambda_expression", "class_declaration", "interface_declaration", "enum_declaration", "record_declaration":
+				return gotreesitter.WalkSkipChildren
+			}
+		}
+		if node.Type(lang) == "assignment_expression" {
+			left := node.ChildByFieldName("left", lang)
+			if left != nil && left.Type(lang) == "identifier" {
+				delete(out, strings.TrimSpace(nodeText(source, left)))
+			}
+		}
+		return gotreesitter.WalkContinue
+	})
+	return out
+}
+
+func javaIfChain(start *gotreesitter.Node, lang *gotreesitter.Language) []*gotreesitter.Node {
+	var out []*gotreesitter.Node
+	for current := start; current != nil && current.Type(lang) == "if_statement"; {
+		out = append(out, current)
+		next := current.ChildByFieldName("alternative", lang)
+		if next == nil || next.Type(lang) != "if_statement" {
+			break
+		}
+		current = next
+	}
+	return out
+}
+
+func kotlinLogicFindings(file *parsedFile) []model.Finding {
+	var out []model.Finding
+	lang := file.document.language
+	gotreesitter.Walk(file.document.tree.RootNode(), func(fn *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if fn.Type(lang) != "function_declaration" {
+			return gotreesitter.WalkContinue
+		}
+		params := kotlinBoolParameters(file.source, fn, lang)
+		body := directNamedChildOfType(fn, lang, "function_body")
+		if len(params) == 0 || body == nil {
+			return gotreesitter.WalkSkipChildren
+		}
+		params = unmodifiedKotlinParams(file.source, body, lang, params)
+		if len(params) == 0 {
+			return gotreesitter.WalkSkipChildren
+		}
+		gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+			if node != body && kotlinScopeBarrier(node.Type(lang)) {
+				return gotreesitter.WalkSkipChildren
+			}
+			if node.Type(lang) != "if_expression" {
+				return gotreesitter.WalkContinue
+			}
+			chain := kotlinIfChain(node, lang)
+			if len(chain) < 2 {
+				return gotreesitter.WalkSkipChildren
+			}
+			seen := map[string]int{}
+			for _, item := range chain {
+				key, ok := conditionKey(file.source, item.ChildByFieldName("condition", lang), params)
+				if !ok {
+					seen = map[string]int{}
+					continue
+				}
+				line := 1 + int(item.StartPoint().Row)
+				if earlier, exists := seen[key]; exists {
+					out = append(out, logicFinding(file.rel, line, earlier, "Kotlin"))
+					break
+				}
+				seen[key] = line
+			}
+			return gotreesitter.WalkSkipChildren
+		})
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func kotlinBoolParameters(source []byte, fn *gotreesitter.Node, lang *gotreesitter.Language) map[string]bool {
+	out := map[string]bool{}
+	params := directNamedChildOfType(fn, lang, "function_value_parameters")
+	if params == nil {
+		return out
+	}
+	gotreesitter.Walk(params, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if node.Type(lang) != "parameter" {
+			return gotreesitter.WalkContinue
+		}
+		nameNode := directNamedChildOfType(node, lang, "simple_identifier")
+		if nameNode == nil {
+			return gotreesitter.WalkSkipChildren
+		}
+		name := strings.TrimSpace(nodeText(source, nameNode))
+		compact := compactWhitespace(nodeText(source, node))
+		if compact == name+":Boolean" {
+			out[name] = true
+		}
+		return gotreesitter.WalkSkipChildren
+	})
+	return out
+}
+
+func unmodifiedKotlinParams(source []byte, body *gotreesitter.Node, lang *gotreesitter.Language, params map[string]bool) map[string]bool {
+	out := cloneNames(params)
+	gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if len(out) == 0 {
+			return gotreesitter.WalkStop
+		}
+		if node != body && kotlinScopeBarrier(node.Type(lang)) {
+			return gotreesitter.WalkSkipChildren
+		}
+		switch node.Type(lang) {
+		case "property_declaration":
+			decl := directNamedChildOfType(node, lang, "variable_declaration")
+			if decl != nil {
+				name := directNamedChildOfType(decl, lang, "simple_identifier")
+				if name != nil {
+					delete(out, strings.TrimSpace(nodeText(source, name)))
+				}
+			}
+		case "assignment":
+			if node.NamedChildCount() > 0 {
+				left := node.NamedChild(0)
+				if left != nil {
+					text := strings.TrimSpace(nodeText(source, left))
+					delete(out, text)
+				}
+			}
+		}
+		return gotreesitter.WalkContinue
+	})
+	return out
+}
+
+func kotlinScopeBarrier(kind string) bool {
+	switch kind {
+	case "lambda_literal", "anonymous_function", "function_declaration", "class_declaration", "object_declaration", "for_statement", "catch_block":
+		return true
+	default:
+		return false
+	}
+}
+
+func kotlinIfChain(start *gotreesitter.Node, lang *gotreesitter.Language) []*gotreesitter.Node {
+	var out []*gotreesitter.Node
+	for current := start; current != nil && current.Type(lang) == "if_expression"; {
+		out = append(out, current)
+		next := unwrapSingle(current.ChildByFieldName("alternative", lang), lang, "control_structure_body", "statements")
+		if next == nil || next.Type(lang) != "if_expression" {
+			break
+		}
+		current = next
+	}
+	return out
+}
+
+func conditionKey(source []byte, node *gotreesitter.Node, params map[string]bool) (string, bool) {
+	if node == nil {
+		return "", false
+	}
+	text := compactWhitespace(nodeText(source, node))
+	for strings.HasPrefix(text, "(") && strings.HasSuffix(text, ")") && len(text) > 2 {
+		text = text[1 : len(text)-1]
+	}
+	if params[text] {
+		return text, true
+	}
+	if strings.HasPrefix(text, "!") && params[strings.TrimPrefix(text, "!")] {
+		return text, true
+	}
+	return "", false
+}
+
+func logicFinding(path string, line, earlier int, language string) model.Finding {
+	return newFinding(
+		ruleLogic, model.CategoryLogic, model.SeverityMedium, model.ConfidenceHigh,
+		path, line,
+		"duplicate side-effect-free JVM bool-parameter condition appears later in the same if/else-if chain",
+		[]string{
+			fmt.Sprintf("AST-proven same %s bool-parameter condition already appeared at line %d", language, earlier),
+			"proof subset is limited to bare or negated unmodified bool parameters of the nearest function/method",
+			"safe_autofix remains disabled",
+		},
+	)
+}
+
+func cloneNames(input map[string]bool) map[string]bool {
+	out := make(map[string]bool, len(input))
+	for name := range input {
+		out[name] = true
+	}
+	return out
+}
+
+func unwrapSingle(node *gotreesitter.Node, lang *gotreesitter.Language, wrappers ...string) *gotreesitter.Node {
+	for node != nil {
+		wrapped := false
+		for _, wrapper := range wrappers {
+			if node.Type(lang) == wrapper {
+				if node.NamedChildCount() != 1 {
+					return nil
+				}
+				node = node.NamedChild(0)
+				wrapped = true
+				break
+			}
+		}
+		if !wrapped {
+			return node
+		}
+	}
+	return nil
+}
+
+func directNamedChildOfType(node *gotreesitter.Node, lang *gotreesitter.Language, want string) *gotreesitter.Node {
+	if node == nil {
+		return nil
+	}
+	for i := 0; i < node.NamedChildCount(); i++ {
+		child := node.NamedChild(i)
+		if child != nil && child.Type(lang) == want {
+			return child
+		}
+	}
+	return nil
+}
+
+func nodeText(source []byte, node *gotreesitter.Node) string {
+	if node == nil {
+		return ""
+	}
+	start, end := int(node.StartByte()), int(node.EndByte())
+	if start < 0 || end < start || end > len(source) {
+		return ""
+	}
+	return string(source[start:end])
+}
+
+func compactWhitespace(value string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsSpace(r) {
+			return -1
+		}
+		return r
+	}, value)
+}
+
+func newFinding(rule string, category model.Category, severity model.Severity, confidence model.Confidence, path string, line int, summary string, evidence []string) model.Finding {
+	return model.Finding{
+		ID:           detector.FindingID(rule, path, line, summary),
+		RuleID:       rule,
+		Category:     category,
+		Severity:     severity,
+		Confidence:   confidence,
+		Path:         path,
+		LineStart:    line,
+		LineEnd:      line,
+		Summary:      summary,
+		Evidence:     evidence,
+		Verification: []string{"project compile/typecheck", "project tests"},
+		SafeAutofix:  false,
+	}
+}
