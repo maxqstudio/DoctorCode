@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m21-language-analyzer-framework
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: c90e5d570a5c9eed3685df3381a1509deff40e88
+Last accepted SHA: f9e08e20300bbc0bc756f2cc40aa2536bfd0251a
 Current source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
 
 ## Authorities

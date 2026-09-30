@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -287,10 +287,10 @@
       "status": "PASS"
     },
     {
+      "evidence": "At main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a: Governance 36674860273 PASS; Core CI 36674860109 PASS 3/3; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS 3/3; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke.",
       "id": "M21-MAIN-POST-MERGE",
       "requirement": "The exact M21 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M21 closure.",
-      "status": "PASS",
-      "evidence": "At main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a: Governance 36674860273 PASS; Core CI 36674860109 PASS 3/3; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS 3/3; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
