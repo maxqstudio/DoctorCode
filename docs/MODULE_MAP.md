@@ -3,12 +3,12 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a
+Source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 559 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 562 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
@@ -27,8 +27,11 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 52 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 54 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
+| internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
+| internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
+| internal/analyzers/rust/syntax.go | Go | 36 | internal/analyzers/rust | NO |
 | internal/application/application.go | Go | 64 | internal/application | NO |
 | internal/application/application_test.go | Go | 71 | internal/application | NO |
 | internal/benchmark/benchmark.go | Go | 330 | internal/benchmark | NO |
@@ -179,6 +182,19 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/sample.tsx | TypeScript/React | 11 | internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive | NO |
 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/anchor.ts | TypeScript | 1 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive | NO |
 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx | TypeScript/React | 4 | internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive | NO |
+| internal/benchmark/testdata/m22-rust/attributed-function-negative/sample.rs | Rust | 2 | internal/benchmark/testdata/m22-rust/attributed-function-negative | NO |
+| internal/benchmark/testdata/m22-rust/deadcode-positive/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/deadcode-positive | NO |
+| internal/benchmark/testdata/m22-rust/different-condition-negative/sample.rs | Rust | 9 | internal/benchmark/testdata/m22-rust/different-condition-negative | NO |
+| internal/benchmark/testdata/m22-rust/for-shadowed-parameter-negative/sample.rs | Rust | 10 | internal/benchmark/testdata/m22-rust/for-shadowed-parameter-negative | NO |
+| internal/benchmark/testdata/m22-rust/logic-positive/sample.rs | Rust | 9 | internal/benchmark/testdata/m22-rust/logic-positive | NO |
+| internal/benchmark/testdata/m22-rust/macro-reference-negative/sample.rs | Rust | 9 | internal/benchmark/testdata/m22-rust/macro-reference-negative | NO |
+| internal/benchmark/testdata/m22-rust/placeholder-secret-negative/sample.rs | Rust | 1 | internal/benchmark/testdata/m22-rust/placeholder-secret-negative | NO |
+| internal/benchmark/testdata/m22-rust/public-function-negative/sample.rs | Rust | 1 | internal/benchmark/testdata/m22-rust/public-function-negative | NO |
+| internal/benchmark/testdata/m22-rust/same-boolean-negative/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/same-boolean-negative | NO |
+| internal/benchmark/testdata/m22-rust/security-positive/sample.rs | Rust | 1 | internal/benchmark/testdata/m22-rust/security-positive | NO |
+| internal/benchmark/testdata/m22-rust/shadowed-parameter-negative/sample.rs | Rust | 10 | internal/benchmark/testdata/m22-rust/shadowed-parameter-negative | NO |
+| internal/benchmark/testdata/m22-rust/simplify-positive/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/simplify-positive | NO |
+| internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative/sample.rs | Rust | 3 | internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 249 | internal/detector | NO |

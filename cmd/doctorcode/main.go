@@ -13,6 +13,7 @@ import (
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
+	rustanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/rust"
 	"github.com/maxqstudio/DoctorCode/internal/application"
 	"github.com/maxqstudio/DoctorCode/internal/benchmark"
 	"github.com/maxqstudio/DoctorCode/internal/buildinfo"
@@ -458,6 +459,8 @@ func runBenchmark(args []string) {
 		analyzer = pythonanalysis.New()
 	case "javascript":
 		analyzer = javascriptanalysis.New()
+	case "rust":
+		analyzer = rustanalysis.New()
 	default:
 		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
 	}

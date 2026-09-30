@@ -785,6 +785,57 @@ Authority: scripts/build_release.py, scripts/verify_release.py, scripts/install.
 
 - No public release is created on development branch failure; revert the M17 branch change or repair and rerun acceptance.
 
+## FLOW-RUST-SEMANTIC-BASELINE — Rust parser-backed conservative semantic baseline
+
+Purpose: Provide deterministic parser-backed Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence while failing closed on unsupported binding, macro-expansion, linkage, and whole-program semantics.
+Critical: FALSE
+Entry condition: Repository contains at least one visible .rs semantic source file.
+Authority: internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json
+
+### States
+
+- SOURCE_DISCOVERY
+- STRICT_PARSE
+- TREE_HEALTH_GATE
+- BOUNDED_RULE_EVALUATION
+- DEADCODE_MACRO_GATE
+- FINDING_CONTRACT_VALIDATE
+- SORTED_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| SOURCE_DISCOVERY | STRICT_PARSE | Discover visible .rs files while excluding ignored directories and symlinks. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+| STRICT_PARSE | TREE_HEALTH_GATE | Parse each source with the pinned embedded Rust grammar using strict parsing without executing source. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+| TREE_HEALTH_GATE | BOUNDED_RULE_EVALUATION | Reject parser errors, ERROR nodes, MISSING nodes, incomplete/NUL source, or unavailable Rust source before semantic rules run. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+| BOUNDED_RULE_EVALUATION | DEADCODE_MACRO_GATE | Evaluate only declared Rust SECURITY, SIMPLIFY, LOGIC, and conservative top-level private DEADCODE rules; pattern shadowing removes LOGIC parameter proof. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+| DEADCODE_MACRO_GATE | FINDING_CONTRACT_VALIDATE | Suppress Rust DEADCODE for macro-bearing source sets because macro expansion and generated references are outside M22 authority. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+| FINDING_CONTRACT_VALIDATE | SORTED_OUTPUT | Validate declared rule/category/safe_autofix and deterministic finding identity before deterministic output. | internal/analyzers/rust/analyzer.go, internal/analyzers/rust/syntax.go, internal/analyzers/registry.go, and internal/benchmark/testdata/m22-rust.json |  |
+
+### Invariants
+
+- Rust source is never executed by the analyzer.
+- Malformed or incomplete Rust syntax fails closed.
+- M22 does not register Rust BLOAT.
+- Every Rust finding has safe_autofix=false.
+- LOGIC authority is limited to bare or negated unshadowed bool parameters of the nearest function item.
+- Any visible AST pattern rebinding a parameter name removes that parameter from LOGIC proof.
+- Rust DEADCODE is limited to unique private top-level free functions in non-generated source and is suppressed for macro-bearing repositories.
+- Public, attributed, modified, method, nested-module, generated, duplicate-name, main-entry, macro-expansion, unresolved linkage, and whole-program cases fail closed.
+
+### Failure behavior
+
+- Unsupported or malformed syntax blocks the Rust analyzer; unsupported semantic proof emits no finding rather than widening authority.
+
+### Restart behavior
+
+- Rust parsing and rule evaluation are read-only and deterministic for a fixed source tree.
+
+### Rollback behavior
+
+- The analyzer is read-only; rollback is source-control only.
+
 ## FLOW-SCAN — Repository inventory scan
 
 Purpose: Produce deterministic repository inventory without whole-repository LLM context.
