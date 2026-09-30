@@ -3,7 +3,6 @@ package pythonanalysis
 import (
 	"bytes"
 	"context"
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"io/fs"
@@ -28,6 +27,32 @@ type Analyzer struct{}
 func New() *Analyzer { return &Analyzer{} }
 
 func (a *Analyzer) Name() string { return "python/stdlib-ast-v1" }
+
+func (a *Analyzer) Descriptor() detector.Descriptor {
+	return detector.Descriptor{
+		ID:         a.Name(),
+		Language:   "Python",
+		Extensions: []string{".py"},
+		Parser: detector.ParserContract{
+			Kind:       detector.ParserExternalAST,
+			Provider:   "Python stdlib ast",
+			FailClosed: true,
+		},
+		Availability: detector.AvailabilityContract{
+			Mode:       detector.AvailabilityExternalTool,
+			Dependency: "Python 3.8+",
+		},
+		EvidenceBoundary: "Python stdlib ast executed through an external Python 3.8+ interpreter; bounded module/import/reference reasoning is conservative and unresolved dynamic behavior remains unproven.",
+		Rules: []detector.RuleMetadata{
+			{ID: ruleBloat, Category: model.CategoryBloat, SafeAutofix: false},
+			{ID: ruleDeadCode, Category: model.CategoryDeadCode, SafeAutofix: false},
+			{ID: ruleLogic, Category: model.CategoryLogic, SafeAutofix: false},
+			{ID: ruleSecurity, Category: model.CategorySecurity, SafeAutofix: false},
+			{ID: ruleSimplify, Category: model.CategorySimplify, SafeAutofix: false},
+		},
+		Benchmark: detector.BenchmarkContract{SchemaVersion: 1, Languages: []string{"Python"}},
+	}
+}
 
 type rawFinding struct {
 	RuleID       string           `json:"rule_id"`
@@ -103,10 +128,8 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 
 	findings := make([]model.Finding, 0, len(raw.Findings))
 	for _, item := range raw.Findings {
-		key := fmt.Sprintf("%s|%s|%d|%s", item.RuleID, item.Path, item.LineStart, item.Summary)
-		digest := sha256.Sum256([]byte(key))
 		findings = append(findings, model.Finding{
-			ID:           fmt.Sprintf("%s-%x", item.RuleID, digest[:5]),
+			ID:           detector.FindingID(item.RuleID, item.Path, item.LineStart, item.Summary),
 			RuleID:       item.RuleID,
 			Category:     item.Category,
 			Severity:     item.Severity,
