@@ -25,6 +25,33 @@ type Analyzer struct{}
 func New() *Analyzer { return &Analyzer{} }
 func (a *Analyzer) Name() string { return "javascript/parser-backed-v2" }
 
+func (a *Analyzer) Descriptor() detector.Descriptor {
+	return detector.Descriptor{
+		ID:         a.Name(),
+		Language:   "JavaScript / TypeScript",
+		Extensions: []string{".cjs", ".cts", ".js", ".jsx", ".mjs", ".mts", ".ts", ".tsx"},
+		Parser: detector.ParserContract{
+			Kind:       detector.ParserEmbeddedAST,
+			Provider:   "gotreesitter v0.55.1 JavaScript/TypeScript/TSX",
+			FailClosed: true,
+		},
+		Availability:     detector.AvailabilityContract{Mode: detector.AvailabilitySourceOnly},
+		EvidenceBoundary: "Embedded gotreesitter syntax/AST authority with fail-closed ERROR/MISSING rejection; semantic authority remains bounded to declared LOGIC, SECURITY, and SIMPLIFY rules without JS/TS DEADCODE, BLOAT, autofix, or whole-program claims.",
+		Rules: []detector.RuleMetadata{
+			{ID: ruleLogic, Category: model.CategoryLogic, SafeAutofix: false},
+			{ID: ruleSecurity, Category: model.CategorySecurity, SafeAutofix: false},
+			{ID: ruleSimplify, Category: model.CategorySimplify, SafeAutofix: false},
+		},
+		Benchmark: detector.BenchmarkContract{
+			SchemaVersion: 1,
+			Languages: []string{
+				"JavaScript / TypeScript",
+				"JavaScript / TypeScript parser-backed JSX/TSX",
+			},
+		},
+	}
+}
+
 var boolReturn = regexp.MustCompile("(?s)if\\s*\\([^{}]+\\)\\s*\\{\\s*return\\s+(true|false)\\s*;?\\s*\\}\\s*else\\s*\\{\\s*return\\s+(true|false)\\s*;?\\s*\\}")
 var credential = regexp.MustCompile("(?im)^\\s*(?:const|let|var)\\s+([A-Za-z_$][\\w$]*)(?:\\s*:\\s*[^=;]+)?\\s*=\\s*[\\\"\x27]([^\\\"\x27\\r\\n]+)[\\\"\x27]\\s*;?")
 var credentialName = regexp.MustCompile("(?i)(?:api[_-]?key|api[_-]?token|access[_-]?token|auth[_-]?token|secret|password|passwd|credential)")
@@ -188,8 +215,7 @@ func maskLexicalViews(source string) (string, string, error) {
 }
 
 func makeFinding(rule string, category model.Category, severity model.Severity, confidence model.Confidence, path string, line int, summary string, evidence []string) model.Finding {
-	key := fmt.Sprintf("%s|%s|%d|%s", rule, path, line, summary); digest := sha256.Sum256([]byte(key))
-	return model.Finding{ID: fmt.Sprintf("%s-%x", rule, digest[:5]), RuleID: rule, Category: category, Severity: severity, Confidence: confidence, Path: path, LineStart: line, LineEnd: line, Summary: summary, Evidence: evidence, Verification: []string{"project parser/typecheck", "project tests"}, SafeAutofix: false}
+	return model.Finding{ID: detector.FindingID(rule, path, line, summary), RuleID: rule, Category: category, Severity: severity, Confidence: confidence, Path: path, LineStart: line, LineEnd: line, Summary: summary, Evidence: evidence, Verification: []string{"project parser/typecheck", "project tests"}, SafeAutofix: false}
 }
 
 func lineAt(source string, offset int) int { return 1 + strings.Count(source[:offset], "\n") }
