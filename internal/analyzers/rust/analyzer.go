@@ -431,9 +431,6 @@ func unshadowedRustBoolParameters(source []byte, body *gotreesitter.Node, lang *
 		if node != body && node.Type(lang) == "function_item" {
 			return gotreesitter.WalkSkipChildren
 		}
-		if node.Type(lang) != "let_declaration" {
-			return gotreesitter.WalkContinue
-		}
 		pattern := node.ChildByFieldName("pattern", lang)
 		if pattern == nil {
 			return gotreesitter.WalkContinue
@@ -448,7 +445,7 @@ func unshadowedRustBoolParameters(source []byte, body *gotreesitter.Node, lang *
 			}
 			return gotreesitter.WalkContinue
 		})
-		return gotreesitter.WalkSkipChildren
+		return gotreesitter.WalkContinue
 	})
 	return out
 }
