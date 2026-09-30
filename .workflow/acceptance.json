@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M20 remains MAIN_ACCEPTED at c90e5d570a5c9eed3685df3381a1509deff40e88. M21 branch candidate ed4592f0da53619894b1ddbf60961eec885f2587 has passed all eight permanent workflows and establishes the reusable analyzer capability framework: source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, and benchmark-language contracts. Existing Go, Python, and JavaScript/TypeScript semantic proof boundaries remain unchanged. M21 is not MAIN_ACCEPTED until squash merge and exact-main revalidation complete.",
+  "evidence_boundary": "M21 is MAIN_ACCEPTED at f9e08e20300bbc0bc756f2cc40aa2536bfd0251a. The reusable analyzer framework now governs source recognition, parser/provider metadata, availability metadata, rule metadata, evidence boundaries, deterministic finding-ID validation, benchmark compatibility, and default analyzer registration while preserving accepted Go, Python, and JavaScript/TypeScript semantic boundaries. Current project phase is M22_RUST_SEMANTIC_BASELINE; no Rust semantic authority is accepted yet.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -285,6 +285,12 @@
       "id": "M21-BRANCH-REGRESSION",
       "requirement": "One exact synchronized M21 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
       "status": "PASS"
+    },
+    {
+      "id": "M21-MAIN-POST-MERGE",
+      "requirement": "The exact M21 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M21 closure.",
+      "status": "PASS",
+      "evidence": "At main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a: Governance 36674860273 PASS; Core CI 36674860109 PASS 3/3; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS 3/3; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke."
     }
   ],
   "runtime_checks": [

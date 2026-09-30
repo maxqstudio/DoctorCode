@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
+  "current_phase": "M22_RUST_SEMANTIC_BASELINE",
   "phases": [
     {
       "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
@@ -28,7 +28,7 @@
     {
       "id": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
       "title": "Language analyzer framework",
-      "status": "CURRENT",
+      "status": "ACCEPTED",
       "objective": "Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages.",
       "exit_criteria": [
         "New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.",
@@ -38,7 +38,7 @@
     {
       "id": "M22_RUST_SEMANTIC_BASELINE",
       "title": "Rust semantic baseline",
-      "status": "PLANNED",
+      "status": "CURRENT",
       "objective": "Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules.",
       "exit_criteria": [
         "Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence have labeled and adversarial corpora.",
