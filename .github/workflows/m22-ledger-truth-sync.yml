@@ -1,0 +1,35 @@
+name: M22 Ledger Truth Sync
+
+on:
+  push:
+    branches:
+      - work/m22-rust-semantic-baseline
+
+permissions:
+  contents: write
+
+concurrency:
+  group: m22-ledger-truth-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Synchronize final M22 ledger truth
+        run: python .workflow/tools/sync_project_truth.py
+      - name: Commit synchronized generated truth
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet || [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            git add .workflow/generated/code_facts.json .workflow/acceptance.json docs
+            git commit -m "docs(m22): finalize branch acceptance truth"
+            git push
+          fi
