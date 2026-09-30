@@ -256,7 +256,7 @@ func literalStringValue(source []byte, node *gotreesitter.Node, kotlin bool) (st
 	if len(raw) < 2 || raw[0] != '"' || raw[len(raw)-1] != '"' {
 		return "", false
 	}
-	if strings.HasPrefix(raw, """"") {
+	if strings.HasPrefix(raw, "\"\"\"") {
 		return "", false
 	}
 	value, err := strconv.Unquote(raw)
