@@ -347,6 +347,10 @@ func logicFindings(file *parsedFile) []model.Finding {
 		if body == nil {
 			return gotreesitter.WalkSkipChildren
 		}
+		params = unshadowedRustBoolParameters(file.source, body, lang, params)
+		if len(params) == 0 {
+			return gotreesitter.WalkSkipChildren
+		}
 		continuations := map[uint32]bool{}
 		gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
 			if node != body && node.Type(lang) == "function_item" {
@@ -412,6 +416,40 @@ func rustBoolParameters(source []byte, fn *gotreesitter.Node, lang *gotreesitter
 		}
 		out[nodeText(source, pattern)] = true
 	}
+	return out
+}
+
+func unshadowedRustBoolParameters(source []byte, body *gotreesitter.Node, lang *gotreesitter.Language, params map[string]bool) map[string]bool {
+	out := make(map[string]bool, len(params))
+	for name := range params {
+		out[name] = true
+	}
+	gotreesitter.Walk(body, func(node *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+		if len(out) == 0 {
+			return gotreesitter.WalkStop
+		}
+		if node != body && node.Type(lang) == "function_item" {
+			return gotreesitter.WalkSkipChildren
+		}
+		if node.Type(lang) != "let_declaration" {
+			return gotreesitter.WalkContinue
+		}
+		pattern := node.ChildByFieldName("pattern", lang)
+		if pattern == nil {
+			return gotreesitter.WalkContinue
+		}
+		gotreesitter.Walk(pattern, func(candidate *gotreesitter.Node, _ int) gotreesitter.WalkAction {
+			if candidate.Type(lang) != "identifier" {
+				return gotreesitter.WalkContinue
+			}
+			name := nodeText(source, candidate)
+			if out[name] {
+				delete(out, name)
+			}
+			return gotreesitter.WalkContinue
+		})
+		return gotreesitter.WalkSkipChildren
+	})
 	return out
 }
 
