@@ -321,9 +321,9 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M21_LANGUAGE_ANALYZER_FRAMEWORK
+Current phase: M22_RUST_SEMANTIC_BASELINE
 
-Current status: M21_BRANCH_ACCEPTED_READY_FOR_MERGE
+Current status: M21_MAIN_ACCEPTED
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -385,9 +385,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize the final M21 acceptance ledger and generated Project Truth without changing product semantics.
-- Require all eight permanent workflows to PASS again on the exact synchronized M21 branch SHA.
-- Only then open the M21 pull request, squash merge to main, and require exact-main post-merge acceptance before M21 closure.
+- Begin M22 Rust semantic baseline planning from accepted main@f9e08e20300bbc0bc756f2cc40aa2536bfd0251a without widening existing Go/Python/JavaScript/TypeScript semantics.
+- Select a deterministic Rust parser/provider and define RED labeled/adversarial corpora for SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE before implementation.
+- Enable Rust BLOAT only if a separate conservative evidence contract is proven; otherwise keep it unavailable.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -464,6 +464,7 @@ Known blockers:
 - M21 RED Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows because Go was reported active for JavaScript-only and source-empty roots, proving analyzer availability/recognition was not governed by a reusable capability contract.
 - M21 framework candidate ed4592f0da53619894b1ddbf60961eec885f2587 passed Governance Bootstrap run 36669873885 and Core CI run 36669873901 on Ubuntu, macOS, and Windows, including the M21 availability repair plus all accepted Go/Python/JavaScript/TypeScript benchmark regressions.
 - At exact M21 candidate ed4592f0da53619894b1ddbf60961eec885f2587: M06 run 36669873896 PASS; Real World Go run 36669873898 PASS; M07 run 36669873931 PASS; M10 run 36669873873 PASS; M16 Thin MCP run 36669873921 PASS on Ubuntu/macOS/Windows; M17 Release and Install run 36669873911 PASS with release build and native Ubuntu/Windows/macOS install-smoke, with publish-release correctly skipped for a non-tag branch.
+- M21 merged through PR #33 to main at f9e08e20300bbc0bc756f2cc40aa2536bfd0251a. Exact-main Governance 36674860273 PASS; Core CI 36674860109 PASS; M06 36674860291 PASS; Real World Go 36674860194 PASS; M07 36674860340 PASS; M10 36674860238 PASS; M16 Thin MCP 36674860427 PASS; M17 Release and Install 36674860256 PASS including Ubuntu/Windows/macOS native install-smoke.
 
 ### Not proven
 
