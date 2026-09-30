@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M22_RUST_SEMANTIC_BASELINE
-Status: M22_IMPLEMENTED_VALIDATION_PENDING
+Status: M22_BRANCH_ACCEPTED_READY_FOR_MERGE
 Roadmap phase: M22_RUST_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
@@ -107,6 +107,7 @@ SEQUENCE_SYNC: PASS
 - M22 for-binding adversarial Core CI run 36732824341 at 8921900828122a856d64b37c1885ff7dae5f2bd2 reported 12 cases = 4 TP / 1 FP / 0 FN; for-shadowed-parameter-negative produced an unexpected RS-LOGIC-DUPLICATE-CONDITION at sample.rs:5.
 - M22 unresolved-macro adversarial Core CI run 36733550595 at fc05091d37d38a110f6ff8b99c19398dfe83e456 reported 13 cases = 4 TP / 1 FP / 0 FN; unresolved-macro-deadcode-negative produced an unexpected RS-DEADCODE-PRIVATE-ZERO-REF at sample.rs:1.
 - M22 repaired behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 passed Core CI run 36733856112 on Ubuntu, macOS, and Windows. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each of SECURITY, SIMPLIFY, LOGIC, and DEADCODE reports precision=1.0 and recall=1.0.
+- Exact synchronized M22 candidate bedfc1d473cdcd747485b465740718f76e0f64f6 passed Governance 36734883264, Core CI 36734883437 on Ubuntu/macOS/Windows, M06 36734883305, Real World Go 36734883121, M07 36734883366, M10 36734883146, M16 Thin MCP 36734883490, and M17 Release and Install 36734883371 including Ubuntu/Windows/macOS native install-smoke.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -128,9 +129,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M22 Rust semantic Project Truth and CURRENT sequence evidence without widening the accepted Rust rule set.
-- Require all eight permanent workflows to PASS on one exact synchronized M22 branch SHA.
-- Only after exact branch acceptance may M22 be proposed for squash merge, exact-main revalidation, and governance closure to M23_JAVA_KOTLIN_SEMANTIC_BASELINE.
+- Synchronize the final M22 branch acceptance ledger and generated Project Truth without changing Rust semantic behavior.
+- Require all eight permanent workflows to PASS again on the exact ledger-synchronized M22 SHA.
+- Only then open the M22 pull request, squash merge to main, and require exact-main revalidation before governance closure advances to M23_JAVA_KOTLIN_SEMANTIC_BASELINE.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

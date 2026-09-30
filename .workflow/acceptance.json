@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -335,10 +335,10 @@
       "status": "PASS"
     },
     {
+      "evidence": "At bedfc1d473cdcd747485b465740718f76e0f64f6: Governance 36734883264 PASS; Core CI 36734883437 PASS 3/3; M06 36734883305 PASS; Real World Go 36734883121 PASS; M07 36734883366 PASS; M10 36734883146 PASS; M16 36734883490 PASS 3/3; M17 36734883371 PASS with release build and Ubuntu/Windows/macOS native install-smoke.",
       "id": "M22-BRANCH-REGRESSION",
       "requirement": "One exact synchronized M22 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
-      "status": "PASS",
-      "evidence": "At bedfc1d473cdcd747485b465740718f76e0f64f6: Governance 36734883264 PASS; Core CI 36734883437 PASS 3/3; M06 36734883305 PASS; Real World Go 36734883121 PASS; M07 36734883366 PASS; M10 36734883146 PASS; M16 36734883490 PASS 3/3; M17 36734883371 PASS with release build and Ubuntu/Windows/macOS native install-smoke."
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
