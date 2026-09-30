@@ -10,9 +10,9 @@
   "last_accepted_branch": "main",
   "last_accepted_sha": "c90e5d570a5c9eed3685df3381a1509deff40e88",
   "next_authorized_actions": [
-    "Begin M21 language analyzer framework planning from accepted main@c90e5d570a5c9eed3685df3381a1509deff40e88 without widening existing language semantics.",
-    "Define reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, availability, and benchmark contracts before implementing new language baselines.",
-    "Preserve M20 parser-backed JavaScript/TypeScript boundaries and retain the recorded release-size telemetry for later production-hardening decisions."
+    "Synchronize M21 Project Truth and CURRENT sequence evidence for the reusable analyzer capability framework.",
+    "Run exact-branch regression across governance, Core CI, Go/Python real-world lanes, MCP, and release/install without widening existing language semantics.",
+    "Only after one exact branch SHA passes all permanent workflows may M21 be proposed for merge and exact-main revalidation."
   ],
   "not_proven": [
     "arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.",
@@ -21,7 +21,8 @@
     "The native tag-triggered m17-release.yml path was not exercised for v0.1.0 because GitHub suppresses workflow recursion for refs created by GITHUB_TOKEN; equivalent publication recovery was proven against the immutable tag.",
     "M18 is a conservative structural JavaScript/TypeScript baseline for two bounded rules; it does not prove full AST semantics, JSX/TSX support, dead-code safety, or general JavaScript/TypeScript semantic completeness.",
     "M19 LOGIC does not prove arrow-function parameters, class/object method parameters, closure captures, local variable declarations, generic TypeScript function signatures, JSX/TSX, or general JavaScript/TypeScript control-flow semantics.",
-    "M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening."
+    "M20 release-size telemetry is measured, but M20 defines no startup-time, memory, or maximum-binary-size acceptance threshold; those performance bounds remain for later hardening.",
+    "M21 capability framework implementation is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation."
   ],
   "phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
   "proven": [
@@ -80,9 +81,12 @@
     "At M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5: Governance 36609998446 PASS; Core CI 36609998432 PASS on Ubuntu/Windows/macOS; M06 36609998610 PASS; Real World Go 36609998542 PASS; M07 36609998396 PASS; M10 36609998465 PASS; M16 Thin MCP 36609998474 PASS; M17 Release and Install 36609998442 PASS.",
     "Core CI run 36609998432 at M20 candidate 8569304b05f09a7e8aad505a8d8586e6127b9ed5 reports M20 parser corpus 5 cases = 3 TP / 0 FP / 0 FN and M19 regression corpus 24 cases = 8 TP / 0 FP / 0 FN on Ubuntu, Windows, and macOS.",
     "GitHub Actions release artifact 11052337933 from M20 run 36609998442 is 119313543 bytes versus M19 accepted artifact 11031553008 from run 36565284851 at 45046740 bytes, a measured increase of 74266803 bytes (164.9%). Per-target M20 archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes; parser correctness remains accepted and the size delta is retained as telemetry.",
-    "M20 merged through PR #31 to main at c90e5d570a5c9eed3685df3381a1509deff40e88. Exact-main Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke."
+    "M20 merged through PR #31 to main at c90e5d570a5c9eed3685df3381a1509deff40e88. Exact-main Governance 36613431485 PASS; Core CI 36613431170 PASS; M06 36613430987 PASS; Real World Go 36613431029 PASS; M07 36613430906 PASS; M10 36613431116 PASS; M16 Thin MCP 36613431005 PASS; M17 Release and Install 36613431218 PASS including Ubuntu/Windows/macOS native install-smoke.",
+    "M21 starts from governance-accepted main@5fc0be4881ee72b593920f24d2d866a003ea828b with M20 product authority c90e5d570a5c9eed3685df3381a1509deff40e88.",
+    "M21 adopts Skill_Workflow main@024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8; upstream Governance Selftest run 36654539575 passed, and DoctorCode authority-sync branch candidate 3bd82a5813b5fdef220c16cfece29b64c3a0c4e7 passed Governance Bootstrap run 36668836350.",
+    "M21 RED Core CI run 36669008902 at 141bb1a80e553ad4ed4fcf6eb68c0464d3f0d967 failed on Ubuntu, macOS, and Windows because Go was reported active for JavaScript-only and source-empty roots, proving analyzer availability/recognition was not governed by a reusable capability contract."
   ],
   "schema_version": 1,
-  "status": "M20_MAIN_ACCEPTED",
-  "working_branch": "main"
+  "status": "M21_IMPLEMENTED_VALIDATION_PENDING",
+  "working_branch": "work/m21-language-analyzer-framework"
 }
