@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3
+Authority verified at SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
 Governance profile: strict
 
 ## Current phase
-Phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
-Status: M23_IMPLEMENTED_VALIDATION_PENDING
-Roadmap phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
+Phase: M24_C_CPP_SEMANTIC_BASELINE
+Status: M23_MAIN_ACCEPTED
+Roadmap phase: M24_C_CPP_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m23-java-kotlin-semantic-baseline
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3
+Last accepted SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
 Current candidate SHA: external final acceptance evidence
 Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 
@@ -112,6 +112,8 @@ SEQUENCE_SYNC: PASS
 - M23 starts from governance-accepted main@761c216453d3ac07235bd2c693aa3a3175d68ba5 with M22 product authority 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 and Skill_Workflow authority 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.
 - M23 RED Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at the Java semantic gate with unknown benchmark analyzer "jvm", proving JVM analyzer authority absent before implementation.
 - M23 semantic candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passed Core CI run 36745770972 on Ubuntu, macOS, and Windows. Java corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
+- Exact synchronized M23 candidate 80257181ecf13e4632fbb771c55aecda777531e0 passed Governance 37206574565, Core CI 37206574539 on Ubuntu/macOS/Windows, M06 37206574563, Real World Go 37206574572, M07 37206574643, M10 37206574574, M16 Thin MCP 37206574566, and M17 Release and Install 37206574626 including Ubuntu/Windows/macOS native install-smoke.
+- M23 merged through PR #37 to main at 1f9686f2f8f560cd3637cd33c91162420e09dc39. Exact-main Governance 37207150801 PASS; Core CI 37207150777 PASS on Ubuntu/macOS/Windows; M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS including deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -129,7 +131,6 @@ SEQUENCE_SYNC: PASS
 - M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
 - M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
 - M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
-- M23 is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation.
 
 ## Known blockers
 - None declared.
@@ -138,9 +139,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Synchronize M23 Project Truth and CURRENT sequence evidence without widening Java/Kotlin semantic authority.
-- Require all eight permanent workflows to PASS on one exact synchronized M23 branch SHA, including release/install after embedding Java/Kotlin grammars.
-- Only after exact branch acceptance may M23 be proposed for squash merge and exact-main revalidation.
+- Begin M24 C/C++ semantic baseline planning from accepted main@1f9686f2f8f560cd3637cd33c91162420e09dc39 without widening accepted Go/Python/JavaScript/TypeScript/Rust/JVM semantics.
+- Select deterministic C and C++ parser/provider boundaries and define RED labeled, adversarial, and repository-shaped corpora before implementation.
+- Treat headers/includes, macros, conditional compilation, declaration-definition linkage, target assumptions, and aggressive dead-code claims conservatively and fail closed when proof is unavailable.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

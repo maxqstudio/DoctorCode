@@ -23,9 +23,9 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "session_id": "M23-JAVA-KOTLIN-SEMANTIC-BASELINE",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
     "internal/analyzers/jvm/analyzer_test.go",
