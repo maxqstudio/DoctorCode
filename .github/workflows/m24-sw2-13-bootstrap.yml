@@ -1,0 +1,81 @@
+name: M24 SW2-13 Bootstrap
+
+on:
+  push:
+    branches:
+      - work/m24-c-cpp-semantic-baseline
+    paths:
+      - .github/workflows/m24-sw2-13-bootstrap.yml
+
+permissions:
+  contents: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Fetch exact Skill_Workflow authority
+        shell: bash
+        run: |
+          git clone --quiet https://github.com/maxqstudio/Skill_Workflow.git .skill-workflow
+          git -C .skill-workflow checkout --quiet 4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef
+          test "$(git -C .skill-workflow rev-parse HEAD)" = "4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef"
+      - name: Sync vendored governance toolchain and authority
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          root = Path('.').resolve()
+          sys.path.insert(0, str(root / '.workflow' / 'tools'))
+          from toolchain_identity import sync_vendored_tools, write_toolchain_lock
+
+          skill_root = root / '.skill-workflow'
+          tool_root = root / '.workflow' / 'tools'
+          result = sync_vendored_tools(skill_root, tool_root)
+          lock_result = write_toolchain_lock(root, root / '.workflow', tool_root, skill_root)
+          print('TOOLCHAIN_SYNC=' + json.dumps(result, sort_keys=True))
+          print('TOOLCHAIN_LOCK=' + lock_result)
+
+          authority_path = root / '.workflow' / 'SKILL_AUTHORITY.json'
+          authority = json.loads(authority_path.read_text(encoding='utf-8'))
+          authority['ref'] = '4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef'
+          authority['policy'] = (
+              'DoctorCode consumes Skill_Workflow SW2-13 from this exact authority. '
+              'Consumer governance tools are vendored and locked by .workflow/toolchain.lock.json; '
+              'root AGENTS.md, schema-v1 governance, progressive reference routing, repository hygiene, '
+              'and Owner-approved license proof remain mandatory without weakening existing DoctorCode acceptance gates.'
+          )
+          authority_path.write_text(json.dumps(authority, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+          PY
+          rm -rf .skill-workflow
+      - name: Remove bootstrap workflow before final candidate commit
+        shell: bash
+        run: rm .github/workflows/m24-sw2-13-bootstrap.yml
+      - name: Commit exact governance upgrade
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow .github/workflows/m24-sw2-13-bootstrap.yml
+          git commit -m "governance: adopt Skill_Workflow SW2-13"
+      - name: Validate committed governance candidate
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/selftest_repository_health.py
+          python .workflow/tools/selftest_cross_document_regressions.py
+          python .workflow/tools/validate_cross_document_consistency.py --root . --base b93a50cdb89b40b2caadce425171baea3fc6ae45
+          test -z "$(git status --porcelain)"
+      - name: Push validated candidate
+        shell: bash
+        run: git push origin HEAD:work/m24-c-cpp-semantic-baseline
