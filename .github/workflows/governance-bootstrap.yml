@@ -28,7 +28,7 @@ jobs:
       - name: Validate governance schema and vendored toolchain
         run: python .workflow/tools/validate_schema_toolchain.py --root .
       - name: Validate public repository health
-        run: python .workflow/tools/validate_repository_health.py --root .
+        run: python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
       - name: Validate tracked project docs
         run: python .workflow/tools/validate_project_docs.py
       - name: Validate doc quality
