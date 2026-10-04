@@ -9,21 +9,16 @@ import re
 import subprocess
 from pathlib import Path
 
+from project_snapshot import (
+    ProjectSnapshot,
+    active_snapshot_for,
+    canonical_source_bytes,
+    discover_source_paths,
+)
 
 VALID_MODES = {"BEFORE", "DURING", "AFTER"}
 VALID_REQUIREMENTS = {"MUST", "MAY", "MUST_NOT"}
 VALID_VERIFICATION = {"SOURCE", "RUNTIME", "BOTH", "DOCUMENT"}
-
-SOURCE_EXTENSIONS = {
-    ".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".java", ".kt", ".kts",
-    ".cs", ".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp", ".rs", ".go",
-    ".swift", ".m", ".mm", ".php", ".rb", ".scala", ".sh", ".ps1", ".sql",
-    ".proto", ".graphql", ".gql", ".xml", ".gradle",
-}
-SOURCE_EXCLUDED_PARTS = {
-    ".git", ".workflow", ".idea", ".vscode", ".venv", "venv", "node_modules", "dist",
-    "build", "coverage", "vendor", "__pycache__",
-}
 
 
 def load_json(path: Path) -> dict:
@@ -51,25 +46,42 @@ def git_head(root: Path) -> str:
     return git(root, "rev-parse", "HEAD")
 
 
-def source_files(root: Path) -> list[Path]:
-    result: list[Path] = []
-    for path in root.rglob("*"):
-        if not path.is_file() or path.suffix.lower() not in SOURCE_EXTENSIONS:
-            continue
-        rel = path.relative_to(root)
-        if any(part in SOURCE_EXCLUDED_PARTS for part in rel.parts):
-            continue
-        result.append(path)
-    return sorted(result, key=lambda p: p.relative_to(root).as_posix())
+def _selected_snapshot(root: Path, snapshot: ProjectSnapshot | None) -> ProjectSnapshot | None:
+    root = root.resolve()
+    selected = snapshot or active_snapshot_for(root)
+    if selected is not None and selected.root != root:
+        raise ValueError(
+            f"SNAPSHOT_ROOT_MISMATCH:{selected.root.as_posix()}:{root.as_posix()}"
+        )
+    return selected
 
 
-def compute_source_digest(root: Path) -> str:
+def source_files(
+    root: Path,
+    snapshot: ProjectSnapshot | None = None,
+) -> list[Path]:
+    root = root.resolve()
+    selected = _selected_snapshot(root, snapshot)
+    if selected is not None:
+        return selected.source_files()
+    return discover_source_paths(root)
+
+
+def compute_source_digest(
+    root: Path,
+    snapshot: ProjectSnapshot | None = None,
+) -> str:
+    root = root.resolve()
+    selected = _selected_snapshot(root, snapshot)
+    if selected is not None:
+        return selected.source_digest
+
     digest = hashlib.sha256()
-    for path in source_files(root):
+    for path in discover_source_paths(root):
         rel = path.relative_to(root).as_posix().encode("utf-8")
         digest.update(rel)
         digest.update(b"\0")
-        digest.update(path.read_bytes())
+        digest.update(canonical_source_bytes(path))
         digest.update(b"\0")
     return digest.hexdigest()
 

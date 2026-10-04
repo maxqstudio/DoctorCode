@@ -526,7 +526,7 @@ Known blockers:
 
 ## Important limitations
 
-- non-Python symbol extraction requires language-specific parsers or Ctags
+- non-Python symbol extraction requires a stronger language analyzer
 - dynamic dispatch/dependency injection/reflection are not resolved
 - JS/TS function-level semantics are not inferred here
 

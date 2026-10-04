@@ -59,6 +59,7 @@ def main() -> int:
     ap.add_argument("--root", default=".")
     ap.add_argument("--session", required=True)
     ap.add_argument("--report", default="")
+    ap.add_argument("--no-write-report", action="store_true")
     args = ap.parse_args()
 
     start = Path(args.root).resolve()
@@ -314,7 +315,7 @@ def main() -> int:
         ),
     }
 
-    report_path_text = args.report or str(session.get("acceptance_report", "")).strip()
+    report_path_text = "" if args.no_write_report else (args.report or str(session.get("acceptance_report", "")).strip())
     if report_path_text:
         report_path = resolve(root, report_path_text)
         write_json(report_path, report)

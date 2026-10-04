@@ -395,3 +395,9 @@ Unix installation uses `scripts/install.sh --version <version>`; Windows install
 Release checksums are an integrity contract for assets obtained from the DoctorCode GitHub release channel. They are not a code-signing claim. Cross-built arm64 archives are package-verified; native execution is claimed only where the acceptance runner executes that architecture.
 
 The first public release target is `v0.1.0`, but it is not published until M17 is MAIN_ACCEPTED on protected `main`.
+
+## Contributing and community
+
+- Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- Security policy: [`SECURITY.md`](SECURITY.md)
+- Code of conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)
