@@ -476,7 +476,7 @@ func boolParameters(file *parsedFile, fn *gotreesitter.Node) map[string]bool {
 	if parameters == nil {
 		return out
 	}
-	for i := uint32(0); i < parameters.NamedChildCount(); i++ {
+	for i := 0; i < parameters.NamedChildCount(); i++ {
 		parameter := parameters.NamedChild(i)
 		if parameter == nil || parameter.Type(lang) != "parameter_declaration" {
 			continue
@@ -530,7 +530,7 @@ func parameterMutatedOrShadowed(file *parsedFile, body *gotreesitter.Node, name 
 }
 
 func containsDirectIdentifier(source []byte, node *gotreesitter.Node, lang *gotreesitter.Language, name string) bool {
-	for i := uint32(0); i < node.NamedChildCount(); i++ {
+	for i := 0; i < node.NamedChildCount(); i++ {
 		child := node.NamedChild(i)
 		if child != nil && child.Type(lang) == "identifier" && nodeText(source, child) == name {
 			return true
