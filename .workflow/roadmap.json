@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "current_phase": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
+  "current_phase": "M24_C_CPP_SEMANTIC_BASELINE",
   "phases": [
     {
       "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
@@ -49,7 +49,7 @@
     {
       "id": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
       "title": "Java and Kotlin semantic baseline",
-      "status": "CURRENT",
+      "status": "ACCEPTED",
       "objective": "Add JVM-family semantic analysis with package, class, method, and build-system awareness.",
       "exit_criteria": [
         "Java and Kotlin bounded rules pass synthetic, adversarial, and repository-shaped tests.",
@@ -60,7 +60,7 @@
     {
       "id": "M24_C_CPP_SEMANTIC_BASELINE",
       "title": "C and C++ semantic baseline",
-      "status": "PLANNED",
+      "status": "CURRENT",
       "objective": "Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation.",
       "exit_criteria": [
         "Header/include and declaration-definition evidence is deterministic.",
