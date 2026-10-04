@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: main
+Active branch: work/m23-java-kotlin-semantic-baseline
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3
-Current source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
+Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

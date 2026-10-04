@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
   "repository": "maxqstudio/Skill_Workflow",
-  "ref": "024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8",
-  "policy": "DoctorCode vendors the current Skill_Workflow runtime tools from this exact authority. This authority retains mandatory synchronized roadmap governance and additionally repairs static sequence HTTP predecessor reachability plus Python class-method path-symbol cross-document validation."
+  "ref": "2fc16cce4c7753ad103bac401d1825a9bd8bd3a1",
+  "policy": "DoctorCode consumes Skill_Workflow SW2-11 from this exact authority. Consumer governance tools must be vendored through the upstream governance-v1 migration, locked by .workflow/toolchain.lock.json, and validated without weakening existing DoctorCode acceptance gates. Root AGENTS.md and schema-v1 governance are mandatory; Owner license authority must never be inferred."
 }

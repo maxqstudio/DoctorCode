@@ -3,110 +3,596 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb
+Source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
 Status: CURRENT
 
-| File | Symbol | Kind | Lines@SHA | Responsibility | Reads/Writes | Called By | Tests |
-|---|---|---|---|---|---|---|---|
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | target | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | _wrapper | function | 6-7 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | use | function | 9-10 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | _stale | function | 12-13 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | classify | function | 15-20 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/all-positive/sample.py | enabled | function | 22-26 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | target | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | first | function | 7-8 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | second | function | 10-11 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | public_unused | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | register | function | 6-7 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | _hook | function | 10-11 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | ready | function | 13-14 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | logic | function | 16-21 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | same | function | 23-27 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | target | function | 29-30 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | _wrapper | function | 32-33 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | use_one | function | 35-36 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | use_two | function | 38-39 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py | _test_helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | test_helper | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | ready | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | choose | function | 4-9 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | target | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | other | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | first | function | 7-8 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | second | function | 10-11 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py | use | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py | _exported | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py | use | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | _hook | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | load | function | 6-7 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | _hook | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | load | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py | use | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | use | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | _generated_helper | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | classify | function | 1-6 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py | run | function | 8-9 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py | generated_entry | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/namespace-package-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | target | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | target | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | _wrapper | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | _stale | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | _live | function | 4-5 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py | run | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | test_helper | function | 3-4 | Observed Python symbol | | | |
-| internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | _helper | function | 1-2 | Observed Python symbol | | | |
-| scripts/build_release.py | parse_args | function | 33-39 | Observed Python symbol | | | |
-| scripts/build_release.py | validate_metadata | function | 42-57 | Observed Python symbol | | | |
-| scripts/build_release.py | sha256 | function | 60-65 | Observed Python symbol | | | |
-| scripts/build_release.py | build_binary | function | 68-86 | Observed Python symbol | | | |
-| scripts/build_release.py | populate_package | function | 89-111 | Observed Python symbol | | | |
-| scripts/build_release.py | iter_archive_paths | function | 114-116 | Observed Python symbol | | | |
-| scripts/build_release.py | write_tar_gz | function | 119-139 | Observed Python symbol | | | |
-| scripts/build_release.py | write_zip | function | 142-157 | Observed Python symbol | | | |
-| scripts/build_release.py | main | function | 160-213 | Observed Python symbol | | | |
-| scripts/smoke_release.py | parse_args | function | 11-15 | Observed Python symbol | | | |
-| scripts/smoke_release.py | target | function | 18-36 | Observed Python symbol | | | |
-| scripts/smoke_release.py | version_json | function | 39-46 | Observed Python symbol | | | |
-| scripts/smoke_release.py | main | function | 49-70 | Observed Python symbol | | | |
-| scripts/verify_release.py | parse_args | function | 21-27 | Observed Python symbol | | | |
-| scripts/verify_release.py | sha256 | function | 30-35 | Observed Python symbol | | | |
-| scripts/verify_release.py | archive_names | function | 38-45 | Observed Python symbol | | | |
-| scripts/verify_release.py | validate_archive | function | 48-66 | Observed Python symbol | | | |
-| scripts/verify_release.py | main | function | 69-125 | Observed Python symbol | | | |
+The default view summarizes machine-observed symbols by file. Expand a file only
+when exact symbol navigation is needed. Full machine facts remain available in
+`.workflow/generated/code_facts.json`; this projection does not invent semantic
+responsibility, callers, or state ownership.
+
+## File summary
+
+| File | Symbols | Classes | Functions | Methods |
+|---|---:|---:|---:|---:|
+| internal/benchmark/testdata/m07-python/all-positive/sample.py | 6 | 0 | 6 | 0 |
+| internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py | 4 | 0 | 4 | 0 |
+| internal/benchmark/testdata/m07-python/conservative-negative/sample.py | 10 | 0 | 10 | 0 |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m07-python/logic-call-negative/sample.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py | 4 | 0 | 4 | 0 |
+| internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m08-python/generated-private-negative/generated.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/namespace-package-live/app.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py | 2 | 0 | 2 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py | 1 | 0 | 1 | 0 |
+| internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py | 1 | 0 | 1 | 0 |
+| scripts/build_release.py | 9 | 0 | 9 | 0 |
+| scripts/smoke_release.py | 4 | 0 | 4 | 0 |
+| scripts/verify_release.py | 5 | 0 | 5 | 0 |
+
+## Detailed symbols
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/all-positive/sample.py</code> — 6 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| target | function | 3-4 |
+| _wrapper | function | 6-7 |
+| use | function | 9-10 |
+| _stale | function | 12-13 |
+| classify | function | 15-20 |
+| enabled | function | 22-26 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/bloat-multiple-references/sample.py</code> — 4 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| target | function | 1-2 |
+| _wrapper | function | 4-5 |
+| first | function | 7-8 |
+| second | function | 10-11 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/conservative-negative/sample.py</code> — 10 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| public_unused | function | 3-4 |
+| register | function | 6-7 |
+| _hook | function | 10-11 |
+| ready | function | 13-14 |
+| logic | function | 16-21 |
+| same | function | 23-27 |
+| target | function | 29-30 |
+| _wrapper | function | 32-33 |
+| use_one | function | 35-36 |
+| use_two | function | 38-39 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/deadcode-test-reference/sample.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _test_helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/deadcode-test-reference/test_sample.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| test_helper | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m07-python/logic-call-negative/sample.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| ready | function | 1-2 |
+| choose | function | 4-9 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/a.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| target | function | 1-2 |
+| _wrapper | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/b.py</code> — 4 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| other | function | 1-2 |
+| _wrapper | function | 4-5 |
+| first | function | 7-8 |
+| second | function | 10-11 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/bloat-same-name-module-collision/consumer.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| use | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-all-export-negative/sample.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _exported | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-from-import-live/a.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-from-import-live/b.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| use | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-getattr-self-negative/sample.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _hook | function | 3-4 |
+| load | function | 6-7 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-globals-negative/sample.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _hook | function | 1-2 |
+| load | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/a.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-module-attribute-live/b.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| use | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/a.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/deadcode-same-name-module-collision/b.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+| use | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/generated-private-negative/generated.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _generated_helper | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m08-python/logic-int-identity-negative/sample.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| classify | function | 1-6 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/linux_impl.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/platform.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 8-9 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/conditional-import-conservative/pkg/win_impl.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/generated-reference-live/pkg/generated.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| generated_entry | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/generated-reference-live/pkg/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/namespace-package-live/app.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/namespace-package-live/ns/pkg/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/nested-dotted-module-live/app.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/nested-dotted-module-live/pkg/sub/core.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/app.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_a/core.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/nested-dotted-same-name-isolation/pkg_b/core.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/package-init-reexport-bloat/app.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/package-init-reexport-bloat/pkg/core.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| target | function | 1-2 |
+| _wrapper | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/package-init-reexport-live/app.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/package-init-reexport-live/pkg/core.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/relative-alias-live/pkg/core.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/relative-alias-live/pkg/use.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_a/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/same-name-nested-package-isolation/pkg_b/use.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/main.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-bloat-live/src/app/wrappers.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| target | function | 1-2 |
+| _wrapper | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/helpers.py</code> — 2 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _stale | function | 1-2 |
+| _live | function | 4-5 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-dead-isolation/src/app/main.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/src-layout-from-import-live/src/app/main.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| run | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/test-reference-live/pkg/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/test-reference-live/tests/test_helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| test_helper | function | 3-4 |
+
+</details>
+
+<details>
+<summary><code>internal/benchmark/testdata/m09-python/type-checking-reference-conservative/pkg/helpers.py</code> — 1 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| _helper | function | 1-2 |
+
+</details>
+
+<details>
+<summary><code>scripts/build_release.py</code> — 9 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| parse_args | function | 33-39 |
+| validate_metadata | function | 42-57 |
+| sha256 | function | 60-65 |
+| build_binary | function | 68-86 |
+| populate_package | function | 89-111 |
+| iter_archive_paths | function | 114-116 |
+| write_tar_gz | function | 119-139 |
+| write_zip | function | 142-157 |
+| main | function | 160-213 |
+
+</details>
+
+<details>
+<summary><code>scripts/smoke_release.py</code> — 4 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| parse_args | function | 11-15 |
+| target | function | 18-36 |
+| version_json | function | 39-46 |
+| main | function | 49-70 |
+
+</details>
+
+<details>
+<summary><code>scripts/verify_release.py</code> — 5 symbols</summary>
+
+| Symbol | Kind | Lines@SHA |
+|---|---|---|
+| parse_args | function | 21-27 |
+| sha256 | function | 30-35 |
+| archive_names | function | 38-45 |
+| validate_archive | function | 48-66 |
+| main | function | 69-125 |
+
+</details>
 
 ## Coverage
 
-- non-Python symbol extraction requires language-specific parsers or Ctags
+- non-Python symbol extraction requires a stronger language analyzer
 - dynamic dispatch/dependency injection/reflection are not resolved
 - JS/TS function-level semantics are not inferred here

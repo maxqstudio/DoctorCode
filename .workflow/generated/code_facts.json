@@ -1,8 +1,434 @@
 {
   "coverage": {
+    "analyzers": [
+      {
+        "analyzer_id": "python_facts",
+        "claimed_extensions": [
+          ".py"
+        ],
+        "dynamic_behavior": "NOT_PROVEN",
+        "languages": [
+          "Python"
+        ],
+        "limitations": [
+          "dynamic dispatch",
+          "dependency injection",
+          "reflection",
+          "callbacks/events",
+          "framework magic not visible statically"
+        ],
+        "parse_failures": [],
+        "proof_status": "PROVEN_STATIC_WITH_LIMITATIONS",
+        "semantic_level": "python_ast_static",
+        "unsupported_files": []
+      },
+      {
+        "analyzer_id": "generic_inventory",
+        "claimed_extensions": [],
+        "dynamic_behavior": "NOT_PROVEN",
+        "languages": [],
+        "limitations": [
+          "semantic symbols, routes, calls, and runtime ordering are NOT_PROVEN for unsupported languages",
+          "dynamic dispatch",
+          "dependency injection",
+          "reflection",
+          "callbacks/events",
+          "framework magic not visible statically"
+        ],
+        "parse_failures": [],
+        "proof_status": "NOT_PROVEN",
+        "semantic_level": "inventory_only",
+        "unsupported_files": [
+          "cmd/doctorcode/main.go",
+          "cmd/doctorcode/main_test.go",
+          "internal/analyzers/golang/analyzer.go",
+          "internal/analyzers/golang/analyzer_test.go",
+          "internal/analyzers/golang/corpus_test.go",
+          "internal/analyzers/golang/related.go",
+          "internal/analyzers/golang/related_test.go",
+          "internal/analyzers/golang/testdata/negative/sample.go",
+          "internal/analyzers/golang/testdata/positive/sample.go",
+          "internal/analyzers/javascript/analyzer.go",
+          "internal/analyzers/javascript/analyzer_test.go",
+          "internal/analyzers/javascript/logic.go",
+          "internal/analyzers/javascript/logic_test.go",
+          "internal/analyzers/javascript/syntax.go",
+          "internal/analyzers/javascript/syntax_test.go",
+          "internal/analyzers/jvm/analyzer.go",
+          "internal/analyzers/jvm/analyzer_test.go",
+          "internal/analyzers/jvm/syntax.go",
+          "internal/analyzers/python/analyzer.go",
+          "internal/analyzers/python/analyzer_test.go",
+          "internal/analyzers/python/related.go",
+          "internal/analyzers/python/related_test.go",
+          "internal/analyzers/registry.go",
+          "internal/analyzers/registry_test.go",
+          "internal/analyzers/rust/analyzer.go",
+          "internal/analyzers/rust/analyzer_test.go",
+          "internal/analyzers/rust/syntax.go",
+          "internal/application/application.go",
+          "internal/application/application_test.go",
+          "internal/benchmark/benchmark.go",
+          "internal/benchmark/benchmark_test.go",
+          "internal/benchmark/testdata/cases/bloat-positive/sample.go",
+          "internal/benchmark/testdata/cases/deadcode-bodyless/sample.go",
+          "internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go",
+          "internal/benchmark/testdata/cases/deadcode-positive/sample.go",
+          "internal/benchmark/testdata/cases/deadcode-test-reference/sample.go",
+          "internal/benchmark/testdata/cases/deadcode-test-reference/sample_test.go",
+          "internal/benchmark/testdata/cases/logic-positive/sample.go",
+          "internal/benchmark/testdata/cases/negative-mixed/sample.go",
+          "internal/benchmark/testdata/cases/security-positive/sample.go",
+          "internal/benchmark/testdata/cases/simplify-positive/sample.go",
+          "internal/benchmark/testdata/m03/bloat-shadow-local/sample.go",
+          "internal/benchmark/testdata/m03/bloat-two-references/sample.go",
+          "internal/benchmark/testdata/m03/deadcode-function-value-reference/sample.go",
+          "internal/benchmark/testdata/m03/deadcode-selector-collision/sample.go",
+          "internal/benchmark/testdata/m03/deadcode-shadow-local/sample.go",
+          "internal/benchmark/testdata/m03/logic-impure-duplicate/sample.go",
+          "internal/benchmark/testdata/m03/logic-parenthesized-duplicate/sample.go",
+          "internal/benchmark/testdata/m03/security-placeholder/sample.go",
+          "internal/benchmark/testdata/m03/security-raw-string/sample.go",
+          "internal/benchmark/testdata/m03/simplify-inverted/sample.go",
+          "internal/benchmark/testdata/m03/simplify-same-result/sample.go",
+          "internal/benchmark/testdata/m04/assembly-fail-closed/helper.go",
+          "internal/benchmark/testdata/m04/build-tag-reference/helper.go",
+          "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go",
+          "internal/benchmark/testdata/m04/cross-file-dead/helper.go",
+          "internal/benchmark/testdata/m04/cross-file-dead/service.go",
+          "internal/benchmark/testdata/m04/cross-file-live/helper.go",
+          "internal/benchmark/testdata/m04/cross-file-live/service.go",
+          "internal/benchmark/testdata/m04/external-test-name-collision/helper.go",
+          "internal/benchmark/testdata/m04/external-test-name-collision/helper_test.go",
+          "internal/benchmark/testdata/m04/generated-reference/helper.go",
+          "internal/benchmark/testdata/m04/generated-reference/zz_generated.go",
+          "internal/benchmark/testdata/m04/multi-file-bloat/service.go",
+          "internal/benchmark/testdata/m04/multi-file-bloat/target.go",
+          "internal/benchmark/testdata/m04/multi-file-bloat/wrapper.go",
+          "internal/benchmark/testdata/m04/multi-package-isolation/pkgone/a.go",
+          "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo/a.go",
+          "internal/benchmark/testdata/m04/nested-logic/internal/router/router.go",
+          "internal/benchmark/testdata/m04/nested-logic/internal/router/support.go",
+          "internal/benchmark/testdata/m04/nested-security/cmd/app/main.go",
+          "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/doc.go",
+          "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go",
+          "internal/benchmark/testdata/m04/same-package-test-reference/helper.go",
+          "internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go",
+          "internal/benchmark/testdata/m18-js-ts/block-comment-fake-code/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/comment-fake-code/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/env-credential/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/inverse-bool/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/javascript-all-positive/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/object-property-token/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/same-bool-negative/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/string-fake-code/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/template-fake-code/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/template-interpolation/sample.js",
+          "internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts",
+          "internal/benchmark/testdata/m18-js-ts/typescript-annotation/sample.ts",
+          "internal/benchmark/testdata/m19-js-ts-logic/arrow-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/call-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/closure-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/comment-spacing-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/function-expression-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/global-accessor-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/intervening-call-barrier/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/intervening-member-barrier/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/js-bare-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/js-negated-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/lexical-fake-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/local-binding-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/loose-equality-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/member-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/method-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/parameter-reassigned-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/parameter-updated-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive/sample.js",
+          "internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative/sample.ts",
+          "internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive/sample.ts",
+          "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/anchor.js",
+          "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/sample.jsx",
+          "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/anchor.js",
+          "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/sample.jsx",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/anchor.ts",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/sample.tsx",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/anchor.ts",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/sample.tsx",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/anchor.ts",
+          "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx",
+          "internal/benchmark/testdata/m22-rust/attributed-function-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/deadcode-positive/sample.rs",
+          "internal/benchmark/testdata/m22-rust/different-condition-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/for-shadowed-parameter-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/logic-positive/sample.rs",
+          "internal/benchmark/testdata/m22-rust/macro-reference-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/placeholder-secret-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/public-function-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/same-boolean-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/security-positive/sample.rs",
+          "internal/benchmark/testdata/m22-rust/shadowed-parameter-negative/sample.rs",
+          "internal/benchmark/testdata/m22-rust/simplify-positive/sample.rs",
+          "internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative/sample.rs",
+          "internal/benchmark/testdata/m23-java/concatenated-secret-negative/Secrets.java",
+          "internal/benchmark/testdata/m23-java/generated-source-negative/Generated.java",
+          "internal/benchmark/testdata/m23-java/logic-positive/Feature.java",
+          "internal/benchmark/testdata/m23-java/maven-repository-shaped/pom.xml",
+          "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo/Feature.java",
+          "internal/benchmark/testdata/m23-java/nested-lambda-negative/Feature.java",
+          "internal/benchmark/testdata/m23-java/placeholder-secret-negative/Secrets.java",
+          "internal/benchmark/testdata/m23-java/reassigned-parameter-negative/Feature.java",
+          "internal/benchmark/testdata/m23-java/security-positive/Secrets.java",
+          "internal/benchmark/testdata/m23-java/simplify-positive/Feature.java",
+          "internal/benchmark/testdata/m23-kotlin/generated-source-negative/Generated.kt",
+          "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/build.gradle.kts",
+          "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo/Feature.kt",
+          "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative/Secrets.kt",
+          "internal/benchmark/testdata/m23-kotlin/logic-positive/Feature.kt",
+          "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative/Feature.kt",
+          "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative/Secrets.kt",
+          "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
+          "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
+          "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+          "internal/buildinfo/buildinfo.go",
+          "internal/buildinfo/buildinfo_test.go",
+          "internal/detector/detector.go",
+          "internal/detector/detector_test.go",
+          "internal/engine/engine.go",
+          "internal/engine/engine_test.go",
+          "internal/evidence/packet.go",
+          "internal/evidence/packet_test.go",
+          "internal/language/registry.go",
+          "internal/language/registry_test.go",
+          "internal/model/model.go",
+          "internal/realworld/labeled_test.go",
+          "internal/realworld/python_m07_test.go",
+          "internal/realworld/python_m10_labeled_test.go",
+          "internal/realworld/realworld_test.go",
+          "internal/scanner/scanner.go",
+          "internal/scanner/scanner_test.go",
+          "internal/skilladapter/skill_test.go",
+          "internal/toolchain/toolchain.go",
+          "internal/toolchain/toolchain_test.go",
+          "internal/verification/verification.go",
+          "internal/verification/verification_test.go",
+          "mcp/cmd/doctorcode-mcp/main.go",
+          "mcp/server.go",
+          "mcp/server_test.go",
+          "scripts/install.ps1",
+          "scripts/install.sh"
+        ]
+      }
+    ],
     "call_inventory": "Python AST token calls only",
+    "dynamic_behavior": "NOT_PROVEN",
+    "generic_fallback": {
+      "analyzer_id": "generic_inventory",
+      "claimed_extensions": [],
+      "dynamic_behavior": "NOT_PROVEN",
+      "languages": [],
+      "limitations": [
+        "semantic symbols, routes, calls, and runtime ordering are NOT_PROVEN for unsupported languages",
+        "dynamic dispatch",
+        "dependency injection",
+        "reflection",
+        "callbacks/events",
+        "framework magic not visible statically"
+      ],
+      "parse_failures": [],
+      "proof_status": "NOT_PROVEN",
+      "semantic_level": "inventory_only",
+      "unsupported_files": [
+        "cmd/doctorcode/main.go",
+        "cmd/doctorcode/main_test.go",
+        "internal/analyzers/golang/analyzer.go",
+        "internal/analyzers/golang/analyzer_test.go",
+        "internal/analyzers/golang/corpus_test.go",
+        "internal/analyzers/golang/related.go",
+        "internal/analyzers/golang/related_test.go",
+        "internal/analyzers/golang/testdata/negative/sample.go",
+        "internal/analyzers/golang/testdata/positive/sample.go",
+        "internal/analyzers/javascript/analyzer.go",
+        "internal/analyzers/javascript/analyzer_test.go",
+        "internal/analyzers/javascript/logic.go",
+        "internal/analyzers/javascript/logic_test.go",
+        "internal/analyzers/javascript/syntax.go",
+        "internal/analyzers/javascript/syntax_test.go",
+        "internal/analyzers/jvm/analyzer.go",
+        "internal/analyzers/jvm/analyzer_test.go",
+        "internal/analyzers/jvm/syntax.go",
+        "internal/analyzers/python/analyzer.go",
+        "internal/analyzers/python/analyzer_test.go",
+        "internal/analyzers/python/related.go",
+        "internal/analyzers/python/related_test.go",
+        "internal/analyzers/registry.go",
+        "internal/analyzers/registry_test.go",
+        "internal/analyzers/rust/analyzer.go",
+        "internal/analyzers/rust/analyzer_test.go",
+        "internal/analyzers/rust/syntax.go",
+        "internal/application/application.go",
+        "internal/application/application_test.go",
+        "internal/benchmark/benchmark.go",
+        "internal/benchmark/benchmark_test.go",
+        "internal/benchmark/testdata/cases/bloat-positive/sample.go",
+        "internal/benchmark/testdata/cases/deadcode-bodyless/sample.go",
+        "internal/benchmark/testdata/cases/deadcode-linkage-escape/sample.go",
+        "internal/benchmark/testdata/cases/deadcode-positive/sample.go",
+        "internal/benchmark/testdata/cases/deadcode-test-reference/sample.go",
+        "internal/benchmark/testdata/cases/deadcode-test-reference/sample_test.go",
+        "internal/benchmark/testdata/cases/logic-positive/sample.go",
+        "internal/benchmark/testdata/cases/negative-mixed/sample.go",
+        "internal/benchmark/testdata/cases/security-positive/sample.go",
+        "internal/benchmark/testdata/cases/simplify-positive/sample.go",
+        "internal/benchmark/testdata/m03/bloat-shadow-local/sample.go",
+        "internal/benchmark/testdata/m03/bloat-two-references/sample.go",
+        "internal/benchmark/testdata/m03/deadcode-function-value-reference/sample.go",
+        "internal/benchmark/testdata/m03/deadcode-selector-collision/sample.go",
+        "internal/benchmark/testdata/m03/deadcode-shadow-local/sample.go",
+        "internal/benchmark/testdata/m03/logic-impure-duplicate/sample.go",
+        "internal/benchmark/testdata/m03/logic-parenthesized-duplicate/sample.go",
+        "internal/benchmark/testdata/m03/security-placeholder/sample.go",
+        "internal/benchmark/testdata/m03/security-raw-string/sample.go",
+        "internal/benchmark/testdata/m03/simplify-inverted/sample.go",
+        "internal/benchmark/testdata/m03/simplify-same-result/sample.go",
+        "internal/benchmark/testdata/m04/assembly-fail-closed/helper.go",
+        "internal/benchmark/testdata/m04/build-tag-reference/helper.go",
+        "internal/benchmark/testdata/m04/build-tag-reference/windows_ref.go",
+        "internal/benchmark/testdata/m04/cross-file-dead/helper.go",
+        "internal/benchmark/testdata/m04/cross-file-dead/service.go",
+        "internal/benchmark/testdata/m04/cross-file-live/helper.go",
+        "internal/benchmark/testdata/m04/cross-file-live/service.go",
+        "internal/benchmark/testdata/m04/external-test-name-collision/helper.go",
+        "internal/benchmark/testdata/m04/external-test-name-collision/helper_test.go",
+        "internal/benchmark/testdata/m04/generated-reference/helper.go",
+        "internal/benchmark/testdata/m04/generated-reference/zz_generated.go",
+        "internal/benchmark/testdata/m04/multi-file-bloat/service.go",
+        "internal/benchmark/testdata/m04/multi-file-bloat/target.go",
+        "internal/benchmark/testdata/m04/multi-file-bloat/wrapper.go",
+        "internal/benchmark/testdata/m04/multi-package-isolation/pkgone/a.go",
+        "internal/benchmark/testdata/m04/multi-package-isolation/pkgtwo/a.go",
+        "internal/benchmark/testdata/m04/nested-logic/internal/router/router.go",
+        "internal/benchmark/testdata/m04/nested-logic/internal/router/support.go",
+        "internal/benchmark/testdata/m04/nested-security/cmd/app/main.go",
+        "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/doc.go",
+        "internal/benchmark/testdata/m04/nested-simplify/pkg/flags/flags.go",
+        "internal/benchmark/testdata/m04/same-package-test-reference/helper.go",
+        "internal/benchmark/testdata/m04/same-package-test-reference/helper_test.go",
+        "internal/benchmark/testdata/m18-js-ts/block-comment-fake-code/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/comment-fake-code/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/conservative-negative/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/env-credential/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/inverse-bool/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/javascript-all-positive/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/object-property-token/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/same-bool-negative/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/string-fake-code/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/template-fake-code/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/template-interpolation/sample.js",
+        "internal/benchmark/testdata/m18-js-ts/typescript-all-positive/sample.ts",
+        "internal/benchmark/testdata/m18-js-ts/typescript-annotation/sample.ts",
+        "internal/benchmark/testdata/m19-js-ts-logic/arrow-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/call-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/closure-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/comment-spacing-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/function-expression-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/global-accessor-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/intervening-call-barrier/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/intervening-member-barrier/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/js-bare-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/js-negated-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/lexical-fake-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/local-binding-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/loose-equality-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/member-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/method-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/nested-own-param-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/parameter-reassigned-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/parameter-updated-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/parenthesized-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/reverse-comparison-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/separate-chains-negative/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/strict-false-positive/sample.js",
+        "internal/benchmark/testdata/m19-js-ts-logic/ts-generic-negative/sample.ts",
+        "internal/benchmark/testdata/m19-js-ts-logic/ts-strict-null-positive/sample.ts",
+        "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/anchor.js",
+        "internal/benchmark/testdata/m20-js-ts-parser/jsx-simplify-positive/sample.jsx",
+        "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/anchor.js",
+        "internal/benchmark/testdata/m20-js-ts-parser/jsx-string-noise-negative/sample.jsx",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/anchor.ts",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-comment-noise-negative/sample.tsx",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/anchor.ts",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-logic-positive/sample.tsx",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/anchor.ts",
+        "internal/benchmark/testdata/m20-js-ts-parser/tsx-security-positive/sample.tsx",
+        "internal/benchmark/testdata/m22-rust/attributed-function-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/deadcode-positive/sample.rs",
+        "internal/benchmark/testdata/m22-rust/different-condition-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/for-shadowed-parameter-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/logic-positive/sample.rs",
+        "internal/benchmark/testdata/m22-rust/macro-reference-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/placeholder-secret-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/public-function-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/same-boolean-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/security-positive/sample.rs",
+        "internal/benchmark/testdata/m22-rust/shadowed-parameter-negative/sample.rs",
+        "internal/benchmark/testdata/m22-rust/simplify-positive/sample.rs",
+        "internal/benchmark/testdata/m22-rust/unresolved-macro-deadcode-negative/sample.rs",
+        "internal/benchmark/testdata/m23-java/concatenated-secret-negative/Secrets.java",
+        "internal/benchmark/testdata/m23-java/generated-source-negative/Generated.java",
+        "internal/benchmark/testdata/m23-java/logic-positive/Feature.java",
+        "internal/benchmark/testdata/m23-java/maven-repository-shaped/pom.xml",
+        "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo/Feature.java",
+        "internal/benchmark/testdata/m23-java/nested-lambda-negative/Feature.java",
+        "internal/benchmark/testdata/m23-java/placeholder-secret-negative/Secrets.java",
+        "internal/benchmark/testdata/m23-java/reassigned-parameter-negative/Feature.java",
+        "internal/benchmark/testdata/m23-java/security-positive/Secrets.java",
+        "internal/benchmark/testdata/m23-java/simplify-positive/Feature.java",
+        "internal/benchmark/testdata/m23-kotlin/generated-source-negative/Generated.kt",
+        "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/build.gradle.kts",
+        "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo/Feature.kt",
+        "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative/Secrets.kt",
+        "internal/benchmark/testdata/m23-kotlin/logic-positive/Feature.kt",
+        "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative/Feature.kt",
+        "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative/Secrets.kt",
+        "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
+        "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
+        "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+        "internal/buildinfo/buildinfo.go",
+        "internal/buildinfo/buildinfo_test.go",
+        "internal/detector/detector.go",
+        "internal/detector/detector_test.go",
+        "internal/engine/engine.go",
+        "internal/engine/engine_test.go",
+        "internal/evidence/packet.go",
+        "internal/evidence/packet_test.go",
+        "internal/language/registry.go",
+        "internal/language/registry_test.go",
+        "internal/model/model.go",
+        "internal/realworld/labeled_test.go",
+        "internal/realworld/python_m07_test.go",
+        "internal/realworld/python_m10_labeled_test.go",
+        "internal/realworld/realworld_test.go",
+        "internal/scanner/scanner.go",
+        "internal/scanner/scanner_test.go",
+        "internal/skilladapter/skill_test.go",
+        "internal/toolchain/toolchain.go",
+        "internal/toolchain/toolchain_test.go",
+        "internal/verification/verification.go",
+        "internal/verification/verification_test.go",
+        "mcp/cmd/doctorcode-mcp/main.go",
+        "mcp/server.go",
+        "mcp/server_test.go",
+        "scripts/install.ps1",
+        "scripts/install.sh"
+      ]
+    },
     "limitations": [
-      "non-Python symbol extraction requires language-specific parsers or Ctags",
+      "non-Python symbol extraction requires a stronger language analyzer",
       "dynamic dispatch/dependency injection/reflection are not resolved",
       "JS/TS function-level semantics are not inferred here"
     ],
@@ -17,7 +443,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 562
+      "lines": 565
     },
     {
       "directory": "cmd/doctorcode",
@@ -118,6 +544,27 @@
       "lines": 111
     },
     {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 730
+    },
+    {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 122
+    },
+    {
+      "directory": "internal/analyzers/jvm",
+      "file": "internal/analyzers/jvm/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 53
+    },
+    {
       "directory": "internal/analyzers/python",
       "file": "internal/analyzers/python/analyzer.go",
       "is_test": false,
@@ -150,7 +597,7 @@
       "file": "internal/analyzers/registry.go",
       "is_test": false,
       "language": "Go",
-      "lines": 54
+      "lines": 56
     },
     {
       "directory": "internal/analyzers",
@@ -1322,6 +1769,146 @@
       "lines": 3
     },
     {
+      "directory": "internal/benchmark/testdata/m23-java/concatenated-secret-negative",
+      "file": "internal/benchmark/testdata/m23-java/concatenated-secret-negative/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/generated-source-negative",
+      "file": "internal/benchmark/testdata/m23-java/generated-source-negative/Generated.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/logic-positive",
+      "file": "internal/benchmark/testdata/m23-java/logic-positive/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/maven-repository-shaped",
+      "file": "internal/benchmark/testdata/m23-java/maven-repository-shaped/pom.xml",
+      "is_test": false,
+      "language": "XML",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo",
+      "file": "internal/benchmark/testdata/m23-java/maven-repository-shaped/src/main/java/demo/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/nested-lambda-negative",
+      "file": "internal/benchmark/testdata/m23-java/nested-lambda-negative/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 15
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m23-java/placeholder-secret-negative/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/reassigned-parameter-negative",
+      "file": "internal/benchmark/testdata/m23-java/reassigned-parameter-negative/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/security-positive",
+      "file": "internal/benchmark/testdata/m23-java/security-positive/Secrets.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-java/simplify-positive",
+      "file": "internal/benchmark/testdata/m23-java/simplify-positive/Feature.java",
+      "is_test": false,
+      "language": "Java",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/generated-source-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/generated-source-negative/Generated.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped",
+      "file": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/build.gradle.kts",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo",
+      "file": "internal/benchmark/testdata/m23-kotlin/gradle-repository-shaped/src/main/kotlin/demo/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/interpolated-secret-negative/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/logic-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/logic-positive/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/nested-lambda-negative/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 14
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/placeholder-secret-negative/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/security-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 3
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative",
+      "file": "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m23-kotlin/simplify-positive",
+      "file": "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+      "is_test": false,
+      "language": "Kotlin",
+      "lines": 9
+    },
+    {
       "directory": "internal/buildinfo",
       "file": "internal/buildinfo/buildinfo.go",
       "is_test": false,
@@ -1554,16 +2141,16 @@
       "target_token": "_wrapper"
     },
     {
-      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
-      "target_token": "ready"
-    },
-    {
-      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
-      "target_token": "ready"
-    },
-    {
       "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::_wrapper",
       "target_token": "target"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "target_token": "ready"
+    },
+    {
+      "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::logic",
+      "target_token": "ready"
     },
     {
       "caller": "internal/benchmark/testdata/m07-python/conservative-negative/sample.py::use_one",
@@ -1686,6 +2273,122 @@
       "target_token": "_helper"
     },
     {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "env.update"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "os.environ.copy"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "str"
+    },
+    {
+      "caller": "scripts/build_release.py::build_binary",
+      "target_token": "subprocess.run"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "item.relative_to"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "package_dir.rglob"
+    },
+    {
+      "caller": "scripts/build_release.py::iter_archive_paths",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "archive.stat"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "artifacts.append"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "checksum_entries.append"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "checksum_entries.sort"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "json.dumps"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "manifest_path.write_text"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "output.exists"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "output.mkdir"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "parse_args"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "populate_package"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "print"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "shutil.rmtree"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "tempfile.TemporaryDirectory"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "validate_metadata"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "write_tar_gz"
+    },
+    {
+      "caller": "scripts/build_release.py::main",
+      "target_token": "write_zip"
+    },
+    {
       "caller": "scripts/build_release.py::parse_args",
       "target_token": "argparse.ArgumentParser"
     },
@@ -1710,92 +2413,12 @@
       "target_token": "parser.parse_args"
     },
     {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "VERSION_RE.fullmatch"
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "build_binary"
     },
     {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "COMMIT_RE.fullmatch"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "dt.datetime.fromisoformat"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "build_date.replace"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "parsed.astimezone"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "int"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "parsed.timestamp"
-    },
-    {
-      "caller": "scripts/build_release.py::validate_metadata",
-      "target_token": "max"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "hashlib.sha256"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "path.open"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "iter"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "handle.read"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "digest.update"
-    },
-    {
-      "caller": "scripts/build_release.py::sha256",
-      "target_token": "digest.hexdigest"
-    },
-    {
-      "caller": "scripts/build_release.py::build_binary",
-      "target_token": "os.environ.copy"
-    },
-    {
-      "caller": "scripts/build_release.py::build_binary",
-      "target_token": "env.update"
-    },
-    {
-      "caller": "scripts/build_release.py::build_binary",
-      "target_token": "subprocess.run"
-    },
-    {
-      "caller": "scripts/build_release.py::build_binary",
-      "target_token": "str"
+      "caller": "scripts/build_release.py::populate_package",
+      "target_token": "build_binary"
     },
     {
       "caller": "scripts/build_release.py::populate_package",
@@ -1803,15 +2426,7 @@
     },
     {
       "caller": "scripts/build_release.py::populate_package",
-      "target_token": "join"
-    },
-    {
-      "caller": "scripts/build_release.py::populate_package",
-      "target_token": "build_binary"
-    },
-    {
-      "caller": "scripts/build_release.py::populate_package",
-      "target_token": "build_binary"
+      "target_token": "shutil.copyfile"
     },
     {
       "caller": "scripts/build_release.py::populate_package",
@@ -1826,32 +2441,76 @@
       "target_token": "skill_dir.mkdir"
     },
     {
-      "caller": "scripts/build_release.py::populate_package",
-      "target_token": "shutil.copyfile"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "digest.hexdigest"
     },
     {
-      "caller": "scripts/build_release.py::populate_package",
-      "target_token": "chmod"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "digest.update"
     },
     {
-      "caller": "scripts/build_release.py::populate_package",
-      "target_token": "chmod"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "handle.read"
     },
     {
-      "caller": "scripts/build_release.py::iter_archive_paths",
-      "target_token": "sorted"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "hashlib.sha256"
     },
     {
-      "caller": "scripts/build_release.py::iter_archive_paths",
-      "target_token": "package_dir.rglob"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "iter"
     },
     {
-      "caller": "scripts/build_release.py::iter_archive_paths",
-      "target_token": "as_posix"
+      "caller": "scripts/build_release.py::sha256",
+      "target_token": "path.open"
     },
     {
-      "caller": "scripts/build_release.py::iter_archive_paths",
-      "target_token": "item.relative_to"
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "COMMIT_RE.fullmatch"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "VERSION_RE.fullmatch"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "build_date.replace"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "dt.datetime.fromisoformat"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "int"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "max"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "parsed.astimezone"
+    },
+    {
+      "caller": "scripts/build_release.py::validate_metadata",
+      "target_token": "parsed.timestamp"
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
@@ -1863,7 +2522,7 @@
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "tarfile.open"
+      "target_token": "io.BytesIO"
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
@@ -1871,11 +2530,31 @@
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "as_posix"
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "path.read_bytes"
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
       "target_token": "path.relative_to"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tar.addfile"
+    },
+    {
+      "caller": "scripts/build_release.py::write_tar_gz",
+      "target_token": "tar.addfile"
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
@@ -1883,35 +2562,7 @@
     },
     {
       "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "path.is_dir"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "path.is_dir"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "tar.addfile"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "path.read_bytes"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "len"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "tar.addfile"
-    },
-    {
-      "caller": "scripts/build_release.py::write_tar_gz",
-      "target_token": "io.BytesIO"
-    },
-    {
-      "caller": "scripts/build_release.py::write_zip",
-      "target_token": "zipfile.ZipFile"
+      "target_token": "tarfile.open"
     },
     {
       "caller": "scripts/build_release.py::write_zip",
@@ -1919,7 +2570,11 @@
     },
     {
       "caller": "scripts/build_release.py::write_zip",
-      "target_token": "as_posix"
+      "target_token": "path.is_dir"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "path.read_bytes"
     },
     {
       "caller": "scripts/build_release.py::write_zip",
@@ -1927,199 +2582,23 @@
     },
     {
       "caller": "scripts/build_release.py::write_zip",
-      "target_token": "path.is_dir"
+      "target_token": "zf.writestr"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zf.writestr"
+    },
+    {
+      "caller": "scripts/build_release.py::write_zip",
+      "target_token": "zipfile.ZipFile"
     },
     {
       "caller": "scripts/build_release.py::write_zip",
       "target_token": "zipfile.ZipInfo"
     },
     {
-      "caller": "scripts/build_release.py::write_zip",
-      "target_token": "zf.writestr"
-    },
-    {
-      "caller": "scripts/build_release.py::write_zip",
-      "target_token": "zf.writestr"
-    },
-    {
-      "caller": "scripts/build_release.py::write_zip",
-      "target_token": "path.read_bytes"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "parse_args"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "validate_metadata"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "resolve"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "Path"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "resolve"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "Path"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "output.exists"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "shutil.rmtree"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "output.mkdir"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "tempfile.TemporaryDirectory"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "Path"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "populate_package"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "write_zip"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "write_tar_gz"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "artifacts.append"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "sha256"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "archive.stat"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "manifest_path.write_text"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "json.dumps"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "checksum_entries.append"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "sha256"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "checksum_entries.sort"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "write_text"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "join"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "print"
-    },
-    {
-      "caller": "scripts/build_release.py::main",
-      "target_token": "len"
-    },
-    {
-      "caller": "scripts/smoke_release.py::parse_args",
-      "target_token": "argparse.ArgumentParser"
-    },
-    {
-      "caller": "scripts/smoke_release.py::parse_args",
-      "target_token": "parser.add_argument"
-    },
-    {
-      "caller": "scripts/smoke_release.py::parse_args",
-      "target_token": "parser.add_argument"
-    },
-    {
-      "caller": "scripts/smoke_release.py::parse_args",
-      "target_token": "parser.parse_args"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "lower"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "platform.system"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "lower"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "platform.machine"
-    },
-    {
-      "caller": "scripts/smoke_release.py::target",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/smoke_release.py::version_json",
-      "target_token": "subprocess.run"
-    },
-    {
-      "caller": "scripts/smoke_release.py::version_json",
-      "target_token": "str"
-    },
-    {
-      "caller": "scripts/smoke_release.py::version_json",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/smoke_release.py::version_json",
-      "target_token": "json.loads"
-    },
-    {
-      "caller": "scripts/smoke_release.py::version_json",
-      "target_token": "SystemExit"
-    },
-    {
       "caller": "scripts/smoke_release.py::main",
-      "target_token": "parse_args"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "json.loads"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "read_text"
+      "target_token": "Path"
     },
     {
       "caller": "scripts/smoke_release.py::main",
@@ -2127,7 +2606,15 @@
     },
     {
       "caller": "scripts/smoke_release.py::main",
-      "target_token": "target"
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "SystemExit"
     },
     {
       "caller": "scripts/smoke_release.py::main",
@@ -2135,83 +2622,87 @@
     },
     {
       "caller": "scripts/smoke_release.py::main",
-      "target_token": "SystemExit"
+      "target_token": "json.loads"
     },
     {
       "caller": "scripts/smoke_release.py::main",
-      "target_token": "Path"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "version_json"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "version_json"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/smoke_release.py::main",
-      "target_token": "SystemExit"
+      "target_token": "parse_args"
     },
     {
       "caller": "scripts/smoke_release.py::main",
       "target_token": "print"
     },
     {
-      "caller": "scripts/verify_release.py::parse_args",
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "target"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "version_json"
+    },
+    {
+      "caller": "scripts/smoke_release.py::main",
+      "target_token": "version_json"
+    },
+    {
+      "caller": "scripts/smoke_release.py::parse_args",
       "target_token": "argparse.ArgumentParser"
     },
     {
-      "caller": "scripts/verify_release.py::parse_args",
+      "caller": "scripts/smoke_release.py::parse_args",
       "target_token": "parser.add_argument"
     },
     {
-      "caller": "scripts/verify_release.py::parse_args",
+      "caller": "scripts/smoke_release.py::parse_args",
       "target_token": "parser.add_argument"
     },
     {
-      "caller": "scripts/verify_release.py::parse_args",
-      "target_token": "parser.add_argument"
-    },
-    {
-      "caller": "scripts/verify_release.py::parse_args",
-      "target_token": "parser.add_argument"
-    },
-    {
-      "caller": "scripts/verify_release.py::parse_args",
+      "caller": "scripts/smoke_release.py::parse_args",
       "target_token": "parser.parse_args"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "hashlib.sha256"
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "SystemExit"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "path.open"
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "SystemExit"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "iter"
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "platform.machine"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "handle.read"
+      "caller": "scripts/smoke_release.py::target",
+      "target_token": "platform.system"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "digest.update"
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "SystemExit"
     },
     {
-      "caller": "scripts/verify_release.py::sha256",
-      "target_token": "digest.hexdigest"
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "json.loads"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "str"
+    },
+    {
+      "caller": "scripts/smoke_release.py::version_json",
+      "target_token": "subprocess.run"
     },
     {
       "caller": "scripts/verify_release.py::archive_names",
-      "target_token": "zipfile.ZipFile"
+      "target_token": "RuntimeError"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "handle.getmembers"
     },
     {
       "caller": "scripts/verify_release.py::archive_names",
@@ -2223,18 +2714,242 @@
     },
     {
       "caller": "scripts/verify_release.py::archive_names",
-      "target_token": "tarfile.open"
-    },
-    {
-      "caller": "scripts/verify_release.py::archive_names",
-      "target_token": "handle.getmembers"
-    },
-    {
-      "caller": "scripts/verify_release.py::archive_names",
       "target_token": "item.isfile"
     },
     {
       "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "tarfile.open"
+    },
+    {
+      "caller": "scripts/verify_release.py::archive_names",
+      "target_token": "zipfile.ZipFile"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "Path"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "SystemExit"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "checksums_path.read_text"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "isinstance"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "item.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "json.loads"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "len"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest.get"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "manifest_path.read_text"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "name.strip"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "parse_args"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "path.is_file"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "path.stat"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "print"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "raw.split"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "raw.strip"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "seen_targets.add"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "set"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "sorted"
+    },
+    {
+      "caller": "scripts/verify_release.py::main",
+      "target_token": "validate_archive"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "argparse.ArgumentParser"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.add_argument"
+    },
+    {
+      "caller": "scripts/verify_release.py::parse_args",
+      "target_token": "parser.parse_args"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "digest.hexdigest"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "digest.update"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "handle.read"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "hashlib.sha256"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "iter"
+    },
+    {
+      "caller": "scripts/verify_release.py::sha256",
+      "target_token": "path.open"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "PurePosixPath"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
+      "target_token": "RuntimeError"
+    },
+    {
+      "caller": "scripts/verify_release.py::validate_archive",
       "target_token": "RuntimeError"
     },
     {
@@ -2243,203 +2958,19 @@
     },
     {
       "caller": "scripts/verify_release.py::validate_archive",
-      "target_token": "PurePosixPath"
-    },
-    {
-      "caller": "scripts/verify_release.py::validate_archive",
       "target_token": "pure.is_absolute"
     },
     {
       "caller": "scripts/verify_release.py::validate_archive",
-      "target_token": "RuntimeError"
-    },
-    {
-      "caller": "scripts/verify_release.py::validate_archive",
       "target_token": "set"
     },
     {
       "caller": "scripts/verify_release.py::validate_archive",
-      "target_token": "RuntimeError"
-    },
-    {
-      "caller": "scripts/verify_release.py::validate_archive",
       "target_token": "sorted"
     },
     {
       "caller": "scripts/verify_release.py::validate_archive",
       "target_token": "sorted"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "parse_args"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "Path"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "json.loads"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest_path.read_text"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "set"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "manifest.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "isinstance"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "len"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "len"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "item.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "item.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "seen_targets.add"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "path.is_file"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "path.stat"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "item.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "sha256"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "item.get"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "validate_archive"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "sorted"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "sha256"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "splitlines"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "checksums_path.read_text"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "raw.strip"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "raw.split"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "len"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "name.strip"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "SystemExit"
-    },
-    {
-      "caller": "scripts/verify_release.py::main",
-      "target_token": "print"
     }
   ],
   "python_routes": [],
@@ -3214,21 +3745,24 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb",
+  "source_digest": "61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366",
   "source_summary": {
-    "files": 217,
+    "files": 240,
     "languages": {
-      "Go": 97,
+      "Go": 100,
+      "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
+      "Kotlin": 10,
       "PowerShell": 1,
       "Python": 58,
       "Rust": 13,
       "Shell": 1,
       "TypeScript": 7,
-      "TypeScript/React": 3
+      "TypeScript/React": 3,
+      "XML": 1
     },
-    "lines": 10018,
+    "lines": 11075,
     "test_files": 2
   },
   "tests": [

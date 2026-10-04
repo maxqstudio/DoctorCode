@@ -12,6 +12,7 @@ import (
 
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
+	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
 	pythonanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/python"
 	rustanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/rust"
 	"github.com/maxqstudio/DoctorCode/internal/application"
@@ -461,6 +462,8 @@ func runBenchmark(args []string) {
 		analyzer = javascriptanalysis.New()
 	case "rust":
 		analyzer = rustanalysis.New()
+	case "jvm":
+		analyzer = jvmanalysis.New()
 	default:
 		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
 	}
@@ -534,7 +537,7 @@ Usage:
   doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
   doctorcode contract <finding-id> [path] [--json]
   doctorcode verify <contract.json> [path] [--json]
-  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript] [--json]
+  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript|rust|jvm] [--json]
   doctorcode version [--json]
 
 M01 detector foundation:

@@ -481,3 +481,11 @@ Status: ACCEPTED
 Keep v0.1.0 fixed at the accepted product SHA and use a one-shot recovery publisher that checks out that immutable tag and reruns the same deterministic build, verification, native install-smoke, and GitHub Release publication contract.
 
 Rationale: GitHub does not trigger new workflows from refs created by the repository GITHUB_TOKEN. Deleting or recreating v0.1.0 would violate the immutable-release contract, while a tag-pinned recovery publisher preserves source identity and all substantive release gates.
+
+## SW2-ADR-010 — Owner-approved MIT license
+
+Status: ACCEPTED
+
+Adopt the MIT License for DoctorCode.
+
+Rationale: The Owner explicitly approved `APPROVE SW2-ADR-010 — MIT` on 2026-10-04. The repository already contains the MIT License text and governance must record that Owner authority rather than infer it from file presence.

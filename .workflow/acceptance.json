@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M22 is MAIN_ACCEPTED at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. The accepted Rust baseline provides embedded parser-backed syntax authority and bounded SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence with 13 adversarial/labeled cases at 4 TP / 0 FP / 0 FN, while Rust BLOAT, macro expansion semantics, borrow/type authority, cargo feature/build-script semantics, whole-program reachability, safe autofix, and automatic deletion remain outside authority. Current project phase is M23_JAVA_KOTLIN_SEMANTIC_BASELINE; no Java/Kotlin semantic authority is accepted yet.",
+  "evidence_boundary": "M22 is MAIN_ACCEPTED and governance-closed at main@761c216453d3ac07235bd2c693aa3a3175d68ba5. M23 candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 establishes an embedded gotreesitter Java/Kotlin syntax/AST baseline for bounded SECURITY, SIMPLIFY, and LOGIC only. Java and Kotlin each pass a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN on Core CI Ubuntu, macOS, and Windows. JVM DEADCODE, BLOAT, Maven/Gradle dependency resolution, annotation processing, reflection, framework wiring, type/overload resolution, safe autofix, and automatic deletion remain outside M23 authority. M23 is not MAIN_ACCEPTED until synchronized exact-branch acceptance, squash merge, and exact-main revalidation complete.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -345,6 +345,42 @@
       "id": "M22-MAIN-POST-MERGE",
       "requirement": "The exact M22 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M22 closure.",
       "status": "PASS"
+    },
+    {
+      "evidence": "work/m23-java-kotlin-semantic-baseline starts from main@761c216453d3ac07235bd2c693aa3a3175d68ba5; M22 product authority is 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3; Skill_Workflow remains 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.",
+      "id": "M23-MAIN-BASELINE",
+      "requirement": "M23 must begin from governance-accepted M22 main and preserve the current Skill_Workflow authority.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at M23 Java semantic benchmark gate with unknown benchmark analyzer \"jvm\".",
+      "id": "M23-RED-JVM-ABSENT",
+      "requirement": "M23 must demonstrate Java/Kotlin analyzer authority absent before implementation.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "jvm/gotreesitter-v1 reuses pinned gotreesitter v0.55.1 Java and Kotlin standalone grammars and ParseWithStrict; analyzer tests require malformed .java and .kt syntax to return blocking syntax-validation errors.",
+      "id": "M23-PARSER-AUTHORITY",
+      "requirement": "Java and Kotlin source must use deterministic embedded syntax/AST parsing with malformed syntax failing closed.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "JVM descriptor declares exactly JVM-LOGIC-DUPLICATE-CONDITION, JVM-SEC-HARDCODED-CREDENTIAL, and JVM-SIMPLIFY-BOOL-RETURN, all safe_autofix=false. No JVM DEADCODE or BLOAT rule is registered.",
+      "id": "M23-BOUNDED-RULES",
+      "requirement": "M23 JVM authority must be limited to declared SECURITY, SIMPLIFY, and LOGIC rules with safe_autofix=false; DEADCODE and BLOAT must remain unavailable.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 36745770972 at c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passes all three OS jobs. Java: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.",
+      "id": "M23-ADVERSARIAL-GREEN",
+      "requirement": "Java and Kotlin labeled/adversarial corpora must pass with zero false positives and zero false negatives on Core CI Ubuntu, macOS, and Windows.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only.",
+      "id": "M23-BUILD-SYSTEM-BOUNDARY",
+      "requirement": "Maven/Gradle-shaped repository roots and generated/build output boundaries must be handled conservatively without claiming dependency-graph authority.",
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -358,12 +394,13 @@
     "M19 JavaScript/TypeScript 24-case LOGIC regression benchmark on Core CI Ubuntu/Windows/macOS",
     "M20 JavaScript/TypeScript parser-backed 5-case benchmark on Core CI Ubuntu/Windows/macOS",
     "M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS",
-    "M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS"
+    "M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS",
+    "M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
   "sequence_mode": "DURING",
-  "sequence_session": "M22-RUST-SEMANTIC-BASELINE",
+  "sequence_session": "M23-JAVA-KOTLIN-SEMANTIC-BASELINE",
   "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",
@@ -379,7 +416,10 @@
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/manifest.json --analyzer=go --json",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m07-python.json --analyzer=python --json",
     "go test ./internal/analyzers/rust ./internal/analyzers ./internal/engine ./internal/benchmark",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m22-rust.json --analyzer=rust --json"
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m22-rust.json --analyzer=rust --json",
+    "go test ./internal/analyzers/jvm ./internal/analyzers ./internal/engine ./internal/benchmark",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-java.json --analyzer=jvm --json",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json"
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",

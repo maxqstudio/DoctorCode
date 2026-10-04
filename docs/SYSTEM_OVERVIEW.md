@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 217 files, 9 language categories.
+Observed source inventory: 240 files, 12 language categories.
 
 ## Major components
 
@@ -146,6 +146,18 @@ Authority: internal/analyzers/golang/related.go, internal/evidence/packet.go, cm
 - FUNCTION_IDENTIFIED -> REFERENCES_CLASSIFIED : Reuse source AST object identity and inspect same-package Go files for production/test references while excluding local shadows and external test packages.
 - REFERENCES_CLASSIFIED -> RELATED_EXCERPTS_BOUNDED : Sort locations deterministically and append at most eight excerpts only while the packet remains inside max-bytes.
 - RELATED_EXCERPTS_BOUNDED -> PACKET_REPORTED : Emit schema-v2 text or JSON packet with related_total, related excerpts, and truncation state.
+
+### FLOW-JAVA-KOTLIN-SEMANTIC-BASELINE — Java and Kotlin parser-backed semantic baseline
+
+Provide conservative Java/Kotlin syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on unsupported JVM/build-system semantics.
+
+Authority: internal/analyzers/jvm, analyzer registry, CLI benchmark selector, M23 Java/Kotlin manifests, and permanent Core CI
+
+- SOURCE_DISCOVERY -> STRICT_PARSE : Discover visible Java/Kotlin source while excluding symlinks and ignored build/generated directories.
+- STRICT_PARSE -> BOUNDARY_FILTER : Parse with embedded gotreesitter Java/Kotlin grammar and fail closed on parser errors, ERROR nodes, or MISSING nodes.
+- BOUNDARY_FILTER -> BOUNDED_RULE_PROOF : Skip generated-source markers and retain only M23-authorized source/AST evidence.
+- BOUNDED_RULE_PROOF -> FINDING_CONTRACT_VALIDATE : Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool-parameter LOGIC without DEADCODE/BLOAT claims.
+- FINDING_CONTRACT_VALIDATE -> DETERMINISTIC_OUTPUT : Validate declared rule/category/autofix metadata and deterministic finding identity before output.
 
 ### FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS — JavaScript and TypeScript conservative structural baseline analysis
 
@@ -336,7 +348,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M23_JAVA_KOTLIN_SEMANTIC_BASELINE
 
-Current status: M22_MAIN_ACCEPTED
+Current status: M23_IMPLEMENTED_VALIDATION_PENDING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -375,6 +387,8 @@ compiler does not infer them from implementation names.
 - FLOW-CONTEXT-COMPILER: Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
 - FLOW-DETERMINISTIC-VERIFICATION: Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
+- FLOW-JAVA-KOTLIN-SEMANTIC-BASELINE: Malformed recognized Java/Kotlin syntax fails closed.
+- FLOW-JAVA-KOTLIN-SEMANTIC-BASELINE: Unsupported semantic ambiguity emits no finding rather than widening proof.
 - FLOW-JAVASCRIPT-TYPESCRIPT-ANALYSIS: No supported files returns analyzer unavailable; source read errors or NUL-containing input block complete analysis.
 - FLOW-JAVASCRIPT-TYPESCRIPT-LOGIC: No supported files returns analyzer unavailable; malformed lexical input fails closed; unsupported condition shapes are skipped without a finding.
 - FLOW-JAVASCRIPT-TYPESCRIPT-PARSER: No supported files returns analyzer unavailable; unknown grammar mapping, parser error, stopped/truncated parse, ERROR node, or MISSING node fails the analyzer closed.
@@ -399,9 +413,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Begin M23 Java/Kotlin semantic baseline planning from accepted main@5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 without widening accepted Go/Python/JavaScript/TypeScript/Rust semantics.
-- Select deterministic Java and Kotlin parser/provider boundaries and define RED labeled/adversarial corpora before implementation.
-- Handle Maven/Gradle/package/class/method boundaries conservatively and keep unsupported JVM/build-system semantics fail closed.
+- Synchronize M23 Project Truth and CURRENT sequence evidence without widening Java/Kotlin semantic authority.
+- Require all eight permanent workflows to PASS on one exact synchronized M23 branch SHA, including release/install after embedding Java/Kotlin grammars.
+- Only after exact branch acceptance may M23 be proposed for squash merge and exact-main revalidation.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -487,6 +501,9 @@ Known blockers:
 - M22 repaired behavior candidate f559f0517b0fae39edc53370a30ea17f0b140dc8 passed Core CI run 36733856112 on Ubuntu, macOS, and Windows. The 13-case Rust corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; each of SECURITY, SIMPLIFY, LOGIC, and DEADCODE reports precision=1.0 and recall=1.0.
 - Exact synchronized M22 candidate bedfc1d473cdcd747485b465740718f76e0f64f6 passed Governance 36734883264, Core CI 36734883437 on Ubuntu/macOS/Windows, M06 36734883305, Real World Go 36734883121, M07 36734883366, M10 36734883146, M16 Thin MCP 36734883490, and M17 Release and Install 36734883371 including Ubuntu/Windows/macOS native install-smoke.
 - M22 merged through PR #35 to main at 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3. Exact-main Governance 36738553649 PASS; Core CI 36738553502 PASS on Ubuntu/macOS/Windows; M06 36738553556 PASS; Real World Go 36738553867 PASS; M07 36738554060 PASS; M10 36738553857 PASS; M16 Thin MCP 36738553920 PASS; M17 Release and Install 36738553978 PASS including release build and Ubuntu/Windows/macOS native install-smoke.
+- M23 starts from governance-accepted main@761c216453d3ac07235bd2c693aa3a3175d68ba5 with M22 product authority 5d84eea86a0c33bf3e784dfd63a4e25cc623f0b3 and Skill_Workflow authority 024e2ea458b25ad9dfb401d3fdeaa994a4cbe1b8.
+- M23 RED Core CI run 36743583723 at cdd5073d8e8bde5bf052fc708b2b52a96fe19ecf failed on Ubuntu, macOS, and Windows at the Java semantic gate with unknown benchmark analyzer "jvm", proving JVM analyzer authority absent before implementation.
+- M23 semantic candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passed Core CI run 36745770972 on Ubuntu, macOS, and Windows. Java corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 
 ### Not proven
 
@@ -501,10 +518,15 @@ Known blockers:
 - M22 Rust DEADCODE intentionally emits no findings for a visible Rust source set containing any macro invocation because DoctorCode has no macro-expansion authority in this milestone.
 - M22 Rust LOGIC is bounded to bare or negated unshadowed bool parameters of the nearest function item; any visible AST pattern rebinding the parameter name removes that parameter from the proof set.
 - M22 Rust parser authority is embedded gotreesitter syntax/AST only; borrow checking, type inference, cargo feature resolution, procedural macro expansion, build-script output, external linkage, and whole-program reachability are not proven.
+- M23 Java/Kotlin DEADCODE and BLOAT authority are not proven and remain unavailable.
+- M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
+- M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
+- M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
+- M23 is not accepted until one synchronized exact branch SHA passes all permanent workflows and exact-main post-merge validation.
 
 ## Important limitations
 
-- non-Python symbol extraction requires language-specific parsers or Ctags
+- non-Python symbol extraction requires a stronger language analyzer
 - dynamic dispatch/dependency injection/reflection are not resolved
 - JS/TS function-level semantics are not inferred here
 

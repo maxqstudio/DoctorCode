@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "language": "Java",
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  },
+  "cases": [
+    {
+      "name": "security-positive",
+      "root": "m23-java/security-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-SEC-HARDCODED-CREDENTIAL",
+          "path": "Secrets.java",
+          "line_start": 2
+        }
+      ]
+    },
+    {
+      "name": "simplify-positive",
+      "root": "m23-java/simplify-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-SIMPLIFY-BOOL-RETURN",
+          "path": "Feature.java",
+          "line_start": 3
+        }
+      ]
+    },
+    {
+      "name": "logic-positive",
+      "root": "m23-java/logic-positive",
+      "expected": [
+        {
+          "rule_id": "JVM-LOGIC-DUPLICATE-CONDITION",
+          "path": "Feature.java",
+          "line_start": 5
+        }
+      ]
+    },
+    {
+      "name": "placeholder-secret-negative",
+      "root": "m23-java/placeholder-secret-negative",
+      "expected": []
+    },
+    {
+      "name": "reassigned-parameter-negative",
+      "root": "m23-java/reassigned-parameter-negative",
+      "expected": []
+    },
+    {
+      "name": "concatenated-secret-negative",
+      "root": "m23-java/concatenated-secret-negative",
+      "expected": []
+    },
+    {
+      "name": "nested-lambda-negative",
+      "root": "m23-java/nested-lambda-negative",
+      "expected": []
+    },
+    {
+      "name": "generated-source-negative",
+      "root": "m23-java/generated-source-negative",
+      "expected": []
+    },
+    {
+      "name": "maven-repository-shaped",
+      "root": "m23-java/maven-repository-shaped",
+      "expected": [
+        {
+          "rule_id": "JVM-SIMPLIFY-BOOL-RETURN",
+          "path": "src/main/java/demo/Feature.java",
+          "line_start": 5
+        }
+      ]
+    }
+  ]
+}

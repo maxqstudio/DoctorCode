@@ -4,16 +4,16 @@
 from __future__ import annotations
 
 import argparse
-import json
-import subprocess
-import sys
 from pathlib import Path
 
+import generate_project_docs
+import validate_doc_quality
 from project_profile import (
     PROFILE_FILE,
     documentation_settings,
     parse_profile,
 )
+from script_runner import invoke_main
 
 
 def main() -> int:
@@ -23,6 +23,19 @@ def main() -> int:
     args = ap.parse_args()
 
     root = Path(args.root).resolve()
+    agents_path = root / "AGENTS.md"
+    if not agents_path.is_file():
+        print("FAIL MISSING_ROOT_AGENTS")
+        return 1
+    agents_text = agents_path.read_text(encoding="utf-8", errors="strict")
+    if validate_doc_quality.GENERATED_MARKER in agents_text:
+        print("FAIL ROOT_AGENTS_MUST_BE_SOURCE_AUTHORED")
+        return 1
+    agents_ok, agents_failures = validate_doc_quality.normalized_shape(agents_text)
+    if not agents_ok:
+        print("FAIL ROOT_AGENTS_QUALITY:" + ";".join(agents_failures))
+        return 1
+
     profile_path = root / PROFILE_FILE
     if not profile_path.is_file():
         print("FAIL MISSING_PROJECT_PROFILE")
@@ -38,49 +51,20 @@ def main() -> int:
         print("PROJECT_DOCS_SYNC=NOT_APPLICABLE")
         return 0
 
-    tool_dir = Path(__file__).resolve().parent
-    compiler = tool_dir / "generate_project_docs.py"
-    if not compiler.is_file():
-        compiler = root / "scripts" / "generate_project_docs.py"
-    if not compiler.is_file():
-        print("FAIL PROJECT_TRUTH_COMPILER_MISSING")
-        return 1
-
-    quality_validator = tool_dir / "validate_doc_quality.py"
-    if not quality_validator.is_file():
-        quality_validator = root / "scripts" / "validate_doc_quality.py"
-    if not quality_validator.is_file():
-        print("FAIL DOC_QUALITY_VALIDATOR_MISSING")
-        return 1
-
-    cmd = [
-        sys.executable,
-        str(compiler),
-        "--root",
-        str(root),
-        "--check",
-    ]
+    compiler_args = ["--root", str(root), "--check"]
     if args.report:
-        cmd.extend(["--report", args.report])
-    proc = subprocess.run(
-        cmd,
-        cwd=root,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        check=False,
+        compiler_args.extend(["--report", args.report])
+    code, output = invoke_main(
+        generate_project_docs.main,
+        compiler_args,
+        program="generate_project_docs.py",
     )
-    print(proc.stdout, end="")
-    if proc.returncode != 0:
+    print(output, end="")
+    if code != 0:
         print("PROJECT_DOCS_SYNC=FAIL")
-        return proc.returncode
+        return code
 
-    quality_cmd = [
-        sys.executable,
-        str(quality_validator),
-        "--root",
-        str(root),
-    ]
+    quality_args = ["--root", str(root)]
     if args.report:
         report_path = Path(args.report)
         quality_report = str(
@@ -88,22 +72,19 @@ def main() -> int:
                 report_path.stem + ".quality" + report_path.suffix
             )
         )
-        quality_cmd.extend(["--report", quality_report])
+        quality_args.extend(["--report", quality_report])
 
-    quality = subprocess.run(
-        quality_cmd,
-        cwd=root,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        check=False,
+    quality_code, quality_output = invoke_main(
+        validate_doc_quality.main,
+        quality_args,
+        program="validate_doc_quality.py",
     )
-    print(quality.stdout, end="")
-    if quality.returncode != 0:
+    print(quality_output, end="")
+    if quality_code != 0:
         print("DOC_LAYOUT=FAIL")
         print("DOC_READABILITY=FAIL")
         print("PROJECT_DOCS_SYNC=FAIL")
-        return quality.returncode
+        return quality_code
 
     print("DOC_LAYOUT=PASS")
     print("PROJECT_DOCS_NORMALIZED=PASS")

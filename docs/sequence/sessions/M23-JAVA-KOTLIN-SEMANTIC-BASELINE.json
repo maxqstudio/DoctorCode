@@ -1,0 +1,35 @@
+{
+  "acceptance_report": "",
+  "actual": {
+    "diagram": "docs/sequence/generated/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.actual.mmd",
+    "entries": [],
+    "graph": "docs/sequence/generated/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.actual.json",
+    "source_digest": "61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366"
+  },
+  "critical": false,
+  "implementation_base_sha": "761c216453d3ac07235bd2c693aa3a3175d68ba5",
+  "mode": "DURING",
+  "phase": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
+  "plan": {
+    "contract": "",
+    "diagram": "",
+    "frozen": false,
+    "frozen_commit": "",
+    "required": false,
+    "sha256": ""
+  },
+  "runtime_trace": {
+    "graph": "",
+    "required": false
+  },
+  "schema_version": 1,
+  "scope": "CURRENT",
+  "session_id": "M23-JAVA-KOTLIN-SEMANTIC-BASELINE",
+  "status": "IN_PROGRESS",
+  "test_traceability_required": true,
+  "tests": [
+    "internal/analyzers/jvm/analyzer_test.go",
+    "internal/benchmark/testdata/m23-java.json",
+    "internal/benchmark/testdata/m23-kotlin.json"
+  ]
+}
