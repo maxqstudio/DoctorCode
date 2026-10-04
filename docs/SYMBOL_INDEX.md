@@ -3,7 +3,7 @@
 # SYMBOL INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
+Source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
 Status: CURRENT
 
 The default view summarizes machine-observed symbols by file. Expand a file only

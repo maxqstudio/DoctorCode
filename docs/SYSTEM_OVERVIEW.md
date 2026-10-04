@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 240 files, 12 language categories.
+Observed source inventory: 257 files, 15 language categories.
 
 ## Major components
 
@@ -348,7 +348,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M24_C_CPP_SEMANTIC_BASELINE
 
-Current status: M23_MAIN_ACCEPTED
+Current status: M24_RED_DECLARED_PENDING_EXECUTION
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -413,9 +413,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Begin M24 C/C++ semantic baseline planning from accepted main@1f9686f2f8f560cd3637cd33c91162420e09dc39 without widening accepted Go/Python/JavaScript/TypeScript/Rust/JVM semantics.
-- Select deterministic C and C++ parser/provider boundaries and define RED labeled, adversarial, and repository-shaped corpora before implementation.
-- Treat headers/includes, macros, conditional compilation, declaration-definition linkage, target assumptions, and aggressive dead-code claims conservatively and fail closed when proof is unavailable.
+- Execute the exact M24 C/C++ RED benchmark on Ubuntu, Windows, and macOS and retain the expected missing-analyzer failure as evidence.
+- Only after RED is proven, implement the smallest cpp analyzer using pinned gotreesitter v0.55.1 C/C++ grammars and the frozen M24 BEFORE plan.
+- Keep macro/conditional-compilation ambiguity, ambiguous .h dialect, target-dependent DEADCODE/BLOAT, whole-program linkage, and safe autofix fail-closed or NOT_PROVEN.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -524,6 +524,9 @@ Known blockers:
 - M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
 - M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
 - M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
+- M24 C/C++ semantic analyzer behavior is not proven until the RED corpus first demonstrates the capability absent and a later exact candidate passes the corpus on Ubuntu, Windows, and macOS.
+- M24 does not prove preprocessor expansion, compile-definition selection, target-specific ABI/build configuration, whole-program linkage, or a unique dialect for ambiguous .h headers.
+- M24 DEADCODE and BLOAT authority are not proven and remain unavailable unless later target-aware evidence explicitly establishes a safe boundary.
 
 ## Important limitations
 

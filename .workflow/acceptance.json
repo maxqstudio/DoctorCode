@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M23 is MAIN_ACCEPTED at main@1f9686f2f8f560cd3637cd33c91162420e09dc39. The accepted Java/Kotlin baseline uses embedded gotreesitter syntax/AST authority and exposes only bounded SECURITY, SIMPLIFY, and LOGIC rules; Java and Kotlin each retain a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. JVM DEADCODE, BLOAT, javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, framework wiring, overload resolution, whole-program reachability, safe autofix, and automatic deletion remain outside M23 authority. Current project phase is M24_C_CPP_SEMANTIC_BASELINE; no C/C++ semantic authority is accepted yet.",
+  "evidence_boundary": "M23 remains MAIN_ACCEPTED at main@1f9686f2f8f560cd3637cd33c91162420e09dc39. M24 C/C++ is now RED-declared under a frozen BEFORE sequence plan and pinned gotreesitter v0.55.1 C/C++ parser authority, but no C/C++ semantic analyzer behavior is accepted yet. DEADCODE/BLOAT, preprocessor expansion, target configuration, whole-program linkage, ambiguous .h dialect inference, safe autofix, and automatic deletion remain NOT_PROVEN.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -393,6 +393,36 @@
       "id": "M23-MAIN-POST-MERGE",
       "requirement": "The exact M23 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M23 closure.",
       "status": "PASS"
+    },
+    {
+      "evidence": "go.mod already pins github.com/odvcencio/gotreesitter v0.55.1; that exact tag exposes standalone grammars/c and grammars/cpp packages backed by embedded grammar blobs.",
+      "id": "M24-PARSER-PROVIDER",
+      "requirement": "M24 must use a deterministic pure-Go/no-CGO C/C++ parser provider without adding an unnecessary parser dependency.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Frozen plan docs/sequence/plans/M24-C-CPP-SEMANTIC-BASELINE.plan.json and generated Mermaid are committed at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before any internal/analyzers/cpp implementation exists.",
+      "id": "M24-SEQUENCE-BEFORE",
+      "requirement": "The M24 intended analyzer flow and fail-closed boundary must be frozen before C/C++ analyzer implementation begins.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "RED corpus and CI gate are declared; exact multi-OS RED execution has not yet completed.",
+      "id": "M24-RED-ANALYZER-ABSENT",
+      "requirement": "The C/C++ benchmark must demonstrate the cpp analyzer capability absent before implementation.",
+      "status": "NOT_RUN"
+    },
+    {
+      "evidence": "Governance boundary declared; implementation has not yet been accepted.",
+      "id": "M24-BOUNDED-RULES",
+      "requirement": "M24 may expose only bounded SECURITY, SIMPLIFY, and LOGIC rules with fail-closed macro/conditional/target boundaries; DEADCODE and BLOAT remain unavailable.",
+      "status": "NOT_PROVEN"
+    },
+    {
+      "evidence": "Final M24 candidate does not exist yet.",
+      "id": "M24-REGRESSION-MATRIX",
+      "requirement": "M24 final candidate must preserve all accepted language, MCP, release/install, governance, and real-world regression lanes.",
+      "status": "NOT_RUN"
     }
   ],
   "runtime_checks": [

@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M23 is MAIN_ACCEPTED at main@1f9686f2f8f560cd3637cd33c91162420e09dc39. The accepted Java/Kotlin baseline uses embedded gotreesitter syntax/AST authority and exposes only bounded SECURITY, SIMPLIFY, and LOGIC rules; Java and Kotlin each retain a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. JVM DEADCODE, BLOAT, javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, framework wiring, overload resolution, whole-program reachability, safe autofix, and automatic deletion remain outside M23 authority. Current project phase is M24_C_CPP_SEMANTIC_BASELINE; no C/C++ semantic authority is accepted yet.
+M23 remains MAIN_ACCEPTED at main@1f9686f2f8f560cd3637cd33c91162420e09dc39. M24 C/C++ is now RED-declared under a frozen BEFORE sequence plan and pinned gotreesitter v0.55.1 C/C++ parser authority, but no C/C++ semantic analyzer behavior is accepted yet. DEADCODE/BLOAT, preprocessor expansion, target configuration, whole-program linkage, ambiguous .h dialect inference, safe autofix, and automatic deletion remain NOT_PROVEN.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
+Current source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -74,6 +74,11 @@ Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813
 | M23-BUILD-SYSTEM-BOUNDARY | Maven/Gradle-shaped repository roots and generated/build output boundaries must be handled conservatively without claiming dependency-graph authority. | M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only. | PASS |
 | M23-BRANCH-REGRESSION | One exact synchronized M23 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion. | At exact synchronized M23 candidate 80257181ecf13e4632fbb771c55aecda777531e0: Governance 37206574565 PASS; Core CI 37206574539 PASS 3/3; M06 37206574563 PASS; Real World Go 37206574572 PASS; M07 37206574643 PASS; M10 37206574574 PASS; M16 Thin MCP 37206574566 PASS; M17 Release and Install 37206574626 PASS with release build and Ubuntu/Windows/macOS native install-smoke. PR #37 repeated all eight permanent workflows successfully on the same exact head before squash merge. | PASS |
 | M23-MAIN-POST-MERGE | The exact M23 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M23 closure. | At main@1f9686f2f8f560cd3637cd33c91162420e09dc39: Governance 37207150801 PASS; Core CI 37207150777 PASS 3/3; M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS with deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke. | PASS |
+| M24-PARSER-PROVIDER | M24 must use a deterministic pure-Go/no-CGO C/C++ parser provider without adding an unnecessary parser dependency. | go.mod already pins github.com/odvcencio/gotreesitter v0.55.1; that exact tag exposes standalone grammars/c and grammars/cpp packages backed by embedded grammar blobs. | PASS |
+| M24-SEQUENCE-BEFORE | The M24 intended analyzer flow and fail-closed boundary must be frozen before C/C++ analyzer implementation begins. | Frozen plan docs/sequence/plans/M24-C-CPP-SEMANTIC-BASELINE.plan.json and generated Mermaid are committed at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before any internal/analyzers/cpp implementation exists. | PASS |
+| M24-RED-ANALYZER-ABSENT | The C/C++ benchmark must demonstrate the cpp analyzer capability absent before implementation. | RED corpus and CI gate are declared; exact multi-OS RED execution has not yet completed. | NOT_RUN |
+| M24-BOUNDED-RULES | M24 may expose only bounded SECURITY, SIMPLIFY, and LOGIC rules with fail-closed macro/conditional/target boundaries; DEADCODE and BLOAT remain unavailable. | Governance boundary declared; implementation has not yet been accepted. | NOT_PROVEN |
+| M24-REGRESSION-MATRIX | M24 final candidate must preserve all accepted language, MCP, release/install, governance, and real-world regression lanes. | Final M24 candidate does not exist yet. | NOT_RUN |
 
 ## Test commands
 

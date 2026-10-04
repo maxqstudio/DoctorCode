@@ -194,6 +194,23 @@
           "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
           "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
           "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+          "internal/benchmark/testdata/m24-c-cpp/c-logic-positive/feature.c",
+          "internal/benchmark/testdata/m24-c-cpp/c-security-positive/secrets.c",
+          "internal/benchmark/testdata/m24-c-cpp/c-simplify-positive/feature.c",
+          "internal/benchmark/testdata/m24-c-cpp/composed-secret-negative/secrets.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive/feature.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/cpp-security-positive/secrets.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive/feature.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/generated-source-negative/generated.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include/feature.hpp",
+          "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src/feature.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include/feature.h",
+          "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src/feature.c",
+          "internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative/feature.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative/feature.c",
+          "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp",
+          "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c",
+          "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c",
           "internal/buildinfo/buildinfo.go",
           "internal/buildinfo/buildinfo_test.go",
           "internal/detector/detector.go",
@@ -398,6 +415,23 @@
         "internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt",
         "internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt",
         "internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt",
+        "internal/benchmark/testdata/m24-c-cpp/c-logic-positive/feature.c",
+        "internal/benchmark/testdata/m24-c-cpp/c-security-positive/secrets.c",
+        "internal/benchmark/testdata/m24-c-cpp/c-simplify-positive/feature.c",
+        "internal/benchmark/testdata/m24-c-cpp/composed-secret-negative/secrets.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive/feature.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/cpp-security-positive/secrets.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive/feature.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/generated-source-negative/generated.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include/feature.hpp",
+        "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src/feature.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include/feature.h",
+        "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src/feature.c",
+        "internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative/feature.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative/feature.c",
+        "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp",
+        "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c",
+        "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c",
         "internal/buildinfo/buildinfo.go",
         "internal/buildinfo/buildinfo_test.go",
         "internal/detector/detector.go",
@@ -1907,6 +1941,125 @@
       "is_test": false,
       "language": "Kotlin",
       "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/c-logic-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/c-logic-positive/feature.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/c-security-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/c-security-positive/secrets.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/c-simplify-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/c-simplify-positive/feature.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 7
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/composed-secret-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/composed-secret-negative/secrets.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive/feature.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/cpp-security-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/cpp-security-positive/secrets.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive",
+      "file": "internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive/feature.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 7
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/generated-source-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/generated-source-negative/generated.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include",
+      "file": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include/feature.hpp",
+      "is_test": false,
+      "language": "C/C++ Header",
+      "lines": 2
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src",
+      "file": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src/feature.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include",
+      "file": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include/feature.h",
+      "is_test": false,
+      "language": "C/C++ Header",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src",
+      "file": "internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src/feature.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative/feature.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 6
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative/feature.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp",
+      "is_test": false,
+      "language": "C++",
+      "lines": 9
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 1
+    },
+    {
+      "directory": "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative",
+      "file": "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c",
+      "is_test": false,
+      "language": "C",
+      "lines": 8
     },
     {
       "directory": "internal/buildinfo",
@@ -3745,10 +3898,13 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366",
+  "source_digest": "734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578",
   "source_summary": {
-    "files": 240,
+    "files": 257,
     "languages": {
+      "C": 7,
+      "C++": 8,
+      "C/C++ Header": 2,
       "Go": 100,
       "Java": 9,
       "JavaScript": 35,
@@ -3762,7 +3918,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 11075,
+    "lines": 11165,
     "test_files": 2
   },
   "tests": [

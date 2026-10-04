@@ -8,7 +8,7 @@ Governance profile: strict
 
 ## Current phase
 Phase: M24_C_CPP_SEMANTIC_BASELINE
-Status: M23_MAIN_ACCEPTED
+Status: M24_RED_DECLARED_PENDING_EXECUTION
 Roadmap phase: M24_C_CPP_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
@@ -18,7 +18,7 @@ Branch: main
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
 Current candidate SHA: external final acceptance evidence
-Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
+Current source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -131,6 +131,9 @@ SEQUENCE_SYNC: PASS
 - M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
 - M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
 - M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
+- M24 C/C++ semantic analyzer behavior is not proven until the RED corpus first demonstrates the capability absent and a later exact candidate passes the corpus on Ubuntu, Windows, and macOS.
+- M24 does not prove preprocessor expansion, compile-definition selection, target-specific ABI/build configuration, whole-program linkage, or a unique dialect for ambiguous .h headers.
+- M24 DEADCODE and BLOAT authority are not proven and remain unavailable unless later target-aware evidence explicitly establishes a safe boundary.
 
 ## Known blockers
 - None declared.
@@ -139,9 +142,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Begin M24 C/C++ semantic baseline planning from accepted main@1f9686f2f8f560cd3637cd33c91162420e09dc39 without widening accepted Go/Python/JavaScript/TypeScript/Rust/JVM semantics.
-- Select deterministic C and C++ parser/provider boundaries and define RED labeled, adversarial, and repository-shaped corpora before implementation.
-- Treat headers/includes, macros, conditional compilation, declaration-definition linkage, target assumptions, and aggressive dead-code claims conservatively and fail closed when proof is unavailable.
+- Execute the exact M24 C/C++ RED benchmark on Ubuntu, Windows, and macOS and retain the expected missing-analyzer failure as evidence.
+- Only after RED is proven, implement the smallest cpp analyzer using pinned gotreesitter v0.55.1 C/C++ grammars and the frozen M24 BEFORE plan.
+- Keep macro/conditional-compilation ambiguity, ambiguous .h dialect, target-dependent DEADCODE/BLOAT, whole-program linkage, and safe autofix fail-closed or NOT_PROVEN.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

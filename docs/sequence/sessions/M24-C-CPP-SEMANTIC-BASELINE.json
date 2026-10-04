@@ -1,0 +1,34 @@
+{
+  "acceptance_report": "artifacts/sequence/M24-C-CPP-SEMANTIC-BASELINE.acceptance.json",
+  "actual": {
+    "diagram": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.actual.mmd",
+    "entries": [],
+    "graph": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.actual.json",
+    "source_digest": "734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578"
+  },
+  "critical": false,
+  "evidence_boundary": "M24 BEFORE plan is frozen before product implementation. Generic Skill_Workflow sequence extraction does not resolve Go call graphs, so plan edges are DOCUMENT-verifiable design constraints; behavioral authority comes from benchmark and cumulative CI evidence.",
+  "implementation_base_sha": "acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5",
+  "mode": "BEFORE",
+  "phase": "M24_C_CPP_SEMANTIC_BASELINE",
+  "plan": {
+    "contract": "docs/sequence/plans/M24-C-CPP-SEMANTIC-BASELINE.plan.json",
+    "diagram": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.plan.mmd",
+    "frozen": true,
+    "frozen_commit": "acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5",
+    "required": true,
+    "sha256": "2990975ba98113936de00d19839779d53fb99408038e5276ff03d5e2cf341c84"
+  },
+  "runtime_trace": {
+    "graph": "",
+    "required": false
+  },
+  "schema_version": 1,
+  "scope": "CURRENT",
+  "session_id": "M24-C-CPP-SEMANTIC-BASELINE",
+  "status": "IN_PROGRESS",
+  "test_traceability_required": true,
+  "tests": [
+    "internal/benchmark/testdata/m24-c-cpp.json"
+  ]
+}
