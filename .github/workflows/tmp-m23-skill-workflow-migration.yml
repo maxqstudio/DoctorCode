@@ -67,24 +67,33 @@ jobs:
           print('EXPECTED_LICENSE_AUTHORITY_BLOCKER=PASS')
           PY
           rm .tmp_repository_health.json
-      - name: Validate migrated Project Truth
+      - name: Validate migrated outputs before commit
         shell: bash
         run: |
           python .workflow/tools/validate_project_docs.py --root .
           python .workflow/tools/validate_doc_quality.py --root .
           python .workflow/tools/validate_human_comprehension.py --root . --require-pass
           python .workflow/tools/validate_handoff.py --root .
-          python .workflow/tools/validate_project_truth.py --root .
           python .workflow/tools/validate_sequence_sessions.py --root .
-      - name: Commit deterministic migration output
+      - name: Commit deterministic migration output locally
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "No migration changes to commit"
-            exit 0
+            echo "MIGRATION_COMMIT=NOT_NEEDED"
+          else
+            git commit -m "chore(m23): migrate governance to Skill_Workflow SW2-11"
+            echo "MIGRATION_COMMIT=CREATED"
           fi
-          git commit -m "chore(m23): migrate governance to Skill_Workflow SW2-11"
-          git push origin HEAD:work/m23-java-kotlin-semantic-baseline
+      - name: Validate clean committed Project Truth
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain)"
+          python .workflow/tools/validate_project_truth.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+          python .workflow/tools/validate_schema_toolchain.py --root .
+      - name: Push validated migration
+        shell: bash
+        run: git push origin HEAD:work/m23-java-kotlin-semantic-baseline
