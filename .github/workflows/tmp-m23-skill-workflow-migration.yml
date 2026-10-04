@@ -46,7 +46,10 @@ jobs:
           if marker not in text:
               text = text.rstrip() + "\n\n" + marker + "\n\n- Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)\n- Security policy: [`SECURITY.md`](SECURITY.md)\n- Code of conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)\n"
               path.write_text(text, encoding="utf-8", newline="\n")
-      - name: Synchronize Project Truth with migrated runtime
+      - name: Remove temporary migration workflow
+        shell: bash
+        run: rm .github/workflows/tmp-m23-skill-workflow-migration.yml
+      - name: Synchronize Project Truth with finalized runtime
         run: python .workflow/tools/sync_project_truth.py --root .
       - name: Validate schema and toolchain lock
         run: python .workflow/tools/validate_schema_toolchain.py --root .
@@ -67,7 +70,7 @@ jobs:
           print('EXPECTED_LICENSE_AUTHORITY_BLOCKER=PASS')
           PY
           rm .tmp_repository_health.json
-      - name: Validate migrated outputs before commit
+      - name: Validate finalized outputs before commit
         shell: bash
         run: |
           python .workflow/tools/validate_project_docs.py --root .
@@ -75,25 +78,25 @@ jobs:
           python .workflow/tools/validate_human_comprehension.py --root . --require-pass
           python .workflow/tools/validate_handoff.py --root .
           python .workflow/tools/validate_sequence_sessions.py --root .
-      - name: Commit deterministic migration output locally
+      - name: Commit finalized governance output locally
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "MIGRATION_COMMIT=NOT_NEEDED"
+            echo "FINALIZE_COMMIT=NOT_NEEDED"
           else
-            git commit -m "chore(m23): migrate governance to Skill_Workflow SW2-11"
-            echo "MIGRATION_COMMIT=CREATED"
+            git commit -m "chore(m23): finalize SW2-11 governance runtime"
+            echo "FINALIZE_COMMIT=CREATED"
           fi
-      - name: Validate clean committed Project Truth
+      - name: Validate clean finalized Project Truth
         shell: bash
         run: |
           test -z "$(git status --porcelain)"
           python .workflow/tools/validate_project_truth.py --root .
           python .workflow/tools/validate_sequence_sessions.py --root .
           python .workflow/tools/validate_schema_toolchain.py --root .
-      - name: Push validated migration
+      - name: Push finalized governance runtime
         shell: bash
         run: git push origin HEAD:work/m23-java-kotlin-semantic-baseline
