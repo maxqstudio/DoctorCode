@@ -1,0 +1,81 @@
+{
+  "edges": [
+    {
+      "action": "register analyzer",
+      "from": "registry",
+      "requirement": "MUST",
+      "to": "cpp_analyzer",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "parse supported C/C++ files fail closed",
+      "from": "cpp_analyzer",
+      "requirement": "MUST",
+      "to": "parser_provider",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "derive bounded semantic evidence",
+      "from": "cpp_analyzer",
+      "requirement": "MUST",
+      "to": "bounded_rules",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "exercise labeled adversarial repository-shaped corpus",
+      "from": "benchmark_gate",
+      "requirement": "MUST",
+      "to": "cpp_analyzer",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "emit target-dependent deadcode or bloat findings",
+      "from": "cpp_analyzer",
+      "requirement": "MUST_NOT",
+      "to": "unsafe_claims",
+      "verification": "DOCUMENT"
+    }
+  ],
+  "evidence_boundary": "This BEFORE plan freezes the intended M24 module flow before C/C++ analyzer implementation. Because the generic sequence extractor does not resolve Go call graphs, these edges are DOCUMENT-verifiable design constraints; behavioral proof must come from labeled/adversarial/repository-shaped benchmarks and cumulative CI.",
+  "flow_id": "M24-C-CPP-SEMANTIC-BASELINE",
+  "nodes": [
+    {
+      "id": "registry",
+      "kind": "participant",
+      "label": "Analyzer registry",
+      "locator": "internal/analyzers/registry.go::Default"
+    },
+    {
+      "id": "cpp_analyzer",
+      "kind": "participant",
+      "label": "C/C++ analyzer",
+      "locator": "internal/analyzers/cpp/analyzer.go::Analyze"
+    },
+    {
+      "id": "parser_provider",
+      "kind": "participant",
+      "label": "Deterministic C/C++ parser provider",
+      "locator": "internal/analyzers/cpp/parser.go::parseTranslationUnit"
+    },
+    {
+      "id": "bounded_rules",
+      "kind": "participant",
+      "label": "Bounded C/C++ rules",
+      "locator": "internal/analyzers/cpp/analyzer.go::collectFindings"
+    },
+    {
+      "id": "benchmark_gate",
+      "kind": "participant",
+      "label": "M24 benchmark gate",
+      "locator": "internal/benchmark/testdata/m24-c-cpp.json"
+    },
+    {
+      "id": "unsafe_claims",
+      "kind": "participant",
+      "label": "Target-dependent DEADCODE/BLOAT claims",
+      "locator": "M24_NOT_PROVEN_TARGET_DEPENDENT_CLAIMS"
+    }
+  ],
+  "schema_version": 1,
+  "status": "FROZEN"
+}
