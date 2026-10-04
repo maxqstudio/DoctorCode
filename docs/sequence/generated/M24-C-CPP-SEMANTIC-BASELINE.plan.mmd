@@ -1,0 +1,15 @@
+%% GENERATED FILE - DO NOT EDIT
+%% PLAN_SHA256: 2990975ba98113936de00d19839779d53fb99408038e5276ff03d5e2cf341c84
+%% FLOW_ID: M24-C-CPP-SEMANTIC-BASELINE
+sequenceDiagram
+    participant registry_0 as Analyzer registry
+    participant cpp_analyzer_1 as C/C++ analyzer
+    participant parser_provider_2 as Deterministic C/C++ parser provider
+    participant bounded_rules_3 as Bounded C/C++ rules
+    participant benchmark_gate_4 as M24 benchmark gate
+    participant unsafe_claims_5 as Target-dependent DEADCODE/BLOAT claims
+    registry_0->>cpp_analyzer_1: register analyzer [MUST]
+    cpp_analyzer_1->>parser_provider_2: parse supported C/C++ files fail closed [MUST]
+    cpp_analyzer_1->>bounded_rules_3: derive bounded semantic evidence [MUST]
+    benchmark_gate_4->>cpp_analyzer_1: exercise labeled adversarial repository-shaped corpus [MUST]
+    cpp_analyzer_1->>unsafe_claims_5: emit target-dependent deadcode or bloat findings [MUST_NOT]
