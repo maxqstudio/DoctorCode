@@ -1,0 +1,178 @@
+name: Temporary M23 Main Acceptance Closure
+
+on:
+  push:
+    branches:
+      - work/m23-main-acceptance-closure
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-m23-main-acceptance-closure
+  cancel-in-progress: true
+
+jobs:
+  close-m23:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: work/m23-main-acceptance-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Record exact M23 acceptance and advance roadmap authority
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          product_sha = '1f9686f2f8f560cd3637cd33c91162420e09dc39'
+          branch_sha = '80257181ecf13e4632fbb771c55aecda777531e0'
+
+          def load(path):
+              return json.loads((root / path).read_text(encoding='utf-8'))
+
+          def save(path, payload):
+              (root / path).write_text(
+                  json.dumps(payload, indent=2, ensure_ascii=False) + '\n',
+                  encoding='utf-8',
+                  newline='\n',
+              )
+
+          acceptance = load('.workflow/acceptance.json')
+          acceptance['evidence_boundary'] = (
+              f'M23 is MAIN_ACCEPTED at main@{product_sha}. The accepted Java/Kotlin baseline uses embedded '
+              'gotreesitter syntax/AST authority and exposes only bounded SECURITY, SIMPLIFY, and LOGIC rules; '
+              'Java and Kotlin each retain a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN '
+              'with precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. JVM DEADCODE, BLOAT, javac/kotlinc '
+              'type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, framework wiring, '
+              'overload resolution, whole-program reachability, safe autofix, and automatic deletion remain outside '
+              'M23 authority. Current project phase is M24_C_CPP_SEMANTIC_BASELINE; no C/C++ semantic authority is accepted yet.'
+          )
+          reqs = acceptance.setdefault('requirements', [])
+          by_id = {item.get('id'): item for item in reqs}
+          branch_req = {
+              'evidence': (
+                  f'At exact synchronized M23 candidate {branch_sha}: Governance 37206574565 PASS; Core CI 37206574539 PASS 3/3; '
+                  'M06 37206574563 PASS; Real World Go 37206574572 PASS; M07 37206574643 PASS; M10 37206574574 PASS; '
+                  'M16 Thin MCP 37206574566 PASS; M17 Release and Install 37206574626 PASS with release build and '
+                  'Ubuntu/Windows/macOS native install-smoke. PR #37 repeated all eight permanent workflows successfully '
+                  'on the same exact head before squash merge.'
+              ),
+              'id': 'M23-BRANCH-REGRESSION',
+              'requirement': (
+                  'One exact synchronized M23 branch candidate must pass governance, Core, MCP, release/install, and all '
+                  'accepted Go/Python real-world regression lanes before PR promotion.'
+              ),
+              'status': 'PASS',
+          }
+          main_req = {
+              'evidence': (
+                  f'At main@{product_sha}: Governance 37207150801 PASS; Core CI 37207150777 PASS 3/3; '
+                  'M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; '
+                  'M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS with deterministic release '
+                  'build/checksum verification and Ubuntu/Windows/macOS native install-smoke.'
+              ),
+              'id': 'M23-MAIN-POST-MERGE',
+              'requirement': (
+                  'The exact M23 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all '
+                  'accepted Go/Python real-world regression lanes before M23 closure.'
+              ),
+              'status': 'PASS',
+          }
+          for item in (branch_req, main_req):
+              if item['id'] in by_id:
+                  by_id[item['id']].update(item)
+              else:
+                  reqs.append(item)
+          save('.workflow/acceptance.json', acceptance)
+
+          roadmap = load('.workflow/roadmap.json')
+          assert roadmap.get('current_phase') == 'M23_JAVA_KOTLIN_SEMANTIC_BASELINE', roadmap.get('current_phase')
+          phase_map = {item['id']: item for item in roadmap['phases']}
+          assert phase_map['M23_JAVA_KOTLIN_SEMANTIC_BASELINE']['status'] == 'CURRENT'
+          assert phase_map['M24_C_CPP_SEMANTIC_BASELINE']['status'] == 'PLANNED'
+          phase_map['M23_JAVA_KOTLIN_SEMANTIC_BASELINE']['status'] = 'ACCEPTED'
+          phase_map['M24_C_CPP_SEMANTIC_BASELINE']['status'] = 'CURRENT'
+          roadmap['current_phase'] = 'M24_C_CPP_SEMANTIC_BASELINE'
+          save('.workflow/roadmap.json', roadmap)
+
+          state = load('.workflow/state.json')
+          assert state.get('phase') == 'M23_JAVA_KOTLIN_SEMANTIC_BASELINE', state.get('phase')
+          state['last_accepted_branch'] = 'main'
+          state['last_accepted_sha'] = product_sha
+          state['phase'] = 'M24_C_CPP_SEMANTIC_BASELINE'
+          state['status'] = 'M23_MAIN_ACCEPTED'
+          state['working_branch'] = 'main'
+          state['next_authorized_actions'] = [
+              f'Begin M24 C/C++ semantic baseline planning from accepted main@{product_sha} without widening accepted Go/Python/JavaScript/TypeScript/Rust/JVM semantics.',
+              'Select deterministic C and C++ parser/provider boundaries and define RED labeled, adversarial, and repository-shaped corpora before implementation.',
+              'Treat headers/includes, macros, conditional compilation, declaration-definition linkage, target assumptions, and aggressive dead-code claims conservatively and fail closed when proof is unavailable.',
+          ]
+          state['not_proven'] = [
+              item for item in state.get('not_proven', [])
+              if not item.startswith('M23 is not accepted until ')
+          ]
+          proven = state.setdefault('proven', [])
+          additions = [
+              (
+                  f'Exact synchronized M23 candidate {branch_sha} passed Governance 37206574565, Core CI 37206574539 on '
+                  'Ubuntu/macOS/Windows, M06 37206574563, Real World Go 37206574572, M07 37206574643, M10 37206574574, '
+                  'M16 Thin MCP 37206574566, and M17 Release and Install 37206574626 including Ubuntu/Windows/macOS native install-smoke.'
+              ),
+              (
+                  f'M23 merged through PR #37 to main at {product_sha}. Exact-main Governance 37207150801 PASS; Core CI '
+                  '37207150777 PASS on Ubuntu/macOS/Windows; M06 37207150792 PASS; Real World Go 37207150799 PASS; '
+                  'M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install '
+                  '37207150735 PASS including deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke.'
+              ),
+          ]
+          for item in additions:
+              if item not in proven:
+                  proven.append(item)
+          save('.workflow/state.json', state)
+
+          session = load('docs/sequence/sessions/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.json')
+          assert session.get('scope') == 'CURRENT', session.get('scope')
+          session['scope'] = 'HISTORICAL'
+          session['status'] = 'ACCEPTED'
+          save('docs/sequence/sessions/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.json', session)
+      - name: Remove temporary closure workflow before truth generation
+        shell: bash
+        run: rm .github/workflows/tmp-m23-main-acceptance-closure.yml
+      - name: Regenerate Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate closure authority before commit
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py --root .
+          python .workflow/tools/validate_doc_quality.py --root .
+          python .workflow/tools/validate_human_comprehension.py --root . --require-pass
+          python .workflow/tools/validate_handoff.py --root .
+          python .workflow/tools/validate_cross_document_consistency.py --base 1f9686f2f8f560cd3637cd33c91162420e09dc39 --require-base
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Commit closure output locally
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(m23): close main acceptance and advance to M24"
+      - name: Validate clean committed Project Truth
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain)"
+          python .workflow/tools/validate_project_truth.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+      - name: Push validated closure
+        shell: bash
+        run: git push origin HEAD:work/m23-main-acceptance-closure
