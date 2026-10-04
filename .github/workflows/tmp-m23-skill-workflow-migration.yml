@@ -1,0 +1,90 @@
+name: Temporary M23 Skill Workflow Migration
+
+on:
+  push:
+    branches:
+      - work/m23-java-kotlin-semantic-baseline
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-m23-skill-workflow-migration
+  cancel-in-progress: true
+
+jobs:
+  migrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: work/m23-java-kotlin-semantic-baseline
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Checkout exact Skill Workflow authority
+        uses: actions/checkout@v4
+        with:
+          repository: maxqstudio/Skill_Workflow
+          ref: 2fc16cce4c7753ad103bac401d1825a9bd8bd3a1
+          path: .skill-workflow
+          fetch-depth: 1
+      - name: Migrate governance schema and vendored toolchain
+        shell: bash
+        run: |
+          python .skill-workflow/scripts/migrate_governance_v1.py --root .
+          rm -rf .skill-workflow
+      - name: Add repository-health links to README
+        shell: python
+        run: |
+          from pathlib import Path
+          path = Path("README.md")
+          text = path.read_text(encoding="utf-8")
+          marker = "## Contributing and community"
+          if marker not in text:
+              text = text.rstrip() + "\n\n" + marker + "\n\n- Contribution guide: [`CONTRIBUTING.md`](CONTRIBUTING.md)\n- Security policy: [`SECURITY.md`](SECURITY.md)\n- Code of conduct: [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md)\n"
+              path.write_text(text, encoding="utf-8", newline="\n")
+      - name: Synchronize Project Truth with migrated runtime
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate schema and toolchain lock
+        run: python .workflow/tools/validate_schema_toolchain.py --root .
+      - name: Prove repository-health blocker is license authority only
+        shell: bash
+        run: |
+          set +e
+          python .workflow/tools/validate_repository_health.py --root . > .tmp_repository_health.json
+          health_status=$?
+          set -e
+          python - "$health_status" <<'PY'
+          import json, sys
+          report = json.load(open('.tmp_repository_health.json', encoding='utf-8'))
+          failures = report.get('failures', [])
+          assert int(sys.argv[1]) != 0, report
+          assert failures == ['UNAPPROVED_LICENSE_PRESENT:LICENSE'], failures
+          assert report.get('license_status') == 'NOT_PROVEN', report
+          print('EXPECTED_LICENSE_AUTHORITY_BLOCKER=PASS')
+          PY
+          rm .tmp_repository_health.json
+      - name: Validate migrated Project Truth
+        shell: bash
+        run: |
+          python .workflow/tools/validate_project_docs.py --root .
+          python .workflow/tools/validate_doc_quality.py --root .
+          python .workflow/tools/validate_human_comprehension.py --root . --require-pass
+          python .workflow/tools/validate_handoff.py --root .
+          python .workflow/tools/validate_project_truth.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Commit deterministic migration output
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No migration changes to commit"
+            exit 0
+          fi
+          git commit -m "chore(m23): migrate governance to Skill_Workflow SW2-11"
+          git push origin HEAD:work/m23-java-kotlin-semantic-baseline
