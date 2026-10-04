@@ -147,7 +147,7 @@ jobs:
         run: rm .github/workflows/tmp-m23-main-acceptance-closure.yml
       - name: Regenerate Project Truth
         run: python .workflow/tools/sync_project_truth.py --root .
-      - name: Validate closure authority before commit
+      - name: Validate closure outputs before commit
         shell: bash
         run: |
           python .workflow/tools/validate_schema_toolchain.py --root .
@@ -156,7 +156,6 @@ jobs:
           python .workflow/tools/validate_doc_quality.py --root .
           python .workflow/tools/validate_human_comprehension.py --root . --require-pass
           python .workflow/tools/validate_handoff.py --root .
-          python .workflow/tools/validate_cross_document_consistency.py --base 1f9686f2f8f560cd3637cd33c91162420e09dc39 --require-base
           python .workflow/tools/validate_sequence_sessions.py --root .
       - name: Commit closure output locally
         shell: bash
@@ -169,6 +168,7 @@ jobs:
         shell: bash
         run: |
           test -z "$(git status --porcelain)"
+          python .workflow/tools/validate_cross_document_consistency.py --base 1f9686f2f8f560cd3637cd33c91162420e09dc39 --require-base
           python .workflow/tools/validate_project_truth.py --root .
           python .workflow/tools/validate_sequence_sessions.py --root .
           python .workflow/tools/validate_schema_toolchain.py --root .
