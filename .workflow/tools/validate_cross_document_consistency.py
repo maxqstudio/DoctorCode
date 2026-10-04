@@ -137,6 +137,15 @@ def is_template_document(root: Path, doc: Path) -> bool:
         return False
 
 
+def is_skill_reference_document(root: Path, doc: Path) -> bool:
+    """Return True only for bundled top-level SKILL.md reference fragments."""
+    try:
+        relative = doc.relative_to(root)
+    except ValueError:
+        return False
+    return len(relative.parts) >= 2 and relative.parts[0] == "references"
+
+
 def all_docs(root: Path) -> list[Path]:
     result: list[Path] = []
     for path in root.rglob("*.md"):
@@ -575,7 +584,10 @@ def main() -> int:
                     failures.append("UNRESOLVED_PATH_SYMBOL:" + relative + ":" + path_ref + "::" + symbol)
 
         ids = set(CLAIM_ID_RE.findall(unfenced))
-        if doc.name not in {"PROJECT_TRUTH_SYNC.md", "README.md", "SKILL.md"}:
+        if (
+            doc.name not in {"PROJECT_TRUTH_SYNC.md", "README.md", "SKILL.md"}
+            and not is_skill_reference_document(root, doc)
+        ):
             for claim_id in sorted(ids):
                 if claim_id not in canonical:
                     failures.append("UNKNOWN_CLAIM_ID:" + relative + ":" + claim_id)

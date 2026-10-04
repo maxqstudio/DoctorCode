@@ -1,6 +1,6 @@
 {
-  "schema_version": 1,
+  "policy": "DoctorCode consumes Skill_Workflow SW2-13 from this exact authority. Consumer governance tools are vendored and locked by .workflow/toolchain.lock.json; root AGENTS.md, schema-v1 governance, progressive reference routing, repository hygiene, and Owner-approved license proof remain mandatory without weakening existing DoctorCode acceptance gates.",
+  "ref": "4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef",
   "repository": "maxqstudio/Skill_Workflow",
-  "ref": "2fc16cce4c7753ad103bac401d1825a9bd8bd3a1",
-  "policy": "DoctorCode consumes Skill_Workflow SW2-11 from this exact authority. Consumer governance tools must be vendored through the upstream governance-v1 migration, locked by .workflow/toolchain.lock.json, and validated without weakening existing DoctorCode acceptance gates. Root AGENTS.md and schema-v1 governance are mandatory; Owner license authority must never be inferred."
+  "schema_version": 1
 }

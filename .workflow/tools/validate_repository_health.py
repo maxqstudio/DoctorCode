@@ -18,10 +18,22 @@ REQUIRED_ROOT_FILES = ("AGENTS.md",)
 README_HEALTH_LINKS = REQUIRED_HEALTH_FILES
 LICENSE_FILES = ("LICENSE", "LICENSE.md", "LICENSE.txt")
 LICENSE_DECISION_ID = "SW2-ADR-010"
+TEMPORARY_WORKFLOW_PREFIXES = ("tmp-",)
 
 
 def _load_json(path: Path) -> dict[str, object]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _temporary_workflows(root: Path) -> list[str]:
+    workflow_root = root / ".github" / "workflows"
+    if not workflow_root.is_dir():
+        return []
+    return sorted(
+        path.relative_to(root).as_posix()
+        for path in workflow_root.iterdir()
+        if path.is_file() and path.name.startswith(TEMPORARY_WORKFLOW_PREFIXES)
+    )
 
 
 def validate(root: Path, *, require_owner_approved_license: bool = False) -> dict[str, object]:
@@ -63,6 +75,10 @@ def validate(root: Path, *, require_owner_approved_license: bool = False) -> dic
         if not ok:
             failures.extend("REPOSITORY_HEALTH_QUALITY:" + relative + ":" + item for item in shape)
 
+    temporary_workflows = _temporary_workflows(root)
+    for relative in temporary_workflows:
+        failures.append("TEMPORARY_WORKFLOW_TRACKED:" + relative)
+
     license_paths = [name for name in LICENSE_FILES if (root / name).is_file()]
     decisions_path = root / ".workflow" / "decisions.json"
     decision_accepted = False
@@ -92,14 +108,17 @@ def validate(root: Path, *, require_owner_approved_license: bool = False) -> dic
         "result": "FAIL" if failures else "PASS",
         "repository_health_files_checked": checked,
         "required_root_files": list(REQUIRED_ROOT_FILES),
+        "temporary_workflows": temporary_workflows,
+        "temporary_workflow_prefixes": list(TEMPORARY_WORKFLOW_PREFIXES),
         "license_files": license_paths,
         "license_decision_id": LICENSE_DECISION_ID,
         "license_status": "PASS" if license_proven else "NOT_PROVEN",
         "require_owner_approved_license": require_owner_approved_license,
         "failures": failures,
         "evidence_boundary": (
-            "This gate proves mandatory root AGENTS.md plus repository-health file presence/shape and guards against an unapproved license file. "
-            "It does not infer an Owner license choice. License PASS requires an accepted SW2-ADR-010 decision plus a license file."
+            "This gate proves mandatory root AGENTS.md plus repository-health file presence/shape, rejects tracked temporary workflows, "
+            "and guards against an unapproved license file. It does not infer an Owner license choice. License PASS requires an "
+            "accepted SW2-ADR-010 decision plus a license file."
         ),
     }
 
