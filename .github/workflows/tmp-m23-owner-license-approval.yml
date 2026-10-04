@@ -1,0 +1,89 @@
+name: Temporary M23 Owner License Approval
+
+on:
+  push:
+    branches:
+      - work/m23-java-kotlin-semantic-baseline
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-m23-owner-license-approval
+  cancel-in-progress: true
+
+jobs:
+  apply-owner-decision:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: work/m23-java-kotlin-semantic-baseline
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Record SW2-ADR-010 Owner approval
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          license_text = (root / 'LICENSE').read_text(encoding='utf-8')
+          if not license_text.startswith('MIT License\n'):
+              raise SystemExit('LICENSE is not the approved MIT license text')
+
+          path = root / '.workflow' / 'decisions.json'
+          payload = json.loads(path.read_text(encoding='utf-8'))
+          decisions = payload.setdefault('decisions', [])
+          existing = [item for item in decisions if item.get('id') == 'SW2-ADR-010']
+          if existing:
+              item = existing[0]
+              if item.get('status') != 'ACCEPTED' or 'MIT' not in str(item.get('decision', '')):
+                  raise SystemExit(f'conflicting SW2-ADR-010: {item!r}')
+          else:
+              decisions.append({
+                  'decision': 'Adopt the MIT License for DoctorCode.',
+                  'id': 'SW2-ADR-010',
+                  'rationale': 'The Owner explicitly approved `APPROVE SW2-ADR-010 — MIT` on 2026-10-04. The repository already contains the MIT License text and governance must record that Owner authority rather than infer it from file presence.',
+                  'status': 'ACCEPTED',
+                  'title': 'Owner-approved MIT license',
+              })
+          path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + '\n', encoding='utf-8', newline='\n')
+      - name: Remove temporary approval workflow
+        shell: bash
+        run: rm .github/workflows/tmp-m23-owner-license-approval.yml
+      - name: Synchronize Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate Owner-approved repository health
+        run: python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+      - name: Validate schema and toolchain
+        run: python .workflow/tools/validate_schema_toolchain.py --root .
+      - name: Validate generated governance outputs before commit
+        shell: bash
+        run: |
+          python .workflow/tools/validate_project_docs.py --root .
+          python .workflow/tools/validate_doc_quality.py --root .
+          python .workflow/tools/validate_human_comprehension.py --root . --require-pass
+          python .workflow/tools/validate_handoff.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Commit Owner decision locally
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(m23): record Owner-approved MIT license"
+      - name: Validate clean committed Project Truth
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain)"
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_project_truth.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Push validated Owner decision
+        shell: bash
+        run: git push origin HEAD:work/m23-java-kotlin-semantic-baseline
