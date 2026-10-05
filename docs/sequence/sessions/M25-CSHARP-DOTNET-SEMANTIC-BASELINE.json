@@ -9,6 +9,11 @@
   "critical": false,
   "evidence_boundary": "M25 BEFORE plan was frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# product implementation. DOCUMENT edges are design traceability only because generic extraction does not resolve Go call graphs or .NET build semantics. Behavioral authority is RED 0a1dc833e8ae61993b63830768f2ac77d01c3c33 / Core 37293193349 and GREEN product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163 / Core 37378314705, whose 12-case corpus is hard-asserted at 4 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS. .csproj/.sln handling is deterministic manifest-presence evidence only; MSBuild/NuGet/project-reference/solution-membership/Roslyn/source-generator/reflection/whole-program semantics remain NOT_PROVEN. Historical M19-M24 sequence evidence remains content-addressed and immutable under SW2-16 Historical Evidence Freeze.",
   "implementation_base_sha": "ab5c6e3b58369b3675eb3d5291f751a0657641d5",
+  "merge_provenance": {
+    "accepted_branch_head": "1b2bcf0c8b715666c814820a3268b815aa1b9a50",
+    "product_merge_sha": "eefd693ea36b3201f4e9c04cb74ef40a2745272d",
+    "strategy": "SQUASH"
+  },
   "mode": "BEFORE",
   "phase": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
   "plan": {

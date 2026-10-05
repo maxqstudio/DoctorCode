@@ -10,7 +10,7 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m25-csharp-dotnet-semantic-baseline
+Active branch: work/m25-main-governance-repair
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: a000c0f4afa7bb88789efc63301a9187ff5bb7dd
 Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
