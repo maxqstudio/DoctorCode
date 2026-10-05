@@ -1,0 +1,150 @@
+name: M25 Main Governance Repair Scratch
+
+on:
+  push:
+    branches:
+      - work/m25-main-governance-repair
+
+permissions:
+  contents: write
+
+concurrency:
+  group: m25-main-governance-repair-scratch
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Verify repair base
+        shell: bash
+        run: |
+          test "$(git rev-parse HEAD^)" = "eefd693ea36b3201f4e9c04cb74ef40a2745272d"
+          test "$(git diff --name-only HEAD^ HEAD)" = ".github/workflows/m25-main-governance-repair-scratch.yml"
+      - name: Record exact squash provenance
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def write(path, data):
+              Path(path).write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+
+          session_path = "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json"
+          session = load(session_path)
+          if session.get("scope") != "CURRENT" or session.get("status") != "IN_PROGRESS":
+              raise SystemExit("M25 session must remain CURRENT / IN_PROGRESS during main governance repair")
+          session["merge_provenance"] = {
+              "accepted_branch_head": "1b2bcf0c8b715666c814820a3268b815aa1b9a50",
+              "product_merge_sha": "eefd693ea36b3201f4e9c04cb74ef40a2745272d",
+              "strategy": "SQUASH"
+          }
+          write(session_path, session)
+
+          acceptance_path = ".workflow/acceptance.json"
+          acceptance = load(acceptance_path)
+          acceptance["evidence_boundary"] = (
+              "M25 product was squash-merged from exact accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 to product main "
+              "eefd693ea36b3201f4e9c04cb74ef40a2745272d with identical tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1. "
+              "All seven non-governance permanent workflows passed on the exact product main. Governance run 37380495659 is retained as the expected predecessor sequence-lineage failure and is not relabeled PASS. "
+              "M25 remains CURRENT / IN_PROGRESS and is not MAIN_ACCEPTED until the provenance-repair branch and governance-normalized main pass the complete permanent matrix. "
+              "C# authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence."
+          )
+          requirements = acceptance.setdefault("requirements", [])
+          by_id = {item.get("id"): item for item in requirements}
+
+          regression = by_id.get("M25-REGRESSION-MATRIX")
+          if regression is None:
+              raise SystemExit("M25-REGRESSION-MATRIX missing")
+          regression["status"] = "PASS"
+          regression["evidence"] = (
+              "Exact synchronized branch candidate 1b2bcf0c8b715666c814820a3268b815aa1b9a50 passed all eight permanent push workflows: "
+              "Governance 37379540125, CI 37379540294, M06 37379540159, Real World Go 37379540145, M07 37379540158, M10 37379540160, M16 37379540207, and M17 37379540134. "
+              "The same exact PR head also passed all eight pull_request workflows before squash merge."
+          )
+
+          additions = [
+              {
+                  "id": "M25-SQUASH-TREE-PROVENANCE",
+                  "requirement": "The accepted M25 branch tree must be cryptographically identical to the squash product merge tree, with frozen-plan lineage retained through the accepted branch head.",
+                  "evidence": "accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1; product merge eefd693ea36b3201f4e9c04cb74ef40a2745272d tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1; SW2-16 exact-tree SQUASH provenance validator applies.",
+                  "status": "PASS"
+              },
+              {
+                  "id": "M25-PRODUCT-MAIN-NON-GOVERNANCE",
+                  "requirement": "The exact M25 squash product merge must preserve all product and regression lanes while governance provenance is repaired separately.",
+                  "evidence": "At eefd693ea36b3201f4e9c04cb74ef40a2745272d: CI 37380495666 PASS; M06 37380495648 PASS; Real World Go 37380495710 PASS; M07 37380495703 PASS; M10 37380495641 PASS; M16 37380495695 PASS; M17 37380495753 PASS. Governance 37380495659 is retained as the predecessor sequence-lineage failure, not relabeled PASS.",
+                  "status": "PASS"
+              }
+          ]
+          for item in additions:
+              existing = by_id.get(item["id"])
+              if existing is None:
+                  requirements.append(item)
+                  by_id[item["id"]] = item
+              elif existing != item:
+                  raise SystemExit(f"conflicting existing requirement: {item['id']}")
+          write(acceptance_path, acceptance)
+
+          state_path = ".workflow/state.json"
+          state = load(state_path)
+          if state.get("phase") != "M25_CSHARP_DOTNET_SEMANTIC_BASELINE":
+              raise SystemExit(f"unexpected phase: {state.get('phase')}")
+          state["status"] = "M25_MAIN_GOVERNANCE_REPAIR"
+          state["working_branch"] = "work/m25-main-governance-repair"
+          state["next_authorized_actions"] = [
+              "Validate the SW2-16 exact-tree SQUASH provenance repair without modifying M25 product behavior.",
+              "Require all eight permanent workflows to PASS on one exact governance-repair branch SHA before PR promotion and squash merge.",
+              "After governance-normalized main passes all eight permanent workflows, close M25 and advance roadmap authority to M26 in a separate governed closure step."
+          ]
+          old_pending = "M25 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes."
+          state["not_proven"] = [x for x in state.get("not_proven", []) if x != old_pending]
+          new_pending = "M25 is not MAIN_ACCEPTED until the governance provenance repair is accepted, merged, and all eight permanent workflows pass on the governance-normalized main."
+          if new_pending not in state.setdefault("not_proven", []):
+              state["not_proven"].append(new_pending)
+          new_proven = [
+              "Exact synchronized M25 branch candidate 1b2bcf0c8b715666c814820a3268b815aa1b9a50 passed all eight permanent push workflows before PR promotion and all eight pull_request workflows before squash merge.",
+              "Accepted M25 branch tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1 is identical to product main eefd693ea36b3201f4e9c04cb74ef40a2745272d tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1.",
+              "Exact M25 product main eefd693ea36b3201f4e9c04cb74ef40a2745272d passed CI 37380495666, M06 37380495648, Real World Go 37380495710, M07 37380495703, M10 37380495641, M16 37380495695, and M17 37380495753. Governance 37380495659 failed only at Validate sequence sessions because squash lineage had not yet been represented."
+          ]
+          for item in new_proven:
+              if item not in state.setdefault("proven", []):
+                  state["proven"].append(item)
+          write(state_path, state)
+          PY
+      - name: Regenerate governed Project Truth
+        shell: bash
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate governance repair
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_handoff.py
+          python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
+          python .workflow/tools/validate_project_truth.py
+          python .workflow/tools/validate_sequence_sessions.py
+      - name: Commit governed repair
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .workflow/state.json .workflow/acceptance.json docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json docs
+          git diff --cached --quiet && { echo "repair produced no diff"; exit 1; }
+          git commit -m "fix(m25): record squash governance provenance"
+          python .workflow/tools/validate_sequence_sessions.py
+          test -z "$(git status --porcelain)"
+          git push origin HEAD:refs/heads/work/m25-main-governance-repair
