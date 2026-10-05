@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M24 is MAIN_ACCEPTED and governance-closed. M25 BEFORE plan is frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# implementation. Skill_Workflow SW2-16 Historical Evidence Freeze is active with immutable M19-M24 historical identities. M25 has selected gotreesitter v0.55.1 c_sharp as pure-Go/no-CGO syntax authority, but no C# semantic capability is accepted yet. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority.",
+  "evidence_boundary": "M24 is MAIN_ACCEPTED and governance-closed. M25 BEFORE plan remains frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5. M25 product behavior is green at e60e4c0d5445d05399462f80aac0f0fa12a3a163 / Core CI 37378314705, but M25 is not branch-accepted or MAIN_ACCEPTED until synchronized Project Truth and all eight permanent workflows PASS on one exact branch SHA followed by squash merge and exact-main revalidation. Authority is limited to pure-Go gotreesitter C# syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and .csproj/.sln manifest-presence evidence. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -489,6 +489,42 @@
       "id": "M25-PARSER-PROVIDER",
       "requirement": "M25 must select a deterministic cross-platform C# parser/provider without introducing CGO or requiring .NET runtime execution for syntax parsing.",
       "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 37293193349 at 0a1dc833e8ae61993b63830768f2ac77d01c3c33 failed on Ubuntu, Windows, and macOS at the M25 C#/.NET semantic benchmark gate before the C# analyzer was registered; earlier accepted Core gates passed.",
+      "id": "M25-RED-CSHARP-ABSENT",
+      "requirement": "The C# benchmark must prove C# analyzer authority absent before implementation on all Core CI operating systems.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "csharp/gotreesitter-v1 reuses pinned gotreesitter v0.55.1 grammars/c_sharp through ParseWithStrict; internal/analyzers/csharp/analyzer_test.go requires malformed C# source to fail closed.",
+      "id": "M25-PARSER-AUTHORITY",
+      "requirement": "Visible .cs source must use deterministic embedded parsing and malformed syntax must fail closed without requiring a .NET runtime.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "csharp/gotreesitter-v1 declares exactly CSHARP-SEC-HARDCODED-CREDENTIAL, CSHARP-SIMPLIFY-BOOL-RETURN, and CSHARP-LOGIC-DUPLICATE-CONDITION with safe_autofix=false. No C# DEADCODE or BLOAT rule is registered.",
+      "id": "M25-BOUNDED-RULES",
+      "requirement": "M25 must expose only bounded SECURITY, SIMPLIFY, and LOGIC rules with safe_autofix=false; C# DEADCODE and BLOAT must remain unavailable.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "internal/analyzers/csharp/project.go::discoverProjectScope inventories visible .csproj/.sln paths deterministically, skips symlinks and ignored generated/build directories, and adds manifest-presence-only evidence. project_test.go proves malformed project XML is not parsed and unrelated source is not assigned project membership.",
+      "id": "M25-PROJECT-SOLUTION-BOUNDARY",
+      "requirement": "M25 must represent .csproj/.sln and generated-code boundaries conservatively without claiming MSBuild, dependency-graph, solution-membership, or source-generator semantics.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Core CI run 37378314705 at e60e4c0d5445d05399462f80aac0f0fa12a3a163 passed all three OS jobs. TestM25Corpus hard-asserts 12 cases = 4 TP / 0 FP / 0 FN; the corpus includes project-shaped, generated-source, preprocessor, partial-type, async/nullable, mutation, nested-local-function, placeholder-secret, and interpolated-secret boundaries.",
+      "id": "M25-ADVERSARIAL-GREEN",
+      "requirement": "The labeled/adversarial/repository-shaped C# corpus must pass with zero false positives and zero false negatives on Core CI Ubuntu, Windows, and macOS.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "At e60e4c0d5445d05399462f80aac0f0fa12a3a163 all seven non-governance permanent workflows passed, while Governance 37378314768 correctly failed on stale Project Truth before synchronization. Final synchronized 8/8 branch acceptance has not yet run.",
+      "id": "M25-REGRESSION-MATRIX",
+      "requirement": "One exact synchronized M25 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion.",
+      "status": "NOT_RUN"
     }
   ],
   "runtime_checks": [
@@ -504,7 +540,8 @@
     "M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS",
     "M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS",
     "M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS",
-    "M24 C/C++ labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS"
+    "M24 C/C++ labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS",
+    "M25 C#/.NET 12-case parser-backed labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS"
   ],
   "runtime_status": "PASS",
   "schema_version": 1,
@@ -530,7 +567,9 @@
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-java.json --analyzer=jvm --json",
     "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json",
     "go test ./internal/analyzers/cpp ./internal/analyzers ./internal/engine ./internal/benchmark",
-    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json"
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json",
+    "go test ./internal/analyzers/csharp ./internal/analyzers ./internal/engine ./internal/benchmark",
+    "go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m25-csharp.json --analyzer=csharp --json"
   ],
   "truth_gates": {
     "BEHAVIORAL_SYNC": "PASS",
