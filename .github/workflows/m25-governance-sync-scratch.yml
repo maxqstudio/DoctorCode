@@ -147,6 +147,14 @@ jobs:
             --session docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json
       - name: Generate Project Truth
         run: python .workflow/tools/generate_project_docs.py --root .
+      - name: Commit clean governed tree locally
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git status --short
+          git commit -m "chore(m25): synchronize governed Project Truth"
+          test -z "$(git status --porcelain)"
       - name: Validate governed outputs
         run: |
           python .workflow/tools/validate_schema_toolchain.py --root .
@@ -158,11 +166,5 @@ jobs:
           python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
           python .workflow/tools/validate_project_truth.py
           python .workflow/tools/validate_sequence_sessions.py
-      - name: Commit clean governed tree
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add -A
-          git status --short
-          git commit -m "chore(m25): synchronize governed Project Truth"
-          git push origin HEAD:work/m25-governance-sync-scratch
+      - name: Push validated governed tree
+        run: git push origin HEAD:work/m25-governance-sync-scratch
