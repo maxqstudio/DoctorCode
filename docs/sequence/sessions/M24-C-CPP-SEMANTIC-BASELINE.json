@@ -9,6 +9,11 @@
   "critical": false,
   "evidence_boundary": "M24 BEFORE plan was frozen at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before product implementation. Generic sequence extraction does not resolve Go call graphs, so DOCUMENT plan edges are design traceability only; behavioral authority is the RED/green benchmark and cumulative CI evidence. RED: 1564c430e22d394ddef1449b1ffff73f474b905c / Core 37219109211. GREEN semantic candidate: da7241f7c57d062656ed5947cf5c87143074d593 / Core 37242861899, 15 cases = 8 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS.",
   "implementation_base_sha": "acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5",
+  "merge_provenance": {
+    "accepted_branch_head": "ef32ff08735ddc9b83889d580daa60f303015ca1",
+    "product_merge_sha": "a000c0f4afa7bb88789efc63301a9187ff5bb7dd",
+    "strategy": "SQUASH"
+  },
   "mode": "BEFORE",
   "phase": "M24_C_CPP_SEMANTIC_BASELINE",
   "plan": {

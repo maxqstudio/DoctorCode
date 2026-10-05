@@ -1,6 +1,6 @@
 {
-  "policy": "DoctorCode consumes Skill_Workflow SW2-13 from this exact authority. Consumer governance tools are vendored and locked by .workflow/toolchain.lock.json; root AGENTS.md, schema-v1 governance, progressive reference routing, repository hygiene, and Owner-approved license proof remain mandatory without weakening existing DoctorCode acceptance gates.",
-  "ref": "4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef",
+  "policy": "DoctorCode consumes accepted Skill_Workflow SW2-16 from this exact authority. Consumer governance tools are vendored and locked by .workflow/toolchain.lock.json. BEFORE sequence evidence may use exact-tree SQUASH merge provenance only when frozen-plan lineage, accepted branch lineage, exact tree equality, and product-merge ancestry are all proven. Existing DoctorCode acceptance gates remain blocking.",
+  "ref": "9ac09b2acd0bdf25ea05157be7711da852173ab8",
   "repository": "maxqstudio/Skill_Workflow",
   "schema_version": 1
 }
