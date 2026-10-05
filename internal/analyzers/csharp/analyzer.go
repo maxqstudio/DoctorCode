@@ -186,9 +186,24 @@ func securityFindings(file *parsedFile) []model.Finding {
 		if node.Type(lang) != "variable_declarator" {
 			return gotreesitter.WalkContinue
 		}
+
 		nameNode := node.ChildByFieldName("name", lang)
+		if nameNode == nil && node.NamedChildCount() > 0 {
+			candidate := node.NamedChild(0)
+			if candidate != nil && candidate.Type(lang) == "identifier" {
+				nameNode = candidate
+			}
+		}
+
 		valueNode := node.ChildByFieldName("value", lang)
-		if nameNode == nil || valueNode == nil || valueNode.Type(lang) != "string_literal" {
+		if valueNode == nil && node.NamedChildCount() > 1 {
+			candidate := node.NamedChild(node.NamedChildCount() - 1)
+			if candidate != nil && candidate.Type(lang) == "string_literal" {
+				valueNode = candidate
+			}
+		}
+
+		if nameNode == nil || nameNode.Type(lang) != "identifier" || valueNode == nil || valueNode.Type(lang) != "string_literal" {
 			return gotreesitter.WalkContinue
 		}
 		name := strings.TrimSpace(nodeText(file.source, nameNode))
