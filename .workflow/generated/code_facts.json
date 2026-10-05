@@ -44,6 +44,12 @@
           "internal/analyzers/cpp/analyzer.go",
           "internal/analyzers/cpp/analyzer_test.go",
           "internal/analyzers/cpp/parser.go",
+          "internal/analyzers/csharp/analyzer.go",
+          "internal/analyzers/csharp/analyzer_test.go",
+          "internal/analyzers/csharp/parser_test.go",
+          "internal/analyzers/csharp/project.go",
+          "internal/analyzers/csharp/project_test.go",
+          "internal/analyzers/csharp/syntax.go",
           "internal/analyzers/golang/analyzer.go",
           "internal/analyzers/golang/analyzer_test.go",
           "internal/analyzers/golang/corpus_test.go",
@@ -214,6 +220,19 @@
           "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp",
           "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c",
           "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c",
+          "internal/benchmark/testdata/m25-csharp/async-nullable-negative/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/generated-source-negative/Generated.cs",
+          "internal/benchmark/testdata/m25-csharp/interpolated-secret-negative/Secrets.cs",
+          "internal/benchmark/testdata/m25-csharp/logic-positive/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/nested-local-function-negative/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/parameter-mutation-negative/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartA.cs",
+          "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartB.cs",
+          "internal/benchmark/testdata/m25-csharp/placeholder-secret-negative/Secrets.cs",
+          "internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/security-positive/Secrets.cs",
+          "internal/benchmark/testdata/m25-csharp/simplify-positive/Feature.cs",
+          "internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App/Feature.cs",
           "internal/buildinfo/buildinfo.go",
           "internal/buildinfo/buildinfo_test.go",
           "internal/detector/detector.go",
@@ -268,6 +287,12 @@
         "internal/analyzers/cpp/analyzer.go",
         "internal/analyzers/cpp/analyzer_test.go",
         "internal/analyzers/cpp/parser.go",
+        "internal/analyzers/csharp/analyzer.go",
+        "internal/analyzers/csharp/analyzer_test.go",
+        "internal/analyzers/csharp/parser_test.go",
+        "internal/analyzers/csharp/project.go",
+        "internal/analyzers/csharp/project_test.go",
+        "internal/analyzers/csharp/syntax.go",
         "internal/analyzers/golang/analyzer.go",
         "internal/analyzers/golang/analyzer_test.go",
         "internal/analyzers/golang/corpus_test.go",
@@ -438,6 +463,19 @@
         "internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp",
         "internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c",
         "internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c",
+        "internal/benchmark/testdata/m25-csharp/async-nullable-negative/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/generated-source-negative/Generated.cs",
+        "internal/benchmark/testdata/m25-csharp/interpolated-secret-negative/Secrets.cs",
+        "internal/benchmark/testdata/m25-csharp/logic-positive/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/nested-local-function-negative/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/parameter-mutation-negative/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartA.cs",
+        "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartB.cs",
+        "internal/benchmark/testdata/m25-csharp/placeholder-secret-negative/Secrets.cs",
+        "internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/security-positive/Secrets.cs",
+        "internal/benchmark/testdata/m25-csharp/simplify-positive/Feature.cs",
+        "internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App/Feature.cs",
         "internal/buildinfo/buildinfo.go",
         "internal/buildinfo/buildinfo_test.go",
         "internal/detector/detector.go",
@@ -483,7 +521,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 564
+      "lines": 567
     },
     {
       "directory": "cmd/doctorcode",
@@ -512,6 +550,48 @@
       "is_test": false,
       "language": "Go",
       "lines": 54
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 538
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 48
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/parser_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 72
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/project.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 92
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/project_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 59
+    },
+    {
+      "directory": "internal/analyzers/csharp",
+      "file": "internal/analyzers/csharp/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 38
     },
     {
       "directory": "internal/analyzers/golang",
@@ -658,7 +738,7 @@
       "file": "internal/analyzers/registry.go",
       "is_test": false,
       "language": "Go",
-      "lines": 58
+      "lines": 60
     },
     {
       "directory": "internal/analyzers",
@@ -2087,6 +2167,97 @@
       "is_test": false,
       "language": "C",
       "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/async-nullable-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/async-nullable-negative/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 8
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/generated-source-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/generated-source-negative/Generated.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 5
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/interpolated-secret-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/interpolated-secret-negative/Secrets.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/logic-positive",
+      "file": "internal/benchmark/testdata/m25-csharp/logic-positive/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 11
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/nested-local-function-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/nested-local-function-negative/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 14
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/parameter-mutation-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/parameter-mutation-negative/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 12
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/partial-type-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartA.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/partial-type-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/partial-type-negative/PartB.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/placeholder-secret-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/placeholder-secret-negative/Secrets.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative",
+      "file": "internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 13
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/security-positive",
+      "file": "internal/benchmark/testdata/m25-csharp/security-positive/Secrets.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 4
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/simplify-positive",
+      "file": "internal/benchmark/testdata/m25-csharp/simplify-positive/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 10
+    },
+    {
+      "directory": "internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App",
+      "file": "internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App/Feature.cs",
+      "is_test": false,
+      "language": "C#",
+      "lines": 16
     },
     {
       "directory": "internal/buildinfo",
@@ -3925,14 +4096,15 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a",
+  "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926",
   "source_summary": {
-    "files": 260,
+    "files": 279,
     "languages": {
       "C": 7,
+      "C#": 13,
       "C++": 8,
       "C/C++ Header": 2,
-      "Go": 103,
+      "Go": 109,
       "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
@@ -3945,7 +4117,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 11860,
+    "lines": 12821,
     "test_files": 2
   },
   "tests": [
