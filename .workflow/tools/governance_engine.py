@@ -30,7 +30,7 @@ import validate_human_comprehension
 import validate_project_docs
 import validate_project_truth
 import validate_sequence_sessions
-from project_snapshot import ProjectSnapshot, active_project_snapshot
+from project_snapshot import ProjectSnapshot, SOURCE_EXTENSIONS, active_project_snapshot
 from script_runner import invoke_main
 
 
@@ -150,6 +150,7 @@ COMPILER_DEVELOP_FILES = {
     "scripts/validate_project_docs.py",
     "scripts/validate_doc_quality.py",
     "scripts/project_profile.py",
+    "scripts/project_truth_impact.py",
 }
 CROSSDOC_DEVELOP_FILES = {
     "scripts/validate_cross_document_consistency.py",
@@ -190,6 +191,146 @@ FINALIZE_NODE_NAMES = (
     "validate_project_truth",
     "governed_state_clean",
 )
+
+
+DEVELOP_NODE_ORDER = (
+    "compile_scripts",
+    "engine_regression",
+    "sequence_regression",
+    "cross_document_regression",
+    "compiler_selftest",
+    "sync_project_truth",
+    "validate_project_docs",
+    "validate_cross_document_consistency",
+    "impact_only",
+)
+DEVELOP_DEPENDENCIES: dict[str, tuple[str, ...]] = {
+    "compile_scripts": (),
+    "engine_regression": ("compile_scripts",),
+    "sequence_regression": ("compile_scripts",),
+    "cross_document_regression": ("compile_scripts",),
+    "compiler_selftest": ("compile_scripts",),
+    "sync_project_truth": (),
+    "validate_project_docs": (),
+    "validate_cross_document_consistency": ("sync_project_truth",),
+    "impact_only": (),
+}
+VERIFY_NODE_ORDER = VERIFY_NODE_NAMES + ("impact_only",)
+VERIFY_DEPENDENCIES: dict[str, tuple[str, ...]] = {
+    "compile_scripts": (),
+    "engine_regression": ("compile_scripts",),
+    "sequence_regression": ("compile_scripts",),
+    "cross_document_regression": ("compile_scripts",),
+    "compiler_selftest": ("compile_scripts",),
+    "validate_project_docs": (),
+    "validate_human_comprehension": ("validate_project_docs",),
+    "validate_sequence_sessions": (),
+    "validate_handoff": ("validate_project_docs",),
+    "validate_cross_document_consistency": (
+        "validate_human_comprehension",
+        "validate_handoff",
+    ),
+    "impact_only": (),
+}
+VERIFY_BROAD_IMPACTS = frozenset({"broad_source", "template", "ci"})
+VERIFY_IMPACT_NODE_SEEDS: dict[str, tuple[str, ...]] = {
+    "engine": ("engine_regression", "validate_cross_document_consistency"),
+    "sequence": (
+        "sequence_regression",
+        "validate_sequence_sessions",
+        "validate_cross_document_consistency",
+    ),
+    "compiler": ("compiler_selftest", "validate_cross_document_consistency"),
+    "cross_document": (
+        "cross_document_regression",
+        "validate_cross_document_consistency",
+    ),
+    "governance": (
+        "validate_sequence_sessions",
+        "validate_cross_document_consistency",
+    ),
+    "documentation": ("validate_cross_document_consistency",),
+    "source": (
+        "validate_sequence_sessions",
+        "validate_cross_document_consistency",
+    ),
+    "benchmark": (),
+}
+
+
+def dependency_closure(
+    seed_names: tuple[str, ...] | list[str],
+    dependencies: dict[str, tuple[str, ...]],
+    order: tuple[str, ...],
+) -> tuple[str, ...]:
+    selected: set[str] = set()
+    visiting: set[str] = set()
+
+    def visit(name: str) -> None:
+        if name in selected:
+            return
+        if name in visiting:
+            raise ValueError(f"PLANNER_DAG_CYCLE:{name}")
+        if name not in dependencies:
+            raise ValueError(f"UNKNOWN_PLANNER_NODE:{name}")
+        visiting.add(name)
+        for dependency in dependencies[name]:
+            if dependency not in dependencies:
+                raise ValueError(f"UNKNOWN_PLANNER_DEPENDENCY:{name}:{dependency}")
+            visit(dependency)
+        visiting.remove(name)
+        selected.add(name)
+
+    for seed in seed_names:
+        visit(seed)
+
+    missing_order = selected.difference(order)
+    if missing_order:
+        raise ValueError("PLANNER_ORDER_MISSING:" + ",".join(sorted(missing_order)))
+    return tuple(name for name in order if name in selected)
+
+
+def verify_seed_node_names(
+    paths: tuple[str, ...] | list[str],
+    impacts: tuple[str, ...],
+) -> tuple[str, ...]:
+    impact_set = set(impacts)
+    if impact_set.intersection(VERIFY_BROAD_IMPACTS):
+        return VERIFY_NODE_NAMES
+    if "unknown" in impact_set:
+        raise ValueError("VERIFY_UNKNOWN_IMPACT_REQUIRES_FINALIZE")
+
+    seeds: set[str] = set()
+    handled = set(VERIFY_IMPACT_NODE_SEEDS) | {"targeted_test"}
+    unhandled = impact_set.difference(handled)
+    if unhandled:
+        raise ValueError("UNMAPPED_VERIFY_IMPACT:" + ",".join(sorted(unhandled)))
+
+    for impact in sorted(impact_set):
+        seeds.update(VERIFY_IMPACT_NODE_SEEDS.get(impact, ()))
+
+    if "targeted_test" in impact_set:
+        mapped = {
+            node_name
+            for path, node_name in DEVELOP_TEST_MAP.items()
+            if path in set(paths)
+        }
+        if not mapped:
+            raise ValueError("TARGETED_TEST_WITHOUT_VERIFY_NODE")
+        seeds.update(mapped)
+        seeds.add("validate_cross_document_consistency")
+
+    if not seeds:
+        seeds.add("impact_only")
+    return tuple(name for name in VERIFY_NODE_ORDER if name in seeds)
+
+
+def verify_node_names(
+    paths: tuple[str, ...] | list[str],
+    impacts: tuple[str, ...],
+) -> tuple[str, ...]:
+    seeds = verify_seed_node_names(paths, impacts)
+    return dependency_closure(seeds, VERIFY_DEPENDENCIES, VERIFY_NODE_ORDER)
 
 
 def git(root: Path, *args: str) -> str:
@@ -256,7 +397,11 @@ def classify_path(path: str) -> str:
         return "governance"
     if path.startswith("artifacts/sequence/"):
         return "sequence"
-    if path in {"SKILL.md", "README.md"} or path.startswith("docs/"):
+    if (
+        path in {"SKILL.md", "README.md"}
+        or path.startswith("docs/")
+        or path.startswith("references/")
+    ):
         return "documentation"
     if path.startswith("benchmarks/"):
         return "benchmark"
@@ -266,6 +411,8 @@ def classify_path(path: str) -> str:
         return "ci"
     if path.startswith("scripts/"):
         return "broad_source"
+    if Path(path).suffix.lower() in SOURCE_EXTENSIONS:
+        return "source"
     return "unknown"
 
 
@@ -306,29 +453,20 @@ def develop_node_names(
         if path in path_set:
             names.add(node_name)
     impact_set = set(impacts)
-    if impact_set.intersection({"governance", "documentation"}):
-        names.add("validate_project_docs")
+    if impact_set.intersection({"governance", "documentation", "source"}):
+        names.add("sync_project_truth")
     if "documentation" in impact_set:
         names.add("validate_cross_document_consistency")
     if "benchmark" in impact_set and not names:
         names.add("impact_only")
     if not names:
         names.add("impact_only")
-    ordered = [
-        name
-        for name in (
-            "compile_scripts",
-            "engine_regression",
-            "sequence_regression",
-            "cross_document_regression",
-            "compiler_selftest",
-            "validate_project_docs",
-            "validate_cross_document_consistency",
-            "impact_only",
-        )
-        if name in names
-    ]
-    return tuple(ordered)
+    ordered = [name for name in DEVELOP_NODE_ORDER if name in names]
+    return dependency_closure(
+        tuple(ordered),
+        DEVELOP_DEPENDENCIES,
+        DEVELOP_NODE_ORDER,
+    )
 
 
 def planned_node_names(
@@ -340,7 +478,7 @@ def planned_node_names(
     if effective == "finalize":
         return FINALIZE_NODE_NAMES
     if effective == "verify":
-        return VERIFY_NODE_NAMES
+        return verify_node_names(paths, impacts)
     return develop_node_names(paths, impacts)
 
 
@@ -420,6 +558,7 @@ def build_mode_dag(
     base: str,
     mode: str,
     node_names: tuple[str, ...],
+    changed_paths: tuple[str, ...] = (),
 ) -> ValidationDAG:
     wanted = set(node_names)
     nodes: list[ValidationNode] = []
@@ -476,13 +615,18 @@ def build_mode_dag(
             if "strict_workflow_selftest" in wanted
             else regressions
         )
+        sync_args = ["--root", str(root)]
+        if mode != "finalize":
+            sync_args.append("--incremental")
+            for path in changed_paths:
+                sync_args.extend(["--changed-path", path])
         nodes.append(
             ValidationNode(
                 name="sync_project_truth",
                 dependencies=dependencies,
                 action=cli_action(
                     sync_project_truth.main,
-                    ["--root", str(root)],
+                    sync_args,
                     "sync_project_truth.py",
                 ),
             )
@@ -490,13 +634,18 @@ def build_mode_dag(
         docs_dependency = "sync_project_truth"
     elif "validate_project_docs" in wanted:
         dependencies = regressions
+        validate_docs_args = ["--root", str(root)]
+        if mode == "verify":
+            validate_docs_args.append("--incremental")
+            for path in changed_paths:
+                validate_docs_args.extend(["--changed-path", path])
         nodes.append(
             ValidationNode(
                 name="validate_project_docs",
                 dependencies=dependencies,
                 action=cli_action(
                     validate_project_docs.main,
-                    ["--root", str(root)],
+                    validate_docs_args,
                     "validate_project_docs.py",
                 ),
             )
@@ -716,17 +865,20 @@ def main() -> int:
         except ValueError as exc:
             failures.append(str(exc))
         if not failures:
-            impacts = classify_changed_paths(changed_paths)
-            selected_mode = effective_mode(args.mode, impacts)
-            if selected_mode == "finalize" and not expected_head:
-                failures.append("FINALIZE_EXPECTED_HEAD_REQUIRED")
-            else:
-                selected_nodes = planned_node_names(
-                    args.mode,
-                    selected_mode,
-                    changed_paths,
-                    impacts,
-                )
+            try:
+                impacts = classify_changed_paths(changed_paths)
+                selected_mode = effective_mode(args.mode, impacts)
+                if selected_mode == "finalize" and not expected_head:
+                    failures.append("FINALIZE_EXPECTED_HEAD_REQUIRED")
+                else:
+                    selected_nodes = planned_node_names(
+                        args.mode,
+                        selected_mode,
+                        changed_paths,
+                        impacts,
+                    )
+            except ValueError as exc:
+                failures.append(str(exc))
 
     if failures:
         report = {
@@ -753,6 +905,7 @@ def main() -> int:
                         base=base,
                         mode=selected_mode,
                         node_names=selected_nodes,
+                        changed_paths=changed_paths,
                     ).run()
                 else:
                     results = build_dag(root, base=base, sync=args.sync).run()

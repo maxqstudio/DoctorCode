@@ -360,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M24_C_CPP_SEMANTIC_BASELINE
 
-Current status: M24_IMPLEMENTED_VALIDATION_PENDING
+Current status: M24_MAIN_GOVERNANCE_REPAIR
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M24 Project Truth and BEFORE sequence actual evidence without widening C/C++ semantic authority.
-- Require all eight permanent workflows to PASS on one exact synchronized M24 branch SHA, including Core C/C++ benchmark on Ubuntu/Windows/macOS and release/install regression.
-- Only after exact branch acceptance may M24 be proposed for squash merge and exact-main revalidation.
+- Require all eight permanent workflows to PASS on one exact SW2-16 governance-repair branch SHA without changing M24 C/C++ product behavior.
+- Merge the governance-only repair through a guarded squash PR, then require all eight permanent workflows to PASS on the exact repaired main SHA.
+- Only after repaired exact-main acceptance may M24 be governance-closed and the roadmap advance to M25_CSHARP_DOTNET_SEMANTIC_BASELINE.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -523,6 +523,10 @@ Known blockers:
 - M24 RED candidate 1564c430e22d394ddef1449b1ffff73f474b905c ran Core CI 37219109211 and failed on Ubuntu, Windows, and macOS exactly at the M24 C/C++ benchmark gate because benchmark analyzer "cpp" was absent; the seven non-Core permanent workflows remained successful.
 - M24 semantic candidate da7241f7c57d062656ed5947cf5c87143074d593 passed Core CI run 37242861899 on Ubuntu, Windows, and macOS. The 15-case C/C++ corpus reports 8 TP / 0 FP / 0 FN, aggregate precision=1.0, recall=1.0; each declared M24 rule also reports precision=1.0 and recall=1.0.
 - M24 uses pinned gotreesitter v0.55.1 standalone C and C++ grammars with pure-Go embedded AST parsing and no new CGO dependency.
+- M24 accepted branch head ef32ff08735ddc9b83889d580daa60f303015ca1 passed all eight permanent workflows before merge and has tree eaafc0655680964a74a8d2898e5976205a57185e.
+- M24 squash product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd has the exact same tree eaafc0655680964a74a8d2898e5976205a57185e as accepted branch head ef32ff08735ddc9b83889d580daa60f303015ca1.
+- At M24 product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd, CI 37247183664, M06 37247183677, Real World Go 37247183735, M07 37247183676, M10 37247183659, M16 37247183663, and M17 37247183637 all passed; Governance 37247183682 failed only because the predecessor SW2-13 BEFORE validator required literal branch ancestry after squash.
+- Skill_Workflow SW2-16 main@9ac09b2acd0bdf25ea05157be7711da852173ab8 passed its complete permanent main matrix and adds exact-tree squash provenance for BEFORE sessions without weakening frozen-plan lineage requirements.
 
 ### Not proven
 
@@ -547,7 +551,7 @@ Known blockers:
 - M24 parser authority is embedded gotreesitter syntax/AST only; macro expansion, compile-definition selection, target ABI/build configuration, whole-program linkage, and ambiguous standalone .h dialect inference remain NOT_PROVEN.
 - M24 SECURITY is limited to direct credential-like string literals; composed/runtime-derived values are outside the rule.
 - M24 SIMPLIFY and LOGIC are bounded to direct unmodified bool/_Bool parameter proof and fail closed across mutation, unsupported conditions, generated source, and semantic preprocessor ambiguity.
-- M24 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes.
+- M24 is not MAIN_ACCEPTED until the SW2-16 governance repair passes exact-branch acceptance, merges to main, and the exact repaired main SHA passes all eight permanent workflows.
 
 ## Important limitations
 

@@ -96,6 +96,72 @@ def is_ancestor(root: Path, ancestor: str, descendant: str) -> bool:
     return proc.returncode == 0
 
 
+def git_tree(root: Path, commit: str) -> str:
+    return git(root, "rev-parse", f"{commit}^{{tree}}")
+
+
+def validate_before_implementation_lineage(
+    root: Path,
+    implementation_base: str,
+    head: str,
+    merge_provenance: object,
+) -> dict:
+    """Validate direct ancestry or an explicit content-identical squash bridge."""
+    result = {
+        "mode": "DIRECT",
+        "strategy": "",
+        "accepted_branch_head": "",
+        "product_merge_sha": "",
+        "accepted_branch_tree": "",
+        "product_merge_tree": "",
+        "failures": [],
+    }
+    if is_ancestor(root, implementation_base, head):
+        return result
+
+    result["mode"] = "MERGE_PROVENANCE"
+    if not isinstance(merge_provenance, dict):
+        result["failures"].append("IMPLEMENTATION_BASE_NOT_ANCESTOR_OF_HEAD")
+        return result
+
+    strategy = str(merge_provenance.get("strategy", "")).strip().upper()
+    accepted_branch_head = str(merge_provenance.get("accepted_branch_head", "")).strip()
+    product_merge_sha = str(merge_provenance.get("product_merge_sha", "")).strip()
+    result.update({
+        "strategy": strategy,
+        "accepted_branch_head": accepted_branch_head,
+        "product_merge_sha": product_merge_sha,
+    })
+    if strategy != "SQUASH":
+        result["failures"].append("INVALID_MERGE_PROVENANCE_STRATEGY:" + strategy)
+        return result
+    if not accepted_branch_head:
+        result["failures"].append("SQUASH_ACCEPTED_BRANCH_HEAD_MISSING")
+    if not product_merge_sha:
+        result["failures"].append("SQUASH_PRODUCT_MERGE_SHA_MISSING")
+    if result["failures"]:
+        return result
+    if not is_ancestor(root, implementation_base, accepted_branch_head):
+        result["failures"].append("SQUASH_ACCEPTED_BRANCH_NOT_DESCENDANT_OF_IMPLEMENTATION_BASE")
+    if not is_ancestor(root, product_merge_sha, head):
+        result["failures"].append("SQUASH_PRODUCT_MERGE_NOT_ANCESTOR_OF_HEAD")
+    try:
+        accepted_tree = git_tree(root, accepted_branch_head)
+        result["accepted_branch_tree"] = accepted_tree
+    except Exception:
+        result["failures"].append("SQUASH_ACCEPTED_BRANCH_HEAD_UNRESOLVED")
+        accepted_tree = ""
+    try:
+        product_tree = git_tree(root, product_merge_sha)
+        result["product_merge_tree"] = product_tree
+    except Exception:
+        result["failures"].append("SQUASH_PRODUCT_MERGE_SHA_UNRESOLVED")
+        product_tree = ""
+    if accepted_tree and product_tree and accepted_tree != product_tree:
+        result["failures"].append("SQUASH_TREE_MISMATCH")
+    return result
+
+
 def sanitize_alias(value: str, index: int) -> str:
     base = re.sub(r"[^A-Za-z0-9_]", "_", value)
     if not base or base[0].isdigit():

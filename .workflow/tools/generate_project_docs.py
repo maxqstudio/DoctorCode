@@ -26,6 +26,7 @@ from typing import Any
 
 from schema_contract import require_json_schema_version
 from extract_project_facts import extract_project_facts
+from project_truth_impact import plan_project_truth_impact
 from project_profile import (
     contract_settings,
     documentation_settings,
@@ -1770,6 +1771,45 @@ def render_glossary(specs: dict[str, dict]) -> str:
     return "# GLOSSARY\n\n| Term | Definition |\n|---|---|\n" + "\n".join(rows) + "\n"
 
 
+
+def wanted_doc_names(
+    required: set[str],
+    contracts: dict[str, str],
+    sequence: dict[str, bool],
+) -> set[str]:
+    wanted = set(required)
+    wanted.update(
+        {
+            "SYSTEM_OVERVIEW.md",
+            "PROJECT_MANIFEST.md",
+            "CURRENT_STATE.md",
+            "ROADMAP.md",
+            "MODULE_MAP.md",
+            "TEST_ACCEPTANCE_MATRIX.md",
+            "DECISIONS.md",
+            "KNOWN_DEFECTS.md",
+            "GLOSSARY.md",
+        }
+    )
+    if sequence.get("required", False):
+        wanted.add("SEQUENCE_CONTRACTS.md")
+
+    optional_map = {
+        "api_contracts": "API_CONTRACTS.md",
+        "data_contracts": "DATA_CONTRACTS.md",
+        "ui_information_architecture": "UI_INFORMATION_ARCHITECTURE.md",
+        "runbook": "RUNBOOK.md",
+        "decisions": "DECISIONS.md",
+        "known_defects": "KNOWN_DEFECTS.md",
+        "glossary": "GLOSSARY.md",
+        "changelog": "CHANGELOG.md",
+    }
+    for key, filename in optional_map.items():
+        if contracts.get(key) != "not_applicable":
+            wanted.add(filename)
+    wanted.discard("PROJECT_PROFILE.yaml")
+    return wanted
+
 def render_all(
     profile: str,
     specs: dict[str, dict],
@@ -1779,6 +1819,7 @@ def render_all(
     contracts: dict[str, str],
     sequence: dict[str, bool],
     digest: str,
+    only: set[str] | None = None,
 ) -> dict[str, str]:
     renderers = {
         "SYSTEM_OVERVIEW.md": lambda: render_system_overview(specs, workflows, facts),
@@ -1811,36 +1852,9 @@ def render_all(
         "CHANGELOG.md": lambda: render_changelog(specs),
     }
 
-    wanted = set(required)
-    wanted.update(
-        {
-            "SYSTEM_OVERVIEW.md",
-            "PROJECT_MANIFEST.md",
-            "CURRENT_STATE.md",
-            "ROADMAP.md",
-            "MODULE_MAP.md",
-            "TEST_ACCEPTANCE_MATRIX.md",
-            "DECISIONS.md",
-            "KNOWN_DEFECTS.md",
-            "GLOSSARY.md",
-        }
-    )
-    if sequence.get("required", False):
-        wanted.add("SEQUENCE_CONTRACTS.md")
-
-    optional_map = {
-        "api_contracts": "API_CONTRACTS.md",
-        "data_contracts": "DATA_CONTRACTS.md",
-        "ui_information_architecture": "UI_INFORMATION_ARCHITECTURE.md",
-        "runbook": "RUNBOOK.md",
-        "decisions": "DECISIONS.md",
-        "known_defects": "KNOWN_DEFECTS.md",
-        "glossary": "GLOSSARY.md",
-        "changelog": "CHANGELOG.md",
-    }
-    for key, filename in optional_map.items():
-        if contracts.get(key) != "not_applicable":
-            wanted.add(filename)
+    wanted = wanted_doc_names(required, contracts, sequence)
+    if only is not None:
+        wanted.intersection_update(only)
 
     result: dict[str, str] = {}
     head = generated_header(digest, facts["source_digest"])
@@ -1854,11 +1868,14 @@ def render_all(
     return result
 
 
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", default=".")
     parser.add_argument("--spec-root", default="")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--incremental", action="store_true")
+    parser.add_argument("--changed-path", action="append", default=[])
     parser.add_argument(
         "--facts-output",
         default=".workflow/generated/code_facts.json",
@@ -1871,6 +1888,9 @@ def main() -> int:
     if not profile_path.is_file():
         print("FAIL MISSING_PROJECT_PROFILE")
         return 1
+    if args.incremental and not args.changed_path:
+        print("FAIL INCREMENTAL_CHANGED_PATH_REQUIRED")
+        return 2
 
     try:
         profile_data = parse_profile(profile_path)
@@ -1887,40 +1907,67 @@ def main() -> int:
     spec_root = Path(spec_root_value)
     if not spec_root.is_absolute():
         spec_root = root / spec_root
-
     docs_root = root / str(documentation.get("docs_root", "docs"))
 
     try:
         specs, workflows = read_specs(spec_root)
-        failures = validate_inputs(
-            profile, specs, workflows, contracts, sequence
-        )
+        failures = validate_inputs(profile, specs, workflows, contracts, sequence)
     except Exception as exc:
         print("FAIL SPEC_ERROR:" + str(exc))
         return 1
-
     if failures:
         for item in failures:
             print("FAIL " + item)
         print("RESULT=FAIL failures=" + str(len(failures)))
         return 1
 
-    facts = extract_project_facts(root)
+    all_wanted = wanted_doc_names(required, contracts, sequence)
+    impact_plan: dict[str, object] = {
+        "affected_docs": sorted(all_wanted),
+        "facts_affected": True,
+        "broad": True,
+        "unknown_paths": [],
+        "changed_paths": [],
+        "reasons": {},
+        "final_acceptance_authority": False,
+    }
+    selected_wanted = set(all_wanted)
+    facts_affected = True
+    if args.incremental:
+        impact_plan = plan_project_truth_impact(args.changed_path, all_wanted)
+        selected_wanted = set(impact_plan["affected_docs"])
+        facts_affected = bool(impact_plan["facts_affected"])
+
     facts_output = Path(args.facts_output)
     if not facts_output.is_absolute():
         facts_output = root / facts_output
-    expected_facts_text = json.dumps(facts, indent=2, sort_keys=True) + "\n"
-    expected_facts_bytes = expected_facts_text.encode("utf-8")
     facts_missing = False
     facts_stale = False
-    if args.check:
-        if not facts_output.is_file():
-            facts_missing = True
-        elif canonical_generated_bytes(facts_output.read_bytes()) != expected_facts_bytes:
-            facts_stale = True
+    facts_written = False
+    facts_recomputed = (not args.incremental) or facts_affected or not facts_output.is_file()
+
+    if facts_recomputed:
+        facts = extract_project_facts(root)
+        expected_facts_text = json.dumps(facts, indent=2, sort_keys=True) + "\n"
+        expected_facts_bytes = expected_facts_text.encode("utf-8")
+        if args.check:
+            if not facts_output.is_file():
+                facts_missing = True
+            elif canonical_generated_bytes(facts_output.read_bytes()) != expected_facts_bytes:
+                facts_stale = True
+        else:
+            facts_output.parent.mkdir(parents=True, exist_ok=True)
+            if not facts_output.is_file() or facts_output.read_bytes() != expected_facts_bytes:
+                facts_output.write_bytes(expected_facts_bytes)
+                facts_written = True
     else:
-        facts_output.parent.mkdir(parents=True, exist_ok=True)
-        facts_output.write_bytes(expected_facts_bytes)
+        try:
+            facts = load_json(facts_output)
+            if not clean(facts.get("source_digest")):
+                raise ValueError("source_digest missing")
+        except Exception as exc:
+            print("FAIL INCREMENTAL_FACT_CACHE_INVALID:" + str(exc))
+            return 1
 
     digest = input_digest(
         profile_path.read_text(encoding="utf-8"),
@@ -1937,12 +1984,14 @@ def main() -> int:
         contracts,
         sequence,
         digest,
+        only=selected_wanted if args.incremental else None,
     )
 
     missing: list[str] = []
     stale: list[str] = []
     root_duplicates: list[str] = []
-
+    written_docs: list[str] = []
+    unchanged_docs: list[str] = []
     if not args.check:
         docs_root.mkdir(parents=True, exist_ok=True)
 
@@ -1951,34 +2000,51 @@ def main() -> int:
         legacy_root_path = root / name
         if legacy_root_path.is_file():
             root_duplicates.append(name)
-
+        expected_bytes = expected.encode("utf-8")
         if args.check:
             if not path.is_file():
                 missing.append("docs/" + name)
-            elif canonical_generated_bytes(path.read_bytes()) != expected.encode("utf-8"):
+            elif canonical_generated_bytes(path.read_bytes()) != expected_bytes:
                 stale.append("docs/" + name)
         else:
-            path.write_bytes(expected.encode("utf-8"))
+            if path.is_file() and path.read_bytes() == expected_bytes:
+                unchanged_docs.append("docs/" + name)
+            else:
+                path.write_bytes(expected_bytes)
+                written_docs.append("docs/" + name)
 
     report = {
-        "schema_version": 1,
+        "schema_version": 2,
         "profile": profile,
         "docs_root": str(docs_root.relative_to(root).as_posix()),
         "source_digest": facts["source_digest"],
         "input_digest": digest,
         "generated_docs": sorted("docs/" + name for name in docs),
+        "all_generated_docs": sorted("docs/" + name for name in all_wanted),
         "missing_docs": missing,
         "stale_docs": stale,
         "legacy_root_doc_duplicates": sorted(root_duplicates),
         "facts_missing": facts_missing,
         "facts_stale": facts_stale,
+        "facts_affected": facts_affected,
+        "facts_recomputed": facts_recomputed,
+        "facts_written": facts_written,
+        "written_docs": sorted(written_docs),
+        "unchanged_docs": sorted(unchanged_docs),
+        "incremental": bool(args.incremental),
+        "impact_broad": bool(impact_plan.get("broad", False)),
+        "unknown_paths": list(impact_plan.get("unknown_paths", [])),
+        "changed_paths": list(impact_plan.get("changed_paths", [])),
+        "impact_reasons": dict(impact_plan.get("reasons", {})),
         "project_docs_normalized": True,
         "doc_layout": "FAIL" if root_duplicates else "PASS",
         "mode": "check" if args.check else "write",
+        "acceptance_scope": "INTERMEDIATE_IMPACT_SUBSET" if args.incremental else "EXHAUSTIVE",
+        "final_acceptance_authority": False if args.incremental else None,
         "result": "FAIL" if missing or stale or root_duplicates or facts_missing or facts_stale else "PASS",
         "semantic_boundary": (
-            "Compiler projects declared semantic/governance specs and "
-            "machine-observed code facts; it does not infer missing intent."
+            "Compiler projects declared semantic/governance specs and machine-observed code facts; "
+            "incremental mode is intermediate-only and unknown impact broadens fail-closed."
         ),
     }
 
@@ -1987,14 +2053,10 @@ def main() -> int:
         if not report_path.is_absolute():
             report_path = root / report_path
         report_path.parent.mkdir(parents=True, exist_ok=True)
-        report_path.write_text(
-            json.dumps(report, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
     print(json.dumps(report, indent=2, sort_keys=True))
     return 1 if report["result"] == "FAIL" else 0
-
 
 if __name__ == "__main__":
     sys.exit(main())

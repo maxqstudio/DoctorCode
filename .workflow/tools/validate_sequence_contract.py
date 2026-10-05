@@ -17,6 +17,7 @@ from sequence_contract import (
     git_head,
     is_ancestor,
     load_json,
+    validate_before_implementation_lineage,
     render_graph_mermaid,
     sha256_file,
     write_json,
@@ -162,6 +163,7 @@ def main() -> int:
     plan_required = bool(plan_cfg.get("required", False))
     source_compare = None
     runtime_compare = None
+    merge_provenance_verification = None
     plan = {}
 
     if mode == "BEFORE":
@@ -211,8 +213,13 @@ def main() -> int:
         if frozen_commit and implementation_base:
             if not is_ancestor(root, frozen_commit, implementation_base):
                 failures.append("PLAN_DOES_NOT_PRECEDE_IMPLEMENTATION")
-            if not is_ancestor(root, implementation_base, head):
-                failures.append("IMPLEMENTATION_BASE_NOT_ANCESTOR_OF_HEAD")
+            merge_provenance_verification = validate_before_implementation_lineage(
+                root,
+                implementation_base,
+                head,
+                session.get("merge_provenance"),
+            )
+            failures.extend(merge_provenance_verification["failures"])
 
         if plan:
             if str(plan.get("status", "")).upper() != "FROZEN":
@@ -300,6 +307,7 @@ def main() -> int:
         "source_digest": source_digest,
         "plan_actual_source_comparison": source_compare,
         "plan_runtime_comparison": runtime_compare,
+        "merge_provenance_verification": merge_provenance_verification,
         "failures": failures,
         "warnings": warnings,
         "mismatch_resolution_required": bool(failures),
