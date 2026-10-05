@@ -360,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
 
-Current status: M25_IMPLEMENTED_VALIDATION_PENDING
+Current status: M25_MAIN_GOVERNANCE_REPAIR
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Synchronize M25 Project Truth and BEFORE sequence actual evidence without widening C#/.NET semantic authority.
-- Require all eight permanent workflows to PASS on one exact synchronized M25 branch SHA, including the Core C# benchmark on Ubuntu/Windows/macOS and release/install regression.
-- Only after exact branch acceptance may M25 be proposed for squash merge and exact-main revalidation.
+- Validate the SW2-16 exact-tree SQUASH provenance repair without modifying M25 product behavior.
+- Require all eight permanent workflows to PASS on one exact governance-repair branch SHA before PR promotion and squash merge.
+- After governance-normalized main passes all eight permanent workflows, close M25 and advance roadmap authority to M26 in a separate governed closure step.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -536,6 +536,9 @@ Known blockers:
 - M25 product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163 passed Core CI 37378314705 on Ubuntu, Windows, and macOS. The 12-case C# corpus is hard-asserted at 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 - M25 represents .csproj/.sln scope conservatively through deterministic manifest-presence inventory only; project manifests are not parsed or evaluated, generated/build directories are excluded, and MSBuild/NuGet/project-reference/solution-membership/source-generator semantics remain NOT_PROVEN.
 - At exact product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163, the seven non-governance permanent workflows passed: CI 37378314705, M06 37378314683, Real World Go 37378314565, M07 37378314754, M10 37378314740, M16 Thin MCP 37378314715, and M17 Release and Install 37378314687. Governance 37378314768 remains the expected pre-sync Project Truth failure and is not relabeled PASS.
+- Exact synchronized M25 branch candidate 1b2bcf0c8b715666c814820a3268b815aa1b9a50 passed all eight permanent push workflows before PR promotion and all eight pull_request workflows before squash merge.
+- Accepted M25 branch tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1 is identical to product main eefd693ea36b3201f4e9c04cb74ef40a2745272d tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1.
+- Exact M25 product main eefd693ea36b3201f4e9c04cb74ef40a2745272d passed CI 37380495666, M06 37380495648, Real World Go 37380495710, M07 37380495703, M10 37380495641, M16 37380495695, and M17 37380495753. Governance 37380495659 failed only at Validate sequence sessions because squash lineage had not yet been represented.
 
 ### Not proven
 
@@ -563,7 +566,7 @@ Known blockers:
 - M25 C# DEADCODE and BLOAT authority are not proven and remain unavailable.
 - M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
 - M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
-- M25 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes.
+- M25 is not MAIN_ACCEPTED until the governance provenance repair is accepted, merged, and all eight permanent workflows pass on the governance-normalized main.
 
 ## Important limitations
 
