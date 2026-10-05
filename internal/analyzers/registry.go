@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	cppanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/cpp"
+	csharpanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/csharp"
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
@@ -20,6 +21,7 @@ func Default() []detector.Analyzer {
 		rustanalysis.New(),
 		jvmanalysis.New(),
 		cppanalysis.New(),
+		csharpanalysis.New(),
 	}
 }
 
