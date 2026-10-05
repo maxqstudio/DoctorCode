@@ -1,0 +1,7 @@
+flowchart LR
+  registry["Analyzer registry"] -->|MUST: register analyzer| csharp_analyzer["C# analyzer"]
+  csharp_analyzer -->|MUST: parse visible C# source fail closed| parser_provider["Deterministic C# parser provider"]
+  csharp_analyzer -->|MUST: represent project/solution + generated boundaries conservatively| project_boundary[".NET project/solution and generated-code boundary"]
+  csharp_analyzer -->|MUST: derive bounded semantic evidence| bounded_rules["Bounded C# rules"]
+  benchmark_gate["M25 benchmark gate"] -->|MUST: labeled/adversarial/repository-shaped corpus| csharp_analyzer
+  csharp_analyzer -.->|MUST NOT: unproven MSBuild/NuGet/Roslyn/source-generator/reflection/DEADCODE/BLOAT claims| unsafe_claims["Unproven .NET semantic claims"]
