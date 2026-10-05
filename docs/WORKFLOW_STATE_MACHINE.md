@@ -94,6 +94,55 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 
 - Benchmark execution does not mutate source or benchmark fixtures.
 
+## FLOW-C-CPP-SEMANTIC-BASELINE — C and C++ parser-backed semantic baseline
+
+Purpose: Provide conservative C/C++ syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on preprocessor, target, linkage, generated-source, and header-dialect ambiguity.
+Critical: FALSE
+Entry condition: A visible .c, .cc, .cpp, or .cxx implementation source file is recognized outside ignored build/generated directories.
+Authority: internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI
+
+### States
+
+- SOURCE_DISCOVERY
+- STRICT_PARSE
+- BOUNDARY_FILTER
+- BOUNDED_RULE_PROOF
+- FINDING_CONTRACT_VALIDATE
+- DETERMINISTIC_OUTPUT
+
+### Legal transitions
+
+| From | To | Action | Authority | Side effects |
+|---|---|---|---|---|
+| SOURCE_DISCOVERY | STRICT_PARSE | Discover visible C/C++ implementation source while excluding symlinks and ignored build/generated directories; do not infer a dialect for standalone .h files. | internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI |  |
+| STRICT_PARSE | BOUNDARY_FILTER | Parse with pinned embedded gotreesitter C/C++ grammar selected by implementation extension. | internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI |  |
+| BOUNDARY_FILTER | BOUNDED_RULE_PROOF | Skip generated source and fail closed when semantic preprocessor/macro ambiguity is visible. | internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI |  |
+| BOUNDED_RULE_PROOF | FINDING_CONTRACT_VALIDATE | Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC without DEADCODE/BLOAT claims. | internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI |  |
+| FINDING_CONTRACT_VALIDATE | DETERMINISTIC_OUTPUT | Validate declared rule/category/autofix metadata and deterministic finding identity before output. | internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI |  |
+
+### Invariants
+
+- M24 does not claim C/C++ DEADCODE or BLOAT authority.
+- safe_autofix is false for every M24 finding.
+- Credential literal evidence never exposes the literal value.
+- Macro expansion, conditional-compilation selection, target ABI/build configuration, and whole-program linkage remain NOT_PROVEN.
+- Standalone .h files do not receive a guessed C or C++ dialect.
+- Generated source and semantic preprocessor ambiguity cannot establish positive findings.
+- LOGIC is limited to direct unmodified bool/_Bool parameters in the nearest function proof subset.
+
+### Failure behavior
+
+- Unsupported C/C++ semantic ambiguity emits no finding rather than widening proof.
+- Recognized implementation-source parse failures block analysis for that source set.
+
+### Restart behavior
+
+- C/C++ analysis is read-only and deterministic for a fixed visible source tree.
+
+### Rollback behavior
+
+- M24 is read-only; rollback is source-control only and requires no data migration.
+
 ## FLOW-CONTEXT-COMPILER — Finding-specific bounded context compilation
 
 Purpose: Convert one exact current audit finding into a byte-bounded evidence packet while preventing source excerpt reads outside the repository root.

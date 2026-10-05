@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
+Source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 
 ## Flow inventory
 
@@ -11,6 +11,7 @@ Source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
 |---|---|---|---|---|---|---|
 | FLOW-AUDIT | doctorcode audit or doctorcode next is invoked for an accessible repository. | cmd/doctorcode/main.go, internal/engine/engine.go, internal/analyzers/golang/analyzer.go, internal/evidence/packet.go | ANALYZING, RANKED, PACKED, REPORTED, REPORTED | internal/analyzers/golang/analyzer_test.go, internal/analyzers/golang/corpus_test.go, internal/evidence/packet_test.go | M01-DETECTOR-FOUNDATION | DECLARED |
 | FLOW-BENCHMARK | doctorcode benchmark is invoked with an accessible validated manifest. | cmd/doctorcode/main.go, internal/benchmark/benchmark.go, internal/benchmark/testdata/manifest.json, internal/benchmark/testdata/m03-adversarial.json, internal/benchmark/testdata/m04-repository-shaped.json, internal/analyzers/golang/analyzer.go | VALIDATING_MANIFEST, ANALYZING_CASES, MATCHING_LABELS, GATED, REPORTED | internal/benchmark/benchmark_test.go, internal/analyzers/golang/analyzer_test.go | M04-REPOSITORY-SHAPED-EVAL | DECLARED |
+| FLOW-C-CPP-SEMANTIC-BASELINE | A visible .c, .cc, .cpp, or .cxx implementation source file is recognized outside ignored build/generated directories. | internal/analyzers/cpp/analyzer.go, internal/analyzers/cpp/parser.go, internal/analyzers/cpp/analyzer_test.go, internal/analyzers/registry.go, cmd/doctorcode/main.go, internal/benchmark/testdata/m24-c-cpp.json, .github/workflows/ci.yml | STRICT_PARSE, BOUNDARY_FILTER, BOUNDED_RULE_PROOF, FINDING_CONTRACT_VALIDATE, DETERMINISTIC_OUTPUT | internal/analyzers/cpp/analyzer_test.go, internal/benchmark/testdata/m24-c-cpp.json | M24-C-CPP-SEMANTIC-BASELINE | DECLARED |
 | FLOW-CONTEXT-COMPILER | Repository is auditable and caller supplies a finding ID emitted by the current source-state audit. | cmd/doctorcode/main.go, internal/evidence/packet.go | FINDING_SELECTED, PATH_BOUNDARY_VERIFIED, PACKET_BOUNDED, REPORTED | cmd/doctorcode/main_test.go, internal/evidence/packet_test.go, .github/workflows/ci.yml | M11-CONTEXT-COMPILER | DECLARED |
 | FLOW-DETERMINISTIC-VERIFICATION | An exact current finding ID exists before repair and doctorcode contract is invoked against that repository state. | internal/verification/verification.go, cmd/doctorcode/main.go | CONTRACT_FROZEN, REPAIR_EXTERNAL, CURRENT_AUDITED, CONTRACT_COMPARED, RESULT_REPORTED | internal/verification/verification_test.go, cmd/doctorcode/main_test.go, .github/workflows/ci.yml | M14-DETERMINISTIC-VERIFICATION | DECLARED |
 | FLOW-GO-RELATED-CONTEXT | The selected current finding resolves to a repository-contained .go source path and is enclosed by a top-level non-method function. | internal/analyzers/golang/related.go, internal/evidence/packet.go, cmd/doctorcode/main.go | FUNCTION_IDENTIFIED, REFERENCES_CLASSIFIED, RELATED_EXCERPTS_BOUNDED, PACKET_REPORTED | internal/analyzers/golang/related_test.go, internal/evidence/packet_test.go, .github/workflows/ci.yml | M12-GO-RELATED-CONTEXT | DECLARED |

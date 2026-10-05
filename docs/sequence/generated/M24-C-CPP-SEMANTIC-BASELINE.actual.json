@@ -67,6 +67,9 @@
         "unsupported_files": [
           "cmd/doctorcode/main.go",
           "cmd/doctorcode/main_test.go",
+          "internal/analyzers/cpp/analyzer.go",
+          "internal/analyzers/cpp/analyzer_test.go",
+          "internal/analyzers/cpp/parser.go",
           "internal/analyzers/golang/analyzer.go",
           "internal/analyzers/golang/analyzer_test.go",
           "internal/analyzers/golang/corpus_test.go",
@@ -240,6 +243,9 @@
       "unsupported_files": [
         "cmd/doctorcode/main.go",
         "cmd/doctorcode/main_test.go",
+        "internal/analyzers/cpp/analyzer.go",
+        "internal/analyzers/cpp/analyzer_test.go",
+        "internal/analyzers/cpp/parser.go",
         "internal/analyzers/golang/analyzer.go",
         "internal/analyzers/golang/analyzer_test.go",
         "internal/analyzers/golang/corpus_test.go",
@@ -1522,7 +1528,7 @@
       "locator": "scripts/verify_release.py::validate_archive"
     }
   ],
-  "observed_head": "8c27a0c4b3de45ae3a17f580f8837c8d07305a67",
+  "observed_head": "2e0f950ff2a990567160f4b04c5751ba90385ba9",
   "schema_version": 1,
-  "source_digest": "734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578"
+  "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a"
 }

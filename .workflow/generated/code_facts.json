@@ -41,6 +41,9 @@
         "unsupported_files": [
           "cmd/doctorcode/main.go",
           "cmd/doctorcode/main_test.go",
+          "internal/analyzers/cpp/analyzer.go",
+          "internal/analyzers/cpp/analyzer_test.go",
+          "internal/analyzers/cpp/parser.go",
           "internal/analyzers/golang/analyzer.go",
           "internal/analyzers/golang/analyzer_test.go",
           "internal/analyzers/golang/corpus_test.go",
@@ -262,6 +265,9 @@
       "unsupported_files": [
         "cmd/doctorcode/main.go",
         "cmd/doctorcode/main_test.go",
+        "internal/analyzers/cpp/analyzer.go",
+        "internal/analyzers/cpp/analyzer_test.go",
+        "internal/analyzers/cpp/parser.go",
         "internal/analyzers/golang/analyzer.go",
         "internal/analyzers/golang/analyzer_test.go",
         "internal/analyzers/golang/corpus_test.go",
@@ -477,7 +483,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 565
+      "lines": 564
     },
     {
       "directory": "cmd/doctorcode",
@@ -485,6 +491,27 @@
       "is_test": false,
       "language": "Go",
       "lines": 142
+    },
+    {
+      "directory": "internal/analyzers/cpp",
+      "file": "internal/analyzers/cpp/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 592
+    },
+    {
+      "directory": "internal/analyzers/cpp",
+      "file": "internal/analyzers/cpp/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 48
+    },
+    {
+      "directory": "internal/analyzers/cpp",
+      "file": "internal/analyzers/cpp/parser.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 54
     },
     {
       "directory": "internal/analyzers/golang",
@@ -631,7 +658,7 @@
       "file": "internal/analyzers/registry.go",
       "is_test": false,
       "language": "Go",
-      "lines": 56
+      "lines": 58
     },
     {
       "directory": "internal/analyzers",
@@ -3898,14 +3925,14 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578",
+  "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a",
   "source_summary": {
-    "files": 257,
+    "files": 260,
     "languages": {
       "C": 7,
       "C++": 8,
       "C/C++ Header": 2,
-      "Go": 100,
+      "Go": 103,
       "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
@@ -3918,7 +3945,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 11165,
+    "lines": 11860,
     "test_files": 2
   },
   "tests": [

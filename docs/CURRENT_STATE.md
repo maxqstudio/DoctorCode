@@ -8,17 +8,17 @@ Governance profile: strict
 
 ## Current phase
 Phase: M24_C_CPP_SEMANTIC_BASELINE
-Status: M24_RED_DECLARED_PENDING_EXECUTION
+Status: M24_IMPLEMENTED_VALIDATION_PENDING
 Roadmap phase: M24_C_CPP_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: main
+Branch: work/m24-c-cpp-semantic-baseline
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
 Current candidate SHA: external final acceptance evidence
-Current source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
+Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md
@@ -34,8 +34,8 @@ PROJECT_DOCS_SYNC: PASS
 
 ## Sequence governance
 Sequence policy: REQUIRED
-Current sequence mode: DURING
-Current sequence session: M23-JAVA-KOTLIN-SEMANTIC-BASELINE
+Current sequence mode: BEFORE
+Current sequence session: M24-C-CPP-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Proven
@@ -114,6 +114,9 @@ SEQUENCE_SYNC: PASS
 - M23 semantic candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passed Core CI run 36745770972 on Ubuntu, macOS, and Windows. Java corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 - Exact synchronized M23 candidate 80257181ecf13e4632fbb771c55aecda777531e0 passed Governance 37206574565, Core CI 37206574539 on Ubuntu/macOS/Windows, M06 37206574563, Real World Go 37206574572, M07 37206574643, M10 37206574574, M16 Thin MCP 37206574566, and M17 Release and Install 37206574626 including Ubuntu/Windows/macOS native install-smoke.
 - M23 merged through PR #37 to main at 1f9686f2f8f560cd3637cd33c91162420e09dc39. Exact-main Governance 37207150801 PASS; Core CI 37207150777 PASS on Ubuntu/macOS/Windows; M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS including deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke.
+- M24 RED candidate 1564c430e22d394ddef1449b1ffff73f474b905c ran Core CI 37219109211 and failed on Ubuntu, Windows, and macOS exactly at the M24 C/C++ benchmark gate because benchmark analyzer "cpp" was absent; the seven non-Core permanent workflows remained successful.
+- M24 semantic candidate da7241f7c57d062656ed5947cf5c87143074d593 passed Core CI run 37242861899 on Ubuntu, Windows, and macOS. The 15-case C/C++ corpus reports 8 TP / 0 FP / 0 FN, aggregate precision=1.0, recall=1.0; each declared M24 rule also reports precision=1.0 and recall=1.0.
+- M24 uses pinned gotreesitter v0.55.1 standalone C and C++ grammars with pure-Go embedded AST parsing and no new CGO dependency.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -131,9 +134,13 @@ SEQUENCE_SYNC: PASS
 - M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
 - M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
 - M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
-- M24 C/C++ semantic analyzer behavior is not proven until the RED corpus first demonstrates the capability absent and a later exact candidate passes the corpus on Ubuntu, Windows, and macOS.
 - M24 does not prove preprocessor expansion, compile-definition selection, target-specific ABI/build configuration, whole-program linkage, or a unique dialect for ambiguous .h headers.
 - M24 DEADCODE and BLOAT authority are not proven and remain unavailable unless later target-aware evidence explicitly establishes a safe boundary.
+- M24 C/C++ DEADCODE and BLOAT authority remain unavailable; no target-aware reachability or size proof is claimed.
+- M24 parser authority is embedded gotreesitter syntax/AST only; macro expansion, compile-definition selection, target ABI/build configuration, whole-program linkage, and ambiguous standalone .h dialect inference remain NOT_PROVEN.
+- M24 SECURITY is limited to direct credential-like string literals; composed/runtime-derived values are outside the rule.
+- M24 SIMPLIFY and LOGIC are bounded to direct unmodified bool/_Bool parameter proof and fail closed across mutation, unsupported conditions, generated source, and semantic preprocessor ambiguity.
+- M24 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes.
 
 ## Known blockers
 - None declared.
@@ -142,9 +149,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Execute the exact M24 C/C++ RED benchmark on Ubuntu, Windows, and macOS and retain the expected missing-analyzer failure as evidence.
-- Only after RED is proven, implement the smallest cpp analyzer using pinned gotreesitter v0.55.1 C/C++ grammars and the frozen M24 BEFORE plan.
-- Keep macro/conditional-compilation ambiguity, ambiguous .h dialect, target-dependent DEADCODE/BLOAT, whole-program linkage, and safe autofix fail-closed or NOT_PROVEN.
+- Synchronize M24 Project Truth and BEFORE sequence actual evidence without widening C/C++ semantic authority.
+- Require all eight permanent workflows to PASS on one exact synchronized M24 branch SHA, including Core C/C++ benchmark on Ubuntu/Windows/macOS and release/install regression.
+- Only after exact branch acceptance may M24 be proposed for squash merge and exact-main revalidation.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

@@ -3,13 +3,16 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 734af5b60c5883ef34c27732278b5c83f3af25bf437c01eed868302653399578
+Source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 565 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 564 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
+| internal/analyzers/cpp/analyzer.go | Go | 592 | internal/analyzers/cpp | NO |
+| internal/analyzers/cpp/analyzer_test.go | Go | 48 | internal/analyzers/cpp | NO |
+| internal/analyzers/cpp/parser.go | Go | 54 | internal/analyzers/cpp | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
@@ -30,7 +33,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 56 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 58 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
 | internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
