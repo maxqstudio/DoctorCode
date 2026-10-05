@@ -358,102 +358,116 @@
       "title": "Keep repository execution outside DoctorCode skill authority"
     },
     {
-      "id": "ADR-M16-001",
-      "title": "Share application authority between CLI and MCP",
-      "status": "ACCEPTED",
       "decision": "Expose Audit, Context, Contract, and Verify through internal/application and make CLI plus MCP call that facade.",
-      "rationale": "A transport adapter must not become a second implementation of DoctorCode semantics."
+      "id": "ADR-M16-001",
+      "rationale": "A transport adapter must not become a second implementation of DoctorCode semantics.",
+      "status": "ACCEPTED",
+      "title": "Share application authority between CLI and MCP"
     },
     {
-      "id": "ADR-M16-002",
-      "title": "Bind repository root at MCP startup",
-      "status": "ACCEPTED",
       "decision": "Resolve and validate one repository root in NewServer and omit root/path selection from MCP tool schemas.",
-      "rationale": "Binding transport scope at startup prevents per-call filesystem authority expansion."
+      "id": "ADR-M16-002",
+      "rationale": "Binding transport scope at startup prevents per-call filesystem authority expansion.",
+      "status": "ACCEPTED",
+      "title": "Bind repository root at MCP startup"
     },
     {
-      "id": "ADR-M16-003",
-      "title": "Keep the MCP surface read-only and bounded",
-      "status": "ACCEPTED",
       "decision": "Expose only audit, context, contract, and verify; cap finding/context sizes and add no mutation or arbitrary command tool.",
-      "rationale": "MCP is a transport over accepted deterministic capabilities, not a new repair executor."
-    },
-    {
-      "id": "ADR-M16-004",
-      "title": "Use isolated pinned Go MCP module",
+      "id": "ADR-M16-003",
+      "rationale": "MCP is a transport over accepted deterministic capabilities, not a new repair executor.",
       "status": "ACCEPTED",
-      "decision": "Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.",
-      "rationale": "The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned."
+      "title": "Keep the MCP surface read-only and bounded"
     },
     {
-      "id": "ADR-M17-001",
-      "date": "2026-09-28",
-      "title": "Package both public binaries together per target",
-      "context": "DoctorCode now has a CLI and a thin local stdio MCP server that must remain version-aligned.",
-      "decision": "Every release target archive contains doctorcode and doctorcode-mcp plus README, LICENSE, and the DoctorCode Agent Skill.",
-      "reason": "One target archive prevents version skew between the CLI and MCP adapter and keeps public installation simple.",
+      "decision": "Keep MCP integration under mcp/ with Go 1.25, modelcontextprotocol/go-sdk v1.7.0, and committed module checksums.",
+      "id": "ADR-M16-004",
+      "rationale": "The core module remains independent of MCP SDK dependencies while the transport module is reproducibly pinned.",
+      "status": "ACCEPTED",
+      "title": "Use isolated pinned Go MCP module"
+    },
+    {
       "alternatives": [
         "Separate CLI/MCP releases",
         "Source-only install"
       ],
+      "authority": "M17 release contract",
+      "context": "DoctorCode now has a CLI and a thin local stdio MCP server that must remain version-aligned.",
+      "date": "2026-09-28",
+      "decision": "Every release target archive contains doctorcode and doctorcode-mcp plus README, LICENSE, and the DoctorCode Agent Skill.",
+      "id": "ADR-M17-001",
       "impact": "Six archives cover linux/darwin/windows on amd64/arm64.",
-      "authority": "M17 release contract"
+      "reason": "One target archive prevents version skew between the CLI and MCP adapter and keeps public installation simple.",
+      "title": "Package both public binaries together per target"
     },
     {
-      "id": "ADR-M17-002",
-      "date": "2026-09-28",
-      "title": "Verify SHA-256 before extraction",
-      "context": "Public installers must reject corrupted or mismatched archives without requiring privileged tooling.",
-      "decision": "Publish checksums.txt and require Unix/PowerShell installers to verify the selected archive before extraction.",
-      "reason": "This provides deterministic release-channel integrity with standard platform tooling while avoiding stronger signing claims.",
       "alternatives": [
         "No integrity check",
         "Platform-specific package-manager signing"
       ],
+      "authority": "M17 release contract",
+      "context": "Public installers must reject corrupted or mismatched archives without requiring privileged tooling.",
+      "date": "2026-09-28",
+      "decision": "Publish checksums.txt and require Unix/PowerShell installers to verify the selected archive before extraction.",
+      "id": "ADR-M17-002",
       "impact": "Checksum failure is fail-closed; code signing remains not proven.",
-      "authority": "M17 release contract"
+      "reason": "This provides deterministic release-channel integrity with standard platform tooling while avoiding stronger signing claims.",
+      "title": "Verify SHA-256 before extraction"
     },
     {
-      "id": "ADR-M17-003",
-      "date": "2026-09-28",
-      "title": "Do not mutate PATH automatically",
-      "context": "Installers should remain unprivileged and predictable.",
-      "decision": "Install both binaries to an explicit/default user directory and report PATH guidance instead of editing shell profiles or system PATH.",
-      "reason": "Avoid hidden persistent mutation and platform-specific privilege behavior.",
       "alternatives": [
         "Automatic PATH mutation",
         "System-wide privileged install"
       ],
+      "authority": "M17 release contract",
+      "context": "Installers should remain unprivileged and predictable.",
+      "date": "2026-09-28",
+      "decision": "Install both binaries to an explicit/default user directory and report PATH guidance instead of editing shell profiles or system PATH.",
+      "id": "ADR-M17-003",
       "impact": "Users may need to add the installation directory to PATH manually.",
-      "authority": "M17 release contract"
+      "reason": "Avoid hidden persistent mutation and platform-specific privilege behavior.",
+      "title": "Do not mutate PATH automatically"
     },
     {
-      "id": "ADR-M17-004",
-      "date": "2026-09-28",
-      "title": "Gate public release publication behind accepted artifacts",
-      "context": "A public tag/release must not precede artifact and install acceptance.",
-      "decision": "The permanent release workflow only publishes on v* tags after release build and native install-smoke jobs succeed; Owner workflow will create v0.1.0 only after M17_MAIN_ACCEPTED.",
-      "reason": "Keeps public release authority downstream of deterministic acceptance.",
       "alternatives": [
         "Publish from every main build",
         "Manual unverified asset upload"
       ],
+      "authority": "M17 release contract",
+      "context": "A public tag/release must not precede artifact and install acceptance.",
+      "date": "2026-09-28",
+      "decision": "The permanent release workflow only publishes on v* tags after release build and native install-smoke jobs succeed; Owner workflow will create v0.1.0 only after M17_MAIN_ACCEPTED.",
+      "id": "ADR-M17-004",
       "impact": "No public M17 release exists before main acceptance.",
-      "authority": "M17 release contract"
+      "reason": "Keeps public release authority downstream of deterministic acceptance.",
+      "title": "Gate public release publication behind accepted artifacts"
     },
     {
-      "id": "ADR-M17-005",
-      "title": "Recover publication without moving the immutable tag when GitHub suppresses GITHUB_TOKEN recursion",
-      "status": "ACCEPTED",
       "decision": "Keep v0.1.0 fixed at the accepted product SHA and use a one-shot recovery publisher that checks out that immutable tag and reruns the same deterministic build, verification, native install-smoke, and GitHub Release publication contract.",
-      "rationale": "GitHub does not trigger new workflows from refs created by the repository GITHUB_TOKEN. Deleting or recreating v0.1.0 would violate the immutable-release contract, while a tag-pinned recovery publisher preserves source identity and all substantive release gates."
+      "id": "ADR-M17-005",
+      "rationale": "GitHub does not trigger new workflows from refs created by the repository GITHUB_TOKEN. Deleting or recreating v0.1.0 would violate the immutable-release contract, while a tag-pinned recovery publisher preserves source identity and all substantive release gates.",
+      "status": "ACCEPTED",
+      "title": "Recover publication without moving the immutable tag when GitHub suppresses GITHUB_TOKEN recursion"
     },
     {
       "decision": "Adopt the MIT License for DoctorCode.",
       "id": "SW2-ADR-010",
-      "rationale": "The Owner explicitly approved `APPROVE SW2-ADR-010 — MIT` on 2026-10-04. The repository already contains the MIT License text and governance must record that Owner authority rather than infer it from file presence.",
+      "rationale": "The Owner explicitly approved `APPROVE SW2-ADR-010 \u2014 MIT` on 2026-10-04. The repository already contains the MIT License text and governance must record that Owner authority rather than infer it from file presence.",
       "status": "ACCEPTED",
       "title": "Owner-approved MIT license"
+    },
+    {
+      "decision": "Use the already pinned gotreesitter v0.55.1 standalone C and C++ grammar packages as M24 syntax/AST authority.",
+      "id": "ADR-M24-001",
+      "rationale": "The dependency is already accepted for DoctorCode, provides embedded standalone C/C++ grammars, preserves pure-Go/no-CGO cross-platform builds, and avoids adding another parser dependency.",
+      "status": "ACCEPTED",
+      "title": "Reuse pinned pure-Go C and C++ grammars"
+    },
+    {
+      "decision": "Start M24 with direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate stable bool-parameter LOGIC only. Keep DEADCODE and BLOAT unavailable, and suppress claims when macro, conditional-compilation, header-dialect, or target assumptions make proof ambiguous.",
+      "id": "ADR-M24-002",
+      "rationale": "C/C++ preprocessing, build targets, headers, linkage, and compile definitions can change program meaning; broad static claims would create unsafe false positives without target-aware proof.",
+      "status": "ACCEPTED",
+      "title": "Bound M24 semantics and fail closed on target ambiguity"
     }
   ],
   "schema_version": 1

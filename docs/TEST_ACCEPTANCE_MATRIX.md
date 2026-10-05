@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M23 is MAIN_ACCEPTED at main@1f9686f2f8f560cd3637cd33c91162420e09dc39. The accepted Java/Kotlin baseline uses embedded gotreesitter syntax/AST authority and exposes only bounded SECURITY, SIMPLIFY, and LOGIC rules; Java and Kotlin each retain a 9-case labeled/adversarial/repository-shaped corpus at 4 TP / 0 FP / 0 FN with precision=1.0 and recall=1.0 on Ubuntu, Windows, and macOS. JVM DEADCODE, BLOAT, javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, framework wiring, overload resolution, whole-program reachability, safe autofix, and automatic deletion remain outside M23 authority. Current project phase is M24_C_CPP_SEMANTIC_BASELINE; no C/C++ semantic authority is accepted yet.
+M23 remains MAIN_ACCEPTED at product main@1f9686f2f8f560cd3637cd33c91162420e09dc39 with governance closure main@b93a50cdb89b40b2caadce425171baea3fc6ae45. M24 RED is proven at 1564c430e22d394ddef1449b1ffff73f474b905c by Core CI 37219109211 failing on Ubuntu/Windows/macOS with unknown benchmark analyzer "cpp" after all earlier Core gates passed. M24 semantic candidate da7241f7c57d062656ed5947cf5c87143074d593 passes Core CI 37242861899 on Ubuntu/Windows/macOS with 15 cases = 8 TP / 0 FP / 0 FN, precision=1.0 and recall=1.0. Authority is limited to direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC. DEADCODE, BLOAT, macro expansion, compile-definition/target selection, whole-program linkage, ambiguous standalone .h dialect inference, safe autofix, and automatic deletion remain NOT_PROVEN. M24 is not MAIN_ACCEPTED until synchronized exact-branch acceptance, squash merge, and exact-main revalidation complete.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
+Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -74,6 +74,16 @@ Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813
 | M23-BUILD-SYSTEM-BOUNDARY | Maven/Gradle-shaped repository roots and generated/build output boundaries must be handled conservatively without claiming dependency-graph authority. | M23 Java corpus contains Maven repository-shaped source and generated-source negatives; Kotlin corpus contains Gradle Kotlin DSL repository-shaped source and generated-source negatives. The analyzer ignores build/target/generated output directories and generated-file markers while parsing visible .java/.kt/.kts source only. | PASS |
 | M23-BRANCH-REGRESSION | One exact synchronized M23 branch candidate must pass governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before PR promotion. | At exact synchronized M23 candidate 80257181ecf13e4632fbb771c55aecda777531e0: Governance 37206574565 PASS; Core CI 37206574539 PASS 3/3; M06 37206574563 PASS; Real World Go 37206574572 PASS; M07 37206574643 PASS; M10 37206574574 PASS; M16 Thin MCP 37206574566 PASS; M17 Release and Install 37206574626 PASS with release build and Ubuntu/Windows/macOS native install-smoke. PR #37 repeated all eight permanent workflows successfully on the same exact head before squash merge. | PASS |
 | M23-MAIN-POST-MERGE | The exact M23 product merge SHA on main must pass strict governance, Core, MCP, release/install, and all accepted Go/Python real-world regression lanes before M23 closure. | At main@1f9686f2f8f560cd3637cd33c91162420e09dc39: Governance 37207150801 PASS; Core CI 37207150777 PASS 3/3; M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS with deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke. | PASS |
+| M24-PARSER-PROVIDER | M24 must use a deterministic pure-Go/no-CGO C/C++ parser provider without adding an unnecessary parser dependency. | go.mod already pins github.com/odvcencio/gotreesitter v0.55.1; that exact tag exposes standalone grammars/c and grammars/cpp packages backed by embedded grammar blobs. | PASS |
+| M24-SEQUENCE-BEFORE | The M24 intended analyzer flow and fail-closed boundary must be frozen before C/C++ analyzer implementation begins. | Frozen plan docs/sequence/plans/M24-C-CPP-SEMANTIC-BASELINE.plan.json and generated Mermaid are committed at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before any internal/analyzers/cpp implementation exists. | PASS |
+| M24-RED-ANALYZER-ABSENT | The C/C++ benchmark must demonstrate the cpp analyzer capability absent before implementation. | RED corpus and CI gate are declared; exact multi-OS RED execution has not yet completed. | NOT_RUN |
+| M24-BOUNDED-RULES | M24 must expose only bounded SECURITY, SIMPLIFY, and LOGIC rules with safe_autofix=false; C/C++ DEADCODE and BLOAT must remain unavailable. | cpp/gotreesitter-v1 declares exactly CPP-SEC-HARDCODED-CREDENTIAL, CPP-SIMPLIFY-BOOL-RETURN, and CPP-LOGIC-DUPLICATE-CONDITION with safe_autofix=false. No C/C++ DEADCODE or BLOAT rule is registered. | PASS |
+| M24-REGRESSION-MATRIX | M24 final candidate must preserve all accepted language, MCP, release/install, governance, and real-world regression lanes. | Final M24 candidate does not exist yet. | NOT_RUN |
+| M24-MAIN-BASELINE | M24 must begin from governance-accepted M23 main and use the current pinned Skill_Workflow authority before product widening. | work/m24-c-cpp-semantic-baseline starts from governance closure main@b93a50cdb89b40b2caadce425171baea3fc6ae45; accepted M23 product authority remains 1f9686f2f8f560cd3637cd33c91162420e09dc39; Skill_Workflow is pinned to SW2-13 4d0c3efb7bfcb8d22bf80c336e86a2a4054e49ef. | PASS |
+| M24-RED-CPP-ABSENT | The C/C++ benchmark must prove cpp analyzer authority absent before implementation on all Core CI operating systems. | Core CI run 37219109211 at 1564c430e22d394ddef1449b1ffff73f474b905c failed on Ubuntu, Windows, and macOS exactly at M24 C/C++ semantic benchmark gate with unknown benchmark analyzer "cpp"; earlier Core gates passed. | PASS |
+| M24-PARSER-AUTHORITY | Recognized C/C++ implementation source must use deterministic embedded parsing without adding CGO and must fail closed on unsupported parser/semantic boundaries. | cpp/gotreesitter-v1 uses the already-pinned gotreesitter v0.55.1 standalone C/C++ grammars through pure-Go embedded AST parsing. Recognized implementation extensions are .c/.cc/.cpp/.cxx; ambiguous standalone .h files are not assigned a dialect. | PASS |
+| M24-ADVERSARIAL-GREEN | The labeled/adversarial/repository-shaped C/C++ corpus must pass with zero false positives and zero false negatives on Core CI Ubuntu, Windows, and macOS. | Core CI run 37242861899 at da7241f7c57d062656ed5947cf5c87143074d593 passes all three OS jobs. M24 corpus: 15 cases = 8 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. LOGIC=2 TP, SECURITY=2 TP, SIMPLIFY=4 TP; every rule precision=1.0 and recall=1.0. | PASS |
+| M24-PREPROCESSOR-HEADER-BOUNDARY | Preprocessor/target ambiguity and ambiguous standalone header dialects must fail closed instead of widening semantic authority. | The M24 corpus includes preprocessor-ambiguity, macro-ambiguity, generated-source, mutation, composed-secret, non-bool-condition, and header repository-shaped cases. Semantic preprocessor ambiguity emits no findings; standalone .h is not analyzed without dialect context. | PASS |
 
 ## Test commands
 
@@ -94,6 +104,8 @@ Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813
 - go test ./internal/analyzers/jvm ./internal/analyzers ./internal/engine ./internal/benchmark
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-java.json --analyzer=jvm --json
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json
+- go test ./internal/analyzers/cpp ./internal/analyzers ./internal/engine ./internal/benchmark
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json
 
 ## Runtime checks
 
@@ -109,6 +121,7 @@ Current source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813
 - M21 analyzer capability contract and existing Go/Python/JavaScript benchmark regressions on Core CI Ubuntu/Windows/macOS
 - M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS
 - M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS
+- M24 C/C++ labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS
 
 ## Roadmap synchronization evidence
 
@@ -117,8 +130,8 @@ ROADMAP_SYNC: PASS
 
 ## Sequence contract evidence
 
-Sequence mode for this phase/session: DURING
-Sequence session contract: M23-JAVA-KOTLIN-SEMANTIC-BASELINE
+Sequence mode for this phase/session: BEFORE
+Sequence session contract: M24-C-CPP-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

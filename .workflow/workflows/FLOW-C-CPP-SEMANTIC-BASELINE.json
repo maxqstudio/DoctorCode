@@ -1,0 +1,82 @@
+{
+  "authority": "internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI",
+  "critical": false,
+  "entry_condition": "A visible .c, .cc, .cpp, or .cxx implementation source file is recognized outside ignored build/generated directories.",
+  "failure_behavior": [
+    "Unsupported C/C++ semantic ambiguity emits no finding rather than widening proof.",
+    "Recognized implementation-source parse failures block analysis for that source set."
+  ],
+  "flow_id": "FLOW-C-CPP-SEMANTIC-BASELINE",
+  "invariants": [
+    "M24 does not claim C/C++ DEADCODE or BLOAT authority.",
+    "safe_autofix is false for every M24 finding.",
+    "Credential literal evidence never exposes the literal value.",
+    "Macro expansion, conditional-compilation selection, target ABI/build configuration, and whole-program linkage remain NOT_PROVEN.",
+    "Standalone .h files do not receive a guessed C or C++ dialect.",
+    "Generated source and semantic preprocessor ambiguity cannot establish positive findings.",
+    "LOGIC is limited to direct unmodified bool/_Bool parameters in the nearest function proof subset."
+  ],
+  "purpose": "Provide conservative C/C++ syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on preprocessor, target, linkage, generated-source, and header-dialect ambiguity.",
+  "restart_behavior": [
+    "C/C++ analysis is read-only and deterministic for a fixed visible source tree."
+  ],
+  "rollback_behavior": [
+    "M24 is read-only; rollback is source-control only and requires no data migration."
+  ],
+  "schema_version": 1,
+  "sequence_session": "M24-C-CPP-SEMANTIC-BASELINE",
+  "source_owners": [
+    "internal/analyzers/cpp/analyzer.go",
+    "internal/analyzers/cpp/parser.go",
+    "internal/analyzers/cpp/analyzer_test.go",
+    "internal/analyzers/registry.go",
+    "cmd/doctorcode/main.go",
+    "internal/benchmark/testdata/m24-c-cpp.json",
+    ".github/workflows/ci.yml"
+  ],
+  "states": [
+    "SOURCE_DISCOVERY",
+    "STRICT_PARSE",
+    "BOUNDARY_FILTER",
+    "BOUNDED_RULE_PROOF",
+    "FINDING_CONTRACT_VALIDATE",
+    "DETERMINISTIC_OUTPUT"
+  ],
+  "tests": [
+    "internal/analyzers/cpp/analyzer_test.go",
+    "internal/benchmark/testdata/m24-c-cpp.json"
+  ],
+  "title": "C and C++ parser-backed semantic baseline",
+  "transitions": [
+    {
+      "action": "Discover visible C/C++ implementation source while excluding symlinks and ignored build/generated directories; do not infer a dialect for standalone .h files.",
+      "from": "SOURCE_DISCOVERY",
+      "side_effects": [],
+      "to": "STRICT_PARSE"
+    },
+    {
+      "action": "Parse with pinned embedded gotreesitter C/C++ grammar selected by implementation extension.",
+      "from": "STRICT_PARSE",
+      "side_effects": [],
+      "to": "BOUNDARY_FILTER"
+    },
+    {
+      "action": "Skip generated source and fail closed when semantic preprocessor/macro ambiguity is visible.",
+      "from": "BOUNDARY_FILTER",
+      "side_effects": [],
+      "to": "BOUNDED_RULE_PROOF"
+    },
+    {
+      "action": "Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC without DEADCODE/BLOAT claims.",
+      "from": "BOUNDED_RULE_PROOF",
+      "side_effects": [],
+      "to": "FINDING_CONTRACT_VALIDATE"
+    },
+    {
+      "action": "Validate declared rule/category/autofix metadata and deterministic finding identity before output.",
+      "from": "FINDING_CONTRACT_VALIDATE",
+      "side_effects": [],
+      "to": "DETERMINISTIC_OUTPUT"
+    }
+  ]
+}

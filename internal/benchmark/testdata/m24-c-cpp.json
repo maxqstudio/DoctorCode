@@ -1,0 +1,133 @@
+{
+  "cases": [
+    {
+      "expected": [
+        {
+          "line_start": 1,
+          "path": "secrets.c",
+          "rule_id": "CPP-SEC-HARDCODED-CREDENTIAL"
+        }
+      ],
+      "name": "c-security-positive",
+      "root": "m24-c-cpp/c-security-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 1,
+          "path": "secrets.cpp",
+          "rule_id": "CPP-SEC-HARDCODED-CREDENTIAL"
+        }
+      ],
+      "name": "cpp-security-positive",
+      "root": "m24-c-cpp/cpp-security-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 2,
+          "path": "feature.c",
+          "rule_id": "CPP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "c-simplify-positive",
+      "root": "m24-c-cpp/c-simplify-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 2,
+          "path": "feature.cpp",
+          "rule_id": "CPP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "cpp-simplify-positive",
+      "root": "m24-c-cpp/cpp-simplify-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 4,
+          "path": "feature.c",
+          "rule_id": "CPP-LOGIC-DUPLICATE-CONDITION"
+        }
+      ],
+      "name": "c-logic-positive",
+      "root": "m24-c-cpp/c-logic-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 4,
+          "path": "feature.cpp",
+          "rule_id": "CPP-LOGIC-DUPLICATE-CONDITION"
+        }
+      ],
+      "name": "cpp-logic-positive",
+      "root": "m24-c-cpp/cpp-logic-positive"
+    },
+    {
+      "expected": [],
+      "name": "placeholder-secret-negative",
+      "root": "m24-c-cpp/placeholder-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "composed-secret-negative",
+      "root": "m24-c-cpp/composed-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "parameter-mutation-negative",
+      "root": "m24-c-cpp/parameter-mutation-negative"
+    },
+    {
+      "expected": [],
+      "name": "non-bool-condition-negative",
+      "root": "m24-c-cpp/non-bool-condition-negative"
+    },
+    {
+      "expected": [],
+      "name": "generated-source-negative",
+      "root": "m24-c-cpp/generated-source-negative"
+    },
+    {
+      "expected": [],
+      "name": "preprocessor-ambiguity-negative",
+      "root": "m24-c-cpp/preprocessor-ambiguity-negative"
+    },
+    {
+      "expected": [],
+      "name": "macro-ambiguity-negative",
+      "root": "m24-c-cpp/macro-ambiguity-negative"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 3,
+          "path": "src/feature.c",
+          "rule_id": "CPP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "header-repository-shaped",
+      "root": "m24-c-cpp/header-repository-shaped"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 3,
+          "path": "src/feature.cpp",
+          "rule_id": "CPP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "header-repository-shaped-cpp",
+      "root": "m24-c-cpp/header-repository-shaped-cpp"
+    }
+  ],
+  "language": "C / C++",
+  "schema_version": 1,
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  }
+}

@@ -30,7 +30,19 @@ def main() -> int:
         baseline = validate(root)
         assert baseline["result"] == "PASS"
         assert baseline["license_status"] == "NOT_PROVEN"
+        assert baseline["temporary_workflows"] == []
         assert validate(root, require_owner_approved_license=True)["result"] == "FAIL"
+
+        workflow_root = root / ".github" / "workflows"
+        workflow_root.mkdir(parents=True, exist_ok=True)
+        temporary_workflow = workflow_root / "tmp-stale-proof.yml"
+        temporary_workflow.write_text("name: temporary fixture\n", encoding="utf-8", newline="\n")
+        stale = validate(root)
+        assert stale["result"] == "FAIL"
+        assert stale["temporary_workflows"] == [".github/workflows/tmp-stale-proof.yml"]
+        assert "TEMPORARY_WORKFLOW_TRACKED:.github/workflows/tmp-stale-proof.yml" in stale["failures"]
+        temporary_workflow.unlink()
+        assert validate(root)["result"] == "PASS"
 
         (root / "LICENSE").write_text("Fixture license text.\n", encoding="utf-8", newline="\n")
         assert validate(root)["result"] == "FAIL"
@@ -64,6 +76,7 @@ def main() -> int:
         assert validate(root)["result"] == "FAIL"
 
     print("REPOSITORY_HEALTH_BASELINE=PASS")
+    print("TEMPORARY_WORKFLOW_REJECTION=PASS")
     print("LICENSE_NOT_PROVEN_WITHOUT_OWNER_DECISION=PASS")
     print("UNAPPROVED_LICENSE_REJECTION=PASS")
     print("OWNER_APPROVED_LICENSE_FIXTURE=PASS")

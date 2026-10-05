@@ -489,3 +489,19 @@ Status: ACCEPTED
 Adopt the MIT License for DoctorCode.
 
 Rationale: The Owner explicitly approved `APPROVE SW2-ADR-010 — MIT` on 2026-10-04. The repository already contains the MIT License text and governance must record that Owner authority rather than infer it from file presence.
+
+## ADR-M24-001 — Reuse pinned pure-Go C and C++ grammars
+
+Status: ACCEPTED
+
+Use the already pinned gotreesitter v0.55.1 standalone C and C++ grammar packages as M24 syntax/AST authority.
+
+Rationale: The dependency is already accepted for DoctorCode, provides embedded standalone C/C++ grammars, preserves pure-Go/no-CGO cross-platform builds, and avoids adding another parser dependency.
+
+## ADR-M24-002 — Bound M24 semantics and fail closed on target ambiguity
+
+Status: ACCEPTED
+
+Start M24 with direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate stable bool-parameter LOGIC only. Keep DEADCODE and BLOAT unavailable, and suppress claims when macro, conditional-compilation, header-dialect, or target assumptions make proof ambiguous.
+
+Rationale: C/C++ preprocessing, build targets, headers, linkage, and compile definitions can change program meaning; broad static claims would create unsafe false positives without target-aware proof.

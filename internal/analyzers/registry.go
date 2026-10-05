@@ -3,6 +3,7 @@ package analyzers
 import (
 	"fmt"
 
+	cppanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/cpp"
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
@@ -18,6 +19,7 @@ func Default() []detector.Analyzer {
 		javascriptanalysis.New(),
 		rustanalysis.New(),
 		jvmanalysis.New(),
+		cppanalysis.New(),
 	}
 }
 

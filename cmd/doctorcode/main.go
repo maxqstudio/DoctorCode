@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	cppanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/cpp"
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
@@ -26,7 +27,6 @@ import (
 	"github.com/maxqstudio/DoctorCode/internal/toolchain"
 	"github.com/maxqstudio/DoctorCode/internal/verification"
 )
-
 
 func main() {
 	if len(os.Args) < 2 {
@@ -61,7 +61,6 @@ func main() {
 		os.Exit(2)
 	}
 }
-
 
 func runVersion(args []string) {
 	asJSON := false
@@ -213,7 +212,6 @@ func runNext(args []string) {
 	printEvidencePacket(packet)
 }
 
-
 func printEvidencePacket(packet evidence.Packet) {
 	fmt.Printf("%s %s %s %s:%d\n%s\n", packet.Finding.ID, packet.Finding.Category, packet.Finding.Confidence, packet.Finding.Path, packet.Finding.LineStart, packet.Finding.Summary)
 	for _, item := range packet.Finding.Evidence {
@@ -302,7 +300,6 @@ func findFindingByID(findings []model.Finding, findingID string) (model.Finding,
 	}
 	return model.Finding{}, false
 }
-
 
 func runContract(args []string) {
 	findingID, root, asJSON, err := parseVerificationArgs("contract", args)
@@ -464,6 +461,8 @@ func runBenchmark(args []string) {
 		analyzer = rustanalysis.New()
 	case "jvm":
 		analyzer = jvmanalysis.New()
+	case "cpp":
+		analyzer = cppanalysis.New()
 	default:
 		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
 	}
@@ -537,7 +536,7 @@ Usage:
   doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
   doctorcode contract <finding-id> [path] [--json]
   doctorcode verify <contract.json> [path] [--json]
-  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript|rust|jvm] [--json]
+  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript|rust|jvm|cpp] [--json]
   doctorcode version [--json]
 
 M01 detector foundation:

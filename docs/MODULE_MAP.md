@@ -3,13 +3,16 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366
+Source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 565 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 564 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
+| internal/analyzers/cpp/analyzer.go | Go | 592 | internal/analyzers/cpp | NO |
+| internal/analyzers/cpp/analyzer_test.go | Go | 48 | internal/analyzers/cpp | NO |
+| internal/analyzers/cpp/parser.go | Go | 54 | internal/analyzers/cpp | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
@@ -30,7 +33,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 56 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 58 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
 | internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
@@ -218,6 +221,23 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m23-kotlin/security-positive/Secrets.kt | Kotlin | 3 | internal/benchmark/testdata/m23-kotlin/security-positive | NO |
 | internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative/Feature.kt | Kotlin | 11 | internal/benchmark/testdata/m23-kotlin/shadowed-parameter-negative | NO |
 | internal/benchmark/testdata/m23-kotlin/simplify-positive/Feature.kt | Kotlin | 9 | internal/benchmark/testdata/m23-kotlin/simplify-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/c-logic-positive/feature.c | C | 8 | internal/benchmark/testdata/m24-c-cpp/c-logic-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/c-security-positive/secrets.c | C | 1 | internal/benchmark/testdata/m24-c-cpp/c-security-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/c-simplify-positive/feature.c | C | 7 | internal/benchmark/testdata/m24-c-cpp/c-simplify-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/composed-secret-negative/secrets.cpp | C++ | 2 | internal/benchmark/testdata/m24-c-cpp/composed-secret-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive/feature.cpp | C++ | 8 | internal/benchmark/testdata/m24-c-cpp/cpp-logic-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/cpp-security-positive/secrets.cpp | C++ | 1 | internal/benchmark/testdata/m24-c-cpp/cpp-security-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive/feature.cpp | C++ | 7 | internal/benchmark/testdata/m24-c-cpp/cpp-simplify-positive | NO |
+| internal/benchmark/testdata/m24-c-cpp/generated-source-negative/generated.cpp | C++ | 2 | internal/benchmark/testdata/m24-c-cpp/generated-source-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include/feature.hpp | C/C++ Header | 2 | internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/include | NO |
+| internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src/feature.cpp | C++ | 8 | internal/benchmark/testdata/m24-c-cpp/header-repository-shaped-cpp/src | NO |
+| internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include/feature.h | C/C++ Header | 4 | internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/include | NO |
+| internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src/feature.c | C | 8 | internal/benchmark/testdata/m24-c-cpp/header-repository-shaped/src | NO |
+| internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative/feature.cpp | C++ | 6 | internal/benchmark/testdata/m24-c-cpp/macro-ambiguity-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative/feature.c | C | 8 | internal/benchmark/testdata/m24-c-cpp/non-bool-condition-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp | C++ | 9 | internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c | C | 1 | internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative | NO |
+| internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c | C | 8 | internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 249 | internal/detector | NO |

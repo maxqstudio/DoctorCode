@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 240 files, 12 language categories.
+Observed source inventory: 260 files, 15 language categories.
 
 ## Major components
 
@@ -112,6 +112,18 @@ Authority: internal/benchmark/benchmark.go and tracked manifests under internal/
 - ANALYZING_CASES -> MATCHING_LABELS : Match actual findings to expected rule/path/location labels.
 - MATCHING_LABELS -> GATED : Count TP, FP, FN and calculate aggregate/per-rule precision and recall.
 - GATED -> REPORTED : Emit the report and return failure when mismatches or thresholds fail.
+
+### FLOW-C-CPP-SEMANTIC-BASELINE — C and C++ parser-backed semantic baseline
+
+Provide conservative C/C++ syntax/AST evidence for bounded SECURITY, SIMPLIFY, and LOGIC rules while failing closed on preprocessor, target, linkage, generated-source, and header-dialect ambiguity.
+
+Authority: internal/analyzers/cpp, analyzer registry, CLI benchmark selector, M24 C/C++ manifest, and permanent Core CI
+
+- SOURCE_DISCOVERY -> STRICT_PARSE : Discover visible C/C++ implementation source while excluding symlinks and ignored build/generated directories; do not infer a dialect for standalone .h files.
+- STRICT_PARSE -> BOUNDARY_FILTER : Parse with pinned embedded gotreesitter C/C++ grammar selected by implementation extension.
+- BOUNDARY_FILTER -> BOUNDED_RULE_PROOF : Skip generated source and fail closed when semantic preprocessor/macro ambiguity is visible.
+- BOUNDED_RULE_PROOF -> FINDING_CONTRACT_VALIDATE : Evaluate direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC without DEADCODE/BLOAT claims.
+- FINDING_CONTRACT_VALIDATE -> DETERMINISTIC_OUTPUT : Validate declared rule/category/autofix metadata and deterministic finding identity before output.
 
 ### FLOW-CONTEXT-COMPILER — Finding-specific bounded context compilation
 
@@ -348,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M24_C_CPP_SEMANTIC_BASELINE
 
-Current status: M23_MAIN_ACCEPTED
+Current status: M24_IMPLEMENTED_VALIDATION_PENDING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -384,6 +396,8 @@ compiler does not infer them from implementation names.
 - FLOW-BENCHMARK: Invalid manifests and escaping case roots fail closed.
 - FLOW-BENCHMARK: Analyzer errors abort the benchmark instead of returning partial PASS.
 - FLOW-BENCHMARK: Label mismatch or threshold failure produces passed=false and CLI exit code 1.
+- FLOW-C-CPP-SEMANTIC-BASELINE: Unsupported C/C++ semantic ambiguity emits no finding rather than widening proof.
+- FLOW-C-CPP-SEMANTIC-BASELINE: Recognized implementation-source parse failures block analysis for that source set.
 - FLOW-CONTEXT-COMPILER: Audit failure, unknown finding ID, path escape, unreadable selected source, or metadata exceeding the byte budget fails the context request.
 - FLOW-DETERMINISTIC-VERIFICATION: Invalid or tampered contracts and analyzer-set drift fail closed with an error; unresolved target or blocking target-path regression returns a deterministic failed verification result.
 - FLOW-GO-RELATED-CONTEXT: Invalid or escaping primary paths fail before related discovery. Parse/read errors for selected eligible Go context fail the context request rather than silently inventing relations.
@@ -413,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Begin M24 C/C++ semantic baseline planning from accepted main@1f9686f2f8f560cd3637cd33c91162420e09dc39 without widening accepted Go/Python/JavaScript/TypeScript/Rust/JVM semantics.
-- Select deterministic C and C++ parser/provider boundaries and define RED labeled, adversarial, and repository-shaped corpora before implementation.
-- Treat headers/includes, macros, conditional compilation, declaration-definition linkage, target assumptions, and aggressive dead-code claims conservatively and fail closed when proof is unavailable.
+- Synchronize M24 Project Truth and BEFORE sequence actual evidence without widening C/C++ semantic authority.
+- Require all eight permanent workflows to PASS on one exact synchronized M24 branch SHA, including Core C/C++ benchmark on Ubuntu/Windows/macOS and release/install regression.
+- Only after exact branch acceptance may M24 be proposed for squash merge and exact-main revalidation.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -506,6 +520,9 @@ Known blockers:
 - M23 semantic candidate c34e3137e2a29530c7f76489f22deb38fdcbb6a2 passed Core CI run 36745770972 on Ubuntu, macOS, and Windows. Java corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0. Kotlin corpus: 9 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0.
 - Exact synchronized M23 candidate 80257181ecf13e4632fbb771c55aecda777531e0 passed Governance 37206574565, Core CI 37206574539 on Ubuntu/macOS/Windows, M06 37206574563, Real World Go 37206574572, M07 37206574643, M10 37206574574, M16 Thin MCP 37206574566, and M17 Release and Install 37206574626 including Ubuntu/Windows/macOS native install-smoke.
 - M23 merged through PR #37 to main at 1f9686f2f8f560cd3637cd33c91162420e09dc39. Exact-main Governance 37207150801 PASS; Core CI 37207150777 PASS on Ubuntu/macOS/Windows; M06 37207150792 PASS; Real World Go 37207150799 PASS; M07 37207150803 PASS; M10 37207150759 PASS; M16 Thin MCP 37207150726 PASS; M17 Release and Install 37207150735 PASS including deterministic release build/checksum verification and Ubuntu/Windows/macOS native install-smoke.
+- M24 RED candidate 1564c430e22d394ddef1449b1ffff73f474b905c ran Core CI 37219109211 and failed on Ubuntu, Windows, and macOS exactly at the M24 C/C++ benchmark gate because benchmark analyzer "cpp" was absent; the seven non-Core permanent workflows remained successful.
+- M24 semantic candidate da7241f7c57d062656ed5947cf5c87143074d593 passed Core CI run 37242861899 on Ubuntu, Windows, and macOS. The 15-case C/C++ corpus reports 8 TP / 0 FP / 0 FN, aggregate precision=1.0, recall=1.0; each declared M24 rule also reports precision=1.0 and recall=1.0.
+- M24 uses pinned gotreesitter v0.55.1 standalone C and C++ grammars with pure-Go embedded AST parsing and no new CGO dependency.
 
 ### Not proven
 
@@ -524,6 +541,13 @@ Known blockers:
 - M23 JVM parser authority is embedded gotreesitter syntax/AST only; javac/kotlinc type resolution, Maven/Gradle dependency graphs, annotation processing, reflection, code generation, framework wiring, overload resolution, and whole-program reachability are not proven.
 - M23 LOGIC is bounded to bare or negated unmodified boolean/Boolean parameters of the nearest Java method or Kotlin function; nested callable/class scopes fail closed.
 - M23 SECURITY only reports credential-like bindings assigned a direct non-placeholder, non-interpolated string literal; composed/runtime-derived strings are outside this rule.
+- M24 does not prove preprocessor expansion, compile-definition selection, target-specific ABI/build configuration, whole-program linkage, or a unique dialect for ambiguous .h headers.
+- M24 DEADCODE and BLOAT authority are not proven and remain unavailable unless later target-aware evidence explicitly establishes a safe boundary.
+- M24 C/C++ DEADCODE and BLOAT authority remain unavailable; no target-aware reachability or size proof is claimed.
+- M24 parser authority is embedded gotreesitter syntax/AST only; macro expansion, compile-definition selection, target ABI/build configuration, whole-program linkage, and ambiguous standalone .h dialect inference remain NOT_PROVEN.
+- M24 SECURITY is limited to direct credential-like string literals; composed/runtime-derived values are outside the rule.
+- M24 SIMPLIFY and LOGIC are bounded to direct unmodified bool/_Bool parameter proof and fail closed across mutation, unsupported conditions, generated source, and semantic preprocessor ambiguity.
+- M24 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes.
 
 ## Important limitations
 

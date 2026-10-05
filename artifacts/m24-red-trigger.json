@@ -1,0 +1,7 @@
+{
+  "purpose": "Trigger exact multi-OS M24 RED acceptance on the governed RED declaration tree.",
+  "red_declaration_sha": "daace8cf615be730a173a10b4db45b3f733f6226",
+  "red_declaration_tree": "6fbe3fb253724012239575dec8c2b0f75d9d2a83",
+  "expected_failure": "CI M24 C C++ semantic benchmark gate fails because analyzer cpp is not implemented yet.",
+  "expected_other_permanent_workflows": "PASS"
+}
