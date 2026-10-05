@@ -1,0 +1,93 @@
+name: Temporary M25 SW2-16 Historical Freeze
+
+on:
+  push:
+    branches:
+      - work/m25-csharp-dotnet-semantic-baseline
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tmp-m25-sw2-16-historical-freeze
+  cancel-in-progress: true
+
+jobs:
+  migrate-freeze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: work/m25-csharp-dotnet-semantic-baseline
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Checkout exact accepted Skill_Workflow authority
+        uses: actions/checkout@v4
+        with:
+          repository: maxqstudio/Skill_Workflow
+          ref: 7e2c5e4669655764e24ec821cefc0c96e2886133
+          path: .skill-workflow
+          fetch-depth: 1
+      - name: Sync latest SW2-16 consumer governance runtime
+        shell: bash
+        run: |
+          python .skill-workflow/scripts/migrate_governance_v1.py --root .
+          rm -rf .skill-workflow
+      - name: Repin Skill_Workflow authority
+        shell: python
+        run: |
+          import json
+          from pathlib import Path
+          path = Path('.workflow/SKILL_AUTHORITY.json')
+          data = json.loads(path.read_text(encoding='utf-8'))
+          data['schema_version'] = 1
+          data['repository'] = 'maxqstudio/Skill_Workflow'
+          data['ref'] = '7e2c5e4669655764e24ec821cefc0c96e2886133'
+          data['policy'] = 'DoctorCode consumes accepted Skill_Workflow SW2-16 Historical Evidence Freeze from this exact authority. Consumer governance tools are vendored and locked by .workflow/toolchain.lock.json. Closed historical sequence evidence is immutable by content-addressed identity; normal validation is no-rewrite, and replay/migration requires explicit authorization. Existing DoctorCode acceptance gates remain blocking.'
+          path.write_text(json.dumps(data, indent=2, sort_keys=True) + '\n', encoding='utf-8', newline='\n')
+      - name: Freeze accepted historical sequence evidence
+        run: >-
+          python .workflow/tools/validate_sequence_sessions.py
+          --root .
+          --freeze-historical
+          --authorize-migration "M25 prerequisite: adopt accepted SW2-16 Historical Evidence Freeze before opening new CSharp/.NET product evidence"
+          --frozen-commit 9652e8d50752059e6ad14d00c9c4e3be5da14bf7
+      - name: Remove temporary workflow before final sync
+        run: rm .github/workflows/tmp-m25-sw2-16-historical-freeze.yml
+      - name: Synchronize Project Truth
+        run: python .workflow/tools/sync_project_truth.py --root .
+      - name: Pre-commit governance validation
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py --root .
+          python .workflow/tools/validate_doc_quality.py --root .
+          python .workflow/tools/validate_human_comprehension.py --root . --require-pass
+          python .workflow/tools/validate_handoff.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Commit migration and freeze locally
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore(m25): adopt SW2-16 historical evidence freeze"
+      - name: Validate clean committed governance tree
+        shell: bash
+        run: |
+          test -z "$(git status --porcelain)"
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py --root .
+          python .workflow/tools/validate_doc_quality.py --root .
+          python .workflow/tools/validate_human_comprehension.py --root . --require-pass
+          python .workflow/tools/validate_handoff.py --root .
+          python .workflow/tools/validate_cross_document_consistency.py --base 9652e8d50752059e6ad14d00c9c4e3be5da14bf7 --require-base
+          python .workflow/tools/validate_project_truth.py --root .
+          python .workflow/tools/validate_sequence_sessions.py --root .
+      - name: Push validated governance prerequisite
+        run: git push origin HEAD:work/m25-csharp-dotnet-semantic-baseline
