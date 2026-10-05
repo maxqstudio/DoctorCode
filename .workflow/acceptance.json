@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M24 is MAIN_ACCEPTED with C/C++ product authority main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd. The accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 and squash product merge have identical tree eaafc0655680964a74a8d2898e5976205a57185e. SW2-16 governance provenance repair is accepted at main@967baad0210f44b67699b764386fdd79c2ebbcfa with all eight permanent workflows PASS. M24 authority remains bounded to direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC; DEADCODE, BLOAT, macro expansion, compile-definition/target selection, whole-program linkage, ambiguous standalone .h dialect inference, safe autofix, and automatic deletion remain outside authority. Current phase is M25_CSHARP_DOTNET_SEMANTIC_BASELINE; no C#/.NET semantic capability is accepted yet.",
+  "evidence_boundary": "M24 is MAIN_ACCEPTED and governance-closed. M25 BEFORE plan is frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# implementation. Skill_Workflow SW2-16 Historical Evidence Freeze is active with immutable M19-M24 historical identities. M25 has selected gotreesitter v0.55.1 c_sharp as pure-Go/no-CGO syntax authority, but no C# semantic capability is accepted yet. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -471,6 +471,24 @@
       "id": "M24-MAIN-POST-MERGE",
       "requirement": "M24 product and repaired governance main must preserve the accepted C/C++ product tree and pass the complete permanent acceptance matrix before M24 closure.",
       "status": "PASS"
+    },
+    {
+      "evidence": "SW2-16 authority 7e2c5e4669655764e24ec821cefc0c96e2886133 was vendored and historical evidence frozen against accepted main@9652e8d50752059e6ad14d00c9c4e3be5da14bf7; exact proof tree 932b92c3d910818ec631eae8a567e1ace21d8a62 completed all eight permanent workflows successfully.",
+      "id": "M25-HISTORICAL-FREEZE",
+      "requirement": "M25 must begin only after accepted historical M19-M24 sequence evidence is frozen under the latest accepted SW2-16 contract.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "docs/sequence/plans/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.plan.json SHA-256 238ca3c7894d0d7978587c8ca68a6e42a8ed26eb1425fa78edbb160ec37db518 was committed at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before any M25 product implementation.",
+      "id": "M25-BEFORE-PLAN",
+      "requirement": "M25 semantic flow and unsafe-claim boundaries must be frozen before product implementation.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Pinned github.com/odvcencio/gotreesitter v0.55.1 contains standalone grammars/c_sharp/c_sharp.go; M25 will reuse that embedded pure-Go provider.",
+      "id": "M25-PARSER-PROVIDER",
+      "requirement": "M25 must select a deterministic cross-platform C# parser/provider without introducing CGO or requiring .NET runtime execution for syntax parsing.",
+      "status": "PASS"
     }
   ],
   "runtime_checks": [
@@ -491,7 +509,7 @@
   "runtime_status": "PASS",
   "schema_version": 1,
   "sequence_mode": "BEFORE",
-  "sequence_session": "M24-C-CPP-SEMANTIC-BASELINE",
+  "sequence_session": "M25-CSHARP-DOTNET-SEMANTIC-BASELINE",
   "sequence_sync_status": "PASS",
   "test_commands": [
     "go test ./...",

@@ -360,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
 
-Current status: M24_MAIN_ACCEPTED
+Current status: M25_PLANNED_RED_PENDING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Begin M25 C#/.NET semantic baseline planning from accepted M24 product authority main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd and governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa.
-- Select and prove a deterministic C# parser/provider plus project/solution and generated-code boundaries before implementation.
-- Establish RED labeled/adversarial/repository-shaped evidence before widening C# semantic authority.
+- Declare a C# labeled/adversarial/repository-shaped RED corpus and permanent Core CI gate before implementing the C# analyzer.
+- Prove the C# benchmark analyzer absent on Ubuntu, Windows, and macOS at one exact RED SHA.
+- Only after valid 3-OS RED may C# analyzer implementation begin within the frozen M25 semantic boundary.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -530,6 +530,8 @@ Known blockers:
 - M24 product authority is squash product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd; accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 has the identical tree eaafc0655680964a74a8d2898e5976205a57185e.
 - M24 SW2-16 governance repair branch 42e2b0f10c1237417b2feb67aa1f84a01b4de8b0 passed Governance 37255224234, CI 37255224364, M06 37255224317, Real World Go 37255224282, M07 37255224195, M10 37255224241, M16 37255224251, and M17 37255224256 before guarded squash merge.
 - M24 governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed Governance 37260312927, CI 37260312967, M06 37260312970, Real World Go 37260312979, M07 37260312956, M10 37260312895, M16 37260313017, and M17 37260313136; all eight permanent workflows completed success.
+- M25 prerequisite exact tree 932b92c3d910818ec631eae8a567e1ace21d8a62 passed all eight permanent workflows after adopting accepted Skill_Workflow SW2-16 Historical Evidence Freeze at 7e2c5e4669655764e24ec821cefc0c96e2886133.
+- M25 parser/provider selection is gotreesitter v0.55.1 standalone grammars/c_sharp, preserving pure-Go/no-CGO syntax authority; no Roslyn or .NET runtime is required for parsing.
 
 ### Not proven
 
@@ -554,6 +556,9 @@ Known blockers:
 - M24 parser authority is embedded gotreesitter syntax/AST only; macro expansion, compile-definition selection, target ABI/build configuration, whole-program linkage, and ambiguous standalone .h dialect inference remain NOT_PROVEN.
 - M24 SECURITY is limited to direct credential-like string literals; composed/runtime-derived values are outside the rule.
 - M24 SIMPLIFY and LOGIC are bounded to direct unmodified bool/_Bool parameter proof and fail closed across mutation, unsupported conditions, generated source, and semantic preprocessor ambiguity.
+- M25 C# DEADCODE and BLOAT authority are not proven and remain unavailable.
+- M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
+- M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
 
 ## Important limitations
 

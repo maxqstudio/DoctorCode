@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M24 is MAIN_ACCEPTED with C/C++ product authority main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd. The accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 and squash product merge have identical tree eaafc0655680964a74a8d2898e5976205a57185e. SW2-16 governance provenance repair is accepted at main@967baad0210f44b67699b764386fdd79c2ebbcfa with all eight permanent workflows PASS. M24 authority remains bounded to direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC; DEADCODE, BLOAT, macro expansion, compile-definition/target selection, whole-program linkage, ambiguous standalone .h dialect inference, safe autofix, and automatic deletion remain outside authority. Current phase is M25_CSHARP_DOTNET_SEMANTIC_BASELINE; no C#/.NET semantic capability is accepted yet.
+M24 is MAIN_ACCEPTED and governance-closed. M25 BEFORE plan is frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# implementation. Skill_Workflow SW2-16 Historical Evidence Freeze is active with immutable M19-M24 historical identities. M25 has selected gotreesitter v0.55.1 c_sharp as pure-Go/no-CGO syntax authority, but no C# semantic capability is accepted yet. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
@@ -87,6 +87,9 @@ Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4
 | M24-SQUASH-TREE-PROVENANCE | The accepted M24 branch tree must be cryptographically identical to the squash product merge tree, with frozen-plan lineage retained through the accepted branch head. | accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 tree eaafc0655680964a74a8d2898e5976205a57185e; product merge a000c0f4afa7bb88789efc63301a9187ff5bb7dd tree eaafc0655680964a74a8d2898e5976205a57185e; SW2-16 exact-tree SQUASH provenance validator applies. | PASS |
 | M24-PRODUCT-MAIN-NON-GOVERNANCE | The exact M24 squash product merge must preserve all product and regression lanes while governance provenance is repaired separately. | At a000c0f4afa7bb88789efc63301a9187ff5bb7dd: CI 37247183664 PASS; M06 37247183677 PASS; Real World Go 37247183735 PASS; M07 37247183676 PASS; M10 37247183659 PASS; M16 37247183663 PASS; M17 37247183637 PASS. Governance 37247183682 is retained as the predecessor-validator failure, not relabeled PASS. | PASS |
 | M24-MAIN-POST-MERGE | M24 product and repaired governance main must preserve the accepted C/C++ product tree and pass the complete permanent acceptance matrix before M24 closure. | Product main a000c0f4afa7bb88789efc63301a9187ff5bb7dd preserved all seven non-governance lanes; SW2-16 repaired provenance without product changes. Repair branch 42e2b0f10c1237417b2feb67aa1f84a01b4de8b0 passed 8/8 PR checks, and governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed Governance 37260312927, CI 37260312967, M06 37260312970, Real World Go 37260312979, M07 37260312956, M10 37260312895, M16 37260313017, and M17 37260313136. | PASS |
+| M25-HISTORICAL-FREEZE | M25 must begin only after accepted historical M19-M24 sequence evidence is frozen under the latest accepted SW2-16 contract. | SW2-16 authority 7e2c5e4669655764e24ec821cefc0c96e2886133 was vendored and historical evidence frozen against accepted main@9652e8d50752059e6ad14d00c9c4e3be5da14bf7; exact proof tree 932b92c3d910818ec631eae8a567e1ace21d8a62 completed all eight permanent workflows successfully. | PASS |
+| M25-BEFORE-PLAN | M25 semantic flow and unsafe-claim boundaries must be frozen before product implementation. | docs/sequence/plans/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.plan.json SHA-256 238ca3c7894d0d7978587c8ca68a6e42a8ed26eb1425fa78edbb160ec37db518 was committed at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before any M25 product implementation. | PASS |
+| M25-PARSER-PROVIDER | M25 must select a deterministic cross-platform C# parser/provider without introducing CGO or requiring .NET runtime execution for syntax parsing. | Pinned github.com/odvcencio/gotreesitter v0.55.1 contains standalone grammars/c_sharp/c_sharp.go; M25 will reuse that embedded pure-Go provider. | PASS |
 
 ## Test commands
 
@@ -134,7 +137,7 @@ ROADMAP_SYNC: PASS
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: BEFORE
-Sequence session contract: M24-C-CPP-SEMANTIC-BASELINE
+Sequence session contract: M25-CSHARP-DOTNET-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

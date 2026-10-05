@@ -1,7 +1,17 @@
-flowchart LR
-  registry["Analyzer registry"] -->|MUST: register analyzer| csharp_analyzer["C# analyzer"]
-  csharp_analyzer -->|MUST: parse visible C# source fail closed| parser_provider["Deterministic C# parser provider"]
-  csharp_analyzer -->|MUST: represent project/solution + generated boundaries conservatively| project_boundary[".NET project/solution and generated-code boundary"]
-  csharp_analyzer -->|MUST: derive bounded semantic evidence| bounded_rules["Bounded C# rules"]
-  benchmark_gate["M25 benchmark gate"] -->|MUST: labeled/adversarial/repository-shaped corpus| csharp_analyzer
-  csharp_analyzer -.->|MUST NOT: unproven MSBuild/NuGet/Roslyn/source-generator/reflection/DEADCODE/BLOAT claims| unsafe_claims["Unproven .NET semantic claims"]
+%% GENERATED FILE - DO NOT EDIT
+%% PLAN_SHA256: 238ca3c7894d0d7978587c8ca68a6e42a8ed26eb1425fa78edbb160ec37db518
+%% FLOW_ID: M25-CSHARP-DOTNET-SEMANTIC-BASELINE
+sequenceDiagram
+    participant registry_0 as Analyzer registry
+    participant csharp_analyzer_1 as C# analyzer
+    participant parser_provider_2 as Deterministic C# parser provider
+    participant project_boundary_3 as .NET project/solution and generated-code boundary
+    participant bounded_rules_4 as Bounded C# rules
+    participant benchmark_gate_5 as M25 benchmark gate
+    participant unsafe_claims_6 as Unproven .NET semantic claims
+    registry_0->>csharp_analyzer_1: register analyzer [MUST]
+    csharp_analyzer_1->>parser_provider_2: parse visible C# source fail closed [MUST]
+    csharp_analyzer_1->>project_boundary_3: represent .csproj/.sln and generated-code boundaries conservatively [MUST]
+    csharp_analyzer_1->>bounded_rules_4: derive bounded semantic evidence [MUST]
+    benchmark_gate_5->>csharp_analyzer_1: exercise labeled adversarial repository-shaped corpus [MUST]
+    csharp_analyzer_1->>unsafe_claims_6: claim MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program DEADCODE/BLOAT semantics [MUST_NOT]
