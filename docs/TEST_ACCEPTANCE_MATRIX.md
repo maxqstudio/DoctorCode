@@ -4,10 +4,10 @@
 
 ## Evidence boundary
 
-M24 is MAIN_ACCEPTED and governance-closed. M25 BEFORE plan is frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# implementation. Skill_Workflow SW2-16 Historical Evidence Freeze is active with immutable M19-M24 historical identities. M25 has selected gotreesitter v0.55.1 c_sharp as pure-Go/no-CGO syntax authority, but no C# semantic capability is accepted yet. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn/source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority.
+M24 remains the last MAIN_ACCEPTED product authority. M25 BEFORE plan was frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# implementation. M25 RED is proven at 0a1dc833e8ae61993b63830768f2ac77d01c3c33 / Core 37293193349. Current product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163 uses gotreesitter v0.55.1 strict C# syntax authority, three bounded rules, and presence-only .csproj/.sln representation; Core 37378314705 reports 12 cases = 4 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS. DEADCODE/BLOAT, MSBuild/NuGet/Roslyn, source-generator/reflection/whole-program semantics, safe autofix, and automatic deletion remain outside authority. M25 is not MAIN_ACCEPTED until one synchronized exact branch SHA passes all eight permanent workflows, squash merge completes, and exact-main revalidation passes.
 
 Final tested source: external final acceptance evidence.
-Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
+Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
@@ -90,6 +90,11 @@ Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4
 | M25-HISTORICAL-FREEZE | M25 must begin only after accepted historical M19-M24 sequence evidence is frozen under the latest accepted SW2-16 contract. | SW2-16 authority 7e2c5e4669655764e24ec821cefc0c96e2886133 was vendored and historical evidence frozen against accepted main@9652e8d50752059e6ad14d00c9c4e3be5da14bf7; exact proof tree 932b92c3d910818ec631eae8a567e1ace21d8a62 completed all eight permanent workflows successfully. | PASS |
 | M25-BEFORE-PLAN | M25 semantic flow and unsafe-claim boundaries must be frozen before product implementation. | docs/sequence/plans/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.plan.json SHA-256 238ca3c7894d0d7978587c8ca68a6e42a8ed26eb1425fa78edbb160ec37db518 was committed at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before any M25 product implementation. | PASS |
 | M25-PARSER-PROVIDER | M25 must select a deterministic cross-platform C# parser/provider without introducing CGO or requiring .NET runtime execution for syntax parsing. | Pinned github.com/odvcencio/gotreesitter v0.55.1 contains standalone grammars/c_sharp/c_sharp.go; M25 will reuse that embedded pure-Go provider. | PASS |
+| M25-RED-ANALYZER-ABSENT | The governed 12-case C# benchmark must prove C# analyzer authority absent before implementation. | Core CI 37293193349 at 0a1dc833e8ae61993b63830768f2ac77d01c3c33 failed on Ubuntu, Windows, and macOS exactly at the M25 C# gate with unknown benchmark analyzer "csharp"; all seven non-Core permanent workflows passed. | PASS |
+| M25-STRICT-PARSER | Recognized C# source must use the pinned strict AST parser and fail closed on malformed syntax, ERROR nodes, or MISSING nodes. | internal/analyzers/csharp/syntax.go uses gotreesitter v0.55.1 C# with strict parser health; internal/analyzers/csharp parser tests and the C# package test suite pass in Core 37378314705 on Ubuntu, Windows, and macOS. | PASS |
+| M25-BOUNDED-RULES | M25 must expose only the declared bounded SECURITY, SIMPLIFY, and LOGIC rules without DEADCODE/BLOAT or safe autofix authority. | csharp/gotreesitter-v1 descriptor declares exactly CSHARP-SEC-HARDCODED-CREDENTIAL, CSHARP-SIMPLIFY-BOOL-RETURN, and CSHARP-LOGIC-DUPLICATE-CONDITION with safe_autofix=false; unsupported semantic boundaries remain explicit. | PASS |
+| M25-PROJECT-SCOPE-BOUNDARY | Project/solution scope must be represented conservatively without inferring unproven MSBuild or solution semantics. | internal/analyzers/csharp/project.go inventories visible .csproj/.sln manifests as presence_only evidence; project_test.go proves malformed manifests are not evaluated and unrelated source is not assigned project membership. Core 37378314705 passes the tests on all three OS lanes. | PASS |
+| M25-CORPUS-GREEN | The complete 12-case M25 C# corpus must pass with zero false positives and zero false negatives on Ubuntu, Windows, and macOS. | Core CI 37378314705 at e60e4c0d5445d05399462f80aac0f0fa12a3a163 passed all three OS jobs. M25 reports 12 cases = 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; SECURITY=1 TP, LOGIC=1 TP, SIMPLIFY=2 TP. | PASS |
 
 ## Test commands
 
@@ -112,6 +117,7 @@ Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json
 - go test ./internal/analyzers/cpp ./internal/analyzers ./internal/engine ./internal/benchmark
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m25-csharp.json --analyzer=csharp --json
 
 ## Runtime checks
 
@@ -128,6 +134,7 @@ Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4
 - M22 Rust 13-case parser-backed labeled/adversarial corpus on Core CI Ubuntu/Windows/macOS
 - M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS
 - M24 C/C++ labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS
+- M25 C#/.NET labeled, adversarial, repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS
 
 ## Roadmap synchronization evidence
 

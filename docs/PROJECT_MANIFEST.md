@@ -13,7 +13,7 @@ Repository: maxqstudio/DoctorCode
 Active branch: work/m25-csharp-dotnet-semantic-baseline
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: a000c0f4afa7bb88789efc63301a9187ff5bb7dd
-Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
+Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

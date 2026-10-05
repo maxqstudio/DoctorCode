@@ -1,0 +1,37 @@
+{
+  "allowed_mismatch_classifications": [
+    "CODE_DEFECT",
+    "PLAN_CHANGE",
+    "GENERATOR_DEFECT"
+  ],
+  "critical": false,
+  "evidence_boundary": "Static generated actual graph proves only extracted structural edges. Dynamic behavior requires runtime trace or semantic evidence when applicable.",
+  "failures": [],
+  "final_head": "4bc7b0c4b208235e85f7adc15c23d4417a0d6004",
+  "merge_provenance_verification": {
+    "accepted_branch_head": "",
+    "accepted_branch_tree": "",
+    "failures": [],
+    "mode": "DIRECT",
+    "product_merge_sha": "",
+    "product_merge_tree": "",
+    "strategy": ""
+  },
+  "mismatch_resolution_required": false,
+  "mode": "BEFORE",
+  "phase": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
+  "plan_actual_source_comparison": {
+    "forbidden_edges_present": [],
+    "match": true,
+    "missing_required_edges": [],
+    "unresolved_bindings": []
+  },
+  "plan_runtime_comparison": null,
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": "CURRENT",
+  "session": "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json",
+  "session_id": "M25-CSHARP-DOTNET-SEMANTIC-BASELINE",
+  "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926",
+  "warnings": []
+}

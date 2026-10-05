@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 260 files, 15 language categories.
+Observed source inventory: 279 files, 16 language categories.
 
 ## Major components
 
@@ -360,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
 
-Current status: M25_PLANNED_RED_PENDING
+Current status: M25_IMPLEMENTED_VALIDATION_PENDING
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Declare a C# labeled/adversarial/repository-shaped RED corpus and permanent Core CI gate before implementing the C# analyzer.
-- Prove the C# benchmark analyzer absent on Ubuntu, Windows, and macOS at one exact RED SHA.
-- Only after valid 3-OS RED may C# analyzer implementation begin within the frozen M25 semantic boundary.
+- Synchronize M25 Project Truth and BEFORE sequence actual evidence without widening C#/.NET semantic authority.
+- Require all eight permanent workflows to PASS on one exact synchronized M25 branch SHA, including Core C# benchmark on Ubuntu/Windows/macOS and release/install regression.
+- Only after exact branch acceptance may M25 be proposed for squash merge and exact-main revalidation.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -532,6 +532,12 @@ Known blockers:
 - M24 governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed Governance 37260312927, CI 37260312967, M06 37260312970, Real World Go 37260312979, M07 37260312956, M10 37260312895, M16 37260313017, and M17 37260313136; all eight permanent workflows completed success.
 - M25 prerequisite exact tree 932b92c3d910818ec631eae8a567e1ace21d8a62 passed all eight permanent workflows after adopting accepted Skill_Workflow SW2-16 Historical Evidence Freeze at 7e2c5e4669655764e24ec821cefc0c96e2886133.
 - M25 parser/provider selection is gotreesitter v0.55.1 standalone grammars/c_sharp, preserving pure-Go/no-CGO syntax authority; no Roslyn or .NET runtime is required for parsing.
+- M25 RED candidate 0a1dc833e8ae61993b63830768f2ac77d01c3c33 ran Core CI 37293193349 and failed on Ubuntu, Windows, and macOS exactly at the M25 C# benchmark gate because benchmark analyzer "csharp" was absent; the seven non-Core permanent workflows remained successful.
+- M25 uses pinned gotreesitter v0.55.1 standalone C# grammar with embedded strict parsing; parser health requires a non-nil tree/root and rejects parser errors plus ERROR/MISSING nodes, while malformed C# fails closed.
+- M25 bounded analyzer csharp/gotreesitter-v1 exposes only CSHARP-SEC-HARDCODED-CREDENTIAL, CSHARP-SIMPLIFY-BOOL-RETURN, and CSHARP-LOGIC-DUPLICATE-CONDITION with safe_autofix=false; DEADCODE and BLOAT remain unavailable.
+- M25 project/solution awareness is limited to deterministic presence-only inventory of visible .csproj/.sln manifests; malformed project manifests are not evaluated, unrelated source is not assigned project membership, and MSBuild/NuGet/TFM/project-graph semantics remain NOT_PROVEN.
+- M25 product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163 passed Core CI 37378314705 on Ubuntu, Windows, and macOS. The 12-case C# corpus reports 4 TP / 0 FP / 0 FN, precision=1.0, recall=1.0; all three declared M25 rules report precision=1.0 and recall=1.0.
+- At M25 product candidate e60e4c0d5445d05399462f80aac0f0fa12a3a163, M06 37378314683, Real World Go 37378314565, M07 37378314754, M10 37378314740, M16 Thin MCP 37378314715, and M17 Release and Install 37378314687 completed success; Governance 37378314768 failed only because generated Project Truth had not yet been synchronized to the changed source facts.
 
 ### Not proven
 
@@ -559,6 +565,7 @@ Known blockers:
 - M25 C# DEADCODE and BLOAT authority are not proven and remain unavailable.
 - M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
 - M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
+- M25 .csproj/.sln presence evidence does not prove solution membership, project-reference graphs, target-framework selection, package resolution, MSBuild condition evaluation, or generated-source execution.
 
 ## Important limitations
 
