@@ -21,6 +21,7 @@
     "selftest_generated_doc_presentation.py": "7005483ae1255d23e6e87990d29f58bb3791ccc1584c6bb93e7ccd54d8533e48",
     "selftest_github_ruleset.py": "f7f312537b10bc53af059fcb2eebe7481f05f16152ebf8984bac91b5ae038aa7",
     "selftest_governance_engine.py": "90d8f7accb161de427b07fbbafc407b5bdce2c1f8d0a6dcfde68969c3b187cb7",
+    "selftest_historical_evidence.py": "7f225bbe1c66d57becd54fd1b6f9c0958e40ca99dcfa541ec859fba11d2c769c",
     "selftest_public_docs.py": "e1e5fe364d6a106e43da0d40a0018d59fc2b6583a07bf352c406a1891885c27e",
     "selftest_release_preflight.py": "1415d68e72130c6c7f37c033f1ccd1b7447d28e23a6d8a20036b2c347b5d012e",
     "selftest_repository_health.py": "351afbd265f4821b2b5e6578d87b1772c842f736467ba1f1ae2ce6d8dda17eda",
@@ -45,14 +46,14 @@
     "validate_schema_toolchain.py": "65106bdefc682f2967cd123b82f12edb90a0ed2d0cf73022259faf4c36fe33c9",
     "validate_sequence_contract.py": "c403d9cc8df90be55f0cf6b0efbdf93d0795ad235c5f8e753d8a84b7b5130337",
     "validate_sequence_human_view.py": "cfab9f5523e12354fe40bb3706a02ccaeb687ea31dc005941c55129f8684b445",
-    "validate_sequence_sessions.py": "56e2c657850497189e891e7603bf16eacdfef5b8ff39552885e2395369387b21"
+    "validate_sequence_sessions.py": "66f13e921c551de6900a19b88412d0e5fb3bd1f17bd5de93125c1cc75a253fa4"
   },
   "producer": {
-    "commit_hint": "9ac09b2acd0bdf25ea05157be7711da852173ab8",
+    "commit_hint": "7e2c5e4669655764e24ec821cefc0c96e2886133",
     "repository": "https://github.com/maxqstudio/Skill_Workflow"
   },
   "schema_version": 1,
   "tool_root": ".workflow/tools",
   "toolchain_contract_version": 1,
-  "toolchain_digest": "8555476c1aa60b5fdd4b178ed9fa5e7d94aa1803f8b8faa4b252cfddd90fd799"
+  "toolchain_digest": "36c6bdf587fcf2df53a7a0d1a7e4dcb74a170c8e607c3b11a2b8d64ae9ddb7b1"
 }

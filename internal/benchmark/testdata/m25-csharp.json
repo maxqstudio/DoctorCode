@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "expected": [
+        {
+          "line_start": 3,
+          "path": "Secrets.cs",
+          "rule_id": "CSHARP-SEC-HARDCODED-CREDENTIAL"
+        }
+      ],
+      "name": "security-positive",
+      "root": "m25-csharp/security-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 4,
+          "path": "Feature.cs",
+          "rule_id": "CSHARP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "simplify-positive",
+      "root": "m25-csharp/simplify-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 6,
+          "path": "Feature.cs",
+          "rule_id": "CSHARP-LOGIC-DUPLICATE-CONDITION"
+        }
+      ],
+      "name": "logic-positive",
+      "root": "m25-csharp/logic-positive"
+    },
+    {
+      "expected": [],
+      "name": "placeholder-secret-negative",
+      "root": "m25-csharp/placeholder-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "interpolated-secret-negative",
+      "root": "m25-csharp/interpolated-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "parameter-mutation-negative",
+      "root": "m25-csharp/parameter-mutation-negative"
+    },
+    {
+      "expected": [],
+      "name": "nested-local-function-negative",
+      "root": "m25-csharp/nested-local-function-negative"
+    },
+    {
+      "expected": [],
+      "name": "generated-source-negative",
+      "root": "m25-csharp/generated-source-negative"
+    },
+    {
+      "expected": [],
+      "name": "preprocessor-ambiguity-negative",
+      "root": "m25-csharp/preprocessor-ambiguity-negative"
+    },
+    {
+      "expected": [],
+      "name": "partial-type-negative",
+      "root": "m25-csharp/partial-type-negative"
+    },
+    {
+      "expected": [],
+      "name": "async-nullable-negative",
+      "root": "m25-csharp/async-nullable-negative"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 7,
+          "path": "src/App/Feature.cs",
+          "rule_id": "CSHARP-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "solution-project-shaped",
+      "root": "m25-csharp/solution-project-shaped"
+    }
+  ],
+  "language": "C#",
+  "schema_version": 1,
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  }
+}

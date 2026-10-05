@@ -62,6 +62,8 @@ jobs:
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m23-kotlin.json --analyzer=jvm --json
       - name: M24 C C++ semantic benchmark gate
         run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json
+      - name: M25 CSharp .NET semantic benchmark gate
+        run: go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m25-csharp.json --analyzer=csharp --json
       - name: Vet
         run: go vet ./...
       - name: Build CLI

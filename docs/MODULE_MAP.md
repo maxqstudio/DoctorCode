@@ -3,16 +3,22 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
+Source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 564 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 567 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/cpp/analyzer.go | Go | 592 | internal/analyzers/cpp | NO |
 | internal/analyzers/cpp/analyzer_test.go | Go | 48 | internal/analyzers/cpp | NO |
 | internal/analyzers/cpp/parser.go | Go | 54 | internal/analyzers/cpp | NO |
+| internal/analyzers/csharp/analyzer.go | Go | 538 | internal/analyzers/csharp | NO |
+| internal/analyzers/csharp/analyzer_test.go | Go | 48 | internal/analyzers/csharp | NO |
+| internal/analyzers/csharp/parser_test.go | Go | 72 | internal/analyzers/csharp | NO |
+| internal/analyzers/csharp/project.go | Go | 92 | internal/analyzers/csharp | NO |
+| internal/analyzers/csharp/project_test.go | Go | 59 | internal/analyzers/csharp | NO |
+| internal/analyzers/csharp/syntax.go | Go | 38 | internal/analyzers/csharp | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/analyzer_test.go | Go | 274 | internal/analyzers/golang | NO |
 | internal/analyzers/golang/corpus_test.go | Go | 43 | internal/analyzers/golang | NO |
@@ -33,7 +39,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 58 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 60 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
 | internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
@@ -238,6 +244,19 @@ Generated/refreshed: current compiler run
 | internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative/feature.cpp | C++ | 9 | internal/benchmark/testdata/m24-c-cpp/parameter-mutation-negative | NO |
 | internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative/secrets.c | C | 1 | internal/benchmark/testdata/m24-c-cpp/placeholder-secret-negative | NO |
 | internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative/feature.c | C | 8 | internal/benchmark/testdata/m24-c-cpp/preprocessor-ambiguity-negative | NO |
+| internal/benchmark/testdata/m25-csharp/async-nullable-negative/Feature.cs | C# | 8 | internal/benchmark/testdata/m25-csharp/async-nullable-negative | NO |
+| internal/benchmark/testdata/m25-csharp/generated-source-negative/Generated.cs | C# | 5 | internal/benchmark/testdata/m25-csharp/generated-source-negative | NO |
+| internal/benchmark/testdata/m25-csharp/interpolated-secret-negative/Secrets.cs | C# | 4 | internal/benchmark/testdata/m25-csharp/interpolated-secret-negative | NO |
+| internal/benchmark/testdata/m25-csharp/logic-positive/Feature.cs | C# | 11 | internal/benchmark/testdata/m25-csharp/logic-positive | NO |
+| internal/benchmark/testdata/m25-csharp/nested-local-function-negative/Feature.cs | C# | 14 | internal/benchmark/testdata/m25-csharp/nested-local-function-negative | NO |
+| internal/benchmark/testdata/m25-csharp/parameter-mutation-negative/Feature.cs | C# | 12 | internal/benchmark/testdata/m25-csharp/parameter-mutation-negative | NO |
+| internal/benchmark/testdata/m25-csharp/partial-type-negative/PartA.cs | C# | 4 | internal/benchmark/testdata/m25-csharp/partial-type-negative | NO |
+| internal/benchmark/testdata/m25-csharp/partial-type-negative/PartB.cs | C# | 4 | internal/benchmark/testdata/m25-csharp/partial-type-negative | NO |
+| internal/benchmark/testdata/m25-csharp/placeholder-secret-negative/Secrets.cs | C# | 4 | internal/benchmark/testdata/m25-csharp/placeholder-secret-negative | NO |
+| internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative/Feature.cs | C# | 13 | internal/benchmark/testdata/m25-csharp/preprocessor-ambiguity-negative | NO |
+| internal/benchmark/testdata/m25-csharp/security-positive/Secrets.cs | C# | 4 | internal/benchmark/testdata/m25-csharp/security-positive | NO |
+| internal/benchmark/testdata/m25-csharp/simplify-positive/Feature.cs | C# | 10 | internal/benchmark/testdata/m25-csharp/simplify-positive | NO |
+| internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App/Feature.cs | C# | 16 | internal/benchmark/testdata/m25-csharp/solution-project-shaped/src/App | NO |
 | internal/buildinfo/buildinfo.go | Go | 31 | internal/buildinfo | NO |
 | internal/buildinfo/buildinfo_test.go | Go | 31 | internal/buildinfo | NO |
 | internal/detector/detector.go | Go | 249 | internal/detector | NO |

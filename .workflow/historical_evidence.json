@@ -1,0 +1,700 @@
+{
+  "authorization_reason": "M25 prerequisite: adopt accepted SW2-16 Historical Evidence Freeze before opening new CSharp/.NET product evidence",
+  "frozen_commit": "9652e8d50752059e6ad14d00c9c4e3be5da14bf7",
+  "generated_by": "validate_sequence_sessions.py",
+  "historical_sessions": [
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M00-BOOTSTRAP.actual.json",
+          "present": true,
+          "sha256": "afef73a3e643714279d6e891590ea3dbca93f1ff37376f0ecabe16b7f7875773"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M00-BOOTSTRAP.actual.mmd",
+          "present": true,
+          "sha256": "7e2829a673ef0c197a8e3f0f3d03e2bf98e6142a9162bb527dd3ad729be8e8fc"
+        },
+        {
+          "bytes": 820,
+          "path": "docs/sequence/sessions/M00-BOOTSTRAP.json",
+          "present": true,
+          "sha256": "8d498c82f4f675d8034c843a2e234af918a2a55ad84070ae069b3ce8b2177101"
+        }
+      ],
+      "phase": "M00_BOOTSTRAP",
+      "session": "docs/sequence/sessions/M00-BOOTSTRAP.json",
+      "session_id": "M00-BOOTSTRAP",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.json",
+          "present": true,
+          "sha256": "d09adf2a38be957f5d6adfc8974584f79dabab46c4da15ae8467330a3fe2f604"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M01-DETECTOR-FOUNDATION.actual.mmd",
+          "present": true,
+          "sha256": "d5f21e55f1f9c39c905d59744608cc6cfa883933e86ed4636f59feb679f605aa"
+        },
+        {
+          "bytes": 872,
+          "path": "docs/sequence/sessions/M01-DETECTOR-FOUNDATION.json",
+          "present": true,
+          "sha256": "baa3cb088bf824c28239ed39c7659978bc5a1dce83a574b5a00e144c70d599dd"
+        }
+      ],
+      "phase": "M01_DETECTOR_FOUNDATION",
+      "session": "docs/sequence/sessions/M01-DETECTOR-FOUNDATION.json",
+      "session_id": "M01-DETECTOR-FOUNDATION",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M02-PRECISION-BENCHMARK.actual.json",
+          "present": true,
+          "sha256": "81117b9048c18a80c05be3818e03bd7b938f02f675a9fe285ce7a1dc10ec37f3"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M02-PRECISION-BENCHMARK.actual.mmd",
+          "present": true,
+          "sha256": "f83f43134ce71384b3cbdc265fdaa33f0f720fe4eb75013787ed08e6061a8650"
+        },
+        {
+          "bytes": 868,
+          "path": "docs/sequence/sessions/M02-PRECISION-BENCHMARK.json",
+          "present": true,
+          "sha256": "fa2114a7db4628156e3e644150a402280ba9dc6630a4d775454d1ba00996aff8"
+        }
+      ],
+      "phase": "M02_PRECISION_BENCHMARK",
+      "session": "docs/sequence/sessions/M02-PRECISION-BENCHMARK.json",
+      "session_id": "M02-PRECISION-BENCHMARK",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.json",
+          "present": true,
+          "sha256": "2ffbd0adb450b5cafe2e465494ba94035864a8518147eba6f60ed794793a33f0"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M03-ADVERSARIAL-PRECISION.actual.mmd",
+          "present": true,
+          "sha256": "bbe149855269f824b58dca1ec2d3c7903d054f3d7807fc74f4a2da7fbc46c7d3"
+        },
+        {
+          "bytes": 876,
+          "path": "docs/sequence/sessions/M03-ADVERSARIAL-PRECISION.json",
+          "present": true,
+          "sha256": "c367261df35219c605bb91e0811b63923b56e46ddb23f7be81a8cdbe3976883a"
+        }
+      ],
+      "phase": "M03_ADVERSARIAL_PRECISION",
+      "session": "docs/sequence/sessions/M03-ADVERSARIAL-PRECISION.json",
+      "session_id": "M03-ADVERSARIAL-PRECISION",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.json",
+          "present": true,
+          "sha256": "866fe0db4316d24aaa72381e01e042d3789b715b97b05faeb40783d8e1641c3e"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M04-REPOSITORY-SHAPED-EVAL.actual.mmd",
+          "present": true,
+          "sha256": "322c06466a133a76e41f1403a81e1f52fb370c5a6fab73027305ac69538d46d8"
+        },
+        {
+          "bytes": 830,
+          "path": "docs/sequence/sessions/M04-REPOSITORY-SHAPED-EVAL.json",
+          "present": true,
+          "sha256": "a62b93b1554e9060bc064f778b93ef47749e58a895d824f290cf689f2d163442"
+        }
+      ],
+      "phase": "M04_REPOSITORY_SHAPED_EVAL",
+      "session": "docs/sequence/sessions/M04-REPOSITORY-SHAPED-EVAL.json",
+      "session_id": "M04-REPOSITORY-SHAPED-EVAL",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M05-PUBLIC-REPO-VALIDATION.actual.json",
+          "present": true,
+          "sha256": "6258577675d81d151fccdb9cb44b9d81ec1285dfa256fa49357ae70825add14c"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M05-PUBLIC-REPO-VALIDATION.actual.mmd",
+          "present": true,
+          "sha256": "58c848be5f43e7aede3ab79d6fba19c615c4a9f0c866c9b6ff76938b4ea10766"
+        },
+        {
+          "bytes": 874,
+          "path": "docs/sequence/sessions/M05-PUBLIC-REPO-VALIDATION.json",
+          "present": true,
+          "sha256": "cede39f28d968df2f88fe1beead11fadccf019428c8bb0ed61228f5746cad1f9"
+        }
+      ],
+      "phase": "M05_PUBLIC_REPO_VALIDATION",
+      "session": "docs/sequence/sessions/M05-PUBLIC-REPO-VALIDATION.json",
+      "session_id": "M05-PUBLIC-REPO-VALIDATION",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 715,
+          "path": "docs/sequence/generated/M06-REALWORLD-LABELED.actual.json",
+          "present": true,
+          "sha256": "da6ce7a5265c6b936a48d67cf583b04c96a2172a5247021a2d35f41d8c1ed6d9"
+        },
+        {
+          "bytes": 235,
+          "path": "docs/sequence/generated/M06-REALWORLD-LABELED.actual.mmd",
+          "present": true,
+          "sha256": "65a6999b4e8067cb99162387a500210bdf7c323f16711328eaf5e3992494afbb"
+        },
+        {
+          "bytes": 858,
+          "path": "docs/sequence/sessions/M06-REALWORLD-LABELED.json",
+          "present": true,
+          "sha256": "b62c82a4382cdb6810f0ac1fd3addf8e5a53fed4d42d04ae2ead3ff8944e1088"
+        }
+      ],
+      "phase": "M06_REALWORLD_LABELED",
+      "session": "docs/sequence/sessions/M06-REALWORLD-LABELED.json",
+      "session_id": "M06-REALWORLD-LABELED",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 13505,
+          "path": "docs/sequence/generated/M07-PYTHON-SEMANTIC.actual.json",
+          "present": true,
+          "sha256": "a7014523d34c66a106324e4157f460f2277f207f2493e60f2cfd890c118f24f1"
+        },
+        {
+          "bytes": 6597,
+          "path": "docs/sequence/generated/M07-PYTHON-SEMANTIC.actual.mmd",
+          "present": true,
+          "sha256": "f4b3d7f7a23d1b180ecb2f7c37542c4401a939af9942eed395906b69a52b50df"
+        },
+        {
+          "bytes": 853,
+          "path": "docs/sequence/sessions/M07-PYTHON-SEMANTIC.json",
+          "present": true,
+          "sha256": "db0739b6e3afb0e3525acd51c6c249c6ed7b9a71d108a4ee183ea1cdb8adb5a0"
+        }
+      ],
+      "phase": "M07_PYTHON_SEMANTIC",
+      "session": "docs/sequence/sessions/M07-PYTHON-SEMANTIC.json",
+      "session_id": "M07-PYTHON-SEMANTIC",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 23820,
+          "path": "docs/sequence/generated/M08-PYTHON-ADVERSARIAL.actual.json",
+          "present": true,
+          "sha256": "ac2ca2f7f1d9f7aefaf38f510b65d65b257261775dd17f636f4cdecb2193a60c"
+        },
+        {
+          "bytes": 11652,
+          "path": "docs/sequence/generated/M08-PYTHON-ADVERSARIAL.actual.mmd",
+          "present": true,
+          "sha256": "85dc3f48372cd89e615f48af0045e5d1c3ae7ba0b824d97ca57461251510fcdb"
+        },
+        {
+          "bytes": 928,
+          "path": "docs/sequence/sessions/M08-PYTHON-ADVERSARIAL.json",
+          "present": true,
+          "sha256": "fde2d5ae7fc9bffa1e97fadbea552331fc7bb20037bfd641c9fbe6c35fe6c973"
+        }
+      ],
+      "phase": "M08_PYTHON_ADVERSARIAL",
+      "session": "docs/sequence/sessions/M08-PYTHON-ADVERSARIAL.json",
+      "session_id": "M08-PYTHON-ADVERSARIAL",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M09-PYTHON-REPOSITORY-SHAPED.actual.json",
+          "present": true,
+          "sha256": "de2919e5eb6b5e0174425c9a4c57bad930c2ecb7b899bb8cb0f84d7040d11293"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M09-PYTHON-REPOSITORY-SHAPED.actual.mmd",
+          "present": true,
+          "sha256": "c1686730722e511757747acc0a906cb70c191139bee7eec0338a6f8e406867c8"
+        },
+        {
+          "bytes": 1044,
+          "path": "docs/sequence/sessions/M09-PYTHON-REPOSITORY-SHAPED.json",
+          "present": true,
+          "sha256": "c562da77ca73a84e4a804c105ec089077abcf686ff82b09922675366a0052af8"
+        }
+      ],
+      "phase": "M09_PYTHON_REPOSITORY_SHAPED",
+      "session": "docs/sequence/sessions/M09-PYTHON-REPOSITORY-SHAPED.json",
+      "session_id": "M09-PYTHON-REPOSITORY-SHAPED",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.json",
+          "present": true,
+          "sha256": "50cfa2f3fbfaf360a477ec27eb157a9a03b4cccd0853421532d36d4c8ce4cba9"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M10-PYTHON-LABELED-REAL-WORLD.actual.mmd",
+          "present": true,
+          "sha256": "734fd1a2311b6a5c1b42f7291354b1f5defd6b1de71764283d20c88f9174a6bf"
+        },
+        {
+          "bytes": 1090,
+          "path": "docs/sequence/sessions/M10-PYTHON-LABELED-REAL-WORLD.json",
+          "present": true,
+          "sha256": "111e84484d4bab4e00badfcc22ea5af72ee02d6236f5fc2dba3bbb93b1f3ed3f"
+        }
+      ],
+      "phase": "M10_PYTHON_LABELED_REAL_WORLD",
+      "session": "docs/sequence/sessions/M10-PYTHON-LABELED-REAL-WORLD.json",
+      "session_id": "M10-PYTHON-LABELED-REAL-WORLD",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.json",
+          "present": true,
+          "sha256": "ed397908c6fe62f992b9a6422bd9dfffa51968a3932a303520c16045914ef2be"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M11-CONTEXT-COMPILER.actual.mmd",
+          "present": true,
+          "sha256": "a737496db087a44b97f3e49aa1774820fba61ac1efe389df78d0823bba56f1d9"
+        },
+        {
+          "bytes": 880,
+          "path": "docs/sequence/sessions/M11-CONTEXT-COMPILER.json",
+          "present": true,
+          "sha256": "2b004d11ff1558a76f78c7c52fe0d032db747f653f077150bc8ed4e440e12134"
+        }
+      ],
+      "phase": "M11_CONTEXT_COMPILER_FOUNDATION",
+      "session": "docs/sequence/sessions/M11-CONTEXT-COMPILER.json",
+      "session_id": "M11-CONTEXT-COMPILER",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.json",
+          "present": true,
+          "sha256": "662b79473ce7979ec25ac1790557add2b63e9a36073c57b16c27cf66bfe02f74"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M12-GO-RELATED-CONTEXT.actual.mmd",
+          "present": true,
+          "sha256": "3e104beb307affaf9f9c4b59441cc10e2df782ddc129e72eefa77b2e8e0fad28"
+        },
+        {
+          "bytes": 891,
+          "path": "docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json",
+          "present": true,
+          "sha256": "65a6d5917d03b826430595e08c74268db13f901e2ecf581057acff04ecbb0f9e"
+        }
+      ],
+      "phase": "M12_GO_RELATED_CONTEXT",
+      "session": "docs/sequence/sessions/M12-GO-RELATED-CONTEXT.json",
+      "session_id": "M12-GO-RELATED-CONTEXT",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.json",
+          "present": true,
+          "sha256": "66949f84f44545020d4ab13c15bfd60a90a261580bb01c4a36ad17b89f907df9"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M13-PYTHON-RELATED-CONTEXT.actual.mmd",
+          "present": true,
+          "sha256": "81b32ca4ffbd0fcbaf763099f57d555f3a94e1d497f9eb683dbed02d5bf0484d"
+        },
+        {
+          "bytes": 907,
+          "path": "docs/sequence/sessions/M13-PYTHON-RELATED-CONTEXT.json",
+          "present": true,
+          "sha256": "fe7ee523bdcc53e78d221317df191acda2f5ebdaddd11868158d47f3b8632b54"
+        }
+      ],
+      "phase": "M13_PYTHON_RELATED_CONTEXT",
+      "session": "docs/sequence/sessions/M13-PYTHON-RELATED-CONTEXT.json",
+      "session_id": "M13-PYTHON-RELATED-CONTEXT",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.json",
+          "present": true,
+          "sha256": "3a8b0cee3a39dd4f9bb3d1cc65631a7cccc77c6312ebf003d031f670a6b157be"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M14-DETERMINISTIC-VERIFICATION.actual.mmd",
+          "present": true,
+          "sha256": "dcd98052c820615f0953749c3c6ad36ccd6272cf4f0b6ebcb71fd08d4a1b2890"
+        },
+        {
+          "bytes": 928,
+          "path": "docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json",
+          "present": true,
+          "sha256": "6957b5b85b219508975c2b9260ad6f6dfca93ea6f5de0772e8692a9bec582b39"
+        }
+      ],
+      "phase": "M14_DETERMINISTIC_VERIFICATION_CONTRACT",
+      "session": "docs/sequence/sessions/M14-DETERMINISTIC-VERIFICATION.json",
+      "session_id": "M14-DETERMINISTIC-VERIFICATION",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.json",
+          "present": true,
+          "sha256": "5dcaf6d165372460240b6414066347e2fca5d1cfbe82aa3f954403b854ad6ede"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M15-THIN-SKILL-ADAPTER.actual.mmd",
+          "present": true,
+          "sha256": "4f06fab176e1116fd59b93d3674ce0bbb20d9c8bab94d1d722378e80c924cfa9"
+        },
+        {
+          "bytes": 845,
+          "path": "docs/sequence/sessions/M15-THIN-SKILL-ADAPTER.json",
+          "present": true,
+          "sha256": "949bc5e75befca27fabd100f0aca317bd731714bc09a8162b08c3b842c8fb71c"
+        }
+      ],
+      "phase": "M15_THIN_SKILL_ADAPTER",
+      "session": "docs/sequence/sessions/M15-THIN-SKILL-ADAPTER.json",
+      "session_id": "M15-THIN-SKILL-ADAPTER",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 38932,
+          "path": "docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.json",
+          "present": true,
+          "sha256": "e0f511139e8702a41f90362ed5315709b19c8a978b8aa6e0ee52d003f21435f4"
+        },
+        {
+          "bytes": 18871,
+          "path": "docs/sequence/generated/M16-THIN-MCP-ADAPTER.actual.mmd",
+          "present": true,
+          "sha256": "3f7a509953c77113fcc4e4afb49715bc2b2a42e9273f45435cedace13990f9e5"
+        },
+        {
+          "bytes": 873,
+          "path": "docs/sequence/sessions/M16-THIN-MCP-ADAPTER.json",
+          "present": true,
+          "sha256": "626d578003f02ea48e6d36f2e6573027500758f70911f77c95fcc15f37769293"
+        }
+      ],
+      "phase": "M16_THIN_MCP_ADAPTER",
+      "session": "docs/sequence/sessions/M16-THIN-MCP-ADAPTER.json",
+      "session_id": "M16-THIN-MCP-ADAPTER",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M17-RELEASE-INSTALL-HARDENING.actual.json",
+          "present": true,
+          "sha256": "4c1e7da207b150cb4497675f4ccc9dfd4bd4c08a357d9d363e9e6a5f1741c342"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M17-RELEASE-INSTALL-HARDENING.actual.mmd",
+          "present": true,
+          "sha256": "22212f39144b54dba317d187f263826a0f01b2a250c4651aed804c64fefe144b"
+        },
+        {
+          "bytes": 883,
+          "path": "docs/sequence/sessions/M17-RELEASE-INSTALL-HARDENING.json",
+          "present": true,
+          "sha256": "4047e280d0488dd49626d773517e8f92d48220c572c675f8868cf4b2e5b0c960"
+        }
+      ],
+      "phase": "M17_RELEASE_INSTALL_HARDENING",
+      "session": "docs/sequence/sessions/M17-RELEASE-INSTALL-HARDENING.json",
+      "session_id": "M17-RELEASE-INSTALL-HARDENING",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.json",
+          "present": true,
+          "sha256": "2c0785483fe89060cb6529d5e30e89bea63598a5ad5f4b45d7bf4d5b1f11fdca"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.actual.mmd",
+          "present": true,
+          "sha256": "08f1be3b438b5d4bbf670413e5bb3b80cc832df1b823edbaa563de70301f1687"
+        },
+        {
+          "bytes": 922,
+          "path": "docs/sequence/sessions/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.json",
+          "present": true,
+          "sha256": "f744fe01e9347cb5973c341ffa05b9d92ae7b059a080b87fcc8e4c3afd767c22"
+        }
+      ],
+      "phase": "M18_JAVASCRIPT_TYPESCRIPT_SEMANTIC",
+      "session": "docs/sequence/sessions/M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC.json",
+      "session_id": "M18-JAVASCRIPT-TYPESCRIPT-SEMANTIC",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.actual.json",
+          "present": true,
+          "sha256": "f1be965a258a9b8a8ae2717ca521680efe318d617b46fb5e4eee8434ff0a1c3c"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.actual.mmd",
+          "present": true,
+          "sha256": "a95474c676cf70dcb9ef06f5d148ed0dbd8cf28430b890408f185e372d68b8b1"
+        },
+        {
+          "bytes": 916,
+          "path": "docs/sequence/sessions/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.json",
+          "present": true,
+          "sha256": "c975c8bed191fc94579538b445f0506bff3fed4252989cf2cce6a4933d747e88"
+        }
+      ],
+      "phase": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
+      "session": "docs/sequence/sessions/M19-JAVASCRIPT-TYPESCRIPT-LOGIC.json",
+      "session_id": "M19-JAVASCRIPT-TYPESCRIPT-LOGIC",
+      "session_schema_version": 1,
+      "source_digest": ""
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.json",
+          "present": true,
+          "sha256": "e2755852f082d0a99ebac9558cacb5d0cd4c588c96ded7a73c569720486fea85"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M20-JAVASCRIPT-TYPESCRIPT-PARSER.actual.mmd",
+          "present": true,
+          "sha256": "97bbf8109531980339a78a191928c90bcf8dcd44a69d8a986edc3f1f7d9640e6"
+        },
+        {
+          "bytes": 1100,
+          "path": "docs/sequence/sessions/M20-JAVASCRIPT-TYPESCRIPT-PARSER.json",
+          "present": true,
+          "sha256": "b86b73c5d1ae757a40e88d71d549bc1f29b8efa506c6dbb1cdb8004d2e1fc9ac"
+        }
+      ],
+      "phase": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
+      "session": "docs/sequence/sessions/M20-JAVASCRIPT-TYPESCRIPT-PARSER.json",
+      "session_id": "M20-JAVASCRIPT-TYPESCRIPT-PARSER",
+      "session_schema_version": 1,
+      "source_digest": "7175f02bc2a5da076b0f25a514684a87b6e73e24de14e01a635e0536c9ddadf9"
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M21-LANGUAGE-ANALYZER-FRAMEWORK.actual.json",
+          "present": true,
+          "sha256": "105f5a3c2471e0e3489f32d81d99ea148362d17338a161a130a83fea7979f74d"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M21-LANGUAGE-ANALYZER-FRAMEWORK.actual.mmd",
+          "present": true,
+          "sha256": "679197440228ab50b7bd46831a8da9083f45beb43e40f64be4dcea7e091624a2"
+        },
+        {
+          "bytes": 1194,
+          "path": "docs/sequence/sessions/M21-LANGUAGE-ANALYZER-FRAMEWORK.json",
+          "present": true,
+          "sha256": "5399252ca8a7d5ab25398f23330f7ba5ea6b89e7565da631504f2f7184722f0d"
+        }
+      ],
+      "phase": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
+      "session": "docs/sequence/sessions/M21-LANGUAGE-ANALYZER-FRAMEWORK.json",
+      "session_id": "M21-LANGUAGE-ANALYZER-FRAMEWORK",
+      "session_schema_version": 1,
+      "source_digest": "5e919d9ff8331af041eacb319db613200bfa0bae27cf187326bb2dff7de13c0a"
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M22-RUST-SEMANTIC-BASELINE.actual.json",
+          "present": true,
+          "sha256": "6c0ba9f44c9e9a4786e8acecffa282b4fecea18ef5d9006e6e1e62fd3ba51f53"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M22-RUST-SEMANTIC-BASELINE.actual.mmd",
+          "present": true,
+          "sha256": "1d630d0200f6b6d7b102c3fb5a577460e5308fcc70a296ce9f56a169a3002bf4"
+        },
+        {
+          "bytes": 947,
+          "path": "docs/sequence/sessions/M22-RUST-SEMANTIC-BASELINE.json",
+          "present": true,
+          "sha256": "5c06d309f3fddb9e858e6db7f8084fa48839f116e10d62f613394c6b620aa6c0"
+        }
+      ],
+      "phase": "M22_RUST_SEMANTIC_BASELINE",
+      "session": "docs/sequence/sessions/M22-RUST-SEMANTIC-BASELINE.json",
+      "session_id": "M22-RUST-SEMANTIC-BASELINE",
+      "session_schema_version": 1,
+      "source_digest": "b4811e3d7103ad7e0d39f924bf8333d780473ffcfcabe1990a83e8ae59d09fdb"
+    },
+    {
+      "files": [
+        {
+          "bytes": 47279,
+          "path": "docs/sequence/generated/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.actual.json",
+          "present": true,
+          "sha256": "d76f76d3282a932eedddcb0d45eb813eb5a7f8c7736bb2008306ef0d731d489e"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.actual.mmd",
+          "present": true,
+          "sha256": "a0630b04a7bac2e0dc27abf9b6916b6f301a5946db4a507ab1ff3973753fe946"
+        },
+        {
+          "bytes": 1025,
+          "path": "docs/sequence/sessions/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.json",
+          "present": true,
+          "sha256": "21461e5d9617e518c53563deb3b80d4ae5d912ad9b3ea73e6606532f750c5900"
+        }
+      ],
+      "phase": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
+      "session": "docs/sequence/sessions/M23-JAVA-KOTLIN-SEMANTIC-BASELINE.json",
+      "session_id": "M23-JAVA-KOTLIN-SEMANTIC-BASELINE",
+      "session_schema_version": 1,
+      "source_digest": "61ca32eef8cd514f7c8dec9ba1ef8d08d358560e67d40116384b26813b4b7366"
+    },
+    {
+      "files": [
+        {
+          "path": "artifacts/sequence/M24-C-CPP-SEMANTIC-BASELINE.acceptance.json",
+          "present": false
+        },
+        {
+          "bytes": 71119,
+          "path": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.actual.json",
+          "present": true,
+          "sha256": "2042467de0906d5ab0da724d3975818dac2aa7a2d561fb5e0153e9db3df461e7"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.actual.mmd",
+          "present": true,
+          "sha256": "a7530ac4b41b285bcb34b433697ea53d6dd1c81bd7d85c4ccf0ad4a61641458c"
+        },
+        {
+          "bytes": 944,
+          "path": "docs/sequence/generated/M24-C-CPP-SEMANTIC-BASELINE.plan.mmd",
+          "present": true,
+          "sha256": "dadca861635277b2dfa5b304e6fcd97c52b810aa82694bc04bda0911b982e559"
+        },
+        {
+          "bytes": 2498,
+          "path": "docs/sequence/plans/M24-C-CPP-SEMANTIC-BASELINE.plan.json",
+          "present": true,
+          "sha256": "2990975ba98113936de00d19839779d53fb99408038e5276ff03d5e2cf341c84"
+        },
+        {
+          "bytes": 2201,
+          "path": "docs/sequence/sessions/M24-C-CPP-SEMANTIC-BASELINE.json",
+          "present": true,
+          "sha256": "57c7e921c2ae634595b3867875667de95f894127f9a897c090dc4ec53c54965b"
+        }
+      ],
+      "phase": "M24_C_CPP_SEMANTIC_BASELINE",
+      "session": "docs/sequence/sessions/M24-C-CPP-SEMANTIC-BASELINE.json",
+      "session_id": "M24-C-CPP-SEMANTIC-BASELINE",
+      "session_schema_version": 1,
+      "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a"
+    }
+  ],
+  "schema_version": 1,
+  "tool_sha256": "66f13e921c551de6900a19b88412d0e5fb3bd1f17bd5de93125c1cc75a253fa4"
+}
