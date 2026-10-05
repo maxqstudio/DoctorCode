@@ -25,8 +25,9 @@ jobs:
       - name: Verify repair base
         shell: bash
         run: |
-          test "$(git rev-parse HEAD^)" = "eefd693ea36b3201f4e9c04cb74ef40a2745272d"
-          test "$(git diff --name-only HEAD^ HEAD)" = ".github/workflows/m25-main-governance-repair-scratch.yml"
+          PRODUCT_MAIN=eefd693ea36b3201f4e9c04cb74ef40a2745272d
+          git merge-base --is-ancestor "$PRODUCT_MAIN" HEAD
+          test "$(git diff --name-only "$PRODUCT_MAIN" HEAD)" = ".github/workflows/m25-main-governance-repair-scratch.yml"
       - name: Record exact squash provenance
         shell: bash
         run: |
@@ -125,7 +126,27 @@ jobs:
       - name: Regenerate governed Project Truth
         shell: bash
         run: python .workflow/tools/sync_project_truth.py --root .
-      - name: Validate governance repair
+      - name: Create clean governance-only candidate
+        shell: bash
+        run: |
+          PRODUCT_MAIN=eefd693ea36b3201f4e9c04cb74ef40a2745272d
+          rm .github/workflows/m25-main-governance-repair-scratch.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && { echo "repair produced no diff"; exit 1; }
+          git commit -m "fix(m25): record squash governance provenance"
+          test -z "$(git status --porcelain)"
+          test ! -e .github/workflows/m25-main-governance-repair-scratch.yml
+          if git diff --name-only "$PRODUCT_MAIN" HEAD | grep -E '^(cmd/|internal/|mcp/|scripts/|go\.mod$|go\.sum$)'; then
+            echo "product source changed during governance-only repair"
+            exit 1
+          fi
+          if git diff --name-only "$PRODUCT_MAIN" HEAD | grep -E '^\.github/workflows/'; then
+            echo "temporary or permanent workflow leaked into governance candidate"
+            exit 1
+          fi
+      - name: Validate clean governance repair
         shell: bash
         run: |
           python .workflow/tools/validate_schema_toolchain.py --root .
@@ -137,14 +158,7 @@ jobs:
           python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
           python .workflow/tools/validate_project_truth.py
           python .workflow/tools/validate_sequence_sessions.py
-      - name: Commit governed repair
-        shell: bash
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .workflow/state.json .workflow/acceptance.json docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json docs
-          git diff --cached --quiet && { echo "repair produced no diff"; exit 1; }
-          git commit -m "fix(m25): record squash governance provenance"
-          python .workflow/tools/validate_sequence_sessions.py
           test -z "$(git status --porcelain)"
-          git push origin HEAD:refs/heads/work/m25-main-governance-repair
+      - name: Push validated governed repair
+        shell: bash
+        run: git push origin HEAD:refs/heads/work/m25-main-governance-repair
