@@ -3,20 +3,20 @@
 # CURRENT STATE
 
 Last updated: generated from current specs
-Authority verified at SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
+Authority verified at SHA: a000c0f4afa7bb88789efc63301a9187ff5bb7dd
 Governance profile: strict
 
 ## Current phase
-Phase: M24_C_CPP_SEMANTIC_BASELINE
-Status: M24_MAIN_GOVERNANCE_REPAIR
-Roadmap phase: M24_C_CPP_SEMANTIC_BASELINE
+Phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
+Status: M24_MAIN_ACCEPTED
+Roadmap phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m24-main-governance-repair
+Branch: main
 Authoritative SHA: external final acceptance evidence
-Last accepted SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
+Last accepted SHA: a000c0f4afa7bb88789efc63301a9187ff5bb7dd
 Current candidate SHA: external final acceptance evidence
 Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 
@@ -121,6 +121,9 @@ SEQUENCE_SYNC: PASS
 - M24 squash product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd has the exact same tree eaafc0655680964a74a8d2898e5976205a57185e as accepted branch head ef32ff08735ddc9b83889d580daa60f303015ca1.
 - At M24 product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd, CI 37247183664, M06 37247183677, Real World Go 37247183735, M07 37247183676, M10 37247183659, M16 37247183663, and M17 37247183637 all passed; Governance 37247183682 failed only because the predecessor SW2-13 BEFORE validator required literal branch ancestry after squash.
 - Skill_Workflow SW2-16 main@9ac09b2acd0bdf25ea05157be7711da852173ab8 passed its complete permanent main matrix and adds exact-tree squash provenance for BEFORE sessions without weakening frozen-plan lineage requirements.
+- M24 product authority is squash product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd; accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 has the identical tree eaafc0655680964a74a8d2898e5976205a57185e.
+- M24 SW2-16 governance repair branch 42e2b0f10c1237417b2feb67aa1f84a01b4de8b0 passed Governance 37255224234, CI 37255224364, M06 37255224317, Real World Go 37255224282, M07 37255224195, M10 37255224241, M16 37255224251, and M17 37255224256 before guarded squash merge.
+- M24 governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed Governance 37260312927, CI 37260312967, M06 37260312970, Real World Go 37260312979, M07 37260312956, M10 37260312895, M16 37260313017, and M17 37260313136; all eight permanent workflows completed success.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -144,7 +147,6 @@ SEQUENCE_SYNC: PASS
 - M24 parser authority is embedded gotreesitter syntax/AST only; macro expansion, compile-definition selection, target ABI/build configuration, whole-program linkage, and ambiguous standalone .h dialect inference remain NOT_PROVEN.
 - M24 SECURITY is limited to direct credential-like string literals; composed/runtime-derived values are outside the rule.
 - M24 SIMPLIFY and LOGIC are bounded to direct unmodified bool/_Bool parameter proof and fail closed across mutation, unsupported conditions, generated source, and semantic preprocessor ambiguity.
-- M24 is not MAIN_ACCEPTED until the SW2-16 governance repair passes exact-branch acceptance, merges to main, and the exact repaired main SHA passes all eight permanent workflows.
 
 ## Known blockers
 - None declared.
@@ -153,9 +155,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Require all eight permanent workflows to PASS on one exact SW2-16 governance-repair branch SHA without changing M24 C/C++ product behavior.
-- Merge the governance-only repair through a guarded squash PR, then require all eight permanent workflows to PASS on the exact repaired main SHA.
-- Only after repaired exact-main acceptance may M24 be governance-closed and the roadmap advance to M25_CSHARP_DOTNET_SEMANTIC_BASELINE.
+- Begin M25 C#/.NET semantic baseline planning from accepted M24 product authority main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd and governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa.
+- Select and prove a deterministic C# parser/provider plus project/solution and generated-code boundaries before implementation.
+- Establish RED labeled/adversarial/repository-shaped evidence before widening C# semantic authority.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.

@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m24-main-governance-repair
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: 1f9686f2f8f560cd3637cd33c91162420e09dc39
+Last accepted SHA: a000c0f4afa7bb88789efc63301a9187ff5bb7dd
 Current source digest: 2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a
 
 ## Authorities
