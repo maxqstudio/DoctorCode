@@ -49,7 +49,7 @@ func (a *Analyzer) Descriptor() detector.Descriptor {
 			FailClosed: true,
 		},
 		Availability: detector.AvailabilityContract{Mode: detector.AvailabilitySourceOnly},
-		EvidenceBoundary: "Pure-Go gotreesitter C# syntax/AST authority. M25 is bounded to direct literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool parameter LOGIC. Generated source, conditional preprocessing, interpolation, placeholder credentials, local-function bodies, parameter mutation, cross-partial-type semantics, unresolved type semantics, DEADCODE, BLOAT, safe autofix, and automatic deletion remain outside authority.",
+		EvidenceBoundary: "Pure-Go gotreesitter C# syntax/AST authority. M25 is bounded to direct literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool parameter LOGIC. .csproj/.sln representation is manifest-presence only; MSBuild evaluation, project-reference resolution, solution membership, target-framework selection, and source-generator execution are not inferred. Generated source, conditional preprocessing, interpolation, placeholder credentials, local-function bodies, parameter mutation, cross-partial-type semantics, unresolved type semantics, DEADCODE, BLOAT, safe autofix, and automatic deletion remain outside authority.",
 		Rules: []detector.RuleMetadata{
 			{ID: ruleLogic, Category: model.CategoryLogic, SafeAutofix: false},
 			{ID: ruleSecurity, Category: model.CategorySecurity, SafeAutofix: false},
@@ -60,6 +60,10 @@ func (a *Analyzer) Descriptor() detector.Descriptor {
 }
 
 func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, error) {
+	scope, err := discoverProjectScope(ctx, root)
+	if err != nil {
+		return nil, err
+	}
 	files, err := parseSourceFiles(ctx, root)
 	if err != nil {
 		return nil, err
@@ -73,7 +77,12 @@ func (a *Analyzer) Analyze(ctx context.Context, root string) ([]model.Finding, e
 		if file.generated || file.ambiguous {
 			continue
 		}
-		findings = append(findings, collectFindings(file)...)
+		current := collectFindings(file)
+		projectEvidence := scope.evidenceFor(file.rel)
+		for i := range current {
+			current[i].Evidence = append(current[i].Evidence, projectEvidence...)
+		}
+		findings = append(findings, current...)
 	}
 	return findings, nil
 }
