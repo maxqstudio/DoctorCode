@@ -2,8 +2,8 @@
 
 # ROADMAP
 
-Current project phase: M24_C_CPP_SEMANTIC_BASELINE
-Current roadmap phase: M24_C_CPP_SEMANTIC_BASELINE
+Current project phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
+Current roadmap phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Phase plan
@@ -15,8 +15,8 @@ ROADMAP_SYNC: PASS
 | 3 | M21_LANGUAGE_ANALYZER_FRAMEWORK | Language analyzer framework | ACCEPTED | Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages. | New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.<br>Framework contract is regression-tested across existing Go, Python, and JavaScript/TypeScript analyzers. |
 | 4 | M22_RUST_SEMANTIC_BASELINE | Rust semantic baseline | ACCEPTED | Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules. | Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence have labeled and adversarial corpora.<br>BLOAT is enabled only if safe evidence is proven.<br>Cross-platform CI and repository-shaped validation pass. |
 | 5 | M23_JAVA_KOTLIN_SEMANTIC_BASELINE | Java and Kotlin semantic baseline | ACCEPTED | Add JVM-family semantic analysis with package, class, method, and build-system awareness. | Java and Kotlin bounded rules pass synthetic, adversarial, and repository-shaped tests.<br>Maven/Gradle project boundaries are handled conservatively.<br>Ubuntu, Windows, and macOS acceptance passes. |
-| 6 | M24_C_CPP_SEMANTIC_BASELINE | C and C++ semantic baseline | CURRENT | Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation. | Header/include and declaration-definition evidence is deterministic.<br>Macro and conditional-compilation ambiguity fails closed.<br>No aggressive dead-code claim is accepted without target-aware proof. |
-| 7 | M25_CSHARP_DOTNET_SEMANTIC_BASELINE | C#/.NET semantic baseline | PLANNED | Add project/solution-aware C# semantic evidence for namespace, type, member, async, nullable, logic, and credential patterns. | Project/solution scope and generated-code boundaries are represented.<br>Core bounded rules pass adversarial and multi-OS validation. |
+| 6 | M24_C_CPP_SEMANTIC_BASELINE | C and C++ semantic baseline | ACCEPTED | Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation. | Header/include and declaration-definition evidence is deterministic.<br>Macro and conditional-compilation ambiguity fails closed.<br>No aggressive dead-code claim is accepted without target-aware proof. |
+| 7 | M25_CSHARP_DOTNET_SEMANTIC_BASELINE | C#/.NET semantic baseline | CURRENT | Add project/solution-aware C# semantic evidence for namespace, type, member, async, nullable, logic, and credential patterns. | Project/solution scope and generated-code boundaries are represented.<br>Core bounded rules pass adversarial and multi-OS validation. |
 | 8 | M26_DART_FLUTTER_SEMANTIC_BASELINE | Dart/Flutter semantic baseline | PLANNED | Add Dart/Flutter analysis for imports, classes, functions, widgets, async constructs, and generated-file boundaries. | Flutter-shaped repositories are covered by bounded real-world evidence.<br>Generated code is not misclassified as hand-maintained authority. |
 | 9 | M27_SCRIPTING_ECOSYSTEM | Scripting ecosystem | PLANNED | Add bounded PHP, Ruby, PowerShell, and Shell analyzers while preserving Python authority. | Each scripting language has its own parser/evidence contract rather than a generic regex-only claim.<br>Language-specific corpora and multi-OS regression lanes pass. |
 | 10 | M28_SPECIALIST_LANGUAGES | Swift, Zig, and MQL5 specialist support | PLANNED | Add conservative specialist-language support after the shared analyzer framework is stable. | Swift, Zig, and MQL5 each have explicit bounded support levels and labeled corpora.<br>Unsupported semantics remain fail-closed and clearly reported. |

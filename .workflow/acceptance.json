@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M24 C/C++ product behavior is fixed at squash product main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd. Its seven non-governance permanent workflows passed; Governance run 37247183682 failed only because SW2-13 could not represent BEFORE provenance after squash even though accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 and product merge a000c0f4afa7bb88789efc63301a9187ff5bb7dd have identical tree eaafc0655680964a74a8d2898e5976205a57185e. This branch upgrades governance only to accepted SW2-16 and records exact-tree SQUASH provenance. M24 remains CURRENT and is not MAIN_ACCEPTED until repaired exact-main 8/8 acceptance passes.",
+  "evidence_boundary": "M24 is MAIN_ACCEPTED with C/C++ product authority main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd. The accepted branch ef32ff08735ddc9b83889d580daa60f303015ca1 and squash product merge have identical tree eaafc0655680964a74a8d2898e5976205a57185e. SW2-16 governance provenance repair is accepted at main@967baad0210f44b67699b764386fdd79c2ebbcfa with all eight permanent workflows PASS. M24 authority remains bounded to direct-literal SECURITY, opposite-boolean SIMPLIFY, and duplicate unmodified bool/_Bool-parameter LOGIC; DEADCODE, BLOAT, macro expansion, compile-definition/target selection, whole-program linkage, ambiguous standalone .h dialect inference, safe autofix, and automatic deletion remain outside authority. Current phase is M25_CSHARP_DOTNET_SEMANTIC_BASELINE; no C#/.NET semantic capability is accepted yet.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -464,6 +464,12 @@
       "evidence": "At a000c0f4afa7bb88789efc63301a9187ff5bb7dd: CI 37247183664 PASS; M06 37247183677 PASS; Real World Go 37247183735 PASS; M07 37247183676 PASS; M10 37247183659 PASS; M16 37247183663 PASS; M17 37247183637 PASS. Governance 37247183682 is retained as the predecessor-validator failure, not relabeled PASS.",
       "id": "M24-PRODUCT-MAIN-NON-GOVERNANCE",
       "requirement": "The exact M24 squash product merge must preserve all product and regression lanes while governance provenance is repaired separately.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Product main a000c0f4afa7bb88789efc63301a9187ff5bb7dd preserved all seven non-governance lanes; SW2-16 repaired provenance without product changes. Repair branch 42e2b0f10c1237417b2feb67aa1f84a01b4de8b0 passed 8/8 PR checks, and governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed Governance 37260312927, CI 37260312967, M06 37260312970, Real World Go 37260312979, M07 37260312956, M10 37260312895, M16 37260313017, and M17 37260313136.",
+      "id": "M24-MAIN-POST-MERGE",
+      "requirement": "M24 product and repaired governance main must preserve the accepted C/C++ product tree and pass the complete permanent acceptance matrix before M24 closure.",
       "status": "PASS"
     }
   ],

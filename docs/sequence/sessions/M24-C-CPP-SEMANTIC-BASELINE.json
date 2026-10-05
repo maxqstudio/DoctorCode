@@ -7,7 +7,7 @@
     "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a"
   },
   "critical": false,
-  "evidence_boundary": "M24 BEFORE plan was frozen at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before product implementation. Generic sequence extraction does not resolve Go call graphs, so DOCUMENT plan edges are design traceability only; behavioral authority is the RED/green benchmark and cumulative CI evidence. RED: 1564c430e22d394ddef1449b1ffff73f474b905c / Core 37219109211. GREEN semantic candidate: da7241f7c57d062656ed5947cf5c87143074d593 / Core 37242861899, 15 cases = 8 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS.",
+  "evidence_boundary": "M24 BEFORE plan was frozen at acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5 before product implementation. Generic sequence extraction does not resolve Go call graphs, so DOCUMENT plan edges are design traceability only; behavioral authority is the RED/green benchmark and cumulative CI evidence. RED: 1564c430e22d394ddef1449b1ffff73f474b905c / Core 37219109211. GREEN semantic candidate: da7241f7c57d062656ed5947cf5c87143074d593 / Core 37242861899, 15 cases = 8 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS. Product authority is main@a000c0f4afa7bb88789efc63301a9187ff5bb7dd; exact-tree SQUASH provenance is accepted under SW2-16, and governance-normalized main@967baad0210f44b67699b764386fdd79c2ebbcfa passed all eight permanent workflows before closure.",
   "implementation_base_sha": "acdb8c1e2d2e7f9cd6c0cd1263f998d8b74664b5",
   "merge_provenance": {
     "accepted_branch_head": "ef32ff08735ddc9b83889d580daa60f303015ca1",
@@ -29,9 +29,9 @@
     "required": false
   },
   "schema_version": 1,
-  "scope": "CURRENT",
+  "scope": "HISTORICAL",
   "session_id": "M24-C-CPP-SEMANTIC-BASELINE",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
     "internal/benchmark/testdata/m24-c-cpp.json",

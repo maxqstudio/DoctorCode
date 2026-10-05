@@ -1,156 +1,156 @@
 {
-  "schema_version": 1,
-  "current_phase": "M24_C_CPP_SEMANTIC_BASELINE",
+  "current_phase": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
   "phases": [
     {
-      "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
-      "title": "JavaScript/TypeScript bounded LOGIC",
-      "status": "ACCEPTED",
-      "objective": "Establish a bounded duplicate-condition LOGIC rule with conservative binding and mutation proof.",
       "exit_criteria": [
         "24-case M19 corpus accepted with zero false positives and zero false negatives on Ubuntu, Windows, and macOS.",
         "Exact-main post-merge acceptance completed."
-      ]
+      ],
+      "id": "M19_JAVASCRIPT_TYPESCRIPT_LOGIC",
+      "objective": "Establish a bounded duplicate-condition LOGIC rule with conservative binding and mutation proof.",
+      "status": "ACCEPTED",
+      "title": "JavaScript/TypeScript bounded LOGIC"
     },
     {
-      "id": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
-      "title": "JavaScript/TypeScript parser-grade foundation",
-      "status": "ACCEPTED",
-      "objective": "Introduce a deterministic pure-Go parser authority for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 rule behavior and fail-closed syntax handling.",
       "exit_criteria": [
         "Pure-Go parser dependency is pinned and release cross-compilation remains valid without CGO.",
         "JS/JSX/TS/TSX syntax validation is fail-closed for parser errors, ERROR nodes, and MISSING nodes.",
         "Existing M18/M19 corpora remain regression-clean.",
         "JSX/TSX parser-backed corpus passes on Ubuntu, Windows, and macOS.",
         "Release/install and governance lanes pass on one exact candidate and exact main."
-      ]
+      ],
+      "id": "M20_JAVASCRIPT_TYPESCRIPT_PARSER_FOUNDATION",
+      "objective": "Introduce a deterministic pure-Go parser authority for JavaScript, JSX, TypeScript, and TSX while preserving accepted M18/M19 rule behavior and fail-closed syntax handling.",
+      "status": "ACCEPTED",
+      "title": "JavaScript/TypeScript parser-grade foundation"
     },
     {
-      "id": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
-      "title": "Language analyzer framework",
-      "status": "ACCEPTED",
-      "objective": "Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages.",
       "exit_criteria": [
         "New analyzers can declare recognition, parser authority, rule capabilities, evidence boundaries, and availability without copy-paste core changes.",
         "Framework contract is regression-tested across existing Go, Python, and JavaScript/TypeScript analyzers."
-      ]
+      ],
+      "id": "M21_LANGUAGE_ANALYZER_FRAMEWORK",
+      "objective": "Stabilize reusable analyzer capability, parser/provider, rule metadata, evidence, deterministic-ID, and benchmark contracts for later languages.",
+      "status": "ACCEPTED",
+      "title": "Language analyzer framework"
     },
     {
-      "id": "M22_RUST_SEMANTIC_BASELINE",
-      "title": "Rust semantic baseline",
-      "status": "ACCEPTED",
-      "objective": "Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules.",
       "exit_criteria": [
         "Rust SECURITY, SIMPLIFY, LOGIC, and conservative DEADCODE evidence have labeled and adversarial corpora.",
         "BLOAT is enabled only if safe evidence is proven.",
         "Cross-platform CI and repository-shaped validation pass."
-      ]
+      ],
+      "id": "M22_RUST_SEMANTIC_BASELINE",
+      "objective": "Add conservative Rust semantic evidence for core categories using language-appropriate parsing and scope rules.",
+      "status": "ACCEPTED",
+      "title": "Rust semantic baseline"
     },
     {
-      "id": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
-      "title": "Java and Kotlin semantic baseline",
-      "status": "ACCEPTED",
-      "objective": "Add JVM-family semantic analysis with package, class, method, and build-system awareness.",
       "exit_criteria": [
         "Java and Kotlin bounded rules pass synthetic, adversarial, and repository-shaped tests.",
         "Maven/Gradle project boundaries are handled conservatively.",
         "Ubuntu, Windows, and macOS acceptance passes."
-      ]
+      ],
+      "id": "M23_JAVA_KOTLIN_SEMANTIC_BASELINE",
+      "objective": "Add JVM-family semantic analysis with package, class, method, and build-system awareness.",
+      "status": "ACCEPTED",
+      "title": "Java and Kotlin semantic baseline"
     },
     {
-      "id": "M24_C_CPP_SEMANTIC_BASELINE",
-      "title": "C and C++ semantic baseline",
-      "status": "CURRENT",
-      "objective": "Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation.",
       "exit_criteria": [
         "Header/include and declaration-definition evidence is deterministic.",
         "Macro and conditional-compilation ambiguity fails closed.",
         "No aggressive dead-code claim is accepted without target-aware proof."
-      ]
+      ],
+      "id": "M24_C_CPP_SEMANTIC_BASELINE",
+      "objective": "Add conservative C/C++ analysis aware of headers, declarations, definitions, macros, and conditional compilation.",
+      "status": "ACCEPTED",
+      "title": "C and C++ semantic baseline"
     },
     {
-      "id": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
-      "title": "C#/.NET semantic baseline",
-      "status": "PLANNED",
-      "objective": "Add project/solution-aware C# semantic evidence for namespace, type, member, async, nullable, logic, and credential patterns.",
       "exit_criteria": [
         "Project/solution scope and generated-code boundaries are represented.",
         "Core bounded rules pass adversarial and multi-OS validation."
-      ]
+      ],
+      "id": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
+      "objective": "Add project/solution-aware C# semantic evidence for namespace, type, member, async, nullable, logic, and credential patterns.",
+      "status": "CURRENT",
+      "title": "C#/.NET semantic baseline"
     },
     {
-      "id": "M26_DART_FLUTTER_SEMANTIC_BASELINE",
-      "title": "Dart/Flutter semantic baseline",
-      "status": "PLANNED",
-      "objective": "Add Dart/Flutter analysis for imports, classes, functions, widgets, async constructs, and generated-file boundaries.",
       "exit_criteria": [
         "Flutter-shaped repositories are covered by bounded real-world evidence.",
         "Generated code is not misclassified as hand-maintained authority."
-      ]
+      ],
+      "id": "M26_DART_FLUTTER_SEMANTIC_BASELINE",
+      "objective": "Add Dart/Flutter analysis for imports, classes, functions, widgets, async constructs, and generated-file boundaries.",
+      "status": "PLANNED",
+      "title": "Dart/Flutter semantic baseline"
     },
     {
-      "id": "M27_SCRIPTING_ECOSYSTEM",
-      "title": "Scripting ecosystem",
-      "status": "PLANNED",
-      "objective": "Add bounded PHP, Ruby, PowerShell, and Shell analyzers while preserving Python authority.",
       "exit_criteria": [
         "Each scripting language has its own parser/evidence contract rather than a generic regex-only claim.",
         "Language-specific corpora and multi-OS regression lanes pass."
-      ]
+      ],
+      "id": "M27_SCRIPTING_ECOSYSTEM",
+      "objective": "Add bounded PHP, Ruby, PowerShell, and Shell analyzers while preserving Python authority.",
+      "status": "PLANNED",
+      "title": "Scripting ecosystem"
     },
     {
-      "id": "M28_SPECIALIST_LANGUAGES",
-      "title": "Swift, Zig, and MQL5 specialist support",
-      "status": "PLANNED",
-      "objective": "Add conservative specialist-language support after the shared analyzer framework is stable.",
       "exit_criteria": [
         "Swift, Zig, and MQL5 each have explicit bounded support levels and labeled corpora.",
         "Unsupported semantics remain fail-closed and clearly reported."
-      ]
+      ],
+      "id": "M28_SPECIALIST_LANGUAGES",
+      "objective": "Add conservative specialist-language support after the shared analyzer framework is stable.",
+      "status": "PLANNED",
+      "title": "Swift, Zig, and MQL5 specialist support"
     },
     {
-      "id": "M29_REPOSITORY_SCALE_INTELLIGENCE",
-      "title": "Repository-scale intelligence",
-      "status": "PLANNED",
-      "objective": "Add cross-file symbol/import/dependency graphs, generated/test/reference awareness, monorepo support, incremental analysis, and deterministic caching.",
       "exit_criteria": [
         "Cross-file evidence is deterministic and bounded.",
         "Monorepo and large-repository scans have validated memory/runtime behavior.",
         "Incremental results match clean scans for unchanged source."
-      ]
+      ],
+      "id": "M29_REPOSITORY_SCALE_INTELLIGENCE",
+      "objective": "Add cross-file symbol/import/dependency graphs, generated/test/reference awareness, monorepo support, incremental analysis, and deterministic caching.",
+      "status": "PLANNED",
+      "title": "Repository-scale intelligence"
     },
     {
-      "id": "M30_DEVELOPER_INTEGRATIONS",
-      "title": "Developer integrations",
-      "status": "PLANNED",
-      "objective": "Stabilize public integration surfaces for CI, editors, MCP/Skill clients, and machine-readable consumers.",
       "exit_criteria": [
         "Stable JSON/SARIF and exit-code contracts are versioned.",
         "GitHub/GitLab annotation, pre-commit, and editor integration boundaries are validated.",
         "MCP/Skill protocol compatibility is regression-tested."
-      ]
+      ],
+      "id": "M30_DEVELOPER_INTEGRATIONS",
+      "objective": "Stabilize public integration surfaces for CI, editors, MCP/Skill clients, and machine-readable consumers.",
+      "status": "PLANNED",
+      "title": "Developer integrations"
     },
     {
-      "id": "M31_PRODUCTION_HARDENING",
-      "title": "Production hardening",
-      "status": "PLANNED",
-      "objective": "Harden DoctorCode for large, malformed, adversarial, and untrusted repositories across supported operating systems.",
       "exit_criteria": [
         "Performance, memory, cancellation, fuzzing, symlink/path/archive safety, dependency supply-chain, update, uninstall, and backwards-compatibility gates pass.",
         "No supported scan path executes analyzed repository code."
-      ]
+      ],
+      "id": "M31_PRODUCTION_HARDENING",
+      "objective": "Harden DoctorCode for large, malformed, adversarial, and untrusted repositories across supported operating systems.",
+      "status": "PLANNED",
+      "title": "Production hardening"
     },
     {
-      "id": "M32_V1_GA_QUALIFICATION",
-      "title": "v1.0 GA qualification",
-      "status": "PLANNED",
-      "objective": "Qualify DoctorCode for broad public use with multi-language real-world evidence, clean-install testing, documentation, support workflows, and release-candidate acceptance.",
       "exit_criteria": [
         "Release candidate passes Windows, Linux, and macOS on one exact SHA and exact merged release SHA.",
         "Production-grade support is demonstrated for Go, Python, and JavaScript/TypeScript.",
         "Supported semantic baselines and specialist support levels are explicitly documented.",
         "v1.0.0 release provenance, integrity, installation, update, uninstall, and user documentation are complete."
-      ]
+      ],
+      "id": "M32_V1_GA_QUALIFICATION",
+      "objective": "Qualify DoctorCode for broad public use with multi-language real-world evidence, clean-install testing, documentation, support workflows, and release-candidate acceptance.",
+      "status": "PLANNED",
+      "title": "v1.0 GA qualification"
     }
-  ]
+  ],
+  "schema_version": 1
 }
