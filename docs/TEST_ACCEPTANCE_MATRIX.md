@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M25 is accepted and frozen as historical evidence under SW2-16. M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.
+M25 is accepted and frozen as historical evidence under SW2-16. M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. M26 permanent 3-OS RED is proven by Core CI run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424, where all three Core lanes passed through M25 and failed only at the M26 gate with unknown benchmark analyzer "dart". M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
@@ -102,6 +102,7 @@ Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cf
 | M26-HISTORICAL-FREEZE | M26 must begin only after accepted M25 sequence evidence is frozen under SW2-16 and exact freeze-main passes permanent acceptance. | M25 sequence evidence is HISTORICAL in the SW2-16 manifest frozen at 749c0883d1f9dba64f1dc301cc69324c3382abf7; normal-merge main bc3846e6d5c412ebe09146a66661d2c49072889b preserves that commit as reachable ancestry and passed all eight permanent workflows. | PASS |
 | M26-BEFORE-PLAN | M26 Dart/Flutter flow and unsafe-claim boundaries must be frozen before product implementation. | docs/sequence/plans/M26-DART-FLUTTER-SEMANTIC-BASELINE.plan.json SHA-256 bfec2e55b4fdab4da32b1e25e06b3a2d2eab06161b04dafb19dd7699e302c1cb was committed at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before any M26 product implementation. | PASS |
 | M26-PARSER-PROVIDER | M26 must select a deterministic cross-platform Dart parser/provider without introducing CGO or requiring Dart/Flutter runtime execution for syntax parsing. | Pinned github.com/odvcencio/gotreesitter v0.55.1 contains grammars/dart/dart.go, .dart registry support, and Dart external-scanner support; M26 will reuse that embedded provider. | PASS |
+| M26-PERMANENT-RED-GATE | The permanent Core CI M26 Dart/Flutter benchmark gate must fail on Ubuntu, Windows, and macOS at one exact SHA because the dart analyzer is absent before implementation begins. | Core CI run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424: core-ubuntu-latest, core-windows-latest, and core-macos-latest each passed all prior gates through M25 and failed only at M26 Dart Flutter semantic benchmark gate with unknown benchmark analyzer "dart" (exit status 1). Governance Bootstrap run 37408847249 passed on the same clean SHA. | PASS |
 
 ## Test commands
 

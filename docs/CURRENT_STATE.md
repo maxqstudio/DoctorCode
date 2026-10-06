@@ -137,6 +137,7 @@ SEQUENCE_SYNC: PASS
 - Exact M25 governance-normalized main permanent acceptance matrix PASS: Governance 37386993060, CI 37386993106, M06 37386993071, Real World Go 37386993076, M07 37386992999, M10 37386993062, M16 37386992971, and M17 37386993223 all completed SUCCESS on governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.
 - M26 prerequisite SW2-16 Historical Evidence Freeze is accepted at main bc3846e6d5c412ebe09146a66661d2c49072889b; M25 is content-addressed against frozen commit 749c0883d1f9dba64f1dc301cc69324c3382abf7 and exact main passed all eight permanent workflows.
 - M26 parser/provider selection is gotreesitter v0.55.1 standalone grammars/dart with registered .dart extension and Dart external-scanner support, preserving embedded pure-Go source-only syntax authority.
+- M26 permanent Core CI RED run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424 proved analyzer dart absent on Ubuntu, Windows, and macOS: every Core lane passed all prior gates through M25, then failed only at the M26 Dart Flutter semantic benchmark gate with unknown benchmark analyzer "dart"; Dart implementation was still absent at this proof SHA.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -175,9 +176,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- Declare a Dart/Flutter labeled, adversarial, and Flutter-shaped RED corpus plus permanent Core CI gate before implementing the Dart analyzer.
-- Prove the Dart benchmark analyzer absent on Ubuntu, Windows, and macOS at one exact RED SHA.
-- Only after valid 3-OS RED may Dart/Flutter analyzer implementation begin within the frozen M26 semantic boundary.
+- Prove the exact gotreesitter v0.55.1 Dart provider and strict fail-closed parser contract on Ubuntu, Windows, and macOS before semantic widening.
+- Implement only the frozen M26 Dart/Flutter SECURITY, SIMPLIFY, and LOGIC boundary against the frozen 12-case corpus; DEADCODE, BLOAT, safe autofix, and automatic deletion remain unavailable.
+- Repair until the M26 corpus and cumulative permanent acceptance matrix pass on one exact candidate SHA before promotion.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.
