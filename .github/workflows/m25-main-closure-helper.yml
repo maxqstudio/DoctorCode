@@ -1,0 +1,181 @@
+name: M25 Main Closure Helper
+
+on:
+  push:
+    branches:
+      - work/m25-main-closure
+
+permissions:
+  contents: write
+
+jobs:
+  close-m25:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: work/m25-main-closure
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Apply M25 closure authority transition
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          PRODUCT_SHA = "eefd693ea36b3201f4e9c04cb74ef40a2745272d"
+          GOVERNANCE_SHA = "d8282a07e5447cecb8908b9e76cc6dfde6413ed6"
+          MAIN_EVIDENCE = (
+              "Governance 37386993060, CI 37386993106, M06 37386993071, "
+              "Real World Go 37386993076, M07 37386992999, M10 37386993062, "
+              "M16 37386992971, and M17 37386993223 all completed SUCCESS on "
+              f"governance-normalized main@{GOVERNANCE_SHA}."
+          )
+
+          def load(path):
+              return json.loads(Path(path).read_text(encoding="utf-8"))
+
+          def save(path, data):
+              Path(path).write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+          state_path = ".workflow/state.json"
+          state = load(state_path)
+          state["last_accepted_branch"] = "main"
+          state["last_accepted_sha"] = PRODUCT_SHA
+          state["phase"] = "M26_DART_FLUTTER_SEMANTIC_BASELINE"
+          state["next_authorized_actions"] = [
+              f"Begin M26 Dart/Flutter semantic baseline planning from accepted M25 product authority main@{PRODUCT_SHA} and governance-normalized main@{GOVERNANCE_SHA}.",
+              "Select and prove a deterministic Dart parser/provider plus Flutter repository and generated-code boundaries before implementation.",
+              "Establish RED labeled/adversarial/repository-shaped evidence before widening Dart/Flutter semantic authority."
+          ]
+          state["not_proven"] = [
+              x for x in state.get("not_proven", [])
+              if not x.startswith("M25 is not MAIN_ACCEPTED")
+          ]
+          m26_np = "M26 Dart/Flutter semantic authority is not proven; no M26 product implementation is accepted yet."
+          if m26_np not in state["not_proven"]:
+              state["not_proven"].append(m26_np)
+          proven = state.setdefault("proven", [])
+          p1 = f"M25 is MAIN_ACCEPTED with C#/.NET product authority main@{PRODUCT_SHA} and governance-normalized main@{GOVERNANCE_SHA}."
+          p2 = "Exact M25 governance-normalized main permanent acceptance matrix PASS: " + MAIN_EVIDENCE
+          for item in (p1, p2):
+              if item not in proven:
+                  proven.append(item)
+          save(state_path, state)
+
+          roadmap_path = ".workflow/roadmap.json"
+          roadmap = load(roadmap_path)
+          roadmap["current_phase"] = "M26_DART_FLUTTER_SEMANTIC_BASELINE"
+          for phase in roadmap.get("phases", []):
+              if phase.get("id") == "M25_CSHARP_DOTNET_SEMANTIC_BASELINE":
+                  phase["status"] = "ACCEPTED"
+              elif phase.get("id") == "M26_DART_FLUTTER_SEMANTIC_BASELINE":
+                  phase["status"] = "CURRENT"
+          save(roadmap_path, roadmap)
+
+          session_path = "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json"
+          session = load(session_path)
+          session["scope"] = "HISTORICAL"
+          session["status"] = "ACCEPTED"
+          session["evidence_boundary"] = (
+              "M25 BEFORE plan was frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# product implementation. "
+              "DOCUMENT edges are design traceability only because generic extraction does not resolve Go call graphs or .NET build semantics. "
+              "Behavioral authority is RED 0a1dc833e8ae61993b63830768f2ac77d01c3c33 / Core 37293193349 and GREEN product candidate "
+              "e60e4c0d5445d05399462f80aac0f0fa12a3a163 / Core 37378314705, whose 12-case corpus is hard-asserted at 4 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS. "
+              f"Product authority is main@{PRODUCT_SHA}; exact-tree SQUASH provenance is accepted under SW2-16, and governance-normalized main@{GOVERNANCE_SHA} passed all eight permanent workflows before closure. "
+              ".csproj/.sln handling is deterministic manifest-presence evidence only; MSBuild/NuGet/project-reference/solution-membership/Roslyn/source-generator/reflection/whole-program semantics remain NOT_PROVEN. "
+              "Historical M19-M25 sequence evidence remains content-addressed and immutable under SW2-16 Historical Evidence Freeze."
+          )
+          save(session_path, session)
+
+          acceptance_path = ".workflow/acceptance.json"
+          acceptance = load(acceptance_path)
+          acceptance["evidence_boundary"] = (
+              f"M25 is MAIN_ACCEPTED with C#/.NET product authority main@{PRODUCT_SHA}. "
+              "The accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 and squash product merge have identical tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1. "
+              f"SW2-16 governance provenance repair is accepted at governance-normalized main@{GOVERNANCE_SHA} with all eight permanent workflows PASS. "
+              "M25 authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence. "
+              "DEADCODE, BLOAT, MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, and automatic deletion remain outside M25 authority. "
+              "Current phase is M26_DART_FLUTTER_SEMANTIC_BASELINE; no Dart/Flutter semantic capability is accepted yet."
+          )
+          reqs = acceptance.setdefault("requirements", [])
+          if not any(r.get("id") == "M25-MAIN-POST-MERGE" for r in reqs):
+              reqs.append({
+                  "id": "M25-MAIN-POST-MERGE",
+                  "requirement": "M25 product and repaired governance main must preserve the accepted C# product authority and pass the complete permanent acceptance matrix before M25 closure.",
+                  "status": "PASS",
+                  "evidence": (
+                      f"Product main {PRODUCT_SHA} preserved all seven non-governance lanes while the original Governance failure remained retained as predecessor evidence. "
+                      f"SW2-16 repaired provenance without product changes. {MAIN_EVIDENCE}"
+                  )
+              })
+          save(acceptance_path, acceptance)
+          PY
+
+      - name: Regenerate governed Project Truth
+        run: python .workflow/tools/generate_project_docs.py
+
+      - name: Remove temporary helper before candidate commit
+        run: rm .github/workflows/m25-main-closure-helper.yml
+
+      - name: Enforce governance-only closure diff
+        shell: bash
+        run: |
+          python - <<'PY'
+          import subprocess
+          allowed = {
+              '.workflow/acceptance.json',
+              '.workflow/roadmap.json',
+              '.workflow/state.json',
+              'docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json',
+              'docs/CURRENT_STATE.md',
+              'docs/PROJECT_MANIFEST.md',
+              'docs/ROADMAP.md',
+              'docs/SYSTEM_OVERVIEW.md',
+              'docs/TEST_ACCEPTANCE_MATRIX.md',
+              '.github/workflows/m25-main-closure-helper.yml',
+          }
+          out = subprocess.check_output(['git', 'diff', '--name-only', 'd8282a07e5447cecb8908b9e76cc6dfde6413ed6'], text=True)
+          changed = {x for x in out.splitlines() if x}
+          unexpected = sorted(changed - allowed)
+          if unexpected:
+              raise SystemExit('Unexpected closure paths: ' + ', '.join(unexpected))
+          productish = [x for x in changed if x.startswith(('cmd/', 'internal/', 'scripts/', 'skills/'))]
+          if productish:
+              raise SystemExit('Product/source mutation forbidden: ' + ', '.join(productish))
+          print('closure paths:', *sorted(changed), sep='\n- ')
+          PY
+
+      - name: Commit clean closure candidate locally
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "M25: main acceptance closure and advance to M26"
+          test -z "$(git status --porcelain)"
+
+      - name: Validate governance schema and vendored toolchain
+        run: python .workflow/tools/validate_schema_toolchain.py --root .
+      - name: Validate public repository health
+        run: python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+      - name: Validate tracked project docs
+        run: python .workflow/tools/validate_project_docs.py
+      - name: Validate doc quality
+        run: python .workflow/tools/validate_doc_quality.py
+      - name: Validate human comprehension
+        run: python .workflow/tools/validate_human_comprehension.py --require-pass
+      - name: Validate handoff
+        run: python .workflow/tools/validate_handoff.py
+      - name: Validate cross-document consistency
+        run: python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
+      - name: Validate project truth
+        run: python .workflow/tools/validate_project_truth.py
+      - name: Validate sequence sessions
+        run: python .workflow/tools/validate_sequence_sessions.py
+      - name: Push only validated closure candidate
+        run: git push origin HEAD:work/m25-main-closure
