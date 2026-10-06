@@ -1,0 +1,117 @@
+name: Temporary M26 Bind RED Proof
+
+on:
+  push:
+    branches:
+      - work/m26-dart-flutter-semantic
+
+permissions:
+  contents: write
+
+jobs:
+  bind-red-proof:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m26-dart-flutter-semantic
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Bind exact permanent RED evidence
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          state_path = Path('.workflow/state.json')
+          acceptance_path = Path('.workflow/acceptance.json')
+          state = json.loads(state_path.read_text(encoding='utf-8'))
+          acceptance = json.loads(acceptance_path.read_text(encoding='utf-8'))
+
+          phase = 'M26_DART_FLUTTER_SEMANTIC_BASELINE'
+          sha = 'e8a920f840fa6aa075d48333fa7987f7614b6424'
+          run = '37408847289'
+          expected_error = 'unknown benchmark analyzer "dart"'
+
+          assert state['phase'] == phase
+          assert acceptance['sequence_session'] == 'M26-DART-FLUTTER-SEMANTIC-BASELINE'
+          assert acceptance['sequence_mode'] == 'BEFORE'
+
+          proof = (
+              f'M26 permanent Core CI RED run {run} at {sha} proved analyzer dart absent on '
+              f'Ubuntu, Windows, and macOS: every Core lane passed all prior gates through M25, '
+              f'then failed only at the M26 Dart Flutter semantic benchmark gate with '
+              f'{expected_error}; Dart implementation was still absent at this proof SHA.'
+          )
+          if proof not in state['proven']:
+              state['proven'].append(proof)
+
+          state['next_authorized_actions'] = [
+              'Prove the exact gotreesitter v0.55.1 Dart provider and strict fail-closed parser contract on Ubuntu, Windows, and macOS before semantic widening.',
+              'Implement only the frozen M26 Dart/Flutter SECURITY, SIMPLIFY, and LOGIC boundary against the frozen 12-case corpus; DEADCODE, BLOAT, safe autofix, and automatic deletion remain unavailable.',
+              'Repair until the M26 corpus and cumulative permanent acceptance matrix pass on one exact candidate SHA before promotion.'
+          ]
+
+          requirement = {
+              'id': 'M26-PERMANENT-RED-GATE',
+              'requirement': 'The permanent Core CI M26 Dart/Flutter benchmark gate must fail on Ubuntu, Windows, and macOS at one exact SHA because the dart analyzer is absent before implementation begins.',
+              'status': 'PASS',
+              'evidence': (
+                  f'Core CI run {run} at {sha}: core-ubuntu-latest, core-windows-latest, and '
+                  f'core-macos-latest each passed all prior gates through M25 and failed only at '
+                  f'M26 Dart Flutter semantic benchmark gate with {expected_error} (exit status 1). '
+                  'Governance Bootstrap run 37408847249 passed on the same clean SHA.'
+              ),
+          }
+          existing = [r for r in acceptance['requirements'] if r.get('id') == requirement['id']]
+          if existing:
+              assert existing == [requirement], existing
+          else:
+              acceptance['requirements'].append(requirement)
+
+          acceptance['evidence_boundary'] = (
+              'M25 is accepted and frozen as historical evidence under SW2-16. '
+              'M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. '
+              f'M26 permanent 3-OS RED is proven by Core CI run {run} at {sha}, where all three Core lanes '
+              f'passed through M25 and failed only at the M26 gate with {expected_error}. '
+              'M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. '
+              'pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.'
+          )
+
+          state_path.write_text(json.dumps(state, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          acceptance_path.write_text(json.dumps(acceptance, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+          PY
+      - name: Generate canonical Project Truth without temporary workflow
+        shell: bash
+        run: |
+          rm .github/workflows/tmp-m26-bind-red-proof.yml
+          python .workflow/tools/sync_project_truth.py --root .
+      - name: Validate canonical governance
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_handoff.py
+          python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
+          python .workflow/tools/validate_project_truth.py
+          python .workflow/tools/validate_sequence_sessions.py
+      - name: Commit bound governance only
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A -- . ':(exclude).github/workflows/tmp-m26-bind-red-proof.yml'
+          if git diff --cached --quiet; then
+            echo 'No governance changes to commit.'
+            exit 1
+          fi
+          git status --short
+          git commit -m 'docs(m26): bind permanent 3-OS RED proof'
+          git push origin HEAD:work/m26-dart-flutter-semantic
