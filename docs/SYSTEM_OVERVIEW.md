@@ -358,7 +358,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 ## Lifecycle and state
 
-Current phase: M25_CSHARP_DOTNET_SEMANTIC_BASELINE
+Current phase: M26_DART_FLUTTER_SEMANTIC_BASELINE
 
 Current status: M25_MAIN_GOVERNANCE_REPAIR
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Validate the SW2-16 exact-tree SQUASH provenance repair without modifying M25 product behavior.
-- Require all eight permanent workflows to PASS on one exact governance-repair branch SHA before PR promotion and squash merge.
-- After governance-normalized main passes all eight permanent workflows, close M25 and advance roadmap authority to M26 in a separate governed closure step.
+- After M25 closure lands and exact closure-main acceptance passes, refresh SW2-16 Historical Evidence Freeze so the accepted M25 sequence is content-addressed against that accepted closure main before any M26 product implementation.
+- Begin M26 Dart/Flutter semantic baseline planning from accepted M25 product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d and governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6; implementation remains blocked until the M25 historical freeze prerequisite passes.
+- Select and prove a deterministic Dart parser/provider plus Flutter repository and generated-code boundaries, then establish RED labeled/adversarial/repository-shaped evidence before widening Dart/Flutter semantic authority.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -539,6 +539,8 @@ Known blockers:
 - Exact synchronized M25 branch candidate 1b2bcf0c8b715666c814820a3268b815aa1b9a50 passed all eight permanent push workflows before PR promotion and all eight pull_request workflows before squash merge.
 - Accepted M25 branch tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1 is identical to product main eefd693ea36b3201f4e9c04cb74ef40a2745272d tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1.
 - Exact M25 product main eefd693ea36b3201f4e9c04cb74ef40a2745272d passed CI 37380495666, M06 37380495648, Real World Go 37380495710, M07 37380495703, M10 37380495641, M16 37380495695, and M17 37380495753. Governance 37380495659 failed only at Validate sequence sessions because squash lineage had not yet been represented.
+- M25 is MAIN_ACCEPTED with C#/.NET product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d and governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.
+- Exact M25 governance-normalized main permanent acceptance matrix PASS: Governance 37386993060, CI 37386993106, M06 37386993071, Real World Go 37386993076, M07 37386992999, M10 37386993062, M16 37386992971, and M17 37386993223 all completed SUCCESS on governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.
 
 ### Not proven
 
@@ -566,7 +568,7 @@ Known blockers:
 - M25 C# DEADCODE and BLOAT authority are not proven and remain unavailable.
 - M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
 - M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
-- M25 is not MAIN_ACCEPTED until the governance provenance repair is accepted, merged, and all eight permanent workflows pass on the governance-normalized main.
+- M26 Dart/Flutter semantic authority is not proven; no M26 product implementation is accepted yet.
 
 ## Important limitations
 

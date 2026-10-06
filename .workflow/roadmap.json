@@ -1,5 +1,5 @@
 {
-  "current_phase": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
+  "current_phase": "M26_DART_FLUTTER_SEMANTIC_BASELINE",
   "phases": [
     {
       "exit_criteria": [
@@ -74,7 +74,7 @@
       ],
       "id": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
       "objective": "Add project/solution-aware C# semantic evidence for namespace, type, member, async, nullable, logic, and credential patterns.",
-      "status": "CURRENT",
+      "status": "ACCEPTED",
       "title": "C#/.NET semantic baseline"
     },
     {
@@ -84,7 +84,7 @@
       ],
       "id": "M26_DART_FLUTTER_SEMANTIC_BASELINE",
       "objective": "Add Dart/Flutter analysis for imports, classes, functions, widgets, async constructs, and generated-file boundaries.",
-      "status": "PLANNED",
+      "status": "CURRENT",
       "title": "Dart/Flutter semantic baseline"
     },
     {

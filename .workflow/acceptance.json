@@ -1,5 +1,5 @@
 {
-  "evidence_boundary": "M25 product was squash-merged from exact accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 to product main eefd693ea36b3201f4e9c04cb74ef40a2745272d with identical tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1. All seven non-governance permanent workflows passed on the exact product main. Governance run 37380495659 is retained as the expected predecessor sequence-lineage failure and is not relabeled PASS. M25 remains CURRENT / IN_PROGRESS and is not MAIN_ACCEPTED until the provenance-repair branch and governance-normalized main pass the complete permanent matrix. C# authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence.",
+  "evidence_boundary": "M25 is MAIN_ACCEPTED with C#/.NET product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d. The accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 and squash product merge have identical tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1. SW2-16 governance provenance repair is accepted at governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6 with all eight permanent workflows PASS. M25 authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence. DEADCODE, BLOAT, MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, and automatic deletion remain outside M25 authority. Current phase is M26_DART_FLUTTER_SEMANTIC_BASELINE; M25 sequence evidence remains CURRENT-scoped only until the post-closure SW2-16 historical-freeze prerequisite binds it to accepted closure main, and no Dart/Flutter semantic capability is accepted yet.",
   "human_comprehension_questions": {
     "How does failure/recovery behave?": "PASS",
     "How does important data flow through the system?": "PASS",
@@ -536,6 +536,12 @@
       "evidence": "At eefd693ea36b3201f4e9c04cb74ef40a2745272d: CI 37380495666 PASS; M06 37380495648 PASS; Real World Go 37380495710 PASS; M07 37380495703 PASS; M10 37380495641 PASS; M16 37380495695 PASS; M17 37380495753 PASS. Governance 37380495659 is retained as the predecessor sequence-lineage failure, not relabeled PASS.",
       "id": "M25-PRODUCT-MAIN-NON-GOVERNANCE",
       "requirement": "The exact M25 squash product merge must preserve all product and regression lanes while governance provenance is repaired separately.",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Product main eefd693ea36b3201f4e9c04cb74ef40a2745272d preserved all seven non-governance lanes while the original Governance failure remained retained as predecessor evidence. SW2-16 repaired provenance without product changes. Governance 37386993060, CI 37386993106, M06 37386993071, Real World Go 37386993076, M07 37386992999, M10 37386993062, M16 37386992971, and M17 37386993223 all completed SUCCESS on governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.",
+      "id": "M25-MAIN-POST-MERGE",
+      "requirement": "M25 product and repaired governance main must preserve the accepted C# product authority and pass the complete permanent acceptance matrix before M25 closure.",
       "status": "PASS"
     }
   ],
