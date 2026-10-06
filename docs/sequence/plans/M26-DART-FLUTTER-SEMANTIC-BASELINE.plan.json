@@ -1,0 +1,94 @@
+{
+  "edges": [
+    {
+      "action": "register analyzer",
+      "from": "registry",
+      "requirement": "MUST",
+      "to": "dart_analyzer",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "parse visible Dart source fail closed",
+      "from": "dart_analyzer",
+      "requirement": "MUST",
+      "to": "parser_provider",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "represent pubspec Flutter and generated-code boundaries conservatively",
+      "from": "dart_analyzer",
+      "requirement": "MUST",
+      "to": "flutter_boundary",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "derive bounded semantic evidence",
+      "from": "dart_analyzer",
+      "requirement": "MUST",
+      "to": "bounded_rules",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "exercise labeled adversarial Flutter-shaped corpus",
+      "from": "benchmark_gate",
+      "requirement": "MUST",
+      "to": "dart_analyzer",
+      "verification": "DOCUMENT"
+    },
+    {
+      "action": "claim pub/build_runner/widget-lifecycle/navigation/whole-program/tree-shaking DEADCODE/BLOAT semantics",
+      "from": "dart_analyzer",
+      "requirement": "MUST_NOT",
+      "to": "unsafe_claims",
+      "verification": "DOCUMENT"
+    }
+  ],
+  "evidence_boundary": "This BEFORE plan freezes the intended M26 module flow before Dart/Flutter analyzer implementation. DoctorCode reuses the already-pinned pure-Go gotreesitter v0.55.1 Dart grammar and must parse visible Dart source fail closed. Flutter/pubspec and generated-code boundaries are conservative visible-source evidence only: pub dependency resolution, build_runner/source-generator execution, Flutter widget lifecycle/navigation semantics, dynamic invocation, whole-program reachability, tree-shaking, DEADCODE, BLOAT, safe autofix, and automatic deletion remain NOT_PROVEN unless separately established. Behavioral authority must come from labeled/adversarial/Flutter-shaped benchmarks and cumulative multi-OS CI.",
+  "flow_id": "M26-DART-FLUTTER-SEMANTIC-BASELINE",
+  "nodes": [
+    {
+      "id": "registry",
+      "kind": "participant",
+      "label": "Analyzer registry",
+      "locator": "internal/analyzers/registry.go::Default"
+    },
+    {
+      "id": "dart_analyzer",
+      "kind": "participant",
+      "label": "Dart/Flutter analyzer",
+      "locator": "internal/analyzers/dart/analyzer.go::Analyze"
+    },
+    {
+      "id": "parser_provider",
+      "kind": "participant",
+      "label": "Deterministic Dart parser provider",
+      "locator": "internal/analyzers/dart/syntax.go::parseSyntax"
+    },
+    {
+      "id": "flutter_boundary",
+      "kind": "participant",
+      "label": "Flutter project and generated-code boundary",
+      "locator": "internal/analyzers/dart/project.go::discoverFlutterScope"
+    },
+    {
+      "id": "bounded_rules",
+      "kind": "participant",
+      "label": "Bounded Dart rules",
+      "locator": "internal/analyzers/dart/analyzer.go::collectFindings"
+    },
+    {
+      "id": "benchmark_gate",
+      "kind": "participant",
+      "label": "M26 benchmark gate",
+      "locator": "internal/benchmark/testdata/m26-dart-flutter.json"
+    },
+    {
+      "id": "unsafe_claims",
+      "kind": "participant",
+      "label": "Unproven Dart/Flutter semantic claims",
+      "locator": "M26_NOT_PROVEN_DART_FLUTTER_SEMANTICS"
+    }
+  ],
+  "schema_version": 1,
+  "status": "FROZEN"
+}

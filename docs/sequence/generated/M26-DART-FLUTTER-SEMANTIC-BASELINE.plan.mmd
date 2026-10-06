@@ -1,0 +1,17 @@
+%% GENERATED FILE - DO NOT EDIT
+%% PLAN_SHA256: bfec2e55b4fdab4da32b1e25e06b3a2d2eab06161b04dafb19dd7699e302c1cb
+%% FLOW_ID: M26-DART-FLUTTER-SEMANTIC-BASELINE
+sequenceDiagram
+    participant registry_0 as Analyzer registry
+    participant dart_analyzer_1 as Dart/Flutter analyzer
+    participant parser_provider_2 as Deterministic Dart parser provider
+    participant flutter_boundary_3 as Flutter project and generated-code boundary
+    participant bounded_rules_4 as Bounded Dart rules
+    participant benchmark_gate_5 as M26 benchmark gate
+    participant unsafe_claims_6 as Unproven Dart/Flutter semantic claims
+    registry_0->>dart_analyzer_1: register analyzer [MUST]
+    dart_analyzer_1->>parser_provider_2: parse visible Dart source fail closed [MUST]
+    dart_analyzer_1->>flutter_boundary_3: represent pubspec Flutter and generated-code boundaries conservatively [MUST]
+    dart_analyzer_1->>bounded_rules_4: derive bounded semantic evidence [MUST]
+    benchmark_gate_5->>dart_analyzer_1: exercise labeled adversarial Flutter-shaped corpus [MUST]
+    dart_analyzer_1->>unsafe_claims_6: claim pub/build_runner/widget-lifecycle/navigation/whole-program/tree-shaking DEADCODE/BLOAT semantics [MUST_NOT]
