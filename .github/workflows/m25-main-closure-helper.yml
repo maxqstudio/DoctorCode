@@ -48,9 +48,9 @@ jobs:
           state["last_accepted_sha"] = PRODUCT_SHA
           state["phase"] = "M26_DART_FLUTTER_SEMANTIC_BASELINE"
           state["next_authorized_actions"] = [
-              f"Begin M26 Dart/Flutter semantic baseline planning from accepted M25 product authority main@{PRODUCT_SHA} and governance-normalized main@{GOVERNANCE_SHA}.",
-              "Select and prove a deterministic Dart parser/provider plus Flutter repository and generated-code boundaries before implementation.",
-              "Establish RED labeled/adversarial/repository-shaped evidence before widening Dart/Flutter semantic authority."
+              "After M25 closure lands and exact closure-main acceptance passes, refresh SW2-16 Historical Evidence Freeze so the accepted M25 sequence is content-addressed against that accepted closure main before any M26 product implementation.",
+              f"Begin M26 Dart/Flutter semantic baseline planning from accepted M25 product authority main@{PRODUCT_SHA} and governance-normalized main@{GOVERNANCE_SHA}; implementation remains blocked until the M25 historical freeze prerequisite passes.",
+              "Select and prove a deterministic Dart parser/provider plus Flutter repository and generated-code boundaries, then establish RED labeled/adversarial/repository-shaped evidence before widening Dart/Flutter semantic authority."
           ]
           state["not_proven"] = [
               x for x in state.get("not_proven", [])
@@ -79,7 +79,7 @@ jobs:
 
           session_path = "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json"
           session = load(session_path)
-          session["scope"] = "HISTORICAL"
+          session["scope"] = "CURRENT"
           session["status"] = "ACCEPTED"
           session["evidence_boundary"] = (
               "M25 BEFORE plan was frozen at ab5c6e3b58369b3675eb3d5291f751a0657641d5 before C# product implementation. "
@@ -88,7 +88,7 @@ jobs:
               "e60e4c0d5445d05399462f80aac0f0fa12a3a163 / Core 37378314705, whose 12-case corpus is hard-asserted at 4 TP / 0 FP / 0 FN on Ubuntu/Windows/macOS. "
               f"Product authority is main@{PRODUCT_SHA}; exact-tree SQUASH provenance is accepted under SW2-16, and governance-normalized main@{GOVERNANCE_SHA} passed all eight permanent workflows before closure. "
               ".csproj/.sln handling is deterministic manifest-presence evidence only; MSBuild/NuGet/project-reference/solution-membership/Roslyn/source-generator/reflection/whole-program semantics remain NOT_PROVEN. "
-              "Historical M19-M25 sequence evidence remains content-addressed and immutable under SW2-16 Historical Evidence Freeze."
+              "M25 status is ACCEPTED, but its sequence scope intentionally remains CURRENT until the M26 prerequisite refreshes the SW2-16 Historical Evidence Freeze against the accepted M25 closure-main commit; no M26 product implementation is authorized before that freeze passes."
           )
           save(session_path, session)
 
@@ -100,7 +100,7 @@ jobs:
               f"SW2-16 governance provenance repair is accepted at governance-normalized main@{GOVERNANCE_SHA} with all eight permanent workflows PASS. "
               "M25 authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence. "
               "DEADCODE, BLOAT, MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, and automatic deletion remain outside M25 authority. "
-              "Current phase is M26_DART_FLUTTER_SEMANTIC_BASELINE; no Dart/Flutter semantic capability is accepted yet."
+              "Current phase is M26_DART_FLUTTER_SEMANTIC_BASELINE; M25 sequence evidence remains CURRENT-scoped only until the post-closure SW2-16 historical-freeze prerequisite binds it to accepted closure main, and no Dart/Flutter semantic capability is accepted yet."
           )
           reqs = acceptance.setdefault("requirements", [])
           if not any(r.get("id") == "M25-MAIN-POST-MERGE" for r in reqs):
