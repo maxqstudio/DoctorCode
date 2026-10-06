@@ -1,0 +1,41 @@
+name: M26 Freeze M25 Scratch
+
+on:
+  push:
+    branches:
+      - scratch/m26-freeze-m25-manifest
+
+permissions:
+  contents: write
+
+jobs:
+  freeze:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: scratch/m26-freeze-m25-manifest
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Generate official SW2-16 historical manifest
+        run: |
+          python .workflow/tools/validate_sequence_sessions.py \
+            --freeze-historical \
+            --frozen-commit 749c0883d1f9dba64f1dc301cc69324c3382abf7 \
+            --authorize-migration "M26 prerequisite: freeze accepted M25 sequence evidence before any Dart/Flutter product implementation"
+      - name: Remove scratch helper
+        run: rm .github/workflows/m26-freeze-m25-scratch.yml
+      - name: Commit generated manifest
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m "M26 prereq: freeze accepted M25 sequence evidence"
+          test -z "$(git status --porcelain)"
+      - name: Validate frozen identity from clean commit
+        run: python .workflow/tools/validate_sequence_sessions.py
+      - name: Push generated manifest only after PASS
+        run: git push origin HEAD:scratch/m26-freeze-m25-manifest
