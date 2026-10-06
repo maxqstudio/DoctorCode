@@ -90,7 +90,16 @@ jobs:
         run: |
           rm .github/workflows/tmp-m26-bind-red-proof.yml
           python .workflow/tools/sync_project_truth.py --root .
-      - name: Validate canonical governance
+      - name: Create clean local validation snapshot
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m 'chore(m26): local RED binding validation snapshot'
+          test -z "$(git status --porcelain)"
+          echo "VALIDATION_TREE=$(git rev-parse HEAD^{tree})" >> "$GITHUB_ENV"
+      - name: Validate canonical governance on clean tree
         shell: bash
         run: |
           python .workflow/tools/validate_schema_toolchain.py --root .
@@ -102,16 +111,21 @@ jobs:
           python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
           python .workflow/tools/validate_project_truth.py
           python .workflow/tools/validate_sequence_sessions.py
-      - name: Commit bound governance only
+          test "$VALIDATION_TREE" = "$(git rev-parse HEAD^{tree})"
+          test -z "$(git status --porcelain)"
+      - name: Build and push governance-only commit
         shell: bash
         run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          validation_tree="$VALIDATION_TREE"
+          git reset --mixed "$GITHUB_SHA"
+          git checkout "$GITHUB_SHA" -- .github/workflows/tmp-m26-bind-red-proof.yml
           git add -A -- . ':(exclude).github/workflows/tmp-m26-bind-red-proof.yml'
           if git diff --cached --quiet; then
             echo 'No governance changes to commit.'
             exit 1
           fi
-          git status --short
+          git diff --cached --name-only
           git commit -m 'docs(m26): bind permanent 3-OS RED proof'
+          git diff --quiet "$GITHUB_SHA" -- .github/workflows/tmp-m26-bind-red-proof.yml
           git push origin HEAD:work/m26-dart-flutter-semantic
+          echo "Validated final tree without temp workflow: $validation_tree"
