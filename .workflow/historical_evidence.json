@@ -1,6 +1,6 @@
 {
-  "authorization_reason": "M25 prerequisite: adopt accepted SW2-16 Historical Evidence Freeze before opening new CSharp/.NET product evidence",
-  "frozen_commit": "9652e8d50752059e6ad14d00c9c4e3be5da14bf7",
+  "authorization_reason": "M26 prerequisite: freeze accepted M25 sequence evidence before any Dart/Flutter product implementation",
+  "frozen_commit": "749c0883d1f9dba64f1dc301cc69324c3382abf7",
   "generated_by": "validate_sequence_sessions.py",
   "historical_sessions": [
     {
@@ -693,6 +693,51 @@
       "session_id": "M24-C-CPP-SEMANTIC-BASELINE",
       "session_schema_version": 1,
       "source_digest": "2f63473ddf9e7f2cd24c51696733169a2f93c68ba93fc0c6f370ec2c4133e87a"
+    },
+    {
+      "files": [
+        {
+          "bytes": 1219,
+          "path": "artifacts/sequence/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.acceptance.json",
+          "present": true,
+          "sha256": "47722b7f14d5fd9f15fa1eb37e7afc9f3435440e224a0340ef945e64685ec38f"
+        },
+        {
+          "bytes": 73995,
+          "path": "docs/sequence/generated/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.actual.json",
+          "present": true,
+          "sha256": "f7fd1a4974ebd0ad42c1bad1c423695f5a844eb43b404224a94c70f515845e0f"
+        },
+        {
+          "bytes": 22342,
+          "path": "docs/sequence/generated/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.actual.mmd",
+          "present": true,
+          "sha256": "461050f6c69acd48e7726668d070f515c3f6643c09daa3c93f005e9653bb03ae"
+        },
+        {
+          "bytes": 1200,
+          "path": "docs/sequence/generated/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.plan.mmd",
+          "present": true,
+          "sha256": "b13b2645025a6da8e0eba20507d865fa7a5ede662de605b8000a1bc6647d37d2"
+        },
+        {
+          "bytes": 3322,
+          "path": "docs/sequence/plans/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.plan.json",
+          "present": true,
+          "sha256": "238ca3c7894d0d7978587c8ca68a6e42a8ed26eb1425fa78edbb160ec37db518"
+        },
+        {
+          "bytes": 2820,
+          "path": "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json",
+          "present": true,
+          "sha256": "1e3f2ba9c26f9f120e7739279f30f9f75e686870fc134f60a74956af9390debf"
+        }
+      ],
+      "phase": "M25_CSHARP_DOTNET_SEMANTIC_BASELINE",
+      "session": "docs/sequence/sessions/M25-CSHARP-DOTNET-SEMANTIC-BASELINE.json",
+      "session_id": "M25-CSHARP-DOTNET-SEMANTIC-BASELINE",
+      "session_schema_version": 1,
+      "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926"
     }
   ],
   "schema_version": 1,
