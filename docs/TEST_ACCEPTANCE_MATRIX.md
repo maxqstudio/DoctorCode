@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M25 is MAIN_ACCEPTED with C#/.NET product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d. The accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 and squash product merge have identical tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1. SW2-16 governance provenance repair is accepted at governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6 with all eight permanent workflows PASS. M25 authority remains limited to pure-Go gotreesitter syntax/AST, direct-literal SECURITY, opposite-boolean SIMPLIFY, duplicate unmodified-bool-parameter LOGIC, generated-code exclusion, and manifest-presence-only .csproj/.sln evidence. DEADCODE, BLOAT, MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, and automatic deletion remain outside M25 authority. Current phase is M26_DART_FLUTTER_SEMANTIC_BASELINE; M25 sequence evidence remains CURRENT-scoped only until the post-closure SW2-16 historical-freeze prerequisite binds it to accepted closure main, and no Dart/Flutter semantic capability is accepted yet.
+M25 is accepted and frozen as historical evidence under SW2-16. M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
@@ -99,6 +99,9 @@ Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cf
 | M25-SQUASH-TREE-PROVENANCE | The accepted M25 branch tree must be cryptographically identical to the squash product merge tree, with frozen-plan lineage retained through the accepted branch head. | accepted branch 1b2bcf0c8b715666c814820a3268b815aa1b9a50 tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1; product merge eefd693ea36b3201f4e9c04cb74ef40a2745272d tree 1430ea9809ee6ce7d301f220b8d4bacc13291bd1; SW2-16 exact-tree SQUASH provenance validator applies. | PASS |
 | M25-PRODUCT-MAIN-NON-GOVERNANCE | The exact M25 squash product merge must preserve all product and regression lanes while governance provenance is repaired separately. | At eefd693ea36b3201f4e9c04cb74ef40a2745272d: CI 37380495666 PASS; M06 37380495648 PASS; Real World Go 37380495710 PASS; M07 37380495703 PASS; M10 37380495641 PASS; M16 37380495695 PASS; M17 37380495753 PASS. Governance 37380495659 is retained as the predecessor sequence-lineage failure, not relabeled PASS. | PASS |
 | M25-MAIN-POST-MERGE | M25 product and repaired governance main must preserve the accepted C# product authority and pass the complete permanent acceptance matrix before M25 closure. | Product main eefd693ea36b3201f4e9c04cb74ef40a2745272d preserved all seven non-governance lanes while the original Governance failure remained retained as predecessor evidence. SW2-16 repaired provenance without product changes. Governance 37386993060, CI 37386993106, M06 37386993071, Real World Go 37386993076, M07 37386992999, M10 37386993062, M16 37386992971, and M17 37386993223 all completed SUCCESS on governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6. | PASS |
+| M26-HISTORICAL-FREEZE | M26 must begin only after accepted M25 sequence evidence is frozen under SW2-16 and exact freeze-main passes permanent acceptance. | M25 sequence evidence is HISTORICAL in the SW2-16 manifest frozen at 749c0883d1f9dba64f1dc301cc69324c3382abf7; normal-merge main bc3846e6d5c412ebe09146a66661d2c49072889b preserves that commit as reachable ancestry and passed all eight permanent workflows. | PASS |
+| M26-BEFORE-PLAN | M26 Dart/Flutter flow and unsafe-claim boundaries must be frozen before product implementation. | docs/sequence/plans/M26-DART-FLUTTER-SEMANTIC-BASELINE.plan.json SHA-256 bfec2e55b4fdab4da32b1e25e06b3a2d2eab06161b04dafb19dd7699e302c1cb was committed at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before any M26 product implementation. | PASS |
+| M26-PARSER-PROVIDER | M26 must select a deterministic cross-platform Dart parser/provider without introducing CGO or requiring Dart/Flutter runtime execution for syntax parsing. | Pinned github.com/odvcencio/gotreesitter v0.55.1 contains grammars/dart/dart.go, .dart registry support, and Dart external-scanner support; M26 will reuse that embedded provider. | PASS |
 
 ## Test commands
 
@@ -149,7 +152,7 @@ ROADMAP_SYNC: PASS
 ## Sequence contract evidence
 
 Sequence mode for this phase/session: BEFORE
-Sequence session contract: M25-CSHARP-DOTNET-SEMANTIC-BASELINE
+Sequence session contract: M26-DART-FLUTTER-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Project Truth Compiler evidence

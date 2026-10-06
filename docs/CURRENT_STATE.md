@@ -8,13 +8,13 @@ Governance profile: strict
 
 ## Current phase
 Phase: M26_DART_FLUTTER_SEMANTIC_BASELINE
-Status: M25_MAIN_GOVERNANCE_REPAIR
+Status: M26_PLANNED_RED_PENDING
 Roadmap phase: M26_DART_FLUTTER_SEMANTIC_BASELINE
 ROADMAP_SYNC: PASS
 
 ## Source
 Repository: maxqstudio/DoctorCode
-Branch: work/m25-main-governance-repair
+Branch: work/m26-dart-flutter-semantic
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: eefd693ea36b3201f4e9c04cb74ef40a2745272d
 Current candidate SHA: external final acceptance evidence
@@ -35,7 +35,7 @@ PROJECT_DOCS_SYNC: PASS
 ## Sequence governance
 Sequence policy: REQUIRED
 Current sequence mode: BEFORE
-Current sequence session: M25-CSHARP-DOTNET-SEMANTIC-BASELINE
+Current sequence session: M26-DART-FLUTTER-SEMANTIC-BASELINE
 SEQUENCE_SYNC: PASS
 
 ## Proven
@@ -135,6 +135,8 @@ SEQUENCE_SYNC: PASS
 - Exact M25 product main eefd693ea36b3201f4e9c04cb74ef40a2745272d passed CI 37380495666, M06 37380495648, Real World Go 37380495710, M07 37380495703, M10 37380495641, M16 37380495695, and M17 37380495753. Governance 37380495659 failed only at Validate sequence sessions because squash lineage had not yet been represented.
 - M25 is MAIN_ACCEPTED with C#/.NET product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d and governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.
 - Exact M25 governance-normalized main permanent acceptance matrix PASS: Governance 37386993060, CI 37386993106, M06 37386993071, Real World Go 37386993076, M07 37386992999, M10 37386993062, M16 37386992971, and M17 37386993223 all completed SUCCESS on governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6.
+- M26 prerequisite SW2-16 Historical Evidence Freeze is accepted at main bc3846e6d5c412ebe09146a66661d2c49072889b; M25 is content-addressed against frozen commit 749c0883d1f9dba64f1dc301cc69324c3382abf7 and exact main passed all eight permanent workflows.
+- M26 parser/provider selection is gotreesitter v0.55.1 standalone grammars/dart with registered .dart extension and Dart external-scanner support, preserving embedded pure-Go source-only syntax authority.
 
 ## Not proven
 - arm64 release archives are cross-built and archive-verified; native execution is proven only on runner architectures actually provided by GitHub-hosted acceptance.
@@ -162,6 +164,9 @@ SEQUENCE_SYNC: PASS
 - M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
 - M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
 - M26 Dart/Flutter semantic authority is not proven; no M26 product implementation is accepted yet.
+- M26 Dart/Flutter DEADCODE and BLOAT authority are not proven and remain unavailable.
+- M26 does not prove pub dependency resolution, build_runner/source-generator execution, Flutter widget lifecycle or navigation semantics, dynamic invocation, whole-program reachability, tree-shaking, safe autofix, or automatic deletion.
+- M26 Flutter/project awareness may represent pubspec presence and generated-code boundaries but must fail closed rather than infer unproven build or framework semantics.
 
 ## Known blockers
 - None declared.
@@ -170,9 +175,9 @@ SEQUENCE_SYNC: PASS
 See KNOWN_DEFECTS.md.
 
 ## Next authorized action
-- After M25 closure lands and exact closure-main acceptance passes, refresh SW2-16 Historical Evidence Freeze so the accepted M25 sequence is content-addressed against that accepted closure main before any M26 product implementation.
-- Begin M26 Dart/Flutter semantic baseline planning from accepted M25 product authority main@eefd693ea36b3201f4e9c04cb74ef40a2745272d and governance-normalized main@d8282a07e5447cecb8908b9e76cc6dfde6413ed6; implementation remains blocked until the M25 historical freeze prerequisite passes.
-- Select and prove a deterministic Dart parser/provider plus Flutter repository and generated-code boundaries, then establish RED labeled/adversarial/repository-shaped evidence before widening Dart/Flutter semantic authority.
+- Declare a Dart/Flutter labeled, adversarial, and Flutter-shaped RED corpus plus permanent Core CI gate before implementing the Dart analyzer.
+- Prove the Dart benchmark analyzer absent on Ubuntu, Windows, and macOS at one exact RED SHA.
+- Only after valid 3-OS RED may Dart/Flutter analyzer implementation begin within the frozen M26 semantic boundary.
 
 ## Explicitly blocked
 - Moving, deleting, or recreating v0.1.0.
