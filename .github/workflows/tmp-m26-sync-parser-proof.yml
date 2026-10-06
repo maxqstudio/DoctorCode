@@ -1,0 +1,66 @@
+name: Temporary M26 Sync Parser Proof
+
+on:
+  push:
+    branches:
+      - work/m26-dart-flutter-semantic
+
+permissions:
+  contents: write
+
+jobs:
+  sync-parser-proof:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: work/m26-dart-flutter-semantic
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Generate canonical Project Truth without temporary workflow
+        shell: bash
+        run: |
+          rm .github/workflows/tmp-m26-sync-parser-proof.yml
+          python .workflow/tools/sync_project_truth.py --root .
+      - name: Create clean local validation snapshot
+        shell: bash
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          git commit -m 'chore(m26): local Dart parser proof validation snapshot'
+          test -z "$(git status --porcelain)"
+          echo "VALIDATION_TREE=$(git rev-parse HEAD^{tree})" >> "$GITHUB_ENV"
+      - name: Validate canonical governance on clean tree
+        shell: bash
+        run: |
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python .workflow/tools/validate_repository_health.py --root . --require-owner-approved-license
+          python .workflow/tools/validate_project_docs.py
+          python .workflow/tools/validate_doc_quality.py
+          python .workflow/tools/validate_human_comprehension.py --require-pass
+          python .workflow/tools/validate_handoff.py
+          python .workflow/tools/validate_cross_document_consistency.py --base cd05f064e1bb1054271e7028941c1fbb80ea32aa --require-base
+          python .workflow/tools/validate_project_truth.py
+          python .workflow/tools/validate_sequence_sessions.py
+          test "$VALIDATION_TREE" = "$(git rev-parse HEAD^{tree})"
+          test -z "$(git status --porcelain)"
+      - name: Build and push generated-facts commit
+        shell: bash
+        run: |
+          validation_tree="$VALIDATION_TREE"
+          git reset --mixed "$GITHUB_SHA"
+          git checkout "$GITHUB_SHA" -- .github/workflows/tmp-m26-sync-parser-proof.yml
+          git add -A -- . ':(exclude).github/workflows/tmp-m26-sync-parser-proof.yml'
+          if git diff --cached --quiet; then
+            echo 'No generated Project Truth changes to commit.'
+            exit 1
+          fi
+          git diff --cached --name-only
+          git commit -m 'docs(m26): sync Dart parser proof facts'
+          git diff --quiet "$GITHUB_SHA" -- .github/workflows/tmp-m26-sync-parser-proof.yml
+          git push origin HEAD:work/m26-dart-flutter-semantic
+          echo "Validated final tree without temp workflow: $validation_tree"
