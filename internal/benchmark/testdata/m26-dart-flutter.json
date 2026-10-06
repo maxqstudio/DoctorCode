@@ -1,0 +1,94 @@
+{
+  "cases": [
+    {
+      "expected": [
+        {
+          "line_start": 2,
+          "path": "lib/secrets.dart",
+          "rule_id": "DART-SEC-HARDCODED-CREDENTIAL"
+        }
+      ],
+      "name": "security-positive",
+      "root": "m26-dart-flutter/security-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 2,
+          "path": "lib/feature.dart",
+          "rule_id": "DART-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "simplify-positive",
+      "root": "m26-dart-flutter/simplify-positive"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 4,
+          "path": "lib/feature.dart",
+          "rule_id": "DART-LOGIC-DUPLICATE-CONDITION"
+        }
+      ],
+      "name": "logic-positive",
+      "root": "m26-dart-flutter/logic-positive"
+    },
+    {
+      "expected": [],
+      "name": "placeholder-secret-negative",
+      "root": "m26-dart-flutter/placeholder-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "interpolated-secret-negative",
+      "root": "m26-dart-flutter/interpolated-secret-negative"
+    },
+    {
+      "expected": [],
+      "name": "parameter-mutation-negative",
+      "root": "m26-dart-flutter/parameter-mutation-negative"
+    },
+    {
+      "expected": [],
+      "name": "nested-local-function-negative",
+      "root": "m26-dart-flutter/nested-local-function-negative"
+    },
+    {
+      "expected": [],
+      "name": "generated-suffix-negative",
+      "root": "m26-dart-flutter/generated-suffix-negative"
+    },
+    {
+      "expected": [],
+      "name": "generated-marker-negative",
+      "root": "m26-dart-flutter/generated-marker-negative"
+    },
+    {
+      "expected": [],
+      "name": "async-nullability-negative",
+      "root": "m26-dart-flutter/async-nullability-negative"
+    },
+    {
+      "expected": [],
+      "name": "widget-callback-negative",
+      "root": "m26-dart-flutter/widget-callback-negative"
+    },
+    {
+      "expected": [
+        {
+          "line_start": 7,
+          "path": "lib/feature_widget.dart",
+          "rule_id": "DART-SIMPLIFY-BOOL-RETURN"
+        }
+      ],
+      "name": "flutter-shaped",
+      "root": "m26-dart-flutter/flutter-shaped"
+    }
+  ],
+  "language": "Dart",
+  "schema_version": 1,
+  "thresholds": {
+    "min_precision": 1,
+    "min_recall": 1
+  }
+}
