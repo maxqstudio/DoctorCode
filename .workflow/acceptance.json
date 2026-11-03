@@ -569,7 +569,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "CI 41634387446 on fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308: unit and corpus tests passed Ubuntu/Windows/macOS; parser.go syntax.go parser_test.go established non-NIL strict AST proof.",
+      "evidence": "CI 41634387446 on fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308: unit and corpus tests passed Ubuntu/Windows/macOS; syntax.go and parser_test.go established non-NIL strict AST proof.",
       "id": "M26-STRICT-DART-PARSER-3OS",
       "requirement": "Parser-backed Dart must fail closed on invalid syntax, ERROR, and MISSING; generated sources are excluded without fallback.",
       "status": "PASS"
