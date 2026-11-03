@@ -9,6 +9,11 @@
   "critical": false,
   "evidence_boundary": "M26 BEFORE plan was frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter product implementation. DOCUMENT edges are design traceability only; behavioral authority must come from RED/green benchmark and cumulative multi-OS CI evidence. Flutter/pubspec and generated-code boundaries are visible-source evidence only. Historical M19-M25 sequence evidence remains content-addressed and immutable under SW2-16 Historical Evidence Freeze.",
   "implementation_base_sha": "bb1ccefd9969a3db9308bb209ac60d0e19f68930",
+  "merge_provenance": {
+    "accepted_branch_head": "ef014b4dd6c3ab5869525e0f5de273baea01b1ac",
+    "product_merge_sha": "c2b215d521d8b9838ce56b04ce03af903455813a",
+    "strategy": "SQUASH"
+  },
   "mode": "BEFORE",
   "phase": "M26_DART_FLUTTER_SEMANTIC_BASELINE",
   "plan": {
