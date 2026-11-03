@@ -10,10 +10,10 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m25-main-governance-repair
+Active branch: work/m26-dart-flutter-semantic
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: eefd693ea36b3201f4e9c04cb74ef40a2745272d
-Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
+Current source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

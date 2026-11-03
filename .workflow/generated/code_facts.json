@@ -50,6 +50,10 @@
           "internal/analyzers/csharp/project.go",
           "internal/analyzers/csharp/project_test.go",
           "internal/analyzers/csharp/syntax.go",
+          "internal/analyzers/dart/analyzer.go",
+          "internal/analyzers/dart/analyzer_test.go",
+          "internal/analyzers/dart/parser_test.go",
+          "internal/analyzers/dart/syntax.go",
           "internal/analyzers/golang/analyzer.go",
           "internal/analyzers/golang/analyzer_test.go",
           "internal/analyzers/golang/corpus_test.go",
@@ -293,6 +297,10 @@
         "internal/analyzers/csharp/project.go",
         "internal/analyzers/csharp/project_test.go",
         "internal/analyzers/csharp/syntax.go",
+        "internal/analyzers/dart/analyzer.go",
+        "internal/analyzers/dart/analyzer_test.go",
+        "internal/analyzers/dart/parser_test.go",
+        "internal/analyzers/dart/syntax.go",
         "internal/analyzers/golang/analyzer.go",
         "internal/analyzers/golang/analyzer_test.go",
         "internal/analyzers/golang/corpus_test.go",
@@ -521,7 +529,7 @@
       "file": "cmd/doctorcode/main.go",
       "is_test": false,
       "language": "Go",
-      "lines": 567
+      "lines": 570
     },
     {
       "directory": "cmd/doctorcode",
@@ -589,6 +597,34 @@
     {
       "directory": "internal/analyzers/csharp",
       "file": "internal/analyzers/csharp/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 38
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/analyzer.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 459
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/analyzer_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 59
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/parser_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 74
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/syntax.go",
       "is_test": false,
       "language": "Go",
       "lines": 38
@@ -738,7 +774,7 @@
       "file": "internal/analyzers/registry.go",
       "is_test": false,
       "language": "Go",
-      "lines": 60
+      "lines": 62
     },
     {
       "directory": "internal/analyzers",
@@ -4096,15 +4132,15 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926",
+  "source_digest": "f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8",
   "source_summary": {
-    "files": 279,
+    "files": 283,
     "languages": {
       "C": 7,
       "C#": 13,
       "C++": 8,
       "C/C++ Header": 2,
-      "Go": 109,
+      "Go": 113,
       "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
@@ -4117,7 +4153,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 12821,
+    "lines": 13456,
     "test_files": 2
   },
   "tests": [

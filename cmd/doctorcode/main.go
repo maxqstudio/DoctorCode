@@ -12,6 +12,7 @@ import (
 
 	cppanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/cpp"
 	csharpanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/csharp"
+	dartanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/dart"
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
@@ -466,6 +467,8 @@ func runBenchmark(args []string) {
 		analyzer = cppanalysis.New()
 	case "csharp":
 		analyzer = csharpanalysis.New()
+	case "dart":
+		analyzer = dartanalysis.New()
 	default:
 		die(fmt.Errorf("unknown benchmark analyzer %q", analyzerName))
 	}
@@ -539,7 +542,7 @@ Usage:
   doctorcode context <finding-id> [path] [--json] [--max-bytes=N]
   doctorcode contract <finding-id> [path] [--json]
   doctorcode verify <contract.json> [path] [--json]
-  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript|rust|jvm|cpp|csharp] [--json]
+  doctorcode benchmark <manifest.json> [--analyzer=go|python|javascript|rust|jvm|cpp|csharp|dart] [--json]
   doctorcode version [--json]
 
 M01 detector foundation:
