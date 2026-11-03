@@ -1,0 +1,97 @@
+name: M26 Strict Finalize
+on:
+  push:
+    branches:
+      - main
+      - "work/**"
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  strict-finalize:
+    name: exact-sha-governance-finalize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact DoctorCode candidate
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout pinned source-only Skill Workflow regression authority
+        uses: actions/checkout@v4
+        with:
+          repository: maxqstudio/Skill_Workflow
+          ref: 7e2c5e4669655764e24ec821cefc0c96e2886133
+          path: skill-workflow
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Prove source-only producer regression identity and clean exact tree
+        working-directory: doctorcode
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$GITHUB_SHA"
+          test "$(git -C ../skill-workflow rev-parse HEAD)" = 7e2c5e4669655764e24ec821cefc0c96e2886133
+          python .workflow/tools/validate_schema_toolchain.py --root .
+          python - <<'PY'
+          import hashlib
+          import json
+          import sys
+          from pathlib import Path
+          sys.path.insert(0, ".workflow/tools")
+          from sequence_contract import compute_source_digest
+          authority=json.loads(Path(".workflow/SKILL_AUTHORITY.json").read_text())
+          lock=json.loads(Path(".workflow/toolchain.lock.json").read_text())
+          session=json.loads(Path("docs/sequence/sessions/M26-DART-FLUTTER-SEMANTIC-BASELINE.json").read_text())
+          pinned="7e2c5e4669655764e24ec821cefc0c96e2886133"
+          assert authority["repository"]=="maxqstudio/Skill_Workflow" and authority["ref"]==pinned
+          assert lock["producer"]["commit_hint"]==pinned
+          for name,expected in lock["files"].items():
+              observed=hashlib.sha256((Path("../skill-workflow/scripts")/name).read_bytes()).hexdigest()
+              assert observed==expected,name
+          assert compute_source_digest(Path("."))==session["actual"]["source_digest"]
+          print("PINNED_PRODUCER_AND_SOURCE_DIGEST=PASS")
+          PY
+          test -d scripts
+          printf '\n/scripts/selftest_*.py\n' >> .git/info/exclude
+          for name in selftest_governance_engine.py selftest_sequence_call_resolution.py selftest_cross_document_regressions.py selftest_project_truth_compiler.py selftest_strict_project_workflow.py; do
+            test ! -e "scripts/$name"
+            ln -s "../../skill-workflow/scripts/$name" "scripts/$name"
+            test -f "scripts/$name"
+          done
+          test -z "$(git status --porcelain --untracked-files=all)"
+          echo "CLEAN_EXACT_SOURCE=PASS"
+      - name: Execute full strict finalize without bypassing regressions
+        working-directory: doctorcode
+        shell: bash
+        run: |
+          python .workflow/tools/governance_engine.py --root . \
+            --base bc3846e6d5c412ebe09146a66661d2c49072889b \
+            --mode finalize \
+            --expected-head "$GITHUB_SHA" \
+            --report "$RUNNER_TEMP/m26-finalize.json"
+          python - <<'PY'
+          import json,os
+          from pathlib import Path
+          data=json.loads((Path(os.environ["RUNNER_TEMP"])/"m26-finalize.json").read_text())
+          assert data["result"]=="PASS",data.get("failures")
+          assert data["final_acceptance_authority"] is True
+          assert data["expected_head"]==os.environ["GITHUB_SHA"]
+          assert data["nodes"] and all(v["status"]=="PASS" for v in data["nodes"].values())
+          print("M26_FINAL_ACCEPTANCE_AUTHORITY=PASS")
+          PY
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - name: Preserve exact-head finalize report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: m26-strict-finalize-${{ github.run_id }}
+          path: ${{ runner.temp }}/m26-finalize.json
+          if-no-files-found: warn

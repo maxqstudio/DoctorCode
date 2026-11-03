@@ -12,6 +12,18 @@
       "status": "OPEN",
       "summary": "Current vendored Skill_Workflow sequence extractor does not resolve Go function call graphs.",
       "evidence": "Governance run 36254412921 failed ENTRY_NOT_RESOLVED for cmd/doctorcode/main.go::main; M00 uses non-critical structural sequence evidence instead of fabricating Go edges."
+    },
+    {
+      "id": "KNOWN-M26-001",
+      "status": "OPEN",
+      "summary": "Unprepared direct invocation of vendored governance_engine.py --mode finalize expects source-only producer selftests in scripts/; DoctorCode does not vendor them.",
+      "evidence": "Reproduced in 41643246262 (FAIL for missing four upstream scripts). Exact pinned producer 7e2c5e4669655764e24ec821cefc0c96e2886133 supplied all five original regressions via temporary runner-only git-ignored mounts; 41649111606 all final nodes PASS. Dedicated M26 GitHub Actions workflow provides reproducible finalization; bare CLI portability is still not proven."
+    },
+    {
+      "id": "KNOWN-M26-002",
+      "status": "OPEN",
+      "summary": "Strict pinned Dart grammar does not parse every Flutter source construct, including flutter/samples navigation_and_routing settings.dart.",
+      "evidence": "M26 public Flutter evidence run 41643139245 passed 3 OS with form_app eight files parsed and expected fail-closed in navigation_and_routing at lib/src/screens/settings.dart; no silent skip or broad compatibility claim."
     }
   ]
 }
