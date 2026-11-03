@@ -4,7 +4,7 @@
 
 ## Evidence boundary
 
-M25 is accepted and frozen as historical evidence under SW2-16. M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. M26 permanent 3-OS RED is proven by Core CI run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424, where all three Core lanes passed through M25 and failed only at the M26 gate with unknown benchmark analyzer "dart". M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.
+M26 Dart/Flutter product scope is limited to strict gotreesitter v0.55.1 syntax validation and three AST-backed SECURITY/SIMPLIFY/LOGIC rules: 12 labeled cases, 4 TP/0 FP/0 FN across three OS. Public flutter/samples@21c71902bb2c7da3cce328ba5946cba2f35a660a proves bounded form_app success and explicit navigation_and_routing strict parse failure; neither general repository precision/recall nor Flutter framework semantics are established. Accepted product main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed nine permanent push workflows. Full finalization run 41649111606 on that exact main SHA returned final_acceptance_authority=true and all final DAG nodes PASS with actual pinned upstream producer-only regressions; direct unprepared vendor CLI remains nonportable (issue #50). Historical M25 and frozen M26 BEFORE remain immutable. No M27 authorization is implied.
 
 Final tested source: external final acceptance evidence.
 Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f
@@ -103,6 +103,12 @@ Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0
 | M26-BEFORE-PLAN | M26 Dart/Flutter flow and unsafe-claim boundaries must be frozen before product implementation. | docs/sequence/plans/M26-DART-FLUTTER-SEMANTIC-BASELINE.plan.json SHA-256 bfec2e55b4fdab4da32b1e25e06b3a2d2eab06161b04dafb19dd7699e302c1cb was committed at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before any M26 product implementation. | PASS |
 | M26-PARSER-PROVIDER | M26 must select a deterministic cross-platform Dart parser/provider without introducing CGO or requiring Dart/Flutter runtime execution for syntax parsing. | Pinned github.com/odvcencio/gotreesitter v0.55.1 contains grammars/dart/dart.go, .dart registry support, and Dart external-scanner support; M26 will reuse that embedded provider. | PASS |
 | M26-PERMANENT-RED-GATE | The permanent Core CI M26 Dart/Flutter benchmark gate must fail on Ubuntu, Windows, and macOS at one exact SHA because the dart analyzer is absent before implementation begins. | Core CI run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424: core-ubuntu-latest, core-windows-latest, and core-macos-latest each passed all prior gates through M25 and failed only at M26 Dart Flutter semantic benchmark gate with unknown benchmark analyzer "dart" (exit status 1). Governance Bootstrap run 37408847249 passed on the same clean SHA. | PASS |
+| M26-STRICT-DART-PARSER-3OS | Parser-backed Dart must fail closed on invalid syntax, ERROR, and MISSING; generated sources are excluded without fallback. | CI 41634387446 on fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308: unit and corpus tests passed Ubuntu/Windows/macOS; parser.go syntax.go parser_test.go established non-NIL strict AST proof. | PASS |
+| M26-BOUNDED-DART-SEMANTIC-3OS | Three authorized Dart SECURITY/SIMPLIFY/LOGIC rules pass 12-case frozen corpus with zero false positives and zero false negatives on three OS; no DEADCODE/BLOAT/autofix. | Core CI 41643139337 on product main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed Ubuntu/Windows/macOS; frozen benchmark 4 TP, 0 FP, 0 FN; registry/CLI integration bound by this same SHA. | PASS |
+| M26-FLUTTER-REALWORLD-3OS | Use exact-pinned public Flutter repositories to prove a bounded success and preserve syntax fail-closed for unsupported examples. | M26 Dart Flutter Real World 41643139245 SUCCESS Ubuntu/Windows/macOS on main fb5f995775c9dd2b411810ebae82fd584c7fe4e2. flutter/samples@21c71902bb2c7da3cce328ba5946cba2f35a660a form_app=8 Dart files 0 observed findings; navigation_and_routing=19 files strict ERROR/MISSING at lib/src/screens/settings.dart. | PASS |
+| M26-PRODUCT-MAIN-MATRIX | Every existing permanent product/regression/release workflow plus M26 real-world lane must pass on one exact merged main SHA. | main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: Governance 41643139277, CI 41643139337, M06 41643139355, RW Go 41643139235, M07 41643139311, M10 41643139264, M16 41643139261, M17 41643139241, M26 Real World 41643139245; all SUCCESS. | PASS |
+| M26-GOVERNANCE-FINALIZE | Full Skill_Workflow finalize must bind exact HEAD, execute genuine upstream source-only regressions and consumer validators, leave clean governed tree, and report final_acceptance_authority=true. | GitHub Actions run 41649111606 on exact main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: result=PASS, final_acceptance_authority=true, all nodes PASS. Skill_Workflow pinned 7e2c5e4669655764e24ec821cefc0c96e2886133, source digest 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f, artifact 13235639371. | PASS |
+| M26-NEXT-MILESTONE-BOUNDARY | Close bounded M26 evidence without changing CURRENT roadmap phase to M27 absent explicit Owner approval. | M26 roadmap phase remains CURRENT, M27 remains PLANNED; state records M26 accepted and awaits Owner authorization for any phase advance. | PASS |
 
 ## Test commands
 
@@ -127,6 +133,10 @@ Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m24-c-cpp.json --analyzer=cpp --json
 - go test ./internal/analyzers/csharp ./internal/analyzers ./internal/engine ./internal/benchmark
 - go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m25-csharp.json --analyzer=csharp --json
+- go test ./internal/analyzers/dart ./internal/analyzers ./internal/benchmark -count=1
+- go run ./cmd/doctorcode benchmark internal/benchmark/testdata/m26-dart-flutter.json --analyzer=dart --json
+- DOCTORCODE_M26_FLUTTER_SAMPLES=<exact-pinned-checkout> DOCTORCODE_M26_REQUIRE=1 go test ./internal/realworld -run '^TestM26PinnedFlutterExamples$' -count=1 -v
+- python .workflow/tools/governance_engine.py --root . --base bc3846e6d5c412ebe09146a66661d2c49072889b --mode finalize --expected-head <EXACT_HEAD> (with five exact-pinned producer source-only selftests mounted by GitHub Actions)
 
 ## Runtime checks
 
@@ -144,6 +154,9 @@ Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0
 - M23 Java and Kotlin semantic/adversarial/repository-shaped benchmark gates on Core CI Ubuntu/Windows/macOS
 - M24 C/C++ labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS
 - M25 C#/.NET 12-case parser-backed labeled/adversarial/repository-shaped benchmark gate on Core CI Ubuntu/Windows/macOS
+- M26 12-case bounded Dart corpus gate and strict parser on Core CI Ubuntu/Windows/macOS, exact main run 41643139337.
+- M26 pinned public Flutter form_app strict parse success plus navigation_and_routing explicit fail-closed, run 41643139245 on Ubuntu/Windows/macOS.
+- M26 exact main full Skill Workflow finalize with pinned source-only producer regressions, run 41649111606, final_acceptance_authority=true.
 
 ## Roadmap synchronization evidence
 

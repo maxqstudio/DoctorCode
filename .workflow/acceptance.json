@@ -239,7 +239,7 @@
       "status": "PASS"
     },
     {
-      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744–20949878 bytes versus M19 7097573–7842924 bytes. No M20 maximum-size threshold exists.",
+      "evidence": "GitHub Actions artifact 11052337933 from M20 run 36609998442 is 119313543 bytes; accepted M19 artifact 11031553008 from run 36565284851 is 45046740 bytes. Delta = +74266803 bytes (+164.9%). M20 per-target archives are 18790744\u201320949878 bytes versus M19 7097573\u20137842924 bytes. No M20 maximum-size threshold exists.",
       "id": "M20-RELEASE-SIZE-TELEMETRY",
       "requirement": "M20 must record actual release-size impact from embedded parser grammars without weakening parser correctness solely to reduce size.",
       "status": "PASS"
@@ -569,39 +569,39 @@
       "status": "PASS"
     },
     {
+      "evidence": "CI 41634387446 on fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308: unit and corpus tests passed Ubuntu/Windows/macOS; parser.go syntax.go parser_test.go established non-NIL strict AST proof.",
       "id": "M26-STRICT-DART-PARSER-3OS",
       "requirement": "Parser-backed Dart must fail closed on invalid syntax, ERROR, and MISSING; generated sources are excluded without fallback.",
-      "evidence": "CI 41634387446 on fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308: unit and corpus tests passed Ubuntu/Windows/macOS; parser.go syntax.go parser_test.go established non-NIL strict AST proof.",
       "status": "PASS"
     },
     {
+      "evidence": "Core CI 41643139337 on product main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed Ubuntu/Windows/macOS; frozen benchmark 4 TP, 0 FP, 0 FN; registry/CLI integration bound by this same SHA.",
       "id": "M26-BOUNDED-DART-SEMANTIC-3OS",
       "requirement": "Three authorized Dart SECURITY/SIMPLIFY/LOGIC rules pass 12-case frozen corpus with zero false positives and zero false negatives on three OS; no DEADCODE/BLOAT/autofix.",
-      "evidence": "Core CI 41643139337 on product main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed Ubuntu/Windows/macOS; frozen benchmark 4 TP, 0 FP, 0 FN; registry/CLI integration bound by this same SHA.",
       "status": "PASS"
     },
     {
+      "evidence": "M26 Dart Flutter Real World 41643139245 SUCCESS Ubuntu/Windows/macOS on main fb5f995775c9dd2b411810ebae82fd584c7fe4e2. flutter/samples@21c71902bb2c7da3cce328ba5946cba2f35a660a form_app=8 Dart files 0 observed findings; navigation_and_routing=19 files strict ERROR/MISSING at lib/src/screens/settings.dart.",
       "id": "M26-FLUTTER-REALWORLD-3OS",
       "requirement": "Use exact-pinned public Flutter repositories to prove a bounded success and preserve syntax fail-closed for unsupported examples.",
-      "evidence": "M26 Dart Flutter Real World 41643139245 SUCCESS Ubuntu/Windows/macOS on main fb5f995775c9dd2b411810ebae82fd584c7fe4e2. flutter/samples@21c71902bb2c7da3cce328ba5946cba2f35a660a form_app=8 Dart files 0 observed findings; navigation_and_routing=19 files strict ERROR/MISSING at lib/src/screens/settings.dart.",
       "status": "PASS"
     },
     {
+      "evidence": "main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: Governance 41643139277, CI 41643139337, M06 41643139355, RW Go 41643139235, M07 41643139311, M10 41643139264, M16 41643139261, M17 41643139241, M26 Real World 41643139245; all SUCCESS.",
       "id": "M26-PRODUCT-MAIN-MATRIX",
       "requirement": "Every existing permanent product/regression/release workflow plus M26 real-world lane must pass on one exact merged main SHA.",
-      "evidence": "main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: Governance 41643139277, CI 41643139337, M06 41643139355, RW Go 41643139235, M07 41643139311, M10 41643139264, M16 41643139261, M17 41643139241, M26 Real World 41643139245; all SUCCESS.",
       "status": "PASS"
     },
     {
+      "evidence": "GitHub Actions run 41649111606 on exact main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: result=PASS, final_acceptance_authority=true, all nodes PASS. Skill_Workflow pinned 7e2c5e4669655764e24ec821cefc0c96e2886133, source digest 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f, artifact 13235639371.",
       "id": "M26-GOVERNANCE-FINALIZE",
       "requirement": "Full Skill_Workflow finalize must bind exact HEAD, execute genuine upstream source-only regressions and consumer validators, leave clean governed tree, and report final_acceptance_authority=true.",
-      "evidence": "GitHub Actions run 41649111606 on exact main fb5f995775c9dd2b411810ebae82fd584c7fe4e2: result=PASS, final_acceptance_authority=true, all nodes PASS. Skill_Workflow pinned 7e2c5e4669655764e24ec821cefc0c96e2886133, source digest 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f, artifact 13235639371.",
       "status": "PASS"
     },
     {
+      "evidence": "M26 roadmap phase remains CURRENT, M27 remains PLANNED; state records M26 accepted and awaits Owner authorization for any phase advance.",
       "id": "M26-NEXT-MILESTONE-BOUNDARY",
       "requirement": "Close bounded M26 evidence without changing CURRENT roadmap phase to M27 absent explicit Owner approval.",
-      "evidence": "M26 roadmap phase remains CURRENT, M27 remains PLANNED; state records M26 accepted and awaits Owner authorization for any phase advance.",
       "status": "PASS"
     }
   ],
