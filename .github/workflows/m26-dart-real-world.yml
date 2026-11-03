@@ -1,0 +1,50 @@
+name: M26 Dart Flutter Real World
+on:
+  push:
+    branches:
+      - main
+      - "work/**"
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  validate:
+    name: m26-dart-real-world-${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+          - macos-latest
+    steps:
+      - name: Checkout DoctorCode
+        uses: actions/checkout@v4
+        with:
+          path: doctorcode
+          persist-credentials: false
+      - name: Checkout exact pinned Flutter samples
+        uses: actions/checkout@v4
+        with:
+          repository: flutter/samples
+          ref: 21c71902bb2c7da3cce328ba5946cba2f35a660a
+          path: external/samples
+          sparse-checkout: |
+            form_app
+            navigation_and_routing
+          filter: blob:none
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: doctorcode/go.mod
+          cache: false
+      - name: Validate public Flutter compatibility and explicit fail-closed boundary
+        working-directory: doctorcode
+        env:
+          DOCTORCODE_M26_FLUTTER_SAMPLES: external/samples
+          DOCTORCODE_M26_REQUIRE: "1"
+        run: go test ./internal/realworld -run '^TestM26PinnedFlutterExamples$' -count=1 -v
