@@ -13,7 +13,7 @@ Repository: maxqstudio/DoctorCode
 Active branch: work/m26-dart-flutter-semantic
 Current authoritative SHA: external final acceptance evidence
 Last accepted SHA: eefd693ea36b3201f4e9c04cb74ef40a2745272d
-Current source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
+Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f
 
 ## Authorities
 Source authority: Tracked source at the exact tested Git commit is implementation authority.

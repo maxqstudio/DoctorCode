@@ -249,6 +249,7 @@
           "internal/language/registry_test.go",
           "internal/model/model.go",
           "internal/realworld/labeled_test.go",
+          "internal/realworld/m26_dart_test.go",
           "internal/realworld/python_m07_test.go",
           "internal/realworld/python_m10_labeled_test.go",
           "internal/realworld/realworld_test.go",
@@ -496,6 +497,7 @@
         "internal/language/registry_test.go",
         "internal/model/model.go",
         "internal/realworld/labeled_test.go",
+        "internal/realworld/m26_dart_test.go",
         "internal/realworld/python_m07_test.go",
         "internal/realworld/python_m10_labeled_test.go",
         "internal/realworld/realworld_test.go",
@@ -2381,6 +2383,13 @@
     },
     {
       "directory": "internal/realworld",
+      "file": "internal/realworld/m26_dart_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 83
+    },
+    {
+      "directory": "internal/realworld",
       "file": "internal/realworld/python_m07_test.go",
       "is_test": false,
       "language": "Go",
@@ -4132,15 +4141,15 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8",
+  "source_digest": "896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f",
   "source_summary": {
-    "files": 283,
+    "files": 284,
     "languages": {
       "C": 7,
       "C#": 13,
       "C++": 8,
       "C/C++ Header": 2,
-      "Go": 113,
+      "Go": 114,
       "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
@@ -4153,7 +4162,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 13456,
+    "lines": 13539,
     "test_files": 2
   },
   "tests": [
