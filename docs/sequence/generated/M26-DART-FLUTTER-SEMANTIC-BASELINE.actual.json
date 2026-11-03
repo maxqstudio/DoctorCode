@@ -1576,7 +1576,7 @@
       "locator": "scripts/verify_release.py::validate_archive"
     }
   ],
-  "observed_head": "cfa20ebd012df642f60025366a19d8a8efdd5b4c",
+  "observed_head": "77c488c54ffac3861b4198a87c8208f00c375fe0",
   "schema_version": 1,
   "source_digest": "896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f"
 }
