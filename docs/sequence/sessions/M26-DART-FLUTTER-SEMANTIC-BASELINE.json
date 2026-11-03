@@ -31,5 +31,10 @@
   "tests": [
     "internal/benchmark/testdata/m26-dart-flutter.json",
     "internal/analyzers/dart/analyzer_test.go"
-  ]
+  ],
+  "merge_provenance": {
+    "accepted_branch_head": "ef014b4dd6c3ab5869525e0f5de273baea01b1ac",
+    "product_merge_sha": "c2b215d521d8b9838ce56b04ce03af903455813a",
+    "strategy": "SQUASH"
+  }
 }
