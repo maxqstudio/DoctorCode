@@ -76,6 +76,8 @@
           "internal/analyzers/csharp/project.go",
           "internal/analyzers/csharp/project_test.go",
           "internal/analyzers/csharp/syntax.go",
+          "internal/analyzers/dart/analyzer.go",
+          "internal/analyzers/dart/analyzer_test.go",
           "internal/analyzers/dart/parser_test.go",
           "internal/analyzers/dart/syntax.go",
           "internal/analyzers/golang/analyzer.go",
@@ -273,6 +275,8 @@
         "internal/analyzers/csharp/project.go",
         "internal/analyzers/csharp/project_test.go",
         "internal/analyzers/csharp/syntax.go",
+        "internal/analyzers/dart/analyzer.go",
+        "internal/analyzers/dart/analyzer_test.go",
         "internal/analyzers/dart/parser_test.go",
         "internal/analyzers/dart/syntax.go",
         "internal/analyzers/golang/analyzer.go",
@@ -1570,7 +1574,7 @@
       "locator": "scripts/verify_release.py::validate_archive"
     }
   ],
-  "observed_head": "9aef2f133042b5899adca25209682cd6e204505a",
+  "observed_head": "332d169692d6484638ba2f2eece901bf9164f94e",
   "schema_version": 1,
-  "source_digest": "954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be"
+  "source_digest": "f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8"
 }

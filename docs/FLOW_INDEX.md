@@ -3,7 +3,7 @@
 # FLOW INDEX
 
 Authority SHA: external final acceptance evidence
-Source digest: 954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be
+Source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
 
 ## Flow inventory
 

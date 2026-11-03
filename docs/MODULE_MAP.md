@@ -3,12 +3,12 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: 954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be
+Source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
 |---|---|---:|---|---|
-| cmd/doctorcode/main.go | Go | 567 | cmd/doctorcode | NO |
+| cmd/doctorcode/main.go | Go | 570 | cmd/doctorcode | NO |
 | cmd/doctorcode/main_test.go | Go | 142 | cmd/doctorcode | NO |
 | internal/analyzers/cpp/analyzer.go | Go | 592 | internal/analyzers/cpp | NO |
 | internal/analyzers/cpp/analyzer_test.go | Go | 48 | internal/analyzers/cpp | NO |
@@ -19,6 +19,8 @@ Generated/refreshed: current compiler run
 | internal/analyzers/csharp/project.go | Go | 92 | internal/analyzers/csharp | NO |
 | internal/analyzers/csharp/project_test.go | Go | 59 | internal/analyzers/csharp | NO |
 | internal/analyzers/csharp/syntax.go | Go | 38 | internal/analyzers/csharp | NO |
+| internal/analyzers/dart/analyzer.go | Go | 459 | internal/analyzers/dart | NO |
+| internal/analyzers/dart/analyzer_test.go | Go | 59 | internal/analyzers/dart | NO |
 | internal/analyzers/dart/parser_test.go | Go | 74 | internal/analyzers/dart | NO |
 | internal/analyzers/dart/syntax.go | Go | 38 | internal/analyzers/dart | NO |
 | internal/analyzers/golang/analyzer.go | Go | 654 | internal/analyzers/golang | NO |
@@ -41,7 +43,7 @@ Generated/refreshed: current compiler run
 | internal/analyzers/python/analyzer_test.go | Go | 142 | internal/analyzers/python | NO |
 | internal/analyzers/python/related.go | Go | 386 | internal/analyzers/python | NO |
 | internal/analyzers/python/related_test.go | Go | 74 | internal/analyzers/python | NO |
-| internal/analyzers/registry.go | Go | 60 | internal/analyzers | NO |
+| internal/analyzers/registry.go | Go | 62 | internal/analyzers | NO |
 | internal/analyzers/registry_test.go | Go | 19 | internal/analyzers | NO |
 | internal/analyzers/rust/analyzer.go | Go | 644 | internal/analyzers/rust | NO |
 | internal/analyzers/rust/analyzer_test.go | Go | 67 | internal/analyzers/rust | NO |
