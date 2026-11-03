@@ -5,6 +5,7 @@ import (
 
 	cppanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/cpp"
 	csharpanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/csharp"
+	dartanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/dart"
 	goanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/golang"
 	javascriptanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/javascript"
 	jvmanalysis "github.com/maxqstudio/DoctorCode/internal/analyzers/jvm"
@@ -22,6 +23,7 @@ func Default() []detector.Analyzer {
 		jvmanalysis.New(),
 		cppanalysis.New(),
 		csharpanalysis.New(),
+		dartanalysis.New(),
 	}
 }
 
