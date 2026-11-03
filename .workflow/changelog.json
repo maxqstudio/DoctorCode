@@ -1,6 +1,17 @@
 {
   "entries": [
     {
+      "date": "2026-11-03",
+      "title": "M26 accepted bounded Dart/Flutter product and finalized main",
+      "type": "acceptance",
+      "changes": [
+        "Accepted exactly three AST-backed Dart rules against frozen 12-case corpus (4 TP, 0 FP, 0 FN) on Ubuntu, Windows, and macOS; strict syntax is fail-closed, generated code excluded, safe autofix disabled.",
+        "Accepted pinned public Flutter source boundary: form_app 8 Dart files parsed without findings, navigation_and_routing remains explicit fail-closed for unsupported settings.dart syntax; general Flutter semantics NOT_PROVEN.",
+        "Protected main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed nine permanent workflows; full exact-main finalization PASS in GitHub Actions run 41649111606 with original producer-only tests from pinned Skill_Workflow.",
+        "Added a repeatable M26 GitHub Actions strict-finalize gate, leaving producer and vendored toolchain SHA unchanged. M26 remains CURRENT and no M27 implementation is authorized."
+      ]
+    },
+    {
       "date": "2026-09-28",
       "title": "DoctorCode v0.1.0 public release complete",
       "type": "release",

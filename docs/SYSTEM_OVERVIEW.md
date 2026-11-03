@@ -360,7 +360,7 @@ Authority: skills/doctorcode/SKILL.md plus DoctorCode CLI/core
 
 Current phase: M26_DART_FLUTTER_SEMANTIC_BASELINE
 
-Current status: M26_PLANNED_RED_PENDING
+Current status: M26_MAIN_ACCEPTED_AWAITING_NEXT_MILESTONE_AUTHORIZATION
 
 See WORKFLOW_STATE_MACHINE.md for generated lifecycle contracts.
 
@@ -427,9 +427,9 @@ compiler does not infer them from implementation names.
 ## Current project state
 
 Next authorized actions:
-- Prove the exact gotreesitter v0.55.1 Dart provider and strict fail-closed parser contract on Ubuntu, Windows, and macOS before semantic widening.
-- Implement only the frozen M26 Dart/Flutter SECURITY, SIMPLIFY, and LOGIC boundary against the frozen 12-case corpus; DEADCODE, BLOAT, safe autofix, and automatic deletion remain unavailable.
-- Repair until the M26 corpus and cumulative permanent acceptance matrix pass on one exact candidate SHA before promotion.
+- Maintain the accepted M26 Dart/Flutter three-rule AST evidence boundary and run M26 strict finalize plus all permanent CI gates for any future change.
+- Preserve frozen M26 BEFORE and historical M25 evidence; document any unsupported Dart/Flutter grammar or framework semantics as NOT_PROVEN.
+- Do not begin M27 or widen language/semantic authority until explicit Owner approval and an accepted roadmap transition.
 
 Blocked actions:
 - Moving, deleting, or recreating v0.1.0.
@@ -437,6 +437,9 @@ Blocked actions:
 - Claiming SHA-256 checksums are cryptographic code signing.
 - Adding automatic PATH mutation or privileged installation as part of the default installer without a new accepted milestone.
 - Widening detector, context, verification, Skill, or MCP authority without a new accepted milestone.
+- Starting M27_SCRIPTING_ECOSYSTEM before explicit Owner roadmap authorization.
+- Representing unsupported Flutter grammar or framework semantics as a successful full-repository analysis.
+- Claiming unprepared standalone consumer governance_engine.py finalize is portable without the pinned producer regressions.
 
 Known blockers:
 - None declared.
@@ -544,6 +547,11 @@ Known blockers:
 - M26 prerequisite SW2-16 Historical Evidence Freeze is accepted at main bc3846e6d5c412ebe09146a66661d2c49072889b; M25 is content-addressed against frozen commit 749c0883d1f9dba64f1dc301cc69324c3382abf7 and exact main passed all eight permanent workflows.
 - M26 parser/provider selection is gotreesitter v0.55.1 standalone grammars/dart with registered .dart extension and Dart external-scanner support, preserving embedded pure-Go source-only syntax authority.
 - M26 permanent Core CI RED run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424 proved analyzer dart absent on Ubuntu, Windows, and macOS: every Core lane passed all prior gates through M25, then failed only at the M26 Dart Flutter semantic benchmark gate with unknown benchmark analyzer "dart"; Dart implementation was still absent at this proof SHA.
+- M26 strict gotreesitter v0.55.1 Dart parser proof passed Ubuntu, Windows, macOS Core CI unit/corpus tests at fd6f9f32f681e1e0e9aa4a8f4213532ef0eba308 (run 41634387446), with fail-closed ERROR/MISSING and generated source exclusion.
+- M26 three bounded AST rules achieved 4 TP, 0 FP, 0 FN on frozen 12-case Dart/Flutter corpus across Ubuntu, Windows, macOS at accepted main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 (Core CI run 41643139337); no DEADCODE, BLOAT, or safe autofix authority was added.
+- M26 pinned public flutter/samples at 21c71902bb2c7da3cce328ba5946cba2f35a660a passed bounded 3-OS regression: form_app eight Dart files yielded 0 observed findings and navigation_and_routing 19 Dart files remained fail-closed at settings.dart (run 41643139245).
+- M26 product main fb5f995775c9dd2b411810ebae82fd584c7fe4e2 passed all nine permanent push workflows: Governance 41643139277, CI 41643139337, M26 Real World 41643139245, M06 41643139355, Real World Go 41643139235, M07 41643139311, M10 41643139264, M16 MCP 41643139261, and M17 Release/Install 41643139241.
+- M26 exact-main full governance_engine.py --mode finalize PASS (run 41649111606, artifact 13235639371) for fb5f995775c9dd2b411810ebae82fd584c7fe4e2: final_acceptance_authority=true, every final node PASS, clean exact source digest, with five genuine source-only producer selftests from pinned Skill_Workflow 7e2c5e4669655764e24ec821cefc0c96e2886133 mounted temporarily outside governed source.
 
 ### Not proven
 
@@ -571,10 +579,12 @@ Known blockers:
 - M25 C# DEADCODE and BLOAT authority are not proven and remain unavailable.
 - M25 does not prove MSBuild evaluation, NuGet/project-reference resolution, Roslyn semantic binding, source-generator execution, reflection/attribute reachability, overload resolution, nullable-flow analysis, whole-program reachability, safe autofix, or automatic deletion.
 - M25 project/solution awareness may represent .csproj/.sln scope and generated-code boundaries but must fail closed rather than infer unproven build semantics.
-- M26 Dart/Flutter semantic authority is not proven; no M26 product implementation is accepted yet.
 - M26 Dart/Flutter DEADCODE and BLOAT authority are not proven and remain unavailable.
 - M26 does not prove pub dependency resolution, build_runner/source-generator execution, Flutter widget lifecycle or navigation semantics, dynamic invocation, whole-program reachability, tree-shaking, safe autofix, or automatic deletion.
 - M26 Flutter/project awareness may represent pubspec presence and generated-code boundaries but must fail closed rather than infer unproven build or framework semantics.
+- M26 semantic authority is accepted only for DART-SEC-HARDCODED-CREDENTIAL, DART-SIMPLIFY-BOOL-RETURN, and DART-LOGIC-DUPLICATE-CONDITION on the 12-case labeled corpus; full Dart/Flutter semantic correctness and general precision/recall remain NOT_PROVEN.
+- Public flutter/samples navigation_and_routing at 21c71902bb2c7da3cce328ba5946cba2f35a660a fails strict parsing at lib/src/screens/settings.dart; the analyzer must fail closed. General Flutter repository compatibility remains NOT_PROVEN.
+- Direct unprepared consumer invocation of vendored governance_engine.py --mode finalize lacks source-only producer selftests at scripts/; M26 GitHub Actions mounts exact pinned Skill_Workflow scripts in an ignored, untracked runner-only overlay. A portable direct-CLI remedy remains open as issue #50.
 
 ## Important limitations
 

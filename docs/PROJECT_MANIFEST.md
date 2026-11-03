@@ -10,9 +10,9 @@ Governance profile: strict
 
 ## Repositories
 Repository: maxqstudio/DoctorCode
-Active branch: work/m26-dart-flutter-semantic
+Active branch: main
 Current authoritative SHA: external final acceptance evidence
-Last accepted SHA: eefd693ea36b3201f4e9c04cb74ef40a2745272d
+Last accepted SHA: fb5f995775c9dd2b411810ebae82fd584c7fe4e2
 Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f
 
 ## Authorities

@@ -31,7 +31,7 @@
   "schema_version": 1,
   "scope": "CURRENT",
   "session_id": "M26-DART-FLUTTER-SEMANTIC-BASELINE",
-  "status": "IN_PROGRESS",
+  "status": "ACCEPTED",
   "test_traceability_required": true,
   "tests": [
     "internal/benchmark/testdata/m26-dart-flutter.json",
