@@ -3,7 +3,7 @@
 # MODULE MAP
 
 Authority SHA: external final acceptance evidence
-Source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
+Source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f
 Generated/refreshed: current compiler run
 
 | Module / File | Language | Lines | Directory | Test file |
@@ -273,6 +273,7 @@ Generated/refreshed: current compiler run
 | internal/language/registry_test.go | Go | 19 | internal/language | NO |
 | internal/model/model.go | Go | 71 | internal/model | NO |
 | internal/realworld/labeled_test.go | Go | 118 | internal/realworld | NO |
+| internal/realworld/m26_dart_test.go | Go | 83 | internal/realworld | NO |
 | internal/realworld/python_m07_test.go | Go | 97 | internal/realworld | NO |
 | internal/realworld/python_m10_labeled_test.go | Go | 112 | internal/realworld | NO |
 | internal/realworld/realworld_test.go | Go | 128 | internal/realworld | NO |

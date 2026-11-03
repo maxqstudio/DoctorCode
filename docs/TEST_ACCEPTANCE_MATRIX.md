@@ -7,7 +7,7 @@
 M25 is accepted and frozen as historical evidence under SW2-16. M26 BEFORE plan is frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter implementation. M26 permanent 3-OS RED is proven by Core CI run 37408847289 at e8a920f840fa6aa075d48333fa7987f7614b6424, where all three Core lanes passed through M25 and failed only at the M26 gate with unknown benchmark analyzer "dart". M26 reuses gotreesitter v0.55.1 Dart as embedded pure-Go syntax authority, but no Dart/Flutter semantic capability is accepted yet. pub/build_runner/source-generator/widget-lifecycle/navigation/whole-program/tree-shaking/DEADCODE/BLOAT semantics, safe autofix, and automatic deletion remain outside authority.
 
 Final tested source: external final acceptance evidence.
-Current source digest: f93c822e0f5c11e8d279c37658e2b0b211bc202f8955acfc4e013a341e2e2fe8
+Current source digest: 896cf8f71ed14dc8597ff42981e891a0b87ddfcca591fca1a6e6c6da0d28d54f
 
 | Requirement | Contract | Evidence | Status |
 |---|---|---|---|
