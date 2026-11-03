@@ -18,7 +18,7 @@ Branch: work/m26-dart-flutter-semantic
 Authoritative SHA: external final acceptance evidence
 Last accepted SHA: eefd693ea36b3201f4e9c04cb74ef40a2745272d
 Current candidate SHA: external final acceptance evidence
-Current source digest: 97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926
+Current source digest: 954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be
 
 ## Runtime
 Environment: see SOURCE_AUTHORITY_MAP.md and RUNBOOK.md

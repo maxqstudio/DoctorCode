@@ -50,6 +50,8 @@
           "internal/analyzers/csharp/project.go",
           "internal/analyzers/csharp/project_test.go",
           "internal/analyzers/csharp/syntax.go",
+          "internal/analyzers/dart/parser_test.go",
+          "internal/analyzers/dart/syntax.go",
           "internal/analyzers/golang/analyzer.go",
           "internal/analyzers/golang/analyzer_test.go",
           "internal/analyzers/golang/corpus_test.go",
@@ -293,6 +295,8 @@
         "internal/analyzers/csharp/project.go",
         "internal/analyzers/csharp/project_test.go",
         "internal/analyzers/csharp/syntax.go",
+        "internal/analyzers/dart/parser_test.go",
+        "internal/analyzers/dart/syntax.go",
         "internal/analyzers/golang/analyzer.go",
         "internal/analyzers/golang/analyzer_test.go",
         "internal/analyzers/golang/corpus_test.go",
@@ -589,6 +593,20 @@
     {
       "directory": "internal/analyzers/csharp",
       "file": "internal/analyzers/csharp/syntax.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 38
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/parser_test.go",
+      "is_test": false,
+      "language": "Go",
+      "lines": 74
+    },
+    {
+      "directory": "internal/analyzers/dart",
+      "file": "internal/analyzers/dart/syntax.go",
       "is_test": false,
       "language": "Go",
       "lines": 38
@@ -4096,15 +4114,15 @@
     }
   ],
   "schema_version": 1,
-  "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926",
+  "source_digest": "954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be",
   "source_summary": {
-    "files": 279,
+    "files": 281,
     "languages": {
       "C": 7,
       "C#": 13,
       "C++": 8,
       "C/C++ Header": 2,
-      "Go": 109,
+      "Go": 111,
       "Java": 9,
       "JavaScript": 35,
       "JavaScript/React": 2,
@@ -4117,7 +4135,7 @@
       "TypeScript/React": 3,
       "XML": 1
     },
-    "lines": 12821,
+    "lines": 12933,
     "test_files": 2
   },
   "tests": [

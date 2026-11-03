@@ -27,7 +27,7 @@ Users / External Systems
     -> State / Evidence Authorities
     -> External Runtime / Outputs
 
-Observed source inventory: 279 files, 16 language categories.
+Observed source inventory: 281 files, 16 language categories.
 
 ## Major components
 

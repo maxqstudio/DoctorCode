@@ -4,7 +4,7 @@
     "diagram": "docs/sequence/generated/M26-DART-FLUTTER-SEMANTIC-BASELINE.actual.mmd",
     "entries": [],
     "graph": "docs/sequence/generated/M26-DART-FLUTTER-SEMANTIC-BASELINE.actual.json",
-    "source_digest": "97945c79008cf148e293e2906417514a56b5d6c57731f57f991f7e0cfe287926"
+    "source_digest": "954ef0c34bb42ccd41c21752399a708f0be54f8f8c913e851345eca1012950be"
   },
   "critical": false,
   "evidence_boundary": "M26 BEFORE plan was frozen at bb1ccefd9969a3db9308bb209ac60d0e19f68930 before Dart/Flutter product implementation. DOCUMENT edges are design traceability only; behavioral authority must come from RED/green benchmark and cumulative multi-OS CI evidence. Flutter/pubspec and generated-code boundaries are visible-source evidence only. Historical M19-M25 sequence evidence remains content-addressed and immutable under SW2-16 Historical Evidence Freeze.",
